@@ -205,6 +205,7 @@
     <Compile Include="Render\Renderer.cs" />
     <Compile Include="Render\UIRenderer.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
+    <Compile Include="System\RootObject.cs" />
     <Compile Include="Scene\MapViewer.cs" />
     <Compile Include="Script\Code\DecoScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -262,6 +263,14 @@
     <ProjectReference Include="..\ccmContent\ccmContent.contentproj">
       <Name>ccmContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
+    </ProjectReference>
+    <ProjectReference Include="..\HimaLibXna\HimaLibXna.csproj">
+      <Project>{87735AB2-56E5-475B-9A42-CD0879ABBB9F}</Project>
+      <Name>HimaLibXna</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HimaLib\HimaLib.csproj">
+      <Project>{ABD2BF1E-FCC5-4FA7-9424-B7DCADAD70AE}</Project>
+      <Name>HimaLib</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

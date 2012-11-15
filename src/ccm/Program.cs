@@ -14,6 +14,12 @@ namespace ccm
             {
                 game.Run();
             }
+
+            //using (var game = new HimaLib.System.Game())
+            //{
+            //    var rootObject = new System.RootObject();
+            //    game.Run(rootObject, rootObject);
+            //}
         }
     }
 #endif
