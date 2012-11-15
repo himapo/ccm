@@ -205,6 +205,8 @@
     <Compile Include="Render\Renderer.cs" />
     <Compile Include="Render\UIRenderer.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
+    <Compile Include="Scene\FakeScene.cs" />
+    <Compile Include="Scene\SceneBase.cs" />
     <Compile Include="System\RootObject.cs" />
     <Compile Include="Scene\MapViewer.cs" />
     <Compile Include="Script\Code\DecoScript.cs">

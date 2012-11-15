@@ -9,28 +9,27 @@ namespace ccm.System
 {
     public class RootObject : StateMachine
     {
+        public Scene.SceneBase CurrentScene { get; set; }
+
         public RootObject()
         {
-            ChangeUpdateState(UpdateFuncInit);
-            ChangeDrawState(DrawFuncInit);
+            UpdateState = UpdateStateMain;
+            DrawState = DrawStateMain;
         }
 
-        void UpdateFuncInit(ITimeKeeper timeKeeper)
+        void UpdateStateMain(ITimeKeeper timeKeeper)
         {
-            ChangeUpdateState(UpdateFuncMain);
+            CurrentScene.Update(timeKeeper);
+
+            if (CurrentScene.ChangeScene)
+            {
+                CurrentScene = CurrentScene.NextScene;
+            }
         }
 
-        void DrawFuncInit(ITimeKeeper timeKeeper)
+        void DrawStateMain(ITimeKeeper timeKeeper)
         {
-            ChangeDrawState(DrawFuncMain);
-        }
-
-        void UpdateFuncMain(ITimeKeeper timeKeeper)
-        {
-        }
-
-        void DrawFuncMain(ITimeKeeper timeKeeper)
-        {
+            CurrentScene.Draw(timeKeeper);
         }
     }
 }
