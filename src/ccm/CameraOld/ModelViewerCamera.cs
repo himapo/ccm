@@ -1,15 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 
-namespace ccm
+
+namespace ccm.CameraOld
 {
-    class ManualCamera : CameraBase
+    /// <summary>
+    /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。
+    /// </summary>
+    class ModelViewerCamera : CameraBase
     {
         float rotX;
         float rotY;
         float fovY;
         float initEyeZ; // カメラの注視点からの距離
 
-        public ManualCamera(Game game)
+        public ModelViewerCamera(Game game)
             : base(game)
         {
             rotX = 0.0f;
@@ -18,13 +22,23 @@ namespace ccm
             initEyeZ = 0.0f;
         }
 
+        /// <summary>
+        /// ゲーム コンポーネントの初期化を行います。
+        /// ここで、必要なサービスを照会して、使用するコンテンツを読み込むことができます。
+        /// </summary>
         public override void Initialize()
         {
             ResetCamera();
 
             UpdateCamera();
+
+            base.Initialize();
         }
 
+        /// <summary>
+        /// ゲーム コンポーネントが自身を更新するためのメソッドです。
+        /// </summary>
+        /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         public override void Update(GameTime gameTime)
         {
             var inputService = InputManager.GetInstance();
@@ -39,8 +53,13 @@ namespace ccm
                     rotX = MathHelper.Clamp(rotX, ROT_X_MIN, ROT_X_MAX);
                     rotY -= 0.04f * inputService.MouseMoveX;
                 }
-                initEyeZ -= 0.2f * inputService.MouseMoveWheel;
-                initEyeZ = MathHelper.Clamp(initEyeZ, 40.0f, 110.0f);
+                initEyeZ -= 0.1f * inputService.MouseMoveWheel;
+                initEyeZ = MathHelper.Clamp(initEyeZ, 10.0f, 110.0f);
+
+                if (inputService.IsPush(InputLabel.MouseMiddle))
+                {
+                    ResetCamera();
+                }
             }
 
             UpdateCamera();
@@ -62,10 +81,9 @@ namespace ccm
             rot = Matrix.CreateRotationY(rotY);
             mat *= rot;
 
-            // プレイヤーに追従
-            var playerPos = Player.GetInstance().Position;
-            var playerTrans = Matrix.CreateTranslation(playerPos.X + 0.0f, playerPos.Y + 6.0f, playerPos.Z + 0.0f);
-            mat *= playerTrans;
+            // 注視点
+            var trans = Matrix.CreateTranslation(0.0f, 0.0f, 0.0f);
+            mat *= trans;
 
             var eye = Vector4.Transform(INIT_EYE, mat);
             var at = Vector4.Transform(INIT_AT, mat);
@@ -83,10 +101,10 @@ namespace ccm
             rotX = -MathHelper.PiOver4;
             rotY = MathHelper.PiOver4;
 
-            fovY = GameProperty.fov;
+            fovY = 30.0f;
             float aspect = (float)GameProperty.resolutionWidth / (float)GameProperty.resolutionHeight;
-            float near = 10.0f;
-            float far = 400.0f;
+            float near = 1.0f;
+            float far = 300.0f;
 
             initEyeZ = 60.0f;
 

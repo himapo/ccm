@@ -64,11 +64,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Content\ContentLoader.cs" />
+    <Compile Include="Content\ContentUser.cs" />
+    <Compile Include="Graphics\GraphicsDeviceUser.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Render\UIBillboardRenderer.cs" />
+    <Compile Include="Shader\ConstantShader.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
     <Compile Include="System\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\XnaGame.cs" />
     <Compile Include="System\TimeKeeper.cs" />
+    <Compile Include="Texture\Texture2D.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HimaLib\HimaLib.csproj">

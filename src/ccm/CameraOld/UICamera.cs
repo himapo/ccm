@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework;
 
 
-namespace ccm
+namespace ccm.CameraOld
 {
     /// <summary>
     /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。

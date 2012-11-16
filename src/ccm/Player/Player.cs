@@ -9,6 +9,7 @@ using MikuMikuDance.Core.Accessory;
 using MikuMikuDance.XNA.Misc;
 using MikuMikuDance.XNA.Accessory;
 using MikuMikuDance.XNA;
+using ccm.CameraOld;
 
 namespace ccm
 {

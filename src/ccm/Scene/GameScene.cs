@@ -3,6 +3,7 @@ using MikuMikuDance.Core;
 using MikuMikuDance.Core.Model;
 using MikuMikuDance.Core.Motion;
 using MikuMikuDance.XNA;
+using ccm.CameraOld;
 
 namespace ccm
 {

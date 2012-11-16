@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-
+using ccm.CameraOld;
 
 namespace ccm
 {
@@ -45,7 +45,7 @@ namespace ccm
 
             cubePosSet = new HashSet<Vector3>();
 
-            CameraLabel = ccm.CameraLabel.Game;
+            CameraLabel = CameraLabel.Game;
         }
 
         /// <summary>
