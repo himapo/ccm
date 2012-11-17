@@ -14,11 +14,11 @@ namespace ccm.Scene
             DrawState = DrawStateMain;
         }
 
-        void UpdateStateMain(ITimeKeeper timeKeeper)
+        void UpdateStateMain()
         {
         }
 
-        void DrawStateMain(ITimeKeeper timeKeeper)
+        void DrawStateMain()
         {
         }
     }

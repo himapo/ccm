@@ -18,31 +18,31 @@ namespace ccm.Scene
             DrawState = DrawStateInit;
         }
 
-        void UpdateStateInit(ITimeKeeper timeKeeper)
+        void UpdateStateInit()
         {
             // コンストラクタではContentの初期化ができてないのでここで
             renderer = new UIBillboardRenderer();
 
-            UpdateState = UpdateStateMain;
-            DrawState = DrawStateMain;
-        }
-
-        void DrawStateInit(ITimeKeeper timeKeeper)
-        {
-        }
-
-        void UpdateStateMain(ITimeKeeper timeKeeper)
-        {
-        }
-
-        void DrawStateMain(ITimeKeeper timeKeeper)
-        {
             renderer.TextureName = "Texture/miki";
             renderer.Alpha = 1.0f;
             renderer.Scale = 1.0f;
             renderer.Rotation = new Vector3(0.0f);
             renderer.Position = new Vector3(0.0f);
 
+            UpdateState = UpdateStateMain;
+            DrawState = DrawStateMain;
+        }
+
+        void DrawStateInit()
+        {
+        }
+
+        void UpdateStateMain()
+        {
+        }
+
+        void DrawStateMain()
+        {
             renderer.Render();
         }
     }

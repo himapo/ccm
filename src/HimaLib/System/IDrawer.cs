@@ -7,6 +7,6 @@ namespace HimaLib.System
 {
     public interface IDrawer
     {
-        void Draw(ITimeKeeper timeKeeper);
+        void Draw();
     }
 }

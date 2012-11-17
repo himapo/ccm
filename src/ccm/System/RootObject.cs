@@ -17,9 +17,9 @@ namespace ccm.System
             DrawState = DrawStateMain;
         }
 
-        void UpdateStateMain(ITimeKeeper timeKeeper)
+        void UpdateStateMain()
         {
-            CurrentScene.Update(timeKeeper);
+            CurrentScene.Update();
 
             if (CurrentScene.ChangeScene)
             {
@@ -27,9 +27,9 @@ namespace ccm.System
             }
         }
 
-        void DrawStateMain(ITimeKeeper timeKeeper)
+        void DrawStateMain()
         {
-            CurrentScene.Draw(timeKeeper);
+            CurrentScene.Draw();
         }
     }
 }

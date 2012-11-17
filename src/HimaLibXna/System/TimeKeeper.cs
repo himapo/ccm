@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace HimaLib.System
 {
-    public class TimeKeeper : ITimeKeeper
+    public class TimeKeeper
     {
         public float FrameRate { get; set; }
 
@@ -39,7 +39,14 @@ namespace HimaLib.System
 
         public Microsoft.Xna.Framework.GameTime XnaGameTime { get; set; }
 
-        public TimeKeeper()
+        static TimeKeeper instance = new TimeKeeper();
+
+        public static TimeKeeper GetInstance()
+        {
+            return instance;
+        }
+
+        protected TimeKeeper()
         {
             FrameRate = 60.0f;
         }

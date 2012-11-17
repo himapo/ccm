@@ -7,6 +7,6 @@ namespace HimaLib.System
 {
     public interface IUpdater
     {
-        void Update(ITimeKeeper timeKeeper);
+        void Update();
     }
 }

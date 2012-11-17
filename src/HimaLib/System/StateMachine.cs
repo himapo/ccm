@@ -7,22 +7,22 @@ namespace HimaLib.System
 {
     public class StateMachine : IUpdater, IDrawer
     {
-        protected Action<ITimeKeeper> UpdateState { get; set; }
+        protected Action UpdateState { get; set; }
 
-        protected Action<ITimeKeeper> DrawState { get; set; }
+        protected Action DrawState { get; set; }
 
         public StateMachine()
         {
         }
 
-        public void Update(ITimeKeeper arg)
+        public void Update()
         {
-            UpdateState(arg);
+            UpdateState();
         }
 
-        public void Draw(ITimeKeeper arg)
+        public void Draw()
         {
-            DrawState(arg);
+            DrawState();
         }
     }
 }

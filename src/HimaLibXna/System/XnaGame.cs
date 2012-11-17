@@ -16,13 +16,9 @@ namespace HimaLib.System
 
         GraphicsDeviceManager graphics;
 
-        TimeKeeper TimeKeeper { get; set; }
-
         public XnaGame()
         {
             graphics = new GraphicsDeviceManager(this);
-
-            TimeKeeper = new TimeKeeper();
         }
 
         /// <summary>
@@ -77,8 +73,8 @@ namespace HimaLib.System
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Update(GameTime gameTime)
         {
-            TimeKeeper.XnaGameTime = gameTime;
-            RootUpdater.Update(TimeKeeper);
+            TimeKeeper.GetInstance().XnaGameTime = gameTime;
+            RootUpdater.Update();
             base.Update(gameTime);
         }
 
@@ -90,8 +86,8 @@ namespace HimaLib.System
         {
             GraphicsDevice.Clear(Color.LightGreen);
 
-            TimeKeeper.XnaGameTime = gameTime;
-            RootDrawer.Draw(TimeKeeper);
+            TimeKeeper.GetInstance().XnaGameTime = gameTime;
+            RootDrawer.Draw();
             base.Draw(gameTime);
         }
     }
