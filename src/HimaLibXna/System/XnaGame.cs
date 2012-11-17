@@ -44,6 +44,8 @@ namespace HimaLib.System
             IsFixedTimeStep = Initializer.FixedFrameRate;
             IsMouseVisible = Initializer.MouseVisible;
 
+            Graphics.GraphicsDeviceUser.GraphicsDevice = GraphicsDevice;
+
             base.Initialize();
         }
 
@@ -53,6 +55,8 @@ namespace HimaLib.System
         /// </summary>
         protected override void LoadContent()
         {
+            Content.RootDirectory = "Content";
+            HimaLib.Content.ContentUser.Content = Content;
             base.LoadContent();
         }
 
@@ -84,7 +88,6 @@ namespace HimaLib.System
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Draw(GameTime gameTime)
         {
-            Graphics.GraphicsDeviceUser.GraphicsDevice = GraphicsDevice;
             GraphicsDevice.Clear(Color.LightGreen);
 
             TimeKeeper.XnaGameTime = gameTime;

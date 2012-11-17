@@ -11,6 +11,35 @@ namespace HimaLib.Shader
     {
         public Model Model { get; set; }
 
+        public Texture2D Texture { get; set; }
+
+        public Vector2 RectOffset { get; set; }
+
+        private Vector2 rectSize;
+        public Vector2 RectSize
+        {
+            get
+            {
+                if (rectSize.X == 0.0f || rectSize.Y == 0.0f)
+                {
+                    return new Vector2(Texture.Width, Texture.Height);
+                }
+                else
+                {
+                    return rectSize;
+                }
+            }
+            set
+            {
+                rectSize = value;
+            }
+        }
+
+        VertexPositionTexture[] vertices;
+
+        short[] indices;
+
+
         public Matrix World { get; set; }
         
         public Matrix View { get; set; }
@@ -19,29 +48,46 @@ namespace HimaLib.Shader
 
         public float Alpha { get; set; }
 
-        public Texture2D Texture { get; set; }
-
-        public Vector2 RectOffset { get; set; }
-
-        public Vector2 RectSize { get; set; }
-
-        Effect effect;        
-        
-        VertexPositionTexture[] vertices;
-
-        short[] indices;
+        Effect effect;
 
         public ConstantShader()
         {
-            var contentLoader = new Content.ContentLoader();
-            effect = contentLoader.Load<Effect>("Effect/Constant");
+            Texture = new Texture2D(GraphicsDevice, 32, 32);
+            RectOffset = new Vector2(0.0f, 0.0f);
+            rectSize = new Vector2(0.0f, 0.0f);
 
             vertices = new VertexPositionTexture[4];
             indices = new short[6] { 0, 1, 2, 2, 1, 3 };
+
+            World = Matrix.Identity;
+            View = Matrix.Identity;
+            Projection = Matrix.Identity;
+            Alpha = 1.0f;
+
+            var contentLoader = new Content.EffectLoader();
+            effect = contentLoader.Load("Effect/Constant");
         }
 
         public void RenderModel()
         {
+            SetUpEffect();
+
+            foreach (var mesh in Model.Meshes)
+            {
+                foreach (var part in mesh.MeshParts)
+                {
+                    GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
+                    GraphicsDevice.Indices = part.IndexBuffer;
+
+                    foreach (var pass in effect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+
+                        GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList,
+                            0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                    }
+                }
+            }
         }
 
         public void RenderBillboard()

@@ -207,10 +207,11 @@
     <Compile Include="Render\Renderer.cs" />
     <Compile Include="Render\UIRenderer.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
+    <Compile Include="Scene\BootScene.cs" />
     <Compile Include="Scene\FakeScene.cs" />
-    <Compile Include="Scene\SceneBase.cs" />
+    <Compile Include="SceneOld\SceneBase.cs" />
     <Compile Include="System\RootObject.cs" />
-    <Compile Include="Scene\MapViewer.cs" />
+    <Compile Include="SceneOld\MapViewer.cs" />
     <Compile Include="Script\Code\DecoScript.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
@@ -224,12 +225,12 @@
     <Compile Include="Shader\LambertShader.cs" />
     <Compile Include="Render\RenderManager.cs" />
     <Compile Include="Shader\PhongShader.cs" />
-    <Compile Include="Scene\BootScene.cs" />
-    <Compile Include="Scene\GameScene.cs" />
-    <Compile Include="Scene\ISceneService.cs" />
-    <Compile Include="Scene\ModelViewer.cs" />
-    <Compile Include="Scene\SceneManager.cs" />
-    <Compile Include="Scene\TitleScene.cs" />
+    <Compile Include="SceneOld\BootScene.cs" />
+    <Compile Include="SceneOld\GameScene.cs" />
+    <Compile Include="SceneOld\ISceneService.cs" />
+    <Compile Include="SceneOld\ModelViewer.cs" />
+    <Compile Include="SceneOld\SceneManager.cs" />
+    <Compile Include="SceneOld\TitleScene.cs" />
     <Compile Include="Script\IScriptService.cs" />
     <Compile Include="Script\Script.cs" />
     <Compile Include="Script\ScriptManager.cs" />

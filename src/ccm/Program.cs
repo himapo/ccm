@@ -19,7 +19,7 @@ namespace ccm
             {
                 var rootObject = new System.RootObject()
                 {
-                    CurrentScene = new Scene.FakeScene()
+                    CurrentScene = new Scene.BootScene()
                 };
                 game.Run(rootObject, rootObject);
             }

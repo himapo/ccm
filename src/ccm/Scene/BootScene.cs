@@ -1,100 +1,49 @@
+﻿using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+using System.Linq;
+using System.Text;
+using HimaLib.System;
+using HimaLib.Render;
+using HimaLib.Math;
 
-
-namespace ccm
+namespace ccm.Scene
 {
-    /// <summary>
-    /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。
-    /// </summary>
-    class BootScene : MyGameComponent
+    public class BootScene : SceneBase
     {
-        struct MenuInfo
+        UIBillboardRenderer renderer;
+
+        public BootScene()
         {
-            public string name;
-            public SceneLabel scene;
+            UpdateState = UpdateStateInit;
+            DrawState = DrawStateInit;
         }
 
-        List<MenuInfo> menuList;
-        int cursor;
-
-        public BootScene(Game game)
-            : base(game)
+        void UpdateStateInit(ITimeKeeper timeKeeper)
         {
-            UpdateOrder = (int)UpdateOrderLabel.SCENE;
+            // コンストラクタではContentの初期化ができてないのでここで
+            renderer = new UIBillboardRenderer();
 
-            menuList = new List<MenuInfo>();
-            cursor = 0;
-
-            // TODO: ここで子コンポーネントを作成します。
+            UpdateState = UpdateStateMain;
+            DrawState = DrawStateMain;
         }
 
-        /// <summary>
-        /// ゲーム コンポーネントの初期化を行います。
-        /// ここで、必要なサービスを照会して、使用するコンテンツを読み込むことができます。
-        /// </summary>
-        public override void Initialize()
+        void DrawStateInit(ITimeKeeper timeKeeper)
         {
-            // TODO: ここに初期化のコードを追加します。
-            menuList.Clear();
-            menuList.Add(new MenuInfo { name = "Test Game", scene = SceneLabel.GAME_SCENE });
-            menuList.Add(new MenuInfo { name = "Main Game", scene = SceneLabel.TITLE_SCENE });
-            menuList.Add(new MenuInfo { name = "Model Viewer", scene = SceneLabel.MODEL_VIEWER });
-            menuList.Add(new MenuInfo { name = "Map Viewer", scene = SceneLabel.MAP_VIEWER });
-
-            base.Initialize();
         }
 
-        public override void OnSceneBegin(SceneLabel sceneLabel)
+        void UpdateStateMain(ITimeKeeper timeKeeper)
         {
-            if (sceneLabel == SceneLabel.BOOT_SCENE)
-            {
-                Enabled = true;
-                Visible = true;
-            }
-            else
-            {
-                Enabled = false;
-                Visible = false;
-            }
         }
 
-        /// <summary>
-        /// ゲーム コンポーネントが自身を更新するためのメソッドです。
-        /// </summary>
-        /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
-        public override void Update(GameTime gameTime)
+        void DrawStateMain(ITimeKeeper timeKeeper)
         {
-            var inputService = InputManager.GetInstance();
+            renderer.TextureName = "Texture/miki";
+            renderer.Alpha = 1.0f;
+            renderer.Scale = 1.0f;
+            renderer.Rotation = new Vector3(0.0f);
+            renderer.Position = new Vector3(0.0f);
 
-            // 選択したシーンに遷移
-            if (inputService.IsPush(InputLabel.OK))
-            {
-                var sceneService = GetService<ISceneService>();
-                sceneService.ChangeScene(menuList[cursor].scene);
-            }
-
-            // カーソルの移動
-            if (inputService.IsPush(InputLabel.Up))
-            {
-                if (--cursor == -1)
-                    cursor = menuList.Count - 1;
-            }
-            if (inputService.IsPush(InputLabel.Down))
-            {
-                if (++cursor == menuList.Count)
-                    cursor = 0;
-            }
-
-            var debugFont = DebugFontManager.GetInstance();
-            debugFont.DrawString(new DebugFontInfo("Boot Scene", new Vector2(50.0f, 60.0f)));
-            for (var i = 0; i < menuList.Count; ++i )
-            {
-                Color fontColor = Color.White;
-                if (i == cursor)
-                    fontColor = Color.Red;
-                debugFont.DrawString(new DebugFontInfo(menuList[i].name, new Vector2(80.0f, 100.0f + 22.0f * i), fontColor, Color.Transparent));
-            }
+            renderer.Render();
         }
     }
 }
