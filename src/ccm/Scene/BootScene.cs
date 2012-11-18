@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.System;
 using HimaLib.Render;
 using HimaLib.Math;
+using HimaLib.Debug;
 
 namespace ccm.Scene
 {
@@ -16,6 +17,8 @@ namespace ccm.Scene
         {
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
+
+            Name = "BootScene";
         }
 
         void UpdateStateInit()
@@ -39,6 +42,7 @@ namespace ccm.Scene
 
         void UpdateStateMain()
         {
+            DebugFont.GetInstance().Add(Name, 50.0f, 60.0f);
         }
 
         void DrawStateMain()

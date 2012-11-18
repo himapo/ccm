@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib;
+using HimaLib.Debug;
 using HimaLib.System;
 
 namespace ccm.System
@@ -13,12 +14,26 @@ namespace ccm.System
 
         public RootObject()
         {
+            UpdateState = UpdateStateInit;
+            DrawState = DrawStateInit;
+        }
+
+        void UpdateStateInit()
+        {
+            DebugFont.GetInstance().Initialize("SpriteFont/Kootenay");
+
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
         }
 
+        void DrawStateInit()
+        {
+        }
+
         void UpdateStateMain()
         {
+            DebugFont.GetInstance().Clear();
+
             CurrentScene.Update();
 
             if (CurrentScene.ChangeScene)
@@ -30,6 +45,8 @@ namespace ccm.System
         void DrawStateMain()
         {
             CurrentScene.Draw();
+
+            DebugFont.GetInstance().Draw();
         }
     }
 }

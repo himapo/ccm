@@ -12,5 +12,14 @@ namespace ccm.Scene
         public bool ChangeScene { get; protected set; }
 
         public SceneBase NextScene { get; protected set; }
+
+        public string Name { get; protected set; }
+
+        protected SceneBase()
+        {
+            ChangeScene = false;
+            NextScene = null;
+            Name = "SceneBase";
+        }
     }
 }
