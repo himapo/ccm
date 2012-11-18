@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace HimaLib
+namespace HimaLib.System
 {
     public class DefaultGameInitializer : IGameInitializer
     {
