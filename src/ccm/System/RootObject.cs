@@ -20,7 +20,7 @@ namespace ccm.System
 
         void UpdateStateInit()
         {
-            DebugFont.GetInstance().Initialize("SpriteFont/Kootenay");
+            DebugFont.Initialize("SpriteFont/Kootenay");
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -32,7 +32,7 @@ namespace ccm.System
 
         void UpdateStateMain()
         {
-            DebugFont.GetInstance().Clear();
+            DebugFont.Clear();
 
             CurrentScene.Update();
 
@@ -46,7 +46,7 @@ namespace ccm.System
         {
             CurrentScene.Draw();
 
-            DebugFont.GetInstance().Draw();
+            DebugFont.Draw();
         }
     }
 }
