@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HimaLib.Math;
 using HimaLib.Shader;
+using HimaLib.System;
 using HimaLib.Content;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -65,8 +66,8 @@ namespace HimaLib.Render
         Matrix GetProjMatrix()
         {
             return new Matrix(
-                2.0f / 1280, 0.0f, 0.0f, 0.0f,
-                0.0f, 2.0f / 720, 0.0f, 0.0f,
+                2.0f / SystemProperty.ScreenWidth, 0.0f, 0.0f, 0.0f,
+                0.0f, 2.0f / SystemProperty.ScreenHeight, 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f);
         }

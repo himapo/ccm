@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace HimaLib.System
 {
@@ -31,18 +32,41 @@ namespace HimaLib.System
         {
             Initializer.Initialize();
 
+            InitializeGraphics();
+
+            InitializeProperty();
+
+            InitializeSystemProperty();
+
+            Graphics.GraphicsDeviceUser.GraphicsDevice = GraphicsDevice;
+
+            base.Initialize();
+        }
+
+        void InitializeGraphics()
+        {
+            GraphicsDevice.PresentationParameters.PresentationInterval =
+                (Initializer.FixedFrameRate || !Initializer.VSyncEnable)
+                ? PresentInterval.Immediate
+                : PresentInterval.One;
+
             graphics.PreferredBackBufferWidth = Initializer.ScreenWidth;
             graphics.PreferredBackBufferHeight = Initializer.ScreenHeight;
             graphics.PreferMultiSampling = Initializer.MSAAEnable;
 
             graphics.ApplyChanges();
+        }
 
+        void InitializeProperty()
+        {
             IsFixedTimeStep = Initializer.FixedFrameRate;
             IsMouseVisible = Initializer.MouseVisible;
+        }
 
-            Graphics.GraphicsDeviceUser.GraphicsDevice = GraphicsDevice;
-
-            base.Initialize();
+        void InitializeSystemProperty()
+        {
+            SystemProperty.ScreenWidth = Initializer.ScreenWidth;
+            SystemProperty.ScreenHeight = Initializer.ScreenHeight;
         }
 
         /// <summary>

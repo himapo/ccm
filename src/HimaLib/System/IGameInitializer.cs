@@ -7,17 +7,19 @@ namespace HimaLib
 {
     public interface IGameInitializer
     {
-        int ScreenWidth { get; set; }
+        int ScreenWidth { get; }
 
-        int ScreenHeight { get; set; }
+        int ScreenHeight { get; }
 
-        bool MSAAEnable { get; set; }
+        bool MSAAEnable { get; }
 
-        int FPS { get; set; }
+        int FPS { get; }
 
-        bool FixedFrameRate { get; set; }
+        bool FixedFrameRate { get; }
 
-        bool MouseVisible { get; set; }
+        bool VSyncEnable { get; }
+
+        bool MouseVisible { get; }
 
         void Initialize();
     }

@@ -7,25 +7,30 @@ namespace HimaLib
 {
     public class DefaultGameInitializer : IGameInitializer
     {
-        public int ScreenWidth { get; set; }
+        public int ScreenWidth { get; private set; }
 
-        public int ScreenHeight { get; set; }
+        public int ScreenHeight { get; private set; }
 
-        public bool MSAAEnable { get; set; }
+        public bool MSAAEnable { get; private set; }
 
-        public int FPS { get; set; }
+        public int FPS { get; private set; }
 
-        public bool FixedFrameRate { get; set; }
+        public bool FixedFrameRate { get; private set; }
 
-        public bool MouseVisible { get; set; }
+        public bool VSyncEnable { get; private set; }
+
+        public bool MouseVisible { get; private set; }
 
         public void Initialize()
         {
+            // TODO : デバイスの性能取得
+
             ScreenWidth = 1280;
             ScreenHeight = 720;
             MSAAEnable = false;
             FPS = 60;
             FixedFrameRate = false;
+            VSyncEnable = false;
             MouseVisible = true;
         }
     }

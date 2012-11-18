@@ -58,12 +58,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debug\ConsoleDebugPrint.cs" />
+    <Compile Include="Debug\DebugPrint.cs" />
+    <Compile Include="Debug\IDebugPrint.cs" />
+    <Compile Include="Debug\NullDebugPrint.cs" />
     <Compile Include="Math\IVector3.cs" />
     <Compile Include="System\IGameInitializer.cs" />
     <Compile Include="System\IDrawer.cs" />
     <Compile Include="System\IUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\StateMachine.cs" />
+    <Compile Include="System\SystemProperty.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Render\" />
