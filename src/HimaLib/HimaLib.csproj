@@ -80,8 +80,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Debug\ConsoleDebugPrint.cs" />
+    <Compile Include="Debug\DebugMenu.cs" />
+    <Compile Include="Debug\DebugMenuNode.cs" />
+    <Compile Include="Debug\DebugMenuNodeExecutable.cs" />
+    <Compile Include="Debug\DebugMenuNodeInternal.cs" />
     <Compile Include="Debug\DebugPrint.cs" />
     <Compile Include="Debug\IDebugFont.cs" />
+    <Compile Include="Debug\IDebugMenu.cs" />
+    <Compile Include="Debug\IDebugMenuDrawer.cs" />
     <Compile Include="Debug\IDebugPrint.cs" />
     <Compile Include="Debug\NullDebugFont.cs" />
     <Compile Include="Debug\NullDebugPrint.cs" />

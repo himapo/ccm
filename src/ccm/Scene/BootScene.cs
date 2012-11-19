@@ -13,15 +13,32 @@ namespace ccm.Scene
     {
         UIBillboardRenderer renderer;
 
+        DebugMenu debugMenu;
+
+        DefaultDebugMenuDrawer debugMenuDrawer;
+
         public BootScene()
         {
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
 
             Name = "BootScene";
+
+            debugMenu = new DebugMenu("BootMenu");
+            debugMenuDrawer = new DefaultDebugMenuDrawer();
         }
 
         void UpdateStateInit()
+        {
+            InitRenderer();
+
+            InitDebugMenu();
+
+            UpdateState = UpdateStateMain;
+            DrawState = DrawStateMain;
+        }
+
+        void InitRenderer()
         {
             // コンストラクタではContentの初期化ができてないのでここで
             renderer = new UIBillboardRenderer();
@@ -31,9 +48,36 @@ namespace ccm.Scene
             renderer.Scale = 1.0f;
             renderer.Rotation = new Vector3(0.0f);
             renderer.Position = new Vector3(0.0f);
+        }
 
-            UpdateState = UpdateStateMain;
-            DrawState = DrawStateMain;
+        void InitDebugMenu()
+        {
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
+            {
+                Label = "Test Game",
+                Selectable = true,
+                ExecFunc = () => { }
+            });
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
+            {
+                Label = "Main Game",
+                Selectable = true,
+                ExecFunc = () => { }
+            });
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
+            {
+                Label = "Model Viewer",
+                Selectable = true,
+                ExecFunc = () => { }
+            });
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
+            {
+                Label = "Map Viewer",
+                Selectable = true,
+                ExecFunc = () => { }
+            });
+
+            debugMenu.Open();
         }
 
         void DrawStateInit()
@@ -48,6 +92,8 @@ namespace ccm.Scene
         void DrawStateMain()
         {
             renderer.Render();
+
+            debugMenu.Draw(debugMenuDrawer);
         }
     }
 }

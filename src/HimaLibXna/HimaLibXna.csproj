@@ -91,6 +91,7 @@
     <Compile Include="Content\SpriteFontLoader.cs" />
     <Compile Include="Content\TextureLoader.cs" />
     <Compile Include="Debug\DebugFont.cs" />
+    <Compile Include="Debug\DefaultDebugMenuDrawer.cs" />
     <Compile Include="Debug\SpriteDebugFont.cs" />
     <Compile Include="Graphics\GraphicsDeviceUser.cs" />
     <Compile Include="Math\Vector3.cs" />

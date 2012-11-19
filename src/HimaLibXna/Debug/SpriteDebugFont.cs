@@ -79,6 +79,11 @@ namespace HimaLib.Debug
             infoList.Add(new DebugFontInfo(output, new Vector2(x, y)));
         }
 
+        public void Add(string output, float x, float y, Color fontColor, Color bgColor)
+        {
+            infoList.Add(new DebugFontInfo(output, new Vector2(x, y), fontColor, bgColor));
+        }
+
         public void Draw()
         {
             spriteBatch.Begin();

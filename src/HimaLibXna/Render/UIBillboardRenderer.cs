@@ -35,7 +35,6 @@ namespace HimaLib.Render
 
         public void Render()
         {
-            // TODO : シェーダにパラメータを渡す
             Shader.Texture = GetTexture();
             Shader.World = GetWorldMatrix();
             Shader.View = GetViewMatrix();
