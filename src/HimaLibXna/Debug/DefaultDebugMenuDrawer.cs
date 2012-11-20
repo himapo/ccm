@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.System;
 
 namespace HimaLib.Debug
 {
@@ -9,13 +10,16 @@ namespace HimaLib.Debug
     {
         public void Draw(string label, List<DebugMenuNode> nodes, int selected)
         {
-            DebugFont.Add(label, 150.0f, 90.0f);
+            DebugFont.Add(label, 140.0f, 110.0f, Color.Purple, new Color(0.0f, 0.0f, 0.0f, 0.2f));
 
             for (var i =0; i<nodes.Count; ++i)
             {
-                // TODO : selectedで色付け
+                var FontColor = (i == selected) ? Color.Red : Color.White;
+                var BGColor = (i == selected)
+                    ? (new Color(1.0f, 1.0f, 0.0f, 0.2f))
+                    : (new Color(0.0f, 0.0f, 0.0f, 0.2f));
 
-                DebugFont.Add(nodes[i].Label, 160.0f, 120.0f + 25.0f * i);
+                DebugFont.Add(nodes[i].Label, 160.0f, 140.0f + 25.0f * i, FontColor, BGColor);
             }
         }
     }

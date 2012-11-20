@@ -108,7 +108,7 @@ namespace HimaLib.System
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.LightGreen);
+            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.LightGreen);
 
             TimeKeeper.GetInstance().XnaGameTime = gameTime;
             RootDrawer.Draw();

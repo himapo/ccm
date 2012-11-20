@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.System;
 
 namespace HimaLib.Debug
 {
@@ -31,6 +32,11 @@ namespace HimaLib.Debug
         public static void Add(string output, float x, float y)
         {
             GetInstance().Add(output, x, y);
+        }
+
+        public static void Add(string output, float x, float y, IColor fontColor, IColor bgColor)
+        {
+            GetInstance().Add(output, x, y, fontColor, bgColor);
         }
 
         public static void Draw()

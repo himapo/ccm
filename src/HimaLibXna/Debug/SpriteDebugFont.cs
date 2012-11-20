@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HimaLib;
 using HimaLib.Graphics;
 
 namespace HimaLib.Debug
@@ -79,9 +80,9 @@ namespace HimaLib.Debug
             infoList.Add(new DebugFontInfo(output, new Vector2(x, y)));
         }
 
-        public void Add(string output, float x, float y, Color fontColor, Color bgColor)
+        public void Add(string output, float x, float y, System.IColor fontColor, System.IColor bgColor)
         {
-            infoList.Add(new DebugFontInfo(output, new Vector2(x, y), fontColor, bgColor));
+            infoList.Add(new DebugFontInfo(output, new Vector2(x, y), System.Color.CreateXnaColor(fontColor), System.Color.CreateXnaColor(bgColor)));
         }
 
         public void Draw()

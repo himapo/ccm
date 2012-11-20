@@ -97,6 +97,7 @@
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Render\UIBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
+    <Compile Include="System\Color.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
     <Compile Include="System\Game.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -84,6 +84,8 @@
     <Compile Include="Debug\DebugMenuNode.cs" />
     <Compile Include="Debug\DebugMenuNodeExecutable.cs" />
     <Compile Include="Debug\DebugMenuNodeInternal.cs" />
+    <Compile Include="Debug\DebugMenuNodeTunable.cs" />
+    <Compile Include="Debug\DebugMenuNodeTunableInt.cs" />
     <Compile Include="Debug\DebugPrint.cs" />
     <Compile Include="Debug\IDebugFont.cs" />
     <Compile Include="Debug\IDebugMenu.cs" />
@@ -92,6 +94,7 @@
     <Compile Include="Debug\NullDebugFont.cs" />
     <Compile Include="Debug\NullDebugPrint.cs" />
     <Compile Include="Math\IVector3.cs" />
+    <Compile Include="System\IColor.cs" />
     <Compile Include="System\IGameInitializer.cs" />
     <Compile Include="System\IDrawer.cs" />
     <Compile Include="System\IUpdater.cs" />
