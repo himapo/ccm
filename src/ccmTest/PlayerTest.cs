@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 
-namespace ccmTest
+namespace ccm
 {
     [TestFixture]
     public class PlayerTest
@@ -12,7 +12,7 @@ namespace ccmTest
         [SetUp]
         public void SetUp()
         {
-            ccm.Player.CreateInstance(null);
+            Player.CreateInstance(null);
         }
 
         [TearDown]
@@ -23,7 +23,7 @@ namespace ccmTest
         [TestCase]
         public void Instance()
         {
-            Assert.NotNull(ccm.Player.GetInstance());
+            Assert.NotNull(Player.GetInstance());
         }
     }
 }

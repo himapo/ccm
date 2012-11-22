@@ -63,12 +63,15 @@
     <Compile Include="PlayerTest.cs" />
     <Compile Include="SampleTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ccm\ccm.csproj">
       <Project>{0822BA92-3BB3-43AF-B76D-C4E46960C2A9}</Project>
       <Name>ccm</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HimaLibTest\HimaLibTest.csproj">
+      <Project>{AC97F11A-C44A-4BBB-8CE8-F68C51B4DC12}</Project>
+      <Name>HimaLibTest</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

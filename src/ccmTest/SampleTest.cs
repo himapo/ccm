@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using HimaLib;
 
-namespace ccmTest
+namespace ccm
 {
     class SampleClass
     {
@@ -31,7 +32,7 @@ namespace ccmTest
         {
             var sample = new SampleClass();
             Assert.True(sample.PublicMethod());
-            Assert.True((bool)sample.CallPrivateMethod("PrivateMethod", new object[] { }));
+            Assert.True(sample.CallPrivateMethod<bool>("PrivateMethod"));
         }
     }
 }

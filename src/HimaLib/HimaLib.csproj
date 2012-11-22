@@ -103,6 +103,7 @@
     <Compile Include="System\SystemProperty.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Input\" />
     <Folder Include="Render\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

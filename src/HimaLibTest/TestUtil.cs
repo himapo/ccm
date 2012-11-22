@@ -4,17 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Reflection;
 
-namespace ccmTest
+namespace HimaLib
 {
-    static class TestUtil
+    public static class TestUtil
     {
-        public static object CallPrivateMethod(this object instance, string methodName, object[] args)
+        public static ReturnType CallPrivateMethod<ReturnType>(this object instance, string methodName, params object[] args)
         {
             var type = instance.GetType();
 
             var methodInfo = type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
             
-            return methodInfo.Invoke(instance, args);  
+            return (ReturnType)methodInfo.Invoke(instance, args);  
         }
     }
 }
