@@ -139,10 +139,12 @@
     <Compile Include="DebugMenu\DebugMenuNodeTunableInt.cs" />
     <Compile Include="DebugMenu\IDebugMenuService.cs" />
     <Compile Include="Debug\DebugFontInfo.cs" />
+    <Compile Include="Debug\DebugMenuUpdater.cs" />
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
     <Compile Include="Input\ControllerLabel.cs" />
+    <Compile Include="Input\InputAccessor.cs" />
     <Compile Include="Input\InputLabel.cs" />
     <Compile Include="Input\InputMode.cs" />
     <Compile Include="Input\MainController.cs" />

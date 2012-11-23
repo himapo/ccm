@@ -28,8 +28,7 @@ namespace ccm.Input
         OK,
         Cancel,
 
-        OpenDebugMenu,
-        CloseDebugMenu,
+        ToggleDebugMenu,
         DebugMenuOK,
         DebugMenuCancel,
         DebugMenuUp,

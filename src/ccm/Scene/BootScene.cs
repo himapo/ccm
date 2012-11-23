@@ -6,6 +6,7 @@ using HimaLib.System;
 using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Debug;
+using ccm.Debug;
 
 namespace ccm.Scene
 {
@@ -14,6 +15,8 @@ namespace ccm.Scene
         UIBillboardRenderer renderer;
 
         DebugMenu debugMenu;
+
+        DebugMenuUpdater debugMenuUpdater;
 
         DefaultDebugMenuDrawer debugMenuDrawer;
 
@@ -25,6 +28,7 @@ namespace ccm.Scene
             Name = "BootScene";
 
             debugMenu = new DebugMenu("BootMenu");
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
             debugMenuDrawer = new DefaultDebugMenuDrawer();
         }
 
@@ -56,25 +60,25 @@ namespace ccm.Scene
             {
                 Label = "Test Game",
                 Selectable = true,
-                ExecFunc = () => { }
+                ExecFunc = () => { Console.WriteLine("Execute Test Game"); }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
                 Label = "Main Game",
                 Selectable = true,
-                ExecFunc = () => { }
+                ExecFunc = () => { Console.WriteLine("Execute Main Game"); }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
                 Label = "Model Viewer",
                 Selectable = true,
-                ExecFunc = () => { }
+                ExecFunc = () => { Console.WriteLine("Execute Model Viewer"); }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
                 Label = "Map Viewer",
                 Selectable = true,
-                ExecFunc = () => { }
+                ExecFunc = () => { Console.WriteLine("Execute Map Viewer"); }
             });
 
             debugMenu.Open();
@@ -86,6 +90,8 @@ namespace ccm.Scene
 
         void UpdateStateMain()
         {
+            debugMenuUpdater.Update();
+
             DebugFont.Add(Name, 50.0f, 60.0f);
         }
 

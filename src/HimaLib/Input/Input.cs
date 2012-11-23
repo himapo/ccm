@@ -17,6 +17,11 @@ namespace HimaLib.Input
             enables[id] = on;
         }
 
+        public static Controller GetController(int id)
+        {
+            return controllers[id];
+        }
+
         public static void SwitchController(int id, bool on)
         {
             enables[id] = on;

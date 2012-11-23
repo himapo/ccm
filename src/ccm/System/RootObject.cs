@@ -6,6 +6,7 @@ using HimaLib;
 using HimaLib.Debug;
 using HimaLib.System;
 using HimaLib.Input;
+using ccm.Input;
 
 namespace ccm.System
 {
@@ -15,15 +16,15 @@ namespace ccm.System
 
         DefaultKeyboard keyboard;
 
-        Input.MainController gameController;
+        MainController gameController;
 
-        Input.MainController debugController;
+        MainController debugController;
 
         public RootObject()
         {
             keyboard = new DefaultKeyboard();
-            gameController = new Input.MainController(keyboard);
-            debugController = new Input.MainController(keyboard);
+            gameController = new MainController(keyboard);
+            debugController = new MainController(keyboard);
 
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
@@ -42,23 +43,24 @@ namespace ccm.System
         void InitController()
         {
             // TODO : コンフィグファイルから設定
-            gameController.AddKeyboardKey(Input.VirtualKeyLabel.Up, KeyboardKeyLabel.W);
-            gameController.AddKeyboardKey(Input.VirtualKeyLabel.Down, KeyboardKeyLabel.S);
-            gameController.AddKeyboardKey(Input.VirtualKeyLabel.Left, KeyboardKeyLabel.A);
-            gameController.AddKeyboardKey(Input.VirtualKeyLabel.Right, KeyboardKeyLabel.D);
-            gameController.AddKeyboardKey(Input.VirtualKeyLabel.OK, KeyboardKeyLabel.Z);
-            gameController.AddKeyboardKey(Input.VirtualKeyLabel.Cancel, KeyboardKeyLabel.X);
+            gameController.AddKeyboardKey(VirtualKeyLabel.Up, KeyboardKeyLabel.W);
+            gameController.AddKeyboardKey(VirtualKeyLabel.Down, KeyboardKeyLabel.S);
+            gameController.AddKeyboardKey(VirtualKeyLabel.Left, KeyboardKeyLabel.A);
+            gameController.AddKeyboardKey(VirtualKeyLabel.Right, KeyboardKeyLabel.D);
+            gameController.AddKeyboardKey(VirtualKeyLabel.OK, KeyboardKeyLabel.Z);
+            gameController.AddKeyboardKey(VirtualKeyLabel.Cancel, KeyboardKeyLabel.X);
+            
+            InputAccessor.AddController(ControllerLabel.Main, gameController, false);
 
-            HimaLib.Input.Input.AddController((int)Input.ControllerLabel.Main, gameController, true);
+            debugController.AddKeyboardKey(VirtualKeyLabel.Up, KeyboardKeyLabel.W);
+            debugController.AddKeyboardKey(VirtualKeyLabel.Down, KeyboardKeyLabel.S);
+            debugController.AddKeyboardKey(VirtualKeyLabel.Left, KeyboardKeyLabel.A);
+            debugController.AddKeyboardKey(VirtualKeyLabel.Right, KeyboardKeyLabel.D);
+            debugController.AddKeyboardKey(VirtualKeyLabel.OK, KeyboardKeyLabel.Z);
+            debugController.AddKeyboardKey(VirtualKeyLabel.Cancel, KeyboardKeyLabel.X);
+            debugController.AddKeyboardKey(VirtualKeyLabel.ToggleDebugMenu, KeyboardKeyLabel.F1);
 
-            debugController.AddKeyboardKey(Input.VirtualKeyLabel.Up, KeyboardKeyLabel.W);
-            debugController.AddKeyboardKey(Input.VirtualKeyLabel.Down, KeyboardKeyLabel.S);
-            debugController.AddKeyboardKey(Input.VirtualKeyLabel.Left, KeyboardKeyLabel.A);
-            debugController.AddKeyboardKey(Input.VirtualKeyLabel.Right, KeyboardKeyLabel.D);
-            debugController.AddKeyboardKey(Input.VirtualKeyLabel.OK, KeyboardKeyLabel.Z);
-            debugController.AddKeyboardKey(Input.VirtualKeyLabel.Cancel, KeyboardKeyLabel.X);
-
-            HimaLib.Input.Input.AddController((int)Input.ControllerLabel.Debug, debugController, false);
+            InputAccessor.AddController(ControllerLabel.Debug, debugController, true);
         }
 
         void DrawStateInit()
@@ -69,7 +71,7 @@ namespace ccm.System
         {
             DebugFont.Clear();
 
-            HimaLib.Input.Input.Update();
+            InputAccessor.Update();
 
             CurrentScene.Update();
 
