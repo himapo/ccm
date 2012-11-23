@@ -97,6 +97,7 @@
     <Compile Include="Input\FakeKeyboard.cs" />
     <Compile Include="Input\IDigitalDevice.cs" />
     <Compile Include="Input\IKeyboard.cs" />
+    <Compile Include="Input\Input.cs" />
     <Compile Include="Input\KeyboardKey.cs" />
     <Compile Include="Input\KeyboardKeyLabel.cs" />
     <Compile Include="Math\IVector3.cs" />

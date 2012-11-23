@@ -16,21 +16,25 @@ namespace HimaLib.Input
 
         public void Update()
         {
+            foreach (var device in digitalDevices.Values)
+            {
+                device.Update();
+            }
         }
 
         public bool IsPush(int label)
         {
-            return false;
+            return digitalDevices[label].IsPush();
         }
 
         public bool IsPress(int label)
         {
-            return false;
+            return digitalDevices[label].IsPress();
         }
 
         public bool IsRelease(int label)
         {
-            return false;
+            return digitalDevices[label].IsRelease();
         }
 
         public void AddDigitalDevice(int label, IDigitalDevice device)
