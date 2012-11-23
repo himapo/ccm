@@ -28,19 +28,29 @@ namespace ccm.Input
             HimaLib.Input.Input.Update();
         }
 
-        public static bool IsPush(ControllerLabel controllerLabel, VirtualKeyLabel keyLabel)
+        public static bool IsPush(ControllerLabel controllerLabel, DigitalDeviceLabel keyLabel)
         {
             return HimaLib.Input.Input.IsPush((int)controllerLabel, (int)keyLabel);
         }
 
-        public static bool IsPress(ControllerLabel controllerLabel, VirtualKeyLabel keyLabel)
+        public static bool IsPress(ControllerLabel controllerLabel, DigitalDeviceLabel keyLabel)
         {
             return HimaLib.Input.Input.IsPress((int)controllerLabel, (int)keyLabel);
         }
 
-        public static bool IsRelease(ControllerLabel controllerLabel, VirtualKeyLabel keyLabel)
+        public static bool IsRelease(ControllerLabel controllerLabel, DigitalDeviceLabel keyLabel)
         {
             return HimaLib.Input.Input.IsRelease((int)controllerLabel, (int)keyLabel);            
+        }
+
+        public static int GetX(ControllerLabel controllerLabel, PointingDeviceLabel deviceLabel)
+        {
+            return HimaLib.Input.Input.GetX((int)controllerLabel, (int)deviceLabel);
+        }
+
+        public static int GetY(ControllerLabel controllerLabel, PointingDeviceLabel deviceLabel)
+        {
+            return HimaLib.Input.Input.GetY((int)controllerLabel, (int)deviceLabel);
         }
     }
 }

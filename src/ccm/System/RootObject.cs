@@ -16,6 +16,8 @@ namespace ccm.System
 
         DefaultKeyboard keyboard;
 
+        DefaultMouse mouse;
+
         MainController gameController;
 
         MainController debugController;
@@ -23,8 +25,9 @@ namespace ccm.System
         public RootObject()
         {
             keyboard = new DefaultKeyboard();
-            gameController = new MainController(keyboard);
-            debugController = new MainController(keyboard);
+            mouse = new DefaultMouse();
+            gameController = new MainController(keyboard, mouse);
+            debugController = new MainController(keyboard, mouse);
 
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
@@ -43,22 +46,28 @@ namespace ccm.System
         void InitController()
         {
             // TODO : コンフィグファイルから設定
-            gameController.AddKeyboardKey(VirtualKeyLabel.Up, KeyboardKeyLabel.W);
-            gameController.AddKeyboardKey(VirtualKeyLabel.Down, KeyboardKeyLabel.S);
-            gameController.AddKeyboardKey(VirtualKeyLabel.Left, KeyboardKeyLabel.A);
-            gameController.AddKeyboardKey(VirtualKeyLabel.Right, KeyboardKeyLabel.D);
-            gameController.AddKeyboardKey(VirtualKeyLabel.OK, KeyboardKeyLabel.Z);
-            gameController.AddKeyboardKey(VirtualKeyLabel.Cancel, KeyboardKeyLabel.X);
-            
+            gameController.AddKeyboardKey(DigitalDeviceLabel.Up, KeyboardKeyLabel.W);
+            gameController.AddKeyboardKey(DigitalDeviceLabel.Down, KeyboardKeyLabel.S);
+            gameController.AddKeyboardKey(DigitalDeviceLabel.Left, KeyboardKeyLabel.A);
+            gameController.AddKeyboardKey(DigitalDeviceLabel.Right, KeyboardKeyLabel.D);
+            gameController.AddKeyboardKey(DigitalDeviceLabel.OK, KeyboardKeyLabel.Z);
+            gameController.AddKeyboardKey(DigitalDeviceLabel.Cancel, KeyboardKeyLabel.X);
+
+            gameController.AddMouseButton(DigitalDeviceLabel.MouseMain, MouseButtonLabel.Left);
+            gameController.AddMouseButton(DigitalDeviceLabel.MouseSub, MouseButtonLabel.Right);
+            gameController.AddMouseButton(DigitalDeviceLabel.MouseMiddle, MouseButtonLabel.Middle);
+
+            gameController.AddMouseAxis(PointingDeviceLabel.Mouse0);
+
             InputAccessor.AddController(ControllerLabel.Main, gameController, false);
 
-            debugController.AddKeyboardKey(VirtualKeyLabel.Up, KeyboardKeyLabel.W);
-            debugController.AddKeyboardKey(VirtualKeyLabel.Down, KeyboardKeyLabel.S);
-            debugController.AddKeyboardKey(VirtualKeyLabel.Left, KeyboardKeyLabel.A);
-            debugController.AddKeyboardKey(VirtualKeyLabel.Right, KeyboardKeyLabel.D);
-            debugController.AddKeyboardKey(VirtualKeyLabel.OK, KeyboardKeyLabel.Z);
-            debugController.AddKeyboardKey(VirtualKeyLabel.Cancel, KeyboardKeyLabel.X);
-            debugController.AddKeyboardKey(VirtualKeyLabel.ToggleDebugMenu, KeyboardKeyLabel.F1);
+            debugController.AddKeyboardKey(DigitalDeviceLabel.Up, KeyboardKeyLabel.W);
+            debugController.AddKeyboardKey(DigitalDeviceLabel.Down, KeyboardKeyLabel.S);
+            debugController.AddKeyboardKey(DigitalDeviceLabel.Left, KeyboardKeyLabel.A);
+            debugController.AddKeyboardKey(DigitalDeviceLabel.Right, KeyboardKeyLabel.D);
+            debugController.AddKeyboardKey(DigitalDeviceLabel.OK, KeyboardKeyLabel.Z);
+            debugController.AddKeyboardKey(DigitalDeviceLabel.Cancel, KeyboardKeyLabel.X);
+            debugController.AddKeyboardKey(DigitalDeviceLabel.ToggleDebugMenu, KeyboardKeyLabel.F1);
 
             InputAccessor.AddController(ControllerLabel.Debug, debugController, true);
         }

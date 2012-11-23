@@ -9,14 +9,22 @@ namespace HimaLib.Input
     {
         Dictionary<int, IDigitalDevice> digitalDevices;
 
+        Dictionary<int, IPointingDevice> pointingDevices;
+
         public Controller()
         {
             digitalDevices = new Dictionary<int, IDigitalDevice>();
+            pointingDevices = new Dictionary<int, IPointingDevice>();
         }
 
         public void Update()
         {
             foreach (var device in digitalDevices.Values)
+            {
+                device.Update();
+            }
+
+            foreach (var device in pointingDevices.Values)
             {
                 device.Update();
             }
@@ -37,9 +45,24 @@ namespace HimaLib.Input
             return digitalDevices[label].IsRelease();
         }
 
+        public int GetX(int label)
+        {
+            return pointingDevices[label].X;
+        }
+
+        public int GetY(int label)
+        {
+            return pointingDevices[label].Y;
+        }
+
         public void AddDigitalDevice(int label, IDigitalDevice device)
         {
             digitalDevices[label] = device;
+        }
+
+        public void AddPointingDevice(int label, IPointingDevice device)
+        {
+            pointingDevices[label] = device;
         }
     }
 }

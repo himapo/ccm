@@ -148,7 +148,8 @@
     <Compile Include="Input\InputLabel.cs" />
     <Compile Include="Input\InputMode.cs" />
     <Compile Include="Input\MainController.cs" />
-    <Compile Include="Input\VirtualKeyLabel.cs" />
+    <Compile Include="Input\DigitalDeviceLabel.cs" />
+    <Compile Include="Input\PointingDeviceLabel.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="CameraOld\ManualCamera.cs" />
     <Compile Include="CameraOld\ModelViewerCamera.cs" />

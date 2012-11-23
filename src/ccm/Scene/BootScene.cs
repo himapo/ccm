@@ -7,6 +7,7 @@ using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Debug;
 using ccm.Debug;
+using ccm.Input;
 
 namespace ccm.Scene
 {
@@ -93,6 +94,8 @@ namespace ccm.Scene
             debugMenuUpdater.Update();
 
             DebugFont.Add(Name, 50.0f, 60.0f);
+
+            ShowMousePosition();
         }
 
         void DrawStateMain()
@@ -100,6 +103,14 @@ namespace ccm.Scene
             renderer.Render();
 
             debugMenu.Draw(debugMenuDrawer);
+        }
+
+        void ShowMousePosition()
+        {
+            var outputString = String.Format("mouse pos ({0}, {1})",
+                InputAccessor.GetX(ControllerLabel.Main, PointingDeviceLabel.Mouse0),
+                InputAccessor.GetY(ControllerLabel.Main, PointingDeviceLabel.Mouse0));
+            DebugFont.Add(outputString, 900.0f, 22.0f * 6);
         }
     }
 }

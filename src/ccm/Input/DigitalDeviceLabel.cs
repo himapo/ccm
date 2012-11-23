@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ccm.Input
 {
-    public enum VirtualKeyLabel
+    public enum DigitalDeviceLabel
     {
         Up,
         Down,
@@ -29,11 +29,5 @@ namespace ccm.Input
         Cancel,
 
         ToggleDebugMenu,
-        DebugMenuOK,
-        DebugMenuCancel,
-        DebugMenuUp,
-        DebugMenuDown,
-        DebugMenuLeft,
-        DebugMenuRight,
     }
 }

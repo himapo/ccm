@@ -95,11 +95,17 @@
     <Compile Include="Debug\NullDebugPrint.cs" />
     <Compile Include="Input\Controller.cs" />
     <Compile Include="Input\FakeKeyboard.cs" />
+    <Compile Include="Input\FakeMouse.cs" />
     <Compile Include="Input\IDigitalDevice.cs" />
     <Compile Include="Input\IKeyboard.cs" />
+    <Compile Include="Input\IMouse.cs" />
     <Compile Include="Input\Input.cs" />
+    <Compile Include="Input\IPointingDevice.cs" />
     <Compile Include="Input\KeyboardKey.cs" />
     <Compile Include="Input\KeyboardKeyLabel.cs" />
+    <Compile Include="Input\MouseAxis.cs" />
+    <Compile Include="Input\MouseButton.cs" />
+    <Compile Include="Input\MouseButtonLabel.cs" />
     <Compile Include="Math\IVector3.cs" />
     <Compile Include="System\IColor.cs" />
     <Compile Include="System\IGameInitializer.cs" />

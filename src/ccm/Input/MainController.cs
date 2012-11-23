@@ -14,14 +14,27 @@ namespace ccm.Input
     {
         IKeyboard keyboard;
 
-        public MainController(IKeyboard keyboard)
+        IMouse mouse;
+
+        public MainController(IKeyboard keyboard, IMouse mouse)
         {
             this.keyboard = keyboard;
+            this.mouse = mouse;
         }
 
-        public void AddKeyboardKey(VirtualKeyLabel virtualKey, KeyboardKeyLabel realKey)
+        public void AddKeyboardKey(DigitalDeviceLabel virtualKey, KeyboardKeyLabel realKey)
         {
             AddDigitalDevice((int)virtualKey, new KeyboardKey(keyboard, realKey));
+        }
+
+        public void AddMouseButton(DigitalDeviceLabel virtualKey, MouseButtonLabel realKey)
+        {
+            AddDigitalDevice((int)virtualKey, new MouseButton(mouse, realKey));
+        }
+
+        public void AddMouseAxis(PointingDeviceLabel virtualKey)
+        {
+            AddPointingDevice((int)virtualKey, new MouseAxis(mouse));
         }
     }
 }

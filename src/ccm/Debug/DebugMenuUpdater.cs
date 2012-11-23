@@ -19,7 +19,7 @@ namespace ccm.Debug
 
         public void Update()
         {
-            if (IsPush(VirtualKeyLabel.ToggleDebugMenu))
+            if (IsPush(DigitalDeviceLabel.ToggleDebugMenu))
             {
                 if (DebugMenu.IsOpen)
                 {
@@ -38,33 +38,33 @@ namespace ccm.Debug
                 return;
             }
 
-            if (IsPush(VirtualKeyLabel.Up))
+            if (IsPush(DigitalDeviceLabel.Up))
             {
                 DebugMenu.OnPushUp();
             }
-            if (IsPush(VirtualKeyLabel.Down))
+            if (IsPush(DigitalDeviceLabel.Down))
             {
                 DebugMenu.OnPushDown();
             }
-            if (IsPush(VirtualKeyLabel.Left))
+            if (IsPush(DigitalDeviceLabel.Left))
             {
                 DebugMenu.OnPushLeft();
             }
-            if (IsPush(VirtualKeyLabel.Right))
+            if (IsPush(DigitalDeviceLabel.Right))
             {
                 DebugMenu.OnPushRight();
             }
-            if (IsPush(VirtualKeyLabel.OK))
+            if (IsPush(DigitalDeviceLabel.OK))
             {
                 DebugMenu.OnPushOK();
             }
-            if (IsPush(VirtualKeyLabel.Cancel))
+            if (IsPush(DigitalDeviceLabel.Cancel))
             {
                 DebugMenu.OnPushCancel();
             }
         }
 
-        bool IsPush(VirtualKeyLabel key)
+        bool IsPush(DigitalDeviceLabel key)
         {
             return InputAccessor.IsPush(ControllerLabel.Debug, key);
         }
