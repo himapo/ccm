@@ -94,6 +94,7 @@
     <Compile Include="Debug\DefaultDebugMenuDrawer.cs" />
     <Compile Include="Debug\SpriteDebugFont.cs" />
     <Compile Include="Graphics\GraphicsDeviceUser.cs" />
+    <Compile Include="Input\DefaultKeyboard.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Render\UIBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
@@ -110,9 +111,7 @@
       <Name>HimaLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Input\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

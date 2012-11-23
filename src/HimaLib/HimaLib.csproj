@@ -93,6 +93,12 @@
     <Compile Include="Debug\IDebugPrint.cs" />
     <Compile Include="Debug\NullDebugFont.cs" />
     <Compile Include="Debug\NullDebugPrint.cs" />
+    <Compile Include="Input\Controller.cs" />
+    <Compile Include="Input\FakeKeyboard.cs" />
+    <Compile Include="Input\IDigitalDevice.cs" />
+    <Compile Include="Input\IKeyboard.cs" />
+    <Compile Include="Input\KeyboardKey.cs" />
+    <Compile Include="Input\KeyboardKeyLabel.cs" />
     <Compile Include="Math\IVector3.cs" />
     <Compile Include="System\IColor.cs" />
     <Compile Include="System\IGameInitializer.cs" />
@@ -103,7 +109,6 @@
     <Compile Include="System\SystemProperty.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Input\" />
     <Folder Include="Render\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
