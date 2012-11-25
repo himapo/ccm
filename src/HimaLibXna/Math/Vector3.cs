@@ -30,6 +30,11 @@ namespace HimaLib.Math
 
         public static Vector3 Zero { get { return new Vector3(0.0f); } }
 
+        public static Microsoft.Xna.Framework.Vector3 CreateXnaVector(IVector3 vector)
+        {
+            return new Microsoft.Xna.Framework.Vector3(vector.X, vector.Y, vector.Z);
+        }
+
         public Vector3(float value)
         {
             XnaVector = new Microsoft.Xna.Framework.Vector3(value);

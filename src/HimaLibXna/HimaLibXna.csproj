@@ -85,9 +85,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\CameraUtil.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentUser.cs" />
     <Compile Include="Content\EffectLoader.cs" />
+    <Compile Include="Content\ModelLoader.cs" />
     <Compile Include="Content\SpriteFontLoader.cs" />
     <Compile Include="Content\TextureLoader.cs" />
     <Compile Include="Debug\DebugFont.cs" />
@@ -97,8 +99,10 @@
     <Compile Include="Input\DefaultKeyboard.cs" />
     <Compile Include="Input\DefaultMouse.cs" />
     <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Render\SimpleModelRenderer.cs" />
     <Compile Include="Render\UIBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
+    <Compile Include="Shader\LambertShader.cs" />
     <Compile Include="System\Color.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
     <Compile Include="System\Game.cs" />

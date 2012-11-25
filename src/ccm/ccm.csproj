@@ -130,7 +130,6 @@
     <Compile Include="CameraOld\FreeLookCamera.cs" />
     <Compile Include="CameraOld\ICamera.cs" />
     <Compile Include="Camera\BasicCamera.cs" />
-    <Compile Include="Camera\ICamera.cs" />
     <Compile Include="DebugMenu\DebugMenuNode.cs" />
     <Compile Include="DebugMenu\DebugMenuManager.cs" />
     <Compile Include="DebugMenu\DebugMenuNodeExecutable.cs" />
@@ -215,6 +214,7 @@
     <Compile Include="Resource\ResourceManager.cs" />
     <Compile Include="Scene\BootScene.cs" />
     <Compile Include="Scene\FakeScene.cs" />
+    <Compile Include="Scene\ModelViewerScene.cs" />
     <Compile Include="Scene\SceneBase.cs" />
     <Compile Include="System\RootObject.cs" />
     <Compile Include="SceneOld\MapViewer.cs" />

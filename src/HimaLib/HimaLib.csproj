@@ -79,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\ICamera.cs" />
     <Compile Include="Debug\ConsoleDebugPrint.cs" />
     <Compile Include="Debug\DebugMenu.cs" />
     <Compile Include="Debug\DebugMenuNode.cs" />

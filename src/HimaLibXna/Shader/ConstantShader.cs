@@ -70,7 +70,7 @@ namespace HimaLib.Shader
 
         public void RenderModel()
         {
-            SetUpEffect();
+            SetUpEffect("TechniqueNm");
 
             foreach (var mesh in Model.Meshes)
             {
@@ -94,7 +94,7 @@ namespace HimaLib.Shader
         {
             SetUpVertices();
 
-            SetUpEffect();
+            SetUpEffect("TechniqueTx");
 
             foreach (var pass in effect.CurrentTechnique.Passes)
             {
@@ -125,7 +125,7 @@ namespace HimaLib.Shader
             vertices[3].TextureCoordinate = new Vector2(uvRight, uvTop);
         }
 
-        void SetUpEffect()
+        void SetUpEffect(string techniqueName)
         {
             effect.Parameters["Alpha"].SetValue(Alpha);
             effect.Parameters["World"].SetValue(World);
@@ -133,7 +133,7 @@ namespace HimaLib.Shader
             effect.Parameters["Projection"].SetValue(Projection);
             effect.Parameters["DiffuseMap"].SetValue(Texture);
 
-            effect.CurrentTechnique = effect.Techniques["TechniqueTx"];
+            effect.CurrentTechnique = effect.Techniques[techniqueName];
         }
     }
 }

@@ -73,7 +73,12 @@ namespace ccm.Scene
             {
                 Label = "Model Viewer",
                 Selectable = true,
-                ExecFunc = () => { Console.WriteLine("Execute Model Viewer"); }
+                ExecFunc = () =>
+                {
+                    Console.WriteLine("Execute Model Viewer");
+                    ChangeScene(new ModelViewerScene());
+                    SwitchController(false);
+                }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
@@ -83,6 +88,13 @@ namespace ccm.Scene
             });
 
             debugMenu.Open();
+            SwitchController(true);
+        }
+
+        void SwitchController(bool debug)
+        {
+            InputAccessor.SwitchController(ControllerLabel.Main, !debug);
+            InputAccessor.SwitchController(ControllerLabel.Debug, debug);
         }
 
         void DrawStateInit()

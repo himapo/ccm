@@ -23,6 +23,12 @@ uniform const sampler DiffuseMapSampler : register(s0) = sampler_state
 // Vertex shader inputs
 //-----------------------------------------------------------------------------
 
+struct VSInputNm
+{
+	float4	Position	: POSITION;
+	float3	Normal		: NORMAL;
+};
+
 struct VSInputTx
 {
 	float4	Position	: POSITION;
@@ -80,6 +86,20 @@ struct PSInput
 //-----------------------------------------------------------------------------
 // Vertex shaders
 //-----------------------------------------------------------------------------
+
+VSOutput VSMainNm(VSInputNm vin)
+{
+	VSOutput vout = (VSOutput)0;
+	
+	float4 pos_ws = mul(vin.Position, World);
+	float4 pos_vs = mul(pos_ws, View);
+	float4 pos_ps = mul(pos_vs, Projection);
+	vout.PositionPS	= pos_ps;
+	
+	vout.Diffuse = float4(1, 1, 1, Alpha);
+
+	return vout;
+}
 
 VSOutput VSMainTx(VSInputTx vin)
 {
@@ -192,6 +212,15 @@ float4 PSMain(PSInput pin,
 	return output;
 }
 
+Technique TechniqueNm
+{
+	Pass P0
+	{
+		VertexShader	= compile vs_2_0 VSMainNm();
+		PixelShader		= compile ps_2_0 PSMain(false);
+	}
+
+}
 Technique TechniqueTx
 {
 	Pass P0

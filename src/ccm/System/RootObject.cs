@@ -52,6 +52,7 @@ namespace ccm.System
             gameController.AddKeyboardKey(DigitalDeviceLabel.Right, KeyboardKeyLabel.D);
             gameController.AddKeyboardKey(DigitalDeviceLabel.OK, KeyboardKeyLabel.Z);
             gameController.AddKeyboardKey(DigitalDeviceLabel.Cancel, KeyboardKeyLabel.X);
+            gameController.AddKeyboardKey(DigitalDeviceLabel.Exit, KeyboardKeyLabel.Q);
 
             gameController.AddMouseButton(DigitalDeviceLabel.MouseMain, MouseButtonLabel.Left);
             gameController.AddMouseButton(DigitalDeviceLabel.MouseSub, MouseButtonLabel.Right);
@@ -59,7 +60,7 @@ namespace ccm.System
 
             gameController.AddMouseAxis(PointingDeviceLabel.Mouse0);
 
-            InputAccessor.AddController(ControllerLabel.Main, gameController, false);
+            InputAccessor.AddController(ControllerLabel.Main, gameController, true);
 
             debugController.AddKeyboardKey(DigitalDeviceLabel.Up, KeyboardKeyLabel.W);
             debugController.AddKeyboardKey(DigitalDeviceLabel.Down, KeyboardKeyLabel.S);
@@ -84,7 +85,7 @@ namespace ccm.System
 
             CurrentScene.Update();
 
-            if (CurrentScene.ChangeScene)
+            if (CurrentScene.IsChange)
             {
                 CurrentScene = CurrentScene.NextScene;
             }

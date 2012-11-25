@@ -5,7 +5,7 @@ using System.Text;
 using HimaLib;
 using HimaLib.Math;
 
-namespace ccm.Camera
+namespace HimaLib.Camera
 {
     public interface ICamera
     {

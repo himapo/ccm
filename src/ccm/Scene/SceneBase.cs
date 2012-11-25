@@ -9,7 +9,7 @@ namespace ccm.Scene
 {
     public class SceneBase : StateMachine
     {
-        public bool ChangeScene { get; protected set; }
+        public bool IsChange { get; protected set; }
 
         public SceneBase NextScene { get; protected set; }
 
@@ -17,9 +17,15 @@ namespace ccm.Scene
 
         protected SceneBase()
         {
-            ChangeScene = false;
+            IsChange = false;
             NextScene = null;
             Name = "SceneBase";
+        }
+
+        protected void ChangeScene(SceneBase nextScene)
+        {
+            IsChange = true;
+            NextScene = nextScene;
         }
     }
 }

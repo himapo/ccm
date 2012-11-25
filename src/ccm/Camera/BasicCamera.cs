@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HimaLib;
 using HimaLib.Math;
+using HimaLib.Camera;
 
 namespace ccm.Camera
 {

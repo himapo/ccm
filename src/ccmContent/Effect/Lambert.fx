@@ -1,9 +1,6 @@
 // Materials
 const float3	DiffuseColor	: register(c0) = 1;
 const float		Alpha			: register(c1) = 1;
-const float3	EmissiveColor	: register(c2) = 0;
-const float3	SpecularColor	: register(c3) = 1;
-const float		SpecularPower	: register(c4) = 16;
 
 // Other parameters
 
@@ -11,7 +8,6 @@ const float		SpecularPower	: register(c4) = 16;
 const float3	AmbientLightColor;
 const float3	DirLight0Direction;
 const float3	DirLight0DiffuseColor;
-const float3	DirLight0SpecularColor;
 
 // Matrices
 const float4x4	World		: World;
