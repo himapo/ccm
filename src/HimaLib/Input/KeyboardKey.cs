@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HimaLib.Input
 {
-    public class KeyboardKey : IDigitalDevice
+    public class KeyboardKey : IBooleanDevice
     {
         IKeyboard keyboard;
 

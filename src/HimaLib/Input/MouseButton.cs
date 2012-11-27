@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HimaLib.Input
 {
-    public class MouseButton : IDigitalDevice
+    public class MouseButton : IBooleanDevice
     {
         IMouse mouse;
 

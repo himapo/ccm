@@ -7,27 +7,6 @@ namespace ccm.Input
 {
     public enum DigitalDeviceLabel
     {
-        Up,
-        Down,
-        Left,
-        Right,
-
-        MouseMain,
-        MouseSub,
-        MouseMiddle,
-
-        Walk,
-        Crouch,
-        Jump,
-        Use,
-        Step,
-        ItemWindow,
-        Camera,
-        Exit,
-
-        OK,
-        Cancel,
-
-        ToggleDebugMenu,
+        MouseWheel0,
     }
 }

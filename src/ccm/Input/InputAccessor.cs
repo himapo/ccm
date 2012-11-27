@@ -28,17 +28,17 @@ namespace ccm.Input
             HimaLib.Input.Input.Update();
         }
 
-        public static bool IsPush(ControllerLabel controllerLabel, DigitalDeviceLabel keyLabel)
+        public static bool IsPush(ControllerLabel controllerLabel, BooleanDeviceLabel keyLabel)
         {
             return HimaLib.Input.Input.IsPush((int)controllerLabel, (int)keyLabel);
         }
 
-        public static bool IsPress(ControllerLabel controllerLabel, DigitalDeviceLabel keyLabel)
+        public static bool IsPress(ControllerLabel controllerLabel, BooleanDeviceLabel keyLabel)
         {
             return HimaLib.Input.Input.IsPress((int)controllerLabel, (int)keyLabel);
         }
 
-        public static bool IsRelease(ControllerLabel controllerLabel, DigitalDeviceLabel keyLabel)
+        public static bool IsRelease(ControllerLabel controllerLabel, BooleanDeviceLabel keyLabel)
         {
             return HimaLib.Input.Input.IsRelease((int)controllerLabel, (int)keyLabel);            
         }

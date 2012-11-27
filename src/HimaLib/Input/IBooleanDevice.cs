@@ -5,12 +5,14 @@ using System.Text;
 
 namespace HimaLib.Input
 {
-    public interface IDigitalDevice
+    public interface IBooleanDevice
     {
-        int Value { get; }
-
-        int Delta { get; }
-
         void Update();
+
+        bool IsPush();
+
+        bool IsPress();
+
+        bool IsRelease();
     }
 }

@@ -11,6 +11,8 @@ namespace HimaLib.Input
 
         public int Y { get; set; }
 
+        public int Wheel { get; set; }
+
         public bool LeftDown { get; set; }
 
         public bool RightDown { get; set; }

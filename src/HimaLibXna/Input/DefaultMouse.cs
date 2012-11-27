@@ -31,6 +31,17 @@ namespace HimaLib.Input
             }
         }
 
+        public int Wheel
+        {
+            get
+            {
+                return Mouse.GetState().ScrollWheelValue;
+            }
+            set
+            {
+            }
+        }
+
         public bool IsLeftButtonDown()
         {
             return (Mouse.GetState().LeftButton == ButtonState.Pressed);

@@ -46,30 +46,31 @@ namespace ccm.System
         void InitController()
         {
             // TODO : コンフィグファイルから設定
-            gameController.AddKeyboardKey(DigitalDeviceLabel.Up, KeyboardKeyLabel.W);
-            gameController.AddKeyboardKey(DigitalDeviceLabel.Down, KeyboardKeyLabel.S);
-            gameController.AddKeyboardKey(DigitalDeviceLabel.Left, KeyboardKeyLabel.A);
-            gameController.AddKeyboardKey(DigitalDeviceLabel.Right, KeyboardKeyLabel.D);
-            gameController.AddKeyboardKey(DigitalDeviceLabel.OK, KeyboardKeyLabel.Z);
-            gameController.AddKeyboardKey(DigitalDeviceLabel.Cancel, KeyboardKeyLabel.X);
-            gameController.AddKeyboardKey(DigitalDeviceLabel.Exit, KeyboardKeyLabel.Q);
-            gameController.AddKeyboardKey(DigitalDeviceLabel.Camera, KeyboardKeyLabel.LeftAlt);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Up, KeyboardKeyLabel.W);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Down, KeyboardKeyLabel.S);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Left, KeyboardKeyLabel.A);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Right, KeyboardKeyLabel.D);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.OK, KeyboardKeyLabel.Z);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Cancel, KeyboardKeyLabel.X);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Exit, KeyboardKeyLabel.Q);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Camera, KeyboardKeyLabel.LeftAlt);
 
-            gameController.AddMouseButton(DigitalDeviceLabel.MouseMain, MouseButtonLabel.Left);
-            gameController.AddMouseButton(DigitalDeviceLabel.MouseSub, MouseButtonLabel.Right);
-            gameController.AddMouseButton(DigitalDeviceLabel.MouseMiddle, MouseButtonLabel.Middle);
+            gameController.AddMouseButton(BooleanDeviceLabel.MouseMain, MouseButtonLabel.Left);
+            gameController.AddMouseButton(BooleanDeviceLabel.MouseSub, MouseButtonLabel.Right);
+            gameController.AddMouseButton(BooleanDeviceLabel.MouseMiddle, MouseButtonLabel.Middle);
 
-            gameController.AddMouseAxis(PointingDeviceLabel.Mouse0);
+            gameController.AddMouseAxis();
+            gameController.AddMouseWheel();            
 
             InputAccessor.AddController(ControllerLabel.Main, gameController, true);
 
-            debugController.AddKeyboardKey(DigitalDeviceLabel.Up, KeyboardKeyLabel.W);
-            debugController.AddKeyboardKey(DigitalDeviceLabel.Down, KeyboardKeyLabel.S);
-            debugController.AddKeyboardKey(DigitalDeviceLabel.Left, KeyboardKeyLabel.A);
-            debugController.AddKeyboardKey(DigitalDeviceLabel.Right, KeyboardKeyLabel.D);
-            debugController.AddKeyboardKey(DigitalDeviceLabel.OK, KeyboardKeyLabel.Z);
-            debugController.AddKeyboardKey(DigitalDeviceLabel.Cancel, KeyboardKeyLabel.X);
-            debugController.AddKeyboardKey(DigitalDeviceLabel.ToggleDebugMenu, KeyboardKeyLabel.F1);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.Up, KeyboardKeyLabel.W);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.Down, KeyboardKeyLabel.S);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.Left, KeyboardKeyLabel.A);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.Right, KeyboardKeyLabel.D);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.OK, KeyboardKeyLabel.Z);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.Cancel, KeyboardKeyLabel.X);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.ToggleDebugMenu, KeyboardKeyLabel.F1);
 
             InputAccessor.AddController(ControllerLabel.Debug, debugController, true);
         }

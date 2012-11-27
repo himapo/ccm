@@ -37,7 +37,8 @@ namespace ccm.Camera
 
         void CheckInput()
         {
-            if (controller.IsPress((int)DigitalDeviceLabel.MouseSub))
+            // rotate
+            if (controller.IsPress((int)BooleanDeviceLabel.MouseSub))
             {
                 rotX += 0.04f * controller.GetMoveY((int)PointingDeviceLabel.Mouse0);
                 const float ROT_X_MAX = 0.0f;
@@ -45,10 +46,13 @@ namespace ccm.Camera
                 rotX = MathUtil.Clamp(rotX, ROT_X_MIN, ROT_X_MAX);
                 rotY -= 0.04f * controller.GetMoveX((int)PointingDeviceLabel.Mouse0);
             }
-            //initEyeZ -= 0.1f * controller.MouseMoveWheel;
-            //initEyeZ = MathHelper.Clamp(initEyeZ, 10.0f, 110.0f);
 
-            if (controller.IsPush((int)DigitalDeviceLabel.MouseMiddle))
+            // zoom
+            initEyeZ -= 0.1f * controller.GetDigitalDelta((int)DigitalDeviceLabel.MouseWheel0);
+            initEyeZ = MathUtil.Clamp(initEyeZ, 10.0f, 110.0f);
+
+            // reset
+            if (controller.IsPush((int)BooleanDeviceLabel.MouseMiddle))
             {
                 Reset();
             }

@@ -64,7 +64,7 @@ namespace ccm.Scene
         {
             DebugFont.Add(Name, 50.0f, 60.0f);
 
-            if (InputAccessor.IsPush(ControllerLabel.Main, DigitalDeviceLabel.Exit))
+            if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
             {
                 ChangeScene(new BootScene());
             }

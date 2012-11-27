@@ -7,19 +7,22 @@ namespace HimaLib.Input
 {
     public class Controller : IController
     {
-        Dictionary<int, IDigitalDevice> digitalDevices;
+        Dictionary<int, IBooleanDevice> booleanDevices;
 
         Dictionary<int, IPointingDevice> pointingDevices;
 
+        Dictionary<int, IDigitalDevice> digitalDevices;
+
         public Controller()
         {
-            digitalDevices = new Dictionary<int, IDigitalDevice>();
+            booleanDevices = new Dictionary<int, IBooleanDevice>();
             pointingDevices = new Dictionary<int, IPointingDevice>();
+            digitalDevices = new Dictionary<int, IDigitalDevice>();
         }
 
         public void Update()
         {
-            foreach (var device in digitalDevices.Values)
+            foreach (var device in booleanDevices.Values)
             {
                 device.Update();
             }
@@ -28,21 +31,26 @@ namespace HimaLib.Input
             {
                 device.Update();
             }
+
+            foreach (var device in digitalDevices.Values)
+            {
+                device.Update();
+            }
         }
 
         public bool IsPush(int label)
         {
-            return digitalDevices[label].IsPush();
+            return booleanDevices[label].IsPush();
         }
 
         public bool IsPress(int label)
         {
-            return digitalDevices[label].IsPress();
+            return booleanDevices[label].IsPress();
         }
 
         public bool IsRelease(int label)
         {
-            return digitalDevices[label].IsRelease();
+            return booleanDevices[label].IsRelease();
         }
 
         public int GetX(int label)
@@ -65,14 +73,29 @@ namespace HimaLib.Input
             return pointingDevices[label].MoveY;
         }
 
-        public void AddDigitalDevice(int label, IDigitalDevice device)
+        public int GetDigitalValue(int label)
         {
-            digitalDevices[label] = device;
+            return digitalDevices[label].Value;
+        }
+
+        public int GetDigitalDelta(int label)
+        {
+            return digitalDevices[label].Delta;
+        }
+
+        public void AddBooleanDevice(int label, IBooleanDevice device)
+        {
+            booleanDevices[label] = device;
         }
 
         public void AddPointingDevice(int label, IPointingDevice device)
         {
             pointingDevices[label] = device;
+        }
+
+        public void AddDigitalDevice(int label, IDigitalDevice device)
+        {
+            digitalDevices[label] = device;
         }
     }
 }

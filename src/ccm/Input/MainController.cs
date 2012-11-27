@@ -22,19 +22,24 @@ namespace ccm.Input
             this.mouse = mouse;
         }
 
-        public void AddKeyboardKey(DigitalDeviceLabel virtualKey, KeyboardKeyLabel realKey)
+        public void AddKeyboardKey(BooleanDeviceLabel virtualKey, KeyboardKeyLabel realKey)
         {
-            AddDigitalDevice((int)virtualKey, new KeyboardKey(keyboard, realKey));
+            AddBooleanDevice((int)virtualKey, new KeyboardKey(keyboard, realKey));
         }
 
-        public void AddMouseButton(DigitalDeviceLabel virtualKey, MouseButtonLabel realKey)
+        public void AddMouseButton(BooleanDeviceLabel virtualKey, MouseButtonLabel realKey)
         {
-            AddDigitalDevice((int)virtualKey, new MouseButton(mouse, realKey));
+            AddBooleanDevice((int)virtualKey, new MouseButton(mouse, realKey));
         }
 
-        public void AddMouseAxis(PointingDeviceLabel virtualKey)
+        public void AddMouseAxis()
         {
-            AddPointingDevice((int)virtualKey, new MouseAxis(mouse));
+            AddPointingDevice(0, new MouseAxis(mouse));
+        }
+
+        public void AddMouseWheel()
+        {
+            AddDigitalDevice(0, new MouseWheel(mouse));
         }
     }
 }

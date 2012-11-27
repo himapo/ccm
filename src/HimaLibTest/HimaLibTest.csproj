@@ -69,6 +69,7 @@
     <Compile Include="Input\InputTest.cs" />
     <Compile Include="Input\KeyboardKeyTest.cs" />
     <Compile Include="Input\MouseAxisTest.cs" />
+    <Compile Include="Input\MouseWheelTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\TimeKeeperTest.cs" />
     <Compile Include="TestUtil.cs" />

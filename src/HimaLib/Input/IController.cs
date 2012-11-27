@@ -20,5 +20,9 @@ namespace HimaLib.Input
         int GetMoveX(int label);
 
         int GetMoveY(int label);
+
+        int GetDigitalValue(int label);
+
+        int GetDigitalDelta(int label);
     }
 }

@@ -7,9 +7,14 @@ namespace HimaLib.Input
 {
     public interface IMouse
     {
+        /// <summary>
+        /// ゲーム画面中心を原点とするピクセル座標を返す
+        /// </summary>
         int X { get; set; }
 
         int Y { get; set; }
+
+        int Wheel { get; set; }
 
         bool IsLeftButtonDown();
 
