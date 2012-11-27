@@ -53,6 +53,7 @@ namespace ccm.System
             gameController.AddKeyboardKey(DigitalDeviceLabel.OK, KeyboardKeyLabel.Z);
             gameController.AddKeyboardKey(DigitalDeviceLabel.Cancel, KeyboardKeyLabel.X);
             gameController.AddKeyboardKey(DigitalDeviceLabel.Exit, KeyboardKeyLabel.Q);
+            gameController.AddKeyboardKey(DigitalDeviceLabel.Camera, KeyboardKeyLabel.LeftAlt);
 
             gameController.AddMouseButton(DigitalDeviceLabel.MouseMain, MouseButtonLabel.Left);
             gameController.AddMouseButton(DigitalDeviceLabel.MouseSub, MouseButtonLabel.Right);

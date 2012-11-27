@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HimaLib.Input
 {
-    public class Controller
+    public class Controller : IController
     {
         Dictionary<int, IDigitalDevice> digitalDevices;
 
@@ -53,6 +53,16 @@ namespace HimaLib.Input
         public int GetY(int label)
         {
             return pointingDevices[label].Y;
+        }
+
+        public int GetMoveX(int label)
+        {
+            return pointingDevices[label].MoveX;
+        }
+
+        public int GetMoveY(int label)
+        {
+            return pointingDevices[label].MoveY;
         }
 
         public void AddDigitalDevice(int label, IDigitalDevice device)

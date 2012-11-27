@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ccm.Input
 {
-    public enum ControllerLabel
+    public enum ControllerLabel : int
     {
         Main,
         Debug,

@@ -15,6 +15,8 @@ namespace ccm.Scene
         SimpleModelRenderer renderer;
 
         BasicCamera camera;
+
+        ModelViewerCameraUpdater cameraUpdater;
         
         public ModelViewerScene()
         {
@@ -24,6 +26,7 @@ namespace ccm.Scene
             Name = "ModelViewer";
 
             camera = new BasicCamera();
+            cameraUpdater = new ModelViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));
         }
 
         void UpdateStateInit()
@@ -65,6 +68,8 @@ namespace ccm.Scene
             {
                 ChangeScene(new BootScene());
             }
+
+            cameraUpdater.Update();
         }
 
         void DrawStateMain()

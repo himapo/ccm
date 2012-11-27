@@ -97,6 +97,7 @@
     <Compile Include="Input\Controller.cs" />
     <Compile Include="Input\FakeKeyboard.cs" />
     <Compile Include="Input\FakeMouse.cs" />
+    <Compile Include="Input\IController.cs" />
     <Compile Include="Input\IDigitalDevice.cs" />
     <Compile Include="Input\IKeyboard.cs" />
     <Compile Include="Input\IMouse.cs" />
@@ -107,7 +108,10 @@
     <Compile Include="Input\MouseAxis.cs" />
     <Compile Include="Input\MouseButton.cs" />
     <Compile Include="Input\MouseButtonLabel.cs" />
+    <Compile Include="Math\IMatrix.cs" />
     <Compile Include="Math\IVector3.cs" />
+    <Compile Include="Math\IVector4.cs" />
+    <Compile Include="Math\MathUtil.cs" />
     <Compile Include="System\IColor.cs" />
     <Compile Include="System\IGameInitializer.cs" />
     <Compile Include="System\IDrawer.cs" />

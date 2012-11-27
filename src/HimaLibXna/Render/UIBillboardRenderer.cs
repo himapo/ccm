@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HimaLib.Math;
 using HimaLib.Shader;
 using HimaLib.System;
 using HimaLib.Content;

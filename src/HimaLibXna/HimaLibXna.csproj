@@ -98,7 +98,9 @@
     <Compile Include="Graphics\GraphicsDeviceUser.cs" />
     <Compile Include="Input\DefaultKeyboard.cs" />
     <Compile Include="Input\DefaultMouse.cs" />
+    <Compile Include="Math\Matrix.cs" />
     <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Vector4.cs" />
     <Compile Include="Render\SimpleModelRenderer.cs" />
     <Compile Include="Render\UIBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
