@@ -22,10 +22,9 @@ namespace HimaLib.Render
 
         public ICamera Camera { get; set; }
 
-        ConstantShader constant;
-        LambertShader lambert;
+        ModelLoader modelLoader;
 
-        ModelLoader ModelLoader { get; set; }
+        LambertShader lambert;
 
         public SimpleModelRenderer()
         {
@@ -33,19 +32,12 @@ namespace HimaLib.Render
             Rotation = HimaLib.Math.Vector3.Zero;
             Position = HimaLib.Math.Vector3.Zero;
 
-            constant = new ConstantShader();
+            modelLoader = new ModelLoader();
             lambert = new LambertShader();
-            ModelLoader = new ModelLoader();
         }
 
         public void Render()
         {
-            constant.Model = GetModel();
-            constant.World = GetWorldMatrix();
-            constant.View = GetViewMatrix();
-            constant.Projection = GetProjMatrix();
-            constant.Alpha = 1.0f;
-
             lambert.Model = GetModel();
             lambert.World = GetWorldMatrix();
             lambert.View = GetViewMatrix();
@@ -61,7 +53,7 @@ namespace HimaLib.Render
 
         Model GetModel()
         {
-            return ModelLoader.Load(ModelName);
+            return modelLoader.Load(ModelName);
         }
 
         Matrix GetWorldMatrix()
