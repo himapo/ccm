@@ -50,9 +50,7 @@ namespace ccm.Scene
             renderer = new SimpleModelRenderer();
 
             renderer.ModelName = "Model/cube003";
-            renderer.Scale = 1.0f;
-            renderer.Rotation = Vector3.Zero;
-            renderer.Position = Vector3.Zero;
+            renderer.Transform = new AffineTransform(Vector3.One, Vector3.Zero, Vector3.Zero);
             renderer.Camera = camera;
         }
 

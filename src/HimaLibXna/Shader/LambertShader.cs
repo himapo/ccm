@@ -53,6 +53,8 @@ namespace HimaLib.Shader
                     GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
                     GraphicsDevice.Indices = part.IndexBuffer;
 
+                    CopyMaterial(part.Effect as BasicEffect);
+
                     foreach (var pass in effect.CurrentTechnique.Passes)
                     {
                         pass.Apply();
@@ -70,7 +72,6 @@ namespace HimaLib.Shader
 
         void SetUpEffect(string techniqueName)
         {
-            effect.Parameters["Alpha"].SetValue(Alpha);
             effect.Parameters["World"].SetValue(World);
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
@@ -81,6 +82,15 @@ namespace HimaLib.Shader
             effect.Parameters["DirLight0DiffuseColor"].SetValue(DirLight0DiffuseColor);
 
             effect.CurrentTechnique = effect.Techniques[techniqueName];
+        }
+
+        void CopyMaterial(BasicEffect src)
+        {
+            if (src == null)
+                return;
+
+            effect.Parameters["DiffuseColor"].SetValue(src.DiffuseColor);
+            effect.Parameters["Alpha"].SetValue(src.Alpha * Alpha);
         }
     }
 }

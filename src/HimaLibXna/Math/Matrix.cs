@@ -71,6 +71,16 @@ namespace HimaLib.Math
             return new Matrix(Microsoft.Xna.Framework.Matrix.CreateScale(scale));
         }
 
+        public static Matrix CreateScale(float xScale, float yScale, float zScale)
+        {
+            return new Matrix(Microsoft.Xna.Framework.Matrix.CreateScale(xScale, yScale, zScale));
+        }
+
+        public static Matrix CreateScale(IVector3 vector)
+        {
+            return CreateScale(vector.X, vector.Y, vector.Z);
+        }
+
         public static Matrix CreateRotationX(float radians)
         {
             return new Matrix(Microsoft.Xna.Framework.Matrix.CreateRotationX(radians));
@@ -89,6 +99,11 @@ namespace HimaLib.Math
         public static Matrix CreateTranslation(float xPosition, float yPosition, float zPosition)
         {
             return new Matrix(Microsoft.Xna.Framework.Matrix.CreateTranslation(xPosition, yPosition, zPosition));
+        }
+
+        public static Matrix CreateTranslation(IVector3 vector)
+        {
+            return CreateTranslation(vector.X, vector.Y, vector.Z);
         }
     }
 }

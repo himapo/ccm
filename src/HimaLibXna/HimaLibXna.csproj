@@ -98,12 +98,15 @@
     <Compile Include="Graphics\GraphicsDeviceUser.cs" />
     <Compile Include="Input\DefaultKeyboard.cs" />
     <Compile Include="Input\DefaultMouse.cs" />
+    <Compile Include="Math\AffineTransform.cs" />
     <Compile Include="Math\Matrix.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Render\SimpleInstancingRenderer.cs" />
     <Compile Include="Render\SimpleModelRenderer.cs" />
     <Compile Include="Render\UIBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
+    <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\LambertShader.cs" />
     <Compile Include="System\Color.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
