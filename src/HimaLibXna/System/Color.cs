@@ -66,6 +66,8 @@ namespace HimaLib.System
 
         public static Color Gray { get { return new Color(Microsoft.Xna.Framework.Color.Gray); } }
 
+        public static Color LightBlue { get { return new Color(Microsoft.Xna.Framework.Color.LightBlue); } }
+
         public static Color LightGreen { get { return new Color(Microsoft.Xna.Framework.Color.LightGreen); } }
 
         public static Color Purple { get { return new Color(Microsoft.Xna.Framework.Color.Purple); } }

@@ -45,6 +45,21 @@ namespace HimaLib.Math
             XnaVector = new Microsoft.Xna.Framework.Vector3(x, y, z);
         }
 
+        public Vector3(Microsoft.Xna.Framework.Vector3 xnaVector)
+        {
+            XnaVector = xnaVector;
+        }
+
+        public static Vector3 operator *(float scaleFactor, Vector3 value)
+        {
+            return new Vector3(scaleFactor * value.XnaVector);
+        }
+
+        public static Vector3 operator *(Vector3 value, float scaleFactor)
+        {
+            return new Vector3(value.XnaVector * scaleFactor);
+        }
+
         public bool Equals(Vector3 other)
         {
             return XnaVector.Equals(other.XnaVector);

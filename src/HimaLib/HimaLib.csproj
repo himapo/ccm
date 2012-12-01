@@ -111,9 +111,11 @@
     <Compile Include="Input\MouseButtonLabel.cs" />
     <Compile Include="Input\MouseWheel.cs" />
     <Compile Include="Math\IMatrix.cs" />
+    <Compile Include="Math\IRand.cs" />
     <Compile Include="Math\IVector3.cs" />
     <Compile Include="Math\IVector4.cs" />
     <Compile Include="Math\MathUtil.cs" />
+    <Compile Include="Math\SystemRand.cs" />
     <Compile Include="System\IColor.cs" />
     <Compile Include="System\IGameInitializer.cs" />
     <Compile Include="System\IDrawer.cs" />

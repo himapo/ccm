@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ccm.DungeonLogic;
 
 namespace ccm
 {
@@ -9,8 +10,15 @@ namespace ccm
     {
         static readonly MapGenerator instance = new MapGenerator();
 
+        HimaLib.Math.SystemRand rand;
+
+        DungeonMap dungeonMap;
+
         MapGenerator()
         {
+            rand = new HimaLib.Math.SystemRand();
+            rand.Init(Environment.TickCount);
+            dungeonMap = new DungeonMap() { Rand = rand };
         }
 
         public static MapGenerator GetInstance()
@@ -20,7 +28,8 @@ namespace ccm
 
         public DungeonMap Generate()
         {
-            return new DungeonMap();
+            dungeonMap.Generate();
+            return dungeonMap;
         }
     }
 }

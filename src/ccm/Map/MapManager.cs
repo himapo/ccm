@@ -18,7 +18,7 @@ namespace ccm
 
         MapCubeRenderParameter renderParam;
 
-        HashSet<Vector3> cubePosSet;
+        HashSet<HimaLib.Math.Vector3> cubePosSet;
 
         public CameraLabel CameraLabel { get; set; }
 
@@ -43,7 +43,7 @@ namespace ccm
 
             renderParam = new MapCubeRenderParameter();
 
-            cubePosSet = new HashSet<Vector3>();
+            cubePosSet = new HashSet<HimaLib.Math.Vector3>();
 
             CameraLabel = CameraLabel.Game;
         }

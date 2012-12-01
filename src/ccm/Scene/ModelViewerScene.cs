@@ -65,6 +65,7 @@ namespace ccm.Scene
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
             {
                 ChangeScene(new BootScene());
+                return;
             }
 
             cameraUpdater.Update();

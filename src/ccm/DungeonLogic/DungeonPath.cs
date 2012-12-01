@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using HimaLib.Math;
 
-namespace ccm
+namespace ccm.DungeonLogic
 {
     class DungeonPath
     {
@@ -14,7 +14,9 @@ namespace ccm
         public DungeonPortal[] Portals { get; set; }
 
         public bool Accessible { get; set; }
-        
+
+        public HimaLib.Math.IRand Rand { get; set; }
+
         List<int> steps;
 
         public DungeonPath()
@@ -38,7 +40,7 @@ namespace ccm
             length.X = Math.Abs(Portals[0].Position.X - Portals[1].Position.X);
             length.Y = Math.Abs(Portals[0].Position.Y - Portals[1].Position.Y);
 
-            Width = GameProperty.gameRand.Next(4) * 2 + 3;  // 3, 5, 7, 9
+            Width = Rand.Next(4) * 2 + 3;  // 3, 5, 7, 9
             
             var minLengthFromRoom = Width / 2;  // 部屋から最初の曲がり角までの最低歩数
 
@@ -119,7 +121,7 @@ namespace ccm
             // 主方向をこの数だけ分割する
             // 水平通路で分割数2なら、水平、垂直、水平と歩くと端まで着く
             // 垂直通路で分割数3なら、垂直、水平、垂直、水平、垂直と歩くと端まで着く
-            var devideNum = GameProperty.gameRand.Next(2, Math.Min(4, devideMax));
+            var devideNum = Rand.Next(2, Math.Min(4, devideMax));
 
             return devideNum;
         }
@@ -143,12 +145,12 @@ namespace ccm
             while (result.Count < count)
             {
                 // 分割する線分を選ぶ（長さ1のものは選ばない）
-                var i = SelectRandomIndexExclude(result, 1, GameProperty.gameRand);
+                var i = SelectRandomIndexExclude(result, 1);
                 if (i == -1)
                     break;
 
                 // 長さaとbに分割（それぞれ1以上）
-                var a = GameProperty.gameRand.Next(1, result[i]);
+                var a = Rand.Next(1, result[i]);
                 var b = result[i] - a;
 
                 // リストを入れ替え
@@ -164,7 +166,7 @@ namespace ccm
         /// exclude以外のものを一つ選んでインデックスを返す
         /// 選べない場合は-1を返す
         /// </summary>
-        int SelectRandomIndexExclude(List<int> list, int exclude, IRand rand)
+        int SelectRandomIndexExclude(List<int> list, int exclude)
         {
             var indices = new List<int>();
             for (var i = 0; i < list.Count; ++i)
@@ -176,7 +178,7 @@ namespace ccm
             if (indices.Count == 0)
                 return -1;
 
-            return indices[rand.Next(indices.Count)];
+            return indices[Rand.Next(indices.Count)];
         }
 
         public void CheckAccessibility()

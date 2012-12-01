@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using HimaLib.Math;
 
-namespace ccm
+namespace ccm.DungeonLogic
 {
     class DungeonRoom
     {
@@ -48,6 +48,8 @@ namespace ccm
         public List<DungeonPortal> Portals { get; set; }
 
         public bool Accessible { get; set; }
+
+        public HimaLib.Math.IRand Rand { get; set; }
 
         public DungeonRoom(Point leftTop, Point width, int height)
         {
@@ -94,7 +96,7 @@ namespace ccm
                     result.X = LeftTopCoord.X + Width.X;
                 }
 
-                result.Y = GameProperty.gameRand.Next(Width.Y - PORTAL_CORNER_MARGIN * 2) + PORTAL_CORNER_MARGIN + LeftTopCoord.Y;
+                result.Y = Rand.Next(Width.Y - PORTAL_CORNER_MARGIN * 2) + PORTAL_CORNER_MARGIN + LeftTopCoord.Y;
             }
             else if (side == Side.Top || side == Side.Bottom)
             {
@@ -107,7 +109,7 @@ namespace ccm
                     result.Y = LeftTopCoord.Y + Width.Y;
                 }
 
-                result.X = GameProperty.gameRand.Next(Width.X - PORTAL_CORNER_MARGIN * 2) + PORTAL_CORNER_MARGIN + LeftTopCoord.X;
+                result.X = Rand.Next(Width.X - PORTAL_CORNER_MARGIN * 2) + PORTAL_CORNER_MARGIN + LeftTopCoord.X;
             }
 
             return result;

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using HimaLib.Math;
 
-namespace ccm
+namespace ccm.DungeonLogic
 {
     class DungeonMap
     {
@@ -22,6 +22,8 @@ namespace ccm
             LEAVE,      // 残す
         }
 
+        public HimaLib.Math.IRand Rand { get; set; }
+
         List<DungeonRoom> Rooms { get; set; }
         List<DungeonPath> Paths { get; set; }
         List<DungeonPortal> Portals { get; set; }
@@ -38,8 +40,6 @@ namespace ccm
 
             removedPaths = new List<DungeonPath>();
             addedPaths = new List<DungeonPath>();
-
-            Generate();
         }
 
         public void Generate()
@@ -87,7 +87,7 @@ namespace ccm
         {
             var result = new List<int>();
 
-            var blockSource = new ShuffleList<int>(GameProperty.gameRand);
+            var blockSource = new ShuffleList<int>(Rand);
 
             blockSource.AddRange(GeneralUtil.Range(16));
             //blockSource.Draw(GameProperty.gameRand.Next(5, 10));
@@ -102,16 +102,16 @@ namespace ccm
         {
             var blockCorner = CalcCornerPoint(block);
 
-            var width_x = GameProperty.gameRand.Next(DungeonRoom.WIDTH_MIN, DungeonRoom.WIDTH_MAX);
-            var width_y = GameProperty.gameRand.Next(DungeonRoom.WIDTH_MIN, DungeonRoom.WIDTH_MAX);
+            var width_x = Rand.Next(DungeonRoom.WIDTH_MIN, DungeonRoom.WIDTH_MAX);
+            var width_y = Rand.Next(DungeonRoom.WIDTH_MIN, DungeonRoom.WIDTH_MAX);
 
-            var margin_x = GameProperty.gameRand.Next(DungeonRoom.MARGIN_MIN, BLOCK_WIDTH - width_x - DungeonRoom.MARGIN_MIN);
-            var margin_y = GameProperty.gameRand.Next(DungeonRoom.MARGIN_MIN, BLOCK_WIDTH - width_y - DungeonRoom.MARGIN_MIN);
+            var margin_x = Rand.Next(DungeonRoom.MARGIN_MIN, BLOCK_WIDTH - width_x - DungeonRoom.MARGIN_MIN);
+            var margin_y = Rand.Next(DungeonRoom.MARGIN_MIN, BLOCK_WIDTH - width_y - DungeonRoom.MARGIN_MIN);
 
             var leftTop = new Point(blockCorner.X + margin_x, blockCorner.Y + margin_y);
             var width = new Point(width_x, width_y);
 
-            return new DungeonRoom(leftTop, width, 0);
+            return new DungeonRoom(leftTop, width, 0) { Rand = this.Rand };
         }
 
         Point CalcCornerPoint(int block)
@@ -191,7 +191,7 @@ namespace ccm
 
         DungeonPath GeneratePath(DungeonPortal start, DungeonPortal end, bool isHorizontal)
         {
-            var result = new DungeonPath();
+            var result = new DungeonPath() { Rand = this.Rand };
 
             start.ConnectedPaths.Add(result);
             result.Portals[0] = start;
@@ -211,7 +211,7 @@ namespace ccm
         /// </summary>
         void ThinOutRooms()
         {
-            var removeNum = GameProperty.gameRand.Next(7, 12);
+            var removeNum = Rand.Next(7, 12);
 
             for (var i = 0; i < removeNum; ++i)
             {
@@ -231,7 +231,7 @@ namespace ccm
 
         void ThinOutRoom()
         {
-            RemoveRoom(Rooms[GameProperty.gameRand.Next(Rooms.Count)]);
+            RemoveRoom(Rooms[Rand.Next(Rooms.Count)]);
 
             ProcessDeadEnd(removedRoom);
         }
@@ -261,7 +261,7 @@ namespace ccm
                 }
             }
 
-            var selector = new RandomSelector<DeadEndDisposal>(GameProperty.gameRand);
+            var selector = new RandomSelector<DeadEndDisposal>(Rand);
             selector.Add(40, DeadEndDisposal.CONNECT);
             selector.Add(55, DeadEndDisposal.REMOVE);
             selector.Add(5, DeadEndDisposal.LEAVE);
@@ -272,7 +272,7 @@ namespace ccm
 
                 if (disposal == DeadEndDisposal.CONNECT && deadends.Count >= 2)
                 {
-                    var another = GameProperty.gameRand.Next(1, deadends.Count);
+                    var another = Rand.Next(1, deadends.Count);
 
                     var portals = new DungeonPortal[2]{
                         deadends[0].GetTerminalPortal(),

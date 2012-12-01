@@ -18,9 +18,9 @@ namespace ccm
 
         int totalProbability;
 
-        IRand rand;
+        HimaLib.Math.IRand rand;
 
-        public RandomSelector(IRand rand)
+        public RandomSelector(HimaLib.Math.IRand rand)
         {
             BorderDic = new Dictionary<int, T>();
             totalProbability = 0;

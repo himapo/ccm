@@ -100,6 +100,8 @@
     <Compile Include="Input\DefaultMouse.cs" />
     <Compile Include="Math\AffineTransform.cs" />
     <Compile Include="Math\Matrix.cs" />
+    <Compile Include="Math\Point.cs" />
+    <Compile Include="Math\Rectangle.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Render\SimpleInstancingRenderer.cs" />

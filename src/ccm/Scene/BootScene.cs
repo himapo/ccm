@@ -84,7 +84,12 @@ namespace ccm.Scene
             {
                 Label = "Map Viewer",
                 Selectable = true,
-                ExecFunc = () => { Console.WriteLine("Execute Map Viewer"); }
+                ExecFunc = () =>
+                {
+                    Console.WriteLine("Execute Map Viewer");
+                    ChangeScene(new MapViewerScene());
+                    SwitchController(false);
+                }
             });
 
             debugMenu.Open();

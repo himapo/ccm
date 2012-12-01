@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
+using HimaLib.Math;
 
-namespace ccm
+namespace ccm.DungeonLogic
 {
     /// <summary>
     /// 通路と部屋、通路同士をつなぐ接続部

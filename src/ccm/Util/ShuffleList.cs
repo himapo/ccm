@@ -15,14 +15,14 @@ namespace ccm
 
         public List<T> DrawnList { get; private set; }
 
-        IRand rand;
+        HimaLib.Math.IRand rand;
 
         public int RemainCount
         {
             get { return RemainList.Count; }
         }
 
-        public ShuffleList(IRand rand)
+        public ShuffleList(HimaLib.Math.IRand rand)
         {
             RemainList = new List<T>();
             DrawnList = new List<T>();

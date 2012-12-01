@@ -69,16 +69,12 @@ namespace HimaLib.Render
 
         Microsoft.Xna.Framework.Matrix GetViewMatrix()
         {
-            return Microsoft.Xna.Framework.Matrix.CreateLookAt(
-                Vector3.CreateXnaVector(Camera.Eye),
-                Vector3.CreateXnaVector(Camera.At),
-                Vector3.CreateXnaVector(Camera.Up));
+            return CameraUtil.GetViewMatrix(Camera);
         }
 
         Microsoft.Xna.Framework.Matrix GetProjMatrix()
         {
-            return Microsoft.Xna.Framework.Matrix.CreatePerspectiveFieldOfView(
-                Camera.FovY, Camera.Aspect, Camera.Near, Camera.Far);
+            return CameraUtil.GetProjMatrix(Camera);
         }
     }
 }

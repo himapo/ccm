@@ -54,6 +54,7 @@ namespace ccm.System
             gameController.AddKeyboardKey(BooleanDeviceLabel.Cancel, KeyboardKeyLabel.X);
             gameController.AddKeyboardKey(BooleanDeviceLabel.Exit, KeyboardKeyLabel.Q);
             gameController.AddKeyboardKey(BooleanDeviceLabel.Camera, KeyboardKeyLabel.LeftAlt);
+            gameController.AddKeyboardKey(BooleanDeviceLabel.Jump, KeyboardKeyLabel.Space);
 
             gameController.AddMouseButton(BooleanDeviceLabel.MouseMain, MouseButtonLabel.Left);
             gameController.AddMouseButton(BooleanDeviceLabel.MouseSub, MouseButtonLabel.Right);
