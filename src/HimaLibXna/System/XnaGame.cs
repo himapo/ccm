@@ -110,6 +110,8 @@ namespace HimaLib.System
         {
             GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.Gray);
 
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
             TimeKeeper.GetInstance().XnaGameTime = gameTime;
             RootDrawer.Draw();
             base.Draw(gameTime);

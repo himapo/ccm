@@ -50,6 +50,11 @@ namespace HimaLib.Math
             XnaVector = xnaVector;
         }
 
+        public static Vector4 operator -(Vector4 value1, Vector4 value2)
+        {
+            return new Vector4(value1.XnaVector - value2.XnaVector);
+        }
+
         public bool Equals(Vector4 other)
         {
             return XnaVector.Equals(other.XnaVector);

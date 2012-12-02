@@ -16,6 +16,8 @@ namespace ccm.Scene
 
         BasicCamera camera;
 
+        MapViewerCameraUpdater cameraUpdater;
+
         DungeonMap dungeonMap;
 
         HimaLib.Math.SystemRand rand;
@@ -27,7 +29,8 @@ namespace ccm.Scene
 
             Name = "MapViewer";
 
-            camera = new BasicCamera();
+            camera = new BasicCamera() { Near = 10.0f, Far = 10000.0f };
+            cameraUpdater = new MapViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));
             rand = new HimaLib.Math.SystemRand();
             rand.Init(Environment.TickCount);
             dungeonMap = new DungeonMap() { Rand = rand };
@@ -35,23 +38,12 @@ namespace ccm.Scene
 
         void UpdateStateInit()
         {
-            InitCamera();
-
             InitRenderer();
 
             ResetMap();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
-        }
-
-        void InitCamera()
-        {
-            camera.Eye.Z = 10.0f;
-            camera.Far = 10000.0f;
-
-            camera.At = new HimaLib.Math.Vector3(0.0f, 0.0f, 1.0f);
-            camera.Eye = HimaLib.Math.Vector3.Up * 3000.0f;
         }
 
         void InitRenderer()
@@ -97,6 +89,8 @@ namespace ccm.Scene
             {
                 ResetMap();
             }
+
+            cameraUpdater.Update();
         }
 
         void DrawStateMain()

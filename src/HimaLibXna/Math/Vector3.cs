@@ -50,6 +50,11 @@ namespace HimaLib.Math
             XnaVector = xnaVector;
         }
 
+        public static Vector3 operator -(Vector3 value1, Vector3 value2)
+        {
+            return new Vector3(value1.XnaVector - value2.XnaVector);
+        }
+
         public static Vector3 operator *(float scaleFactor, Vector3 value)
         {
             return new Vector3(scaleFactor * value.XnaVector);
@@ -60,9 +65,19 @@ namespace HimaLib.Math
             return new Vector3(value.XnaVector * scaleFactor);
         }
 
+        public static Vector3 operator +(Vector3 value1, Vector3 value2)
+        {
+            return new Vector3(value1.XnaVector + value2.XnaVector);
+        }
+
         public bool Equals(Vector3 other)
         {
             return XnaVector.Equals(other.XnaVector);
+        }
+
+        public static Vector3 Cross(Vector3 vector1, Vector3 vector2)
+        {
+            return new Vector3(Microsoft.Xna.Framework.Vector3.Cross(vector1.XnaVector, vector2.XnaVector));
         }
 
         public float Length()

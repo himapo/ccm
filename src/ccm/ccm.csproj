@@ -130,6 +130,7 @@
     <Compile Include="CameraOld\FreeLookCamera.cs" />
     <Compile Include="CameraOld\ICamera.cs" />
     <Compile Include="Camera\BasicCamera.cs" />
+    <Compile Include="Camera\MapViewerCameraUpdater.cs" />
     <Compile Include="Camera\ModelViewerCameraUpdater.cs" />
     <Compile Include="DebugMenu\DebugMenuNode.cs" />
     <Compile Include="DebugMenu\DebugMenuManager.cs" />
