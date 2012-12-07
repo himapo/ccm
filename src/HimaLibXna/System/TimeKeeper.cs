@@ -18,6 +18,10 @@ namespace HimaLib.System
             }
         }
 
+        public float AverageFrameRate { get; private set; }
+
+        public float UpdateInterval { get; set; }
+
         public virtual float LastFrameSeconds
         {
             get
@@ -41,6 +45,10 @@ namespace HimaLib.System
 
         static TimeKeeper instance = new TimeKeeper();
 
+        float totalTime;
+
+        int totalFrame;
+
         public static TimeKeeper GetInstance()
         {
             return instance;
@@ -49,10 +57,24 @@ namespace HimaLib.System
         protected TimeKeeper()
         {
             FrameRate = 60.0f;
+            AverageFrameRate = 60.0f;
+            UpdateInterval = 0.5f;
         }
 
         public void Update()
         {
+            totalTime += LastFrameSeconds;
+            totalFrame++;
+            if (totalTime > UpdateInterval)
+            {
+                AverageFrameRate = totalFrame / totalTime;
+                totalTime = 0.0f;
+                totalFrame = 0;
+                if (AverageFrameRate > 999.99f)
+                {
+                    AverageFrameRate = 999.99f;
+                }
+            }
         }
     }
 }

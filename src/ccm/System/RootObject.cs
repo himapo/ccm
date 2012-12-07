@@ -82,6 +82,8 @@ namespace ccm.System
 
         void UpdateStateMain()
         {
+            TimeKeeper.GetInstance().Update();
+
             DebugFont.Clear();
 
             InputAccessor.Update();
@@ -98,7 +100,14 @@ namespace ccm.System
         {
             CurrentScene.Draw();
 
+            DrawDebugFPS();
+
             DebugFont.Draw();
+        }
+
+        void DrawDebugFPS()
+        {
+            DebugFont.Add(string.Format("{0:f2}FPS", TimeKeeper.GetInstance().AverageFrameRate), 0.0f, 0.0f);
         }
     }
 }
