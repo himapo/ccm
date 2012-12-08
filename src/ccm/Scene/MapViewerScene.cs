@@ -50,8 +50,7 @@ namespace ccm.Scene
         {
             renderer = new SimpleInstancingRenderer();
 
-            renderer.ModelName = "Model/cube000";
-            renderer.Transforms = new List<HimaLib.Math.AffineTransform>();            
+            renderer.ModelName = "Model/cube000";          
             renderer.Camera = camera;
         }
 
@@ -69,6 +68,8 @@ namespace ccm.Scene
                         HimaLib.Math.Vector3.Zero,
                         pos));
             }
+
+            renderer.SetUp();
         }
 
         void DrawStateInit()

@@ -19,19 +19,60 @@ namespace HimaLib.Render
 
         ModelLoader modelLoader;
 
+        Microsoft.Xna.Framework.Graphics.Model model;
+
+        Microsoft.Xna.Framework.Matrix[] modelBones;
+
+        Microsoft.Xna.Framework.Matrix[] instanceTransforms;
+
         InstancingPhongShader shader;
 
         public SimpleInstancingRenderer()
         {
+            Transforms = new List<AffineTransform>();
             modelLoader = new ModelLoader();
             shader = new InstancingPhongShader();
         }
 
+        public void SetUp()
+        {
+            SetUpModel();
+            SetUpModelBones();
+            SetUpInstanceTransforms();
+        }
+
+        void SetUpModel()
+        {
+            model = modelLoader.Load(ModelName);
+        }
+
+        void SetUpModelBones()
+        {
+            Array.Resize(ref modelBones, model.Bones.Count);
+            model.CopyAbsoluteBoneTransformsTo(modelBones);
+        }
+
+        void SetUpInstanceTransforms()
+        {
+            Array.Resize(ref instanceTransforms, Transforms.Count);
+            for (var i = 0; i < Transforms.Count; ++i)
+            {
+                instanceTransforms[i] = Matrix.CreateXnaMatrix(Transforms[i].WorldMatrix);
+            }
+        }
+
         public void Render()
         {
-            shader.Model = GetModel();
-            shader.ModelBones = GetModelBones(shader.Model);
-            shader.InstanceTransforms = GetInstanceTransforms();
+            SetShaderParameters();
+
+            shader.RenderModel();
+        }
+
+        void SetShaderParameters()
+        {
+            shader.Model = model;
+            shader.ModelBones = modelBones;
+            shader.InstanceTransforms = instanceTransforms;
             shader.View = GetViewMatrix();
             shader.Projection = GetProjMatrix();
 
@@ -41,30 +82,6 @@ namespace HimaLib.Render
             shader.DirLight0DiffuseColor = new Microsoft.Xna.Framework.Vector3(0.5f, 0.6f, 0.8f);
             shader.DirLight0SpecularColor = Microsoft.Xna.Framework.Vector3.One;
             shader.EyePosition = Vector3.CreateXnaVector(Camera.Eye);
-
-            shader.RenderModel();
-        }
-
-        Microsoft.Xna.Framework.Graphics.Model GetModel()
-        {
-            return modelLoader.Load(ModelName);
-        }
-
-        Microsoft.Xna.Framework.Matrix[] GetModelBones(Microsoft.Xna.Framework.Graphics.Model model)
-        {
-            var modelBones = new Microsoft.Xna.Framework.Matrix[model.Bones.Count];
-            model.CopyAbsoluteBoneTransformsTo(modelBones);
-            return modelBones;
-        }
-
-        Microsoft.Xna.Framework.Matrix[] GetInstanceTransforms()
-        {
-            var result = new Microsoft.Xna.Framework.Matrix[Transforms.Count];
-            for (var i = 0; i < Transforms.Count; ++i)
-            {
-                result[i] = Matrix.CreateXnaMatrix(Transforms[i].WorldMatrix);
-            }
-            return result;
         }
 
         Microsoft.Xna.Framework.Matrix GetViewMatrix()
