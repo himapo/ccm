@@ -82,6 +82,10 @@ namespace ccm.System
 
         void UpdateStateMain()
         {
+            LoadProfiler.StartFrame();
+
+            LoadProfiler.BeginMark("Update");
+
             TimeKeeper.GetInstance().Update();
 
             DebugFont.Clear();
@@ -94,15 +98,21 @@ namespace ccm.System
             {
                 CurrentScene = CurrentScene.NextScene;
             }
+
+            LoadProfiler.EndMark();
         }
 
         void DrawStateMain()
         {
+            LoadProfiler.BeginMark("Draw");
+
             CurrentScene.Draw();
 
             DrawDebugFPS();
 
             DebugFont.Draw();
+
+            LoadProfiler.EndMark();
         }
 
         void DrawDebugFPS()

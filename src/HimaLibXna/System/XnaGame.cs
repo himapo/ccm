@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HimaLib.Debug;
 
 namespace HimaLib.System
 {
@@ -20,6 +21,8 @@ namespace HimaLib.System
         public XnaGame()
         {
             graphics = new GraphicsDeviceManager(this);
+
+            DebugSampleAccessor.CreateInstance(this);
         }
 
         /// <summary>

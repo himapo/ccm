@@ -51,7 +51,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\x86\Release</OutputPath>
-    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <DefineConstants>WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoStdLib>true</NoStdLib>
@@ -163,14 +163,6 @@
     <Compile Include="Debug\DebugAxis.cs" />
     <Compile Include="Debug\DebugFontManager.cs" />
     <Compile Include="Debug\DebugSampleManager.cs" />
-    <Compile Include="Debug\DebugSample\GameDebug\DebugCommandUI.cs" />
-    <Compile Include="Debug\DebugSample\GameDebug\DebugManager.cs" />
-    <Compile Include="Debug\DebugSample\GameDebug\FpsCounter.cs" />
-    <Compile Include="Debug\DebugSample\GameDebug\IDebugCommandHost.cs" />
-    <Compile Include="Debug\DebugSample\GameDebug\KeyboardUtils.cs" />
-    <Compile Include="Debug\DebugSample\GameDebug\TimeRuler.cs" />
-    <Compile Include="Debug\DebugSample\Utils\Layout.cs" />
-    <Compile Include="Debug\DebugSample\Utils\StringBuilderExtensions.cs" />
     <Compile Include="Debug\DebugUtil.cs" />
     <Compile Include="Deco\Deco.cs" />
     <Compile Include="Deco\DecoManager.cs" />

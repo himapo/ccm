@@ -92,6 +92,7 @@
     <Compile Include="Debug\IDebugMenu.cs" />
     <Compile Include="Debug\IDebugMenuDrawer.cs" />
     <Compile Include="Debug\IDebugPrint.cs" />
+    <Compile Include="Debug\ILoadProfiler.cs" />
     <Compile Include="Debug\NullDebugFont.cs" />
     <Compile Include="Debug\NullDebugPrint.cs" />
     <Compile Include="Input\Controller.cs" />
