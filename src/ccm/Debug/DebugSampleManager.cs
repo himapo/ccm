@@ -1,11 +1,10 @@
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using DebugSample;
 
-
 namespace ccm
 {
-#if DEBUG
     /// <summary>
     /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。
     /// </summary>
@@ -36,8 +35,12 @@ namespace ccm
         DebugSampleManager(Game game)
             : base(game)
         {
-            // TODO: ここで子コンポーネントを作成します。
-            
+            CreateComponents(game);
+        }
+
+        [Conditional("DEBUG")]
+        void CreateComponents(Game game)
+        {
             // デバッグマネージャーの初期化と追加
             debugManager = new DebugManager(game);
             game.Components.Add(debugManager);
@@ -76,11 +79,15 @@ namespace ccm
         /// </summary>
         public override void Initialize()
         {
-            // TODO: ここに初期化のコードを追加します。
+            InitializeTimeRuler();
+            base.Initialize();
+        }
+
+        [Conditional("DEBUG")]
+        void InitializeTimeRuler()
+        {
             timeRuler.Visible = true;
             timeRuler.ShowLog = true;
-
-            base.Initialize();
         }
 
         /// <summary>
@@ -94,12 +101,14 @@ namespace ccm
             base.Update(gameTime);
         }
 
+        [Conditional("DEBUG")]
         public void StartFrame()
         {
             colorIndex = 0;
             timeRuler.StartFrame();
         }
 
+        [Conditional("DEBUG")]
         public void BeginTimeRuler(string markerName)
         {
             timeRuler.BeginMark(barIndex, markerName, colorSet[colorIndex]);
@@ -110,67 +119,10 @@ namespace ccm
             }
         }
 
+        [Conditional("DEBUG")]
         public void EndTimeRuler(string markerName)
         {
             timeRuler.EndMark(--barIndex, markerName);
         }
     }
-#else
-    /// <summary>
-    /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。
-    /// </summary>
-    class DebugSampleManager : MyGameComponent
-    {
-        static DebugSampleManager instance;
-
-        public static void CreateInstance(Game game)
-        {
-            instance = new DebugSampleManager(game);
-        }
-
-        public static DebugSampleManager GetInstance()
-        {
-            return instance;
-        }
-
-        DebugSampleManager(Game game)
-            : base(game)
-        {
-        }
-
-        /// <summary>
-        /// ゲーム コンポーネントの初期化を行います。
-        /// ここで、必要なサービスを照会して、使用するコンテンツを読み込むことができます。
-        /// </summary>
-        public override void Initialize()
-        {
-            // TODO: ここに初期化のコードを追加します。
-
-            base.Initialize();
-        }
-
-        /// <summary>
-        /// ゲーム コンポーネントが自身を更新するためのメソッドです。
-        /// </summary>
-        /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
-        public override void Update(GameTime gameTime)
-        {
-            // TODO: ここにアップデートのコードを追加します。
-
-            base.Update(gameTime);
-        }
-
-        public void StartFrame()
-        {
-        }
-
-        public void BeginTimeRuler(string markerName)
-        {
-        }
-
-        public void EndTimeRuler(string markerName)
-        {
-        }
-    }
-#endif
 }

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
@@ -22,15 +23,19 @@ namespace ccm
             AddScene(SceneLabel.TITLE_SCENE, new TitleScene(game));
             AddScene(SceneLabel.GAME_SCENE, new GameScene(game));
 
-#if DEBUG
-            AddScene(SceneLabel.BOOT_SCENE, new BootScene(game));
-            AddScene(SceneLabel.MODEL_VIEWER, new ModelViewer(game));
-            AddScene(SceneLabel.MAP_VIEWER, new MapViewer(game));
-#endif
+            AddDebugScenes(game);
 
             AddComponents();
 
             game.Services.AddService(typeof(ISceneService), this);
+        }
+
+        [Conditional("DEBUG")]
+        void AddDebugScenes(Game game)
+        {
+            AddScene(SceneLabel.BOOT_SCENE, new BootScene(game));
+            AddScene(SceneLabel.MODEL_VIEWER, new ModelViewer(game));
+            AddScene(SceneLabel.MAP_VIEWER, new MapViewer(game));
         }
 
         void AddScene(SceneLabel label, MyGameComponent scene)

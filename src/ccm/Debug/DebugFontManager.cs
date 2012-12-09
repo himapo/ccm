@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -82,11 +83,10 @@ namespace ccm
             spriteBatch.End();
         }
 
+        [Conditional("DEBUG")]
         public void DrawString(DebugFontInfo info)
         {
-#if DEBUG
             infoList.Add(info);
-#endif
         }
 
         public void DrawString(string output, float x, float y)

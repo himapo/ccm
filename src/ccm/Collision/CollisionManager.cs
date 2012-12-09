@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -23,14 +24,12 @@ namespace ccm
         List<int> availableIDList;
         Dictionary<int, Dictionary<int, int>> collisionMatrix;
 
-#if DEBUG
         // デバッグ表示用
         BasicEffect basicEffect;
         VertexPositionColor[] sphereVertices;
         short[] sphereIndices;
         VertexPositionColor[] cylinderVertices;
         short[] cylinderIndices;
-#endif
 
         public CollisionManager(Game game)
             : base(game)
@@ -54,9 +53,14 @@ namespace ccm
         /// </summary>
         public override void Initialize()
         {
-            // TODO: ここに初期化のコードを追加します。
+            InitializeDebug();
 
-#if DEBUG
+            base.Initialize();
+        }
+
+        [Conditional("DEBUG")]
+        void InitializeDebug()
+        {
             basicEffect = new BasicEffect(Game.GraphicsDevice);
             basicEffect.VertexColorEnabled = true;
             basicEffect.View = Matrix.CreateLookAt(new Vector3(0, 0, 800.0f), Vector3.Zero, Vector3.Up);
@@ -68,7 +72,7 @@ namespace ccm
 
             // 球の頂点初期化
             sphereVertices = new VertexPositionColor[12 * 5 + 2];
-            
+
             for (var i = 0; i < 5; ++i)
             {
                 var theta = MathHelper.ToRadians(30.0f * (i + 1));
@@ -101,7 +105,7 @@ namespace ccm
                     sphereIndices[i * 13 + 11 - j] = (short)(j * 12 + i + 6);
                 }
             }
-            
+
             // 水平に5枚の円
             var offset = 13 * 6;
             for (var i = 0; i < 5; ++i)
@@ -134,9 +138,6 @@ namespace ccm
                 cylinderIndices[i * 2 + 0] = (short)i;
                 cylinderIndices[i * 2 + 1] = (short)(i + division);
             }
-#endif
-
-            base.Initialize();
         }
 
         /// <summary>
@@ -154,24 +155,14 @@ namespace ccm
             Detect(CollisionGroup.PlayerBody, CollisionGroup.EnemyBody);
 
             DebugSampleManager.GetInstance().EndTimeRuler("CollisionDetection");
-
-#if DEBUG
-            // デバッグ表示
-            var camera = CameraManager.GetInstance().Get(CameraLabel.Game);
-
-            basicEffect.View = camera.View;
-            basicEffect.Projection = camera.Proj;
-#endif
         }
 
         public override void Draw(GameTime gameTime)
         {
-#if DEBUG
             // デバッグ表示
             DebugSampleManager.GetInstance().BeginTimeRuler("DrawCollision");
             DebugDraw();
             DebugSampleManager.GetInstance().EndTimeRuler("DrawCollision");
-#endif
         }
 
         public void Add(CollisionInfo info)
@@ -337,9 +328,14 @@ namespace ccm
             return vertical;
         }
 
-#if DEBUG
+        [Conditional("DEBUG")]
         void DebugDraw()
         {
+            var camera = CameraManager.GetInstance().Get(CameraLabel.Game);
+
+            basicEffect.View = camera.View;
+            basicEffect.Projection = camera.Proj;
+
             var activeQuery =
                 from x in infoList
                 where x.Active()
@@ -349,6 +345,7 @@ namespace ccm
             DebugDrawCylinder(activeQuery);
         }
 
+        [Conditional("DEBUG")]
         void DebugDrawSphere(IEnumerable<CollisionInfo> activeQuery)
         {
             var query =
@@ -374,6 +371,7 @@ namespace ccm
             }
         }
 
+        [Conditional("DEBUG")]
         void DebugDrawCylinder(IEnumerable<CollisionInfo> activeQuery)
         {
             var query =
@@ -403,6 +401,5 @@ namespace ccm
                 }
             }
         }
-#endif
     }
 }
