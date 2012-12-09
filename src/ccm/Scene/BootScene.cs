@@ -61,7 +61,12 @@ namespace ccm.Scene
             {
                 Label = "Test Game",
                 Selectable = true,
-                ExecFunc = () => { Console.WriteLine("Execute Test Game"); }
+                ExecFunc = () =>
+                {
+                    Console.WriteLine("Execute Test Game");
+                    ChangeScene(new GameScene());
+                    SwitchController(false);
+                }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
