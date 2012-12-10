@@ -8,9 +8,9 @@ namespace ccm.Player
 {
     public class Player
     {
-        string ModelName = "Model/petit_miku_mix2";
+        string ModelName = "petit_miku_mix2";
 
-        List<string> AttackmentNames = new List<string>();
+        List<string> AttachmentNames = new List<string>();
 
         AffineTransform Transform = new AffineTransform(Vector3.One, Vector3.Zero, Vector3.Zero);
 
@@ -18,17 +18,19 @@ namespace ccm.Player
         {
         }
 
-        public void AddAttachment()
+        public void AddAttachment(string attachmentName)
         {
+            AttachmentNames.Add(attachmentName);
         }
 
-        public void RemoveAttackment()
+        public void RemoveAttackment(string attachmentName)
         {
+            AttachmentNames.Remove(attachmentName);
         }
 
         public void Draw(IPlayerDrawer drawer)
         {
-            drawer.Draw(ModelName, AttackmentNames, Transform);
+            drawer.Draw(ModelName, AttachmentNames, Transform);
         }
     }
 }

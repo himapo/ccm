@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using MikuMikuDance.Core;
 using MikuMikuDance.Core.Model;
+using MikuMikuDance.Core.Accessory;
 using MikuMikuDance.XNA;
+using MikuMikuDance.XNA.Model;
+using MikuMikuDance.XNA.Accessory;
 using HimaLib.Camera;
 using HimaLib.Math;
 using HimaLib.Content;
@@ -17,17 +20,32 @@ namespace HimaLib.Render
 
         public ICamera Camera { get; set; }
 
-        MMDModel model;
+        MMDXModel model;
+
+        List<MMDAccessory> accessoryModels = new List<MMDAccessory>();
 
         MMDXModelLoader modelLoader = new MMDXModelLoader();
+
+        MMDAccessoryLoader accessoryLoader = new MMDAccessoryLoader();
+
+        MMDVACLoader vacLoader = new MMDVACLoader();
 
         public MMDXModelRenderer()
         {
         }
 
-        public void SetUp(string modelName)
+        public void SetUp(string modelName, List<string> accessoryNames)
         {
-            model = modelLoader.Load(modelName);
+            model = modelLoader.Load("Model/" + modelName);
+
+            accessoryModels.Clear();
+            foreach (var name in accessoryNames)
+            {
+                var accessory = accessoryLoader.Load("Accessory/" + name);
+                var vac = vacLoader.Load("Accessory/" + name + "-vac");
+                model.BindAccessory(accessory, vac);
+                accessoryModels.Add(accessory);
+            }
         }
 
         public void Render()
@@ -37,6 +55,11 @@ namespace HimaLib.Render
             SetCameraParameter();
 
             model.Draw();
+
+            foreach (var accessory in accessoryModels)
+            {
+                accessory.Draw();
+            }
         }
 
         void SetCameraParameter()

@@ -27,10 +27,17 @@ namespace ccm.Scene
 
         void UpdateStateInit()
         {
+            InitPlayer();
             InitCamera();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
+        }
+
+        void InitPlayer()
+        {
+            Player.AddAttachment("bonbon");
+            Player.AddAttachment("negi");
         }
 
         void InitCamera()

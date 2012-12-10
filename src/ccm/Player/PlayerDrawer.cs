@@ -20,7 +20,7 @@ namespace ccm.Player
 
         public void Draw(string modelName, List<string> attackmentNames, AffineTransform transform)
         {
-            renderer.SetUp(modelName);
+            renderer.SetUp(modelName, attackmentNames);
 
             renderer.Transform = transform;
 

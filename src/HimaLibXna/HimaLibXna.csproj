@@ -89,6 +89,8 @@
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentUser.cs" />
     <Compile Include="Content\EffectLoader.cs" />
+    <Compile Include="Content\MMDAccessoryLoader.cs" />
+    <Compile Include="Content\MMDVACLoader.cs" />
     <Compile Include="Content\MMDXModelLoader.cs" />
     <Compile Include="Content\ModelLoader.cs" />
     <Compile Include="Content\SpriteFontLoader.cs" />
