@@ -4,6 +4,7 @@ using MikuMikuDance.Core.Model;
 using MikuMikuDance.Core.Motion;
 using MikuMikuDance.XNA;
 using ccm.CameraOld;
+using ccm.PlayerOld;
 
 namespace ccm
 {
@@ -26,8 +27,8 @@ namespace ccm
             stageMainLight = new DirectionalLight();
 
             // TODO: ここで子コンポーネントを作成します。
-            Player.CreateInstance(game);
-            ChildComponents.Add(Player.GetInstance());
+            PlayerOld.Player.CreateInstance(game);
+            ChildComponents.Add(PlayerOld.Player.GetInstance());
             ChildComponents.Add(new DebugAxis(game, CameraLabel.Game));
 
             AddComponents();
@@ -160,7 +161,7 @@ namespace ccm
         protected override void Dispose(bool disposing)
         {
             // MMDModelを所持するPlayerを破棄
-            Player.GetInstance().Dispose();
+            PlayerOld.Player.GetInstance().Dispose();
 
             //MMDの破棄処理を実行
             MMDXCore.Instance.Dispose();

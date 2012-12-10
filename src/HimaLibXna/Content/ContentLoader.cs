@@ -7,7 +7,7 @@ namespace HimaLib.Content
 {
     public class ContentLoader<ContentType> : ContentUser
     {
-        static Dictionary<string, ContentType> resourceDic = new Dictionary<string, ContentType>();
+        protected static Dictionary<string, ContentType> resourceDic = new Dictionary<string, ContentType>();
 
         public ContentLoader()
         {

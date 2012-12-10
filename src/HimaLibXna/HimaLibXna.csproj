@@ -89,6 +89,7 @@
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentUser.cs" />
     <Compile Include="Content\EffectLoader.cs" />
+    <Compile Include="Content\MMDXModelLoader.cs" />
     <Compile Include="Content\ModelLoader.cs" />
     <Compile Include="Content\SpriteFontLoader.cs" />
     <Compile Include="Content\TextureLoader.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Math\Rectangle.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Render\MMDXModelRenderer.cs" />
     <Compile Include="Render\SimpleInstancingRenderer.cs" />
     <Compile Include="Render\SimpleModelRenderer.cs" />
     <Compile Include="Render\UIBillboardRenderer.cs" />
@@ -129,6 +131,14 @@
     <Compile Include="System\TimeKeeper.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\lib\MMDX_src\MikuMikuDanceCore\MikuMikuDanceCore.csproj">
+      <Project>{59AF880A-09A9-4884-8208-C36976EDF2B9}</Project>
+      <Name>MikuMikuDanceCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\lib\MMDX_src\MikuMikuDanceXNA\MikuMikuDanceXNA.csproj">
+      <Project>{E9814344-4640-417C-8269-18363625B229}</Project>
+      <Name>MikuMikuDanceXNA</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HimaLib\HimaLib.csproj">
       <Project>{ABD2BF1E-FCC5-4FA7-9424-B7DCADAD70AE}</Project>
       <Name>HimaLib</Name>

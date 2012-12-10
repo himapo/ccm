@@ -17,14 +17,12 @@ namespace HimaLib.Render
 
         public ICamera Camera { get; set; }
 
-        ModelLoader modelLoader;
+        ModelLoader modelLoader = new ModelLoader();
 
-        LambertShader lambert;
+        LambertShader lambert = new LambertShader();
 
         public SimpleModelRenderer()
         {
-            modelLoader = new ModelLoader();
-            lambert = new LambertShader();
         }
 
         public void Render()

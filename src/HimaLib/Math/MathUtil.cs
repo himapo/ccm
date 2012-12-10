@@ -29,5 +29,10 @@ namespace HimaLib.Math
         {
             return value1 > value2 ? value2 : value1;
         }
+
+        public static float ToRadians(float degrees)
+        {
+            return degrees * Pi / 180.0f;
+        }
     }
 }

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MikuMikuDance.XNA;
 using HimaLib.Debug;
+using HimaLib.Content;
 
 namespace HimaLib.System
 {
@@ -18,11 +20,28 @@ namespace HimaLib.System
 
         GraphicsDeviceManager graphics;
 
+        bool disposed = false;
+
         public XnaGame()
         {
             graphics = new GraphicsDeviceManager(this);
 
             DebugSampleAccessor.CreateInstance(this);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    MMDXModelLoader.Dispose();
+                    MMDXCore.Instance.Dispose();
+                }
+                disposed = true;
+            }
+
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -101,6 +120,7 @@ namespace HimaLib.System
         protected override void Update(GameTime gameTime)
         {
             TimeKeeper.GetInstance().XnaGameTime = gameTime;
+            MMDXCore.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             RootUpdater.Update();
             base.Update(gameTime);
         }

@@ -63,7 +63,7 @@ namespace ccm.CameraOld
             mat *= rot;
 
             // プレイヤーに追従
-            var playerPos = Player.GetInstance().Position;
+            var playerPos = PlayerOld.Player.GetInstance().Position;
             var playerTrans = Matrix.CreateTranslation(playerPos.X + 0.0f, playerPos.Y + 6.0f, playerPos.Z + 0.0f);
             mat *= playerTrans;
 

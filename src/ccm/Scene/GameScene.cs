@@ -4,11 +4,19 @@ using System.Linq;
 using System.Text;
 using HimaLib.Debug;
 using ccm.Input;
+using ccm.Player;
+using ccm.Camera;
 
 namespace ccm.Scene
 {
     public class GameScene : SceneBase
     {
+        Player.Player Player = new Player.Player();
+
+        PlayerDrawer PlayerDrawer = new PlayerDrawer();
+
+        BasicCamera Camera = new BasicCamera();
+
         public GameScene()
         {
             UpdateState = UpdateStateInit;
@@ -19,8 +27,17 @@ namespace ccm.Scene
 
         void UpdateStateInit()
         {
+            InitCamera();
+
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
+        }
+
+        void InitCamera()
+        {
+            Camera.Eye.Y = 6.0f;
+            Camera.Eye.Z = 50.0f;
+            Camera.At.Y = 6.0f;
         }
 
         void DrawStateInit()
@@ -40,6 +57,8 @@ namespace ccm.Scene
 
         void DrawStateMain()
         {
+            PlayerDrawer.Camera = Camera;
+            Player.Draw(PlayerDrawer);
         }
     }
 }

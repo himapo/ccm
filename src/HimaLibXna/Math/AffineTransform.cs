@@ -17,7 +17,11 @@ namespace HimaLib.Math
         {
             get
             {
-                return GetWorldMatrix();
+                return Matrix.CreateScale(Scale) *
+                    Matrix.CreateRotationZ(Rotation.Z) *
+                    Matrix.CreateRotationY(Rotation.Y) *
+                    Matrix.CreateRotationX(Rotation.X) *
+                    Matrix.CreateTranslation(Translation);
             }
         }
 
@@ -26,15 +30,6 @@ namespace HimaLib.Math
             Scale = scale;
             Rotation = rotation;
             Translation = translation;
-        }
-
-        public Matrix GetWorldMatrix()
-        {
-            return Matrix.CreateScale(Scale) *
-                Matrix.CreateRotationZ(Rotation.Z) *
-                Matrix.CreateRotationY(Rotation.Y) *
-                Matrix.CreateRotationX(Rotation.X) *
-                Matrix.CreateTranslation(Translation);
         }
     }
 }

@@ -166,7 +166,7 @@ namespace ccm
 
         void UpdateAlive(GameTime gameTime)
         {
-            var player = Player.GetInstance();
+            var player = PlayerOld.Player.GetInstance();
             var vecToPlayer = new Vector2(player.Position.X - Position.X, player.Position.Z - Position.Z);
             var distanceSquare = vecToPlayer.LengthSquared();
 

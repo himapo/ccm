@@ -12,7 +12,7 @@ namespace ccm
         [SetUp]
         public void SetUp()
         {
-            Player.CreateInstance(null);
+            PlayerOld.Player.CreateInstance(null);
         }
 
         [TearDown]
@@ -23,7 +23,7 @@ namespace ccm
         [TestCase]
         public void Instance()
         {
-            Assert.NotNull(Player.GetInstance());
+            Assert.NotNull(PlayerOld.Player.GetInstance());
         }
     }
 }

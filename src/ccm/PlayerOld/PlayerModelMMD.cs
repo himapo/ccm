@@ -148,6 +148,7 @@ namespace ccm
 
             elapsedTime += (float)contextBase.GameTime.ElapsedGameTime.TotalSeconds;
             elapsedTime = MathHelper.Clamp(elapsedTime, 0.0f, shiftTime);
+
             model.AnimationPlayer[nowMotion].BlendingFactor = elapsedTime / shiftTime;
             if (prevMotion != "")
             {
