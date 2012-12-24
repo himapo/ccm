@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Math;
 using HimaLib.Render;
 using HimaLib.Camera;
+using HimaLib.Model;
 
 namespace ccm.Player
 {
@@ -12,21 +13,18 @@ namespace ccm.Player
     {
         public ICamera Camera { get; set; }
 
-        MMDXModelRenderer renderer = new MMDXModelRenderer();
+        ToonModelRenderParameter renderParam = new ToonModelRenderParameter();
 
         public PlayerDrawer()
         {
         }
 
-        public void Draw(string modelName, List<string> attackmentNames, AffineTransform transform)
+        public void Draw(IModel model, List<IModel> attachments, AffineTransform transform)
         {
-            renderer.SetUp(modelName, attackmentNames);
+            renderParam.Camera = Camera;
 
-            renderer.Transform = transform;
-
-            renderer.Camera = Camera;
-
-            renderer.Render();
+            model.Render(renderParam);
         }
+
     }
 }

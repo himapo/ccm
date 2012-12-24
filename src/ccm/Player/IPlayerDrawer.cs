@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Math;
+using HimaLib.Model;
 
 namespace ccm.Player
 {
     public interface IPlayerDrawer
     {
-        void Draw(string modelName, List<string> attackmentNames, AffineTransform transform);
+        void Draw(IModel model, List<IModel> attachments, AffineTransform transform);
     }
 }

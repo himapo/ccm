@@ -9,7 +9,7 @@ namespace HimaLib.Shader
 {
     public class InstancingPhongShader : Graphics.GraphicsDeviceUser
     {
-        public Model Model { get; set; }
+        public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
         
         public Matrix[] ModelBones { get; set; }
         

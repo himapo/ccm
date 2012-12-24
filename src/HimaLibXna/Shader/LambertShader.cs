@@ -9,7 +9,7 @@ namespace HimaLib.Shader
 {
     public class LambertShader : Graphics.GraphicsDeviceUser
     {
-        public Model Model { get; set; }
+        public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
         public Texture2D Texture { get; set; }
 

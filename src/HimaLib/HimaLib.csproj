@@ -117,6 +117,10 @@
     <Compile Include="Math\IVector4.cs" />
     <Compile Include="Math\MathUtil.cs" />
     <Compile Include="Math\SystemRand.cs" />
+    <Compile Include="Model\IModel.cs" />
+    <Compile Include="Render\IModelRenderParameter.cs" />
+    <Compile Include="Render\SimpleModelRenderParameter.cs" />
+    <Compile Include="Render\ToonModelRenderParameter.cs" />
     <Compile Include="System\IColor.cs" />
     <Compile Include="System\IGameInitializer.cs" />
     <Compile Include="System\IDrawer.cs" />
@@ -125,9 +129,7 @@
     <Compile Include="System\StateMachine.cs" />
     <Compile Include="System\SystemProperty.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Render\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

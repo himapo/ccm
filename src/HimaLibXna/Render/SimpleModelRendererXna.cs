@@ -9,7 +9,7 @@ using HimaLib.Math;
 
 namespace HimaLib.Render
 {
-    public class SimpleModelRenderer
+    public class SimpleModelRendererXna : IModelRendererXna
     {
         public string ModelName { get; set; }
 
@@ -21,8 +21,18 @@ namespace HimaLib.Render
 
         LambertShader lambert = new LambertShader();
 
-        public SimpleModelRenderer()
+        public SimpleModelRendererXna()
         {
+        }
+
+        public void SetParameter(SimpleModelRenderParameter param)
+        {
+            lambert.View = CameraUtil.GetViewMatrix(param.Camera);
+            lambert.Projection = CameraUtil.GetProjMatrix(param.Camera);
+            lambert.Alpha = param.Alpha;
+            lambert.AmbientLightColor = Vector3.CreateXnaVector(param.AmbientLightColor);
+            lambert.DirLight0Direction = Vector3.CreateXnaVector(param.DirLight0Direction);
+            lambert.DirLight0DiffuseColor = Vector3.CreateXnaVector(param.DirLight0DiffuseColor);
         }
 
         public void Render()
@@ -37,6 +47,14 @@ namespace HimaLib.Render
             lambert.DirLight0Direction = new Microsoft.Xna.Framework.Vector3(-1.0f, -1.0f, -1.0f);
             lambert.DirLight0DiffuseColor = new Microsoft.Xna.Framework.Vector3(0.5f, 0.6f, 0.8f);
             
+            lambert.RenderModel();
+        }
+
+        public void Render(Microsoft.Xna.Framework.Graphics.Model model, AffineTransform transform)
+        {
+            lambert.Model = model;
+            lambert.World = Matrix.CreateXnaMatrix(transform.WorldMatrix);
+
             lambert.RenderModel();
         }
 

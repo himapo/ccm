@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Debug;
 using HimaLib.Render;
 using HimaLib.Math;
+using HimaLib.Model;
 using ccm.Input;
 using ccm.Camera;
 
@@ -12,11 +13,13 @@ namespace ccm.Scene
 {
     public class ModelViewerScene : SceneBase
     {
-        SimpleModelRenderer renderer;
-
-        BasicCamera camera;
+        BasicCamera camera = new BasicCamera();
 
         ModelViewerCameraUpdater cameraUpdater;
+
+        IModel model;
+
+        SimpleModelRenderParameter renderParam = new SimpleModelRenderParameter();
         
         public ModelViewerScene()
         {
@@ -25,7 +28,6 @@ namespace ccm.Scene
 
             Name = "ModelViewer";
 
-            camera = new BasicCamera();
             cameraUpdater = new ModelViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));
         }
 
@@ -34,6 +36,8 @@ namespace ccm.Scene
             InitCamera();
 
             InitRenderer();
+
+            InitModel();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -47,11 +51,16 @@ namespace ccm.Scene
 
         void InitRenderer()
         {
-            renderer = new SimpleModelRenderer();
+            renderParam.Camera = camera;
+            renderParam.Alpha = 1.0f;
+            renderParam.AmbientLightColor = Vector3.One * 0.4f;
+            renderParam.DirLight0Direction = Vector3.One * -1.0f;
+            renderParam.DirLight0DiffuseColor = new Vector3(0.5f, 0.6f, 0.8f);
+        }
 
-            renderer.ModelName = "Model/cube003";
-            renderer.Transform = new AffineTransform(Vector3.One, Vector3.Zero, Vector3.Zero);
-            renderer.Camera = camera;
+        void InitModel()
+        {
+            model = ModelFactory.Instance.Create("cube003");
         }
 
         void DrawStateInit()
@@ -73,7 +82,7 @@ namespace ccm.Scene
 
         void DrawStateMain()
         {
-            renderer.Render();
+            model.Render(renderParam);
         }
     }
 }

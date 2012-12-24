@@ -36,6 +36,7 @@ namespace ccm.Scene
 
         void InitPlayer()
         {
+            Player.InitModel();
             Player.AddAttachment("bonbon");
             Player.AddAttachment("negi");
         }

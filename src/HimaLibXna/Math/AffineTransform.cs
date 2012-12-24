@@ -31,5 +31,10 @@ namespace HimaLib.Math
             Rotation = rotation;
             Translation = translation;
         }
+
+        public AffineTransform()
+            : this(Vector3.One, Vector3.Zero, Vector3.Zero)
+        {
+        }
     }
 }
