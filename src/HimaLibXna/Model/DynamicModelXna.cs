@@ -16,6 +16,10 @@ namespace HimaLib.Model
         {
         }
 
+        public void Update(float elapsedTimeSeconds)
+        {
+        }
+
         public void Render(IModelRenderParameter renderer)
         {
         }
@@ -25,6 +29,10 @@ namespace HimaLib.Model
         }
 
         public void RemoveAttachment(string name)
+        {
+        }
+
+        public void ChangeMotion(string name, float shiftTime)
         {
         }
     }

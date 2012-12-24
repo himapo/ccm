@@ -61,6 +61,8 @@ namespace ccm.Scene
                 ChangeScene(new BootScene());
                 return;
             }
+
+            Player.Update();
         }
 
         void DrawStateMain()

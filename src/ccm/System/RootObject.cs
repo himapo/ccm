@@ -86,7 +86,7 @@ namespace ccm.System
 
             LoadProfiler.BeginMark("Update");
 
-            TimeKeeper.GetInstance().Update();
+            TimeKeeper.Instance.Update();
 
             DebugFont.Clear();
 
@@ -117,7 +117,7 @@ namespace ccm.System
 
         void DrawDebugFPS()
         {
-            DebugFont.Add(string.Format("{0:f2}FPS", TimeKeeper.GetInstance().AverageFrameRate), 0.0f, 0.0f);
+            DebugFont.Add(string.Format("{0:f2}FPS", TimeKeeper.Instance.AverageFrameRate), 0.0f, 0.0f);
         }
     }
 }

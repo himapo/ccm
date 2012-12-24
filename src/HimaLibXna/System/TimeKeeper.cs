@@ -43,16 +43,13 @@ namespace HimaLib.System
 
         public Microsoft.Xna.Framework.GameTime XnaGameTime { get; set; }
 
-        static TimeKeeper instance = new TimeKeeper();
+        static readonly TimeKeeper instance = new TimeKeeper();
 
         float totalTime;
 
         int totalFrame;
 
-        public static TimeKeeper GetInstance()
-        {
-            return instance;
-        }
+        public static TimeKeeper Instance { get { return instance; } set { } }
 
         protected TimeKeeper()
         {

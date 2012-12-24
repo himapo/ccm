@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HimaLib.Math;
 using HimaLib.Model;
+using HimaLib.System;
 
 namespace ccm.Player
 {
@@ -22,6 +23,7 @@ namespace ccm.Player
         public void InitModel()
         {
             model = ModelFactory.Instance.Create(modelName);
+            model.ChangeMotion("stand", 0.01f);
         }
 
         public void AddAttachment(string attachmentName)
@@ -32,6 +34,11 @@ namespace ccm.Player
         public void RemoveAttackment(string attachmentName)
         {
             model.RemoveAttachment(attachmentName);
+        }
+
+        public void Update()
+        {
+            model.Update(TimeKeeper.Instance.LastFrameSeconds);
         }
 
         public void Draw(IPlayerDrawer drawer)

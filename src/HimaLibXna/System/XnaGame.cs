@@ -119,7 +119,7 @@ namespace HimaLib.System
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Update(GameTime gameTime)
         {
-            TimeKeeper.GetInstance().XnaGameTime = gameTime;
+            TimeKeeper.Instance.XnaGameTime = gameTime;
             MMDXCore.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             RootUpdater.Update();
             base.Update(gameTime);
@@ -135,7 +135,7 @@ namespace HimaLib.System
 
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-            TimeKeeper.GetInstance().XnaGameTime = gameTime;
+            TimeKeeper.Instance.XnaGameTime = gameTime;
             RootDrawer.Draw();
             base.Draw(gameTime);
         }
