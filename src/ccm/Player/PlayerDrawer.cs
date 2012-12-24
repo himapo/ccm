@@ -19,7 +19,7 @@ namespace ccm.Player
         {
         }
 
-        public void Draw(IModel model, List<IModel> attachments, AffineTransform transform)
+        public void Draw(IModel model, AffineTransform transform)
         {
             renderParam.Camera = Camera;
 

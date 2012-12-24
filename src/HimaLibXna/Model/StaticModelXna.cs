@@ -24,5 +24,13 @@ namespace HimaLib.Model
             var renderer = ModelRendererFactoryXna.Instance.Create(param);
             renderer.Render(Model, transform);
         }
+
+        public void AddAttachment(string name)
+        {
+        }
+
+        public void RemoveAttachment(string name)
+        {
+        }
     }
 }

@@ -9,15 +9,11 @@ namespace ccm.Player
 {
     public class Player
     {
-        string ModelName = "petit_miku_mix2";
+        string modelName = "petit_miku_mix2";
 
         IModel model;
 
-        List<string> AttachmentNames = new List<string>();
-
-        List<IModel> attachments = new List<IModel>();
-
-        AffineTransform Transform = new AffineTransform(Vector3.One, Vector3.Zero, Vector3.Zero);
+        AffineTransform transform = new AffineTransform(Vector3.One, Vector3.Zero, Vector3.Zero);
 
         public Player()
         {
@@ -25,22 +21,22 @@ namespace ccm.Player
 
         public void InitModel()
         {
-            model = ModelFactory.Instance.Create(ModelName);
+            model = ModelFactory.Instance.Create(modelName);
         }
 
         public void AddAttachment(string attachmentName)
         {
-            AttachmentNames.Add(attachmentName);
+            model.AddAttachment(attachmentName);
         }
 
         public void RemoveAttackment(string attachmentName)
         {
-            AttachmentNames.Remove(attachmentName);
+            model.RemoveAttachment(attachmentName);
         }
 
         public void Draw(IPlayerDrawer drawer)
         {
-            drawer.Draw(model, attachments, Transform);
+            drawer.Draw(model, transform);
         }
     }
 }

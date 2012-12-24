@@ -16,11 +16,15 @@ namespace HimaLib.Model
         {
         }
 
-        public void ChangeMotion()
+        public void Render(IModelRenderParameter renderer)
         {
         }
 
-        public void Render(IModelRenderParameter renderer)
+        public void AddAttachment(string name)
+        {
+        }
+
+        public void RemoveAttachment(string name)
         {
         }
     }

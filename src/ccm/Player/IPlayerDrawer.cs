@@ -9,6 +9,6 @@ namespace ccm.Player
 {
     public interface IPlayerDrawer
     {
-        void Draw(IModel model, List<IModel> attachments, AffineTransform transform);
+        void Draw(IModel model, AffineTransform transform);
     }
 }

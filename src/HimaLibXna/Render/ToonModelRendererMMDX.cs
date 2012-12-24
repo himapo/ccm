@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using MikuMikuDance.XNA;
 using MikuMikuDance.XNA.Model;
+using MikuMikuDance.XNA.Accessory;
 using HimaLib.Math;
 
 namespace HimaLib.Render
@@ -22,6 +23,11 @@ namespace HimaLib.Render
         public void Render(MMDXModel model, AffineTransform transform)
         {
             model.Transform = Matrix.CreateXnaMatrix(transform.WorldMatrix);
+            model.Draw();
+        }
+
+        public void Render(MMDAccessory model)
+        {
             model.Draw();
         }
     }

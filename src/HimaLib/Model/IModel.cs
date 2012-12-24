@@ -11,5 +11,9 @@ namespace HimaLib.Model
         string Name { get; set; }
 
         void Render(IModelRenderParameter renderer);
+
+        void AddAttachment(string name);
+
+        void RemoveAttachment(string name);
     }
 }
