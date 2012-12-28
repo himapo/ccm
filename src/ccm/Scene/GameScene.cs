@@ -17,12 +17,20 @@ namespace ccm.Scene
 
         BasicCamera Camera = new BasicCamera();
 
+        ModelViewerCameraUpdater cameraUpdater;
+
         public GameScene()
         {
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
 
             Name = "GameScene";
+
+            cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
+            {
+                InitEyeZ = 50.0f,
+                EnableCameraKey = true
+            };
         }
 
         void UpdateStateInit()
@@ -43,9 +51,13 @@ namespace ccm.Scene
 
         void InitCamera()
         {
-            Camera.Eye.Y = 6.0f;
-            Camera.Eye.Z = 50.0f;
-            Camera.At.Y = 6.0f;
+            //Camera.Eye.Y = 6.0f;
+            //Camera.Eye.Z = 50.0f;
+            //Camera.At.Y = 6.0f;
+
+            cameraUpdater.MinEyeZ = 40.0f;
+            cameraUpdater.MaxEyeZ = 110.0f;
+            cameraUpdater.EyeZInterval = 0.2f;
         }
 
         void DrawStateInit()
@@ -62,6 +74,10 @@ namespace ccm.Scene
                 return;
             }
 
+            var playerPos = Player.Transform.Translation;
+            playerPos.Y += 6.0f;
+            cameraUpdater.Update(playerPos);
+            
             Player.Update();
         }
 

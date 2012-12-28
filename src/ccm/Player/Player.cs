@@ -14,7 +14,8 @@ namespace ccm.Player
 
         IModel model;
 
-        AffineTransform transform = new AffineTransform(Vector3.One, Vector3.Zero, Vector3.Zero);
+        AffineTransform transform = new AffineTransform();
+        public AffineTransform Transform { get { return transform; } }
 
         public Player()
         {

@@ -77,7 +77,7 @@ namespace ccm.Scene
                 return;
             }
 
-            cameraUpdater.Update();
+            cameraUpdater.Update(Vector3.Zero);
         }
 
         void DrawStateMain()
