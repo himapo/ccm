@@ -20,7 +20,11 @@ namespace ccm.Camera
         float rotY;
 
         float eyeZ;
-        
+
+        public float InitRotX { get; set; }
+
+        public float InitRotY { get; set; }
+
         public float InitEyeZ; // カメラの注視点からの距離
 
         public float MaxEyeZ { get; set; }
@@ -51,6 +55,13 @@ namespace ccm.Camera
             EnableCameraKey = false;
 
             Reset();
+        }
+
+        public void Reset()
+        {
+            rotX = InitRotX;
+            rotY = InitRotY;
+            eyeZ = InitEyeZ;
         }
 
         public void Update(Vector3 at)
@@ -84,13 +95,6 @@ namespace ccm.Camera
             {
                 Reset();
             }
-        }
-
-        void Reset()
-        {
-            rotX = 0.0f;
-            rotY = 0.0f;
-            eyeZ = InitEyeZ;
         }
 
         void UpdateCamera(Vector3 atPosition)

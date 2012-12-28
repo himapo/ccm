@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Debug;
+using HimaLib.Math;
 using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
@@ -28,7 +29,12 @@ namespace ccm.Scene
 
             cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
-                InitEyeZ = 50.0f,
+                InitRotX = -MathUtil.PiOver4,
+                InitRotY = MathUtil.PiOver4,
+                InitEyeZ = 60.0f,
+                MaxEyeZ = 110.0f,
+                MinEyeZ = 40.0f,
+                EyeZInterval = 0.2f,
                 EnableCameraKey = true
             };
         }
@@ -51,13 +57,7 @@ namespace ccm.Scene
 
         void InitCamera()
         {
-            //Camera.Eye.Y = 6.0f;
-            //Camera.Eye.Z = 50.0f;
-            //Camera.At.Y = 6.0f;
-
-            cameraUpdater.MinEyeZ = 40.0f;
-            cameraUpdater.MaxEyeZ = 110.0f;
-            cameraUpdater.EyeZInterval = 0.2f;
+            cameraUpdater.Reset();
         }
 
         void DrawStateInit()
