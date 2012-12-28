@@ -110,8 +110,11 @@ namespace HimaLib.Model
                 return;
             }
 
-            var motion = motionLoader.Load("Motion/" + name);
-            Model.AnimationPlayer.AddMotion(name, motion, MMDMotionTrackOptions.UpdateWhenStopped);
+            if (!Model.AnimationPlayer.ContainsKey(name))
+            {
+                var motion = motionLoader.Load("Motion/" + name);
+                Model.AnimationPlayer.AddMotion(name, motion, MMDMotionTrackOptions.UpdateWhenStopped);
+            }
             motionNames.Add(name);
         }
     }
