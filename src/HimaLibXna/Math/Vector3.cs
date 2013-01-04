@@ -94,5 +94,13 @@ namespace HimaLib.Math
         {
             XnaVector.Normalize();
         }
+
+        public static Vector3 Transform(Vector3 vector, Matrix matrix)
+        {
+            return new Vector3(
+                Microsoft.Xna.Framework.Vector3.Transform(
+                    Vector3.CreateXnaVector(vector),
+                    Matrix.CreateXnaMatrix(matrix)));
+        }
     }
 }

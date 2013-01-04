@@ -29,8 +29,8 @@ namespace ccm.Scene
 
             cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
-                InitRotX = -MathUtil.PiOver4,
-                InitRotY = MathUtil.PiOver4,
+                //InitRotX = -MathUtil.PiOver4,
+                //InitRotY = MathUtil.PiOver4,
                 InitEyeZ = 60.0f,
                 MaxEyeZ = 110.0f,
                 MinEyeZ = 40.0f,
@@ -53,6 +53,8 @@ namespace ccm.Scene
             Player.InitModel();
             Player.AddAttachment("bonbon");
             Player.AddAttachment("negi");
+
+            Player.Camera = Camera;
         }
 
         void InitCamera()
@@ -74,11 +76,15 @@ namespace ccm.Scene
                 return;
             }
 
+            Player.Update();
+            UpdateCamera();
+        }
+
+        void UpdateCamera()
+        {
             var playerPos = Player.Transform.Translation;
             playerPos.Y += 6.0f;
             cameraUpdater.Update(playerPos);
-            
-            Player.Update();
         }
 
         void DrawStateMain()

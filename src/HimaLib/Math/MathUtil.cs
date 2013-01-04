@@ -34,5 +34,10 @@ namespace HimaLib.Math
         {
             return degrees * Pi / 180.0f;
         }
+
+        public static float ToDegrees(float radians)
+        {
+            return radians * 180.0f / Pi;
+        }
     }
 }
