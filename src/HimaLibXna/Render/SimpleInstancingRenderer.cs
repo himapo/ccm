@@ -57,7 +57,7 @@ namespace HimaLib.Render
             Array.Resize(ref instanceTransforms, Transforms.Count);
             for (var i = 0; i < Transforms.Count; ++i)
             {
-                instanceTransforms[i] = Matrix.CreateXnaMatrix(Transforms[i].WorldMatrix);
+                instanceTransforms[i] = MathUtilXna.ToXnaMatrix(Transforms[i].WorldMatrix);
             }
         }
 
@@ -81,7 +81,7 @@ namespace HimaLib.Render
             shader.DirLight0Direction.Normalize();
             shader.DirLight0DiffuseColor = new Microsoft.Xna.Framework.Vector3(0.5f, 0.6f, 0.8f);
             shader.DirLight0SpecularColor = Microsoft.Xna.Framework.Vector3.One;
-            shader.EyePosition = Vector3.CreateXnaVector(Camera.Eye);
+            shader.EyePosition = MathUtilXna.ToXnaVector(Camera.Eye);
         }
 
         Microsoft.Xna.Framework.Matrix GetViewMatrix()

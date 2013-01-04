@@ -9,11 +9,11 @@ namespace HimaLib.Camera
 {
     public interface ICamera
     {
-        IVector3 Eye { get; set; }
+        Vector3 Eye { get; set; }
 
-        IVector3 At { get; set; }
+        Vector3 At { get; set; }
         
-        IVector3 Up { get; set; }
+        Vector3 Up { get; set; }
 
         float FovY { get; set; }
         

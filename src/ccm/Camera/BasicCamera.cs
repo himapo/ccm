@@ -10,11 +10,11 @@ namespace ccm.Camera
 {
     public class BasicCamera : ICamera
     {
-        public IVector3 Eye { get; set; }
+        public Vector3 Eye { get; set; }
 
-        public IVector3 At { get; set; }
+        public Vector3 At { get; set; }
 
-        public IVector3 Up { get; set; }
+        public Vector3 Up { get; set; }
 
         public float FovY { get; set; }
 

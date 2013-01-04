@@ -15,11 +15,11 @@ namespace HimaLib.Render
 
         public float Alpha { get; set; }
 
-        public IVector3 AmbientLightColor { get; set; }
+        public Vector3 AmbientLightColor { get; set; }
 
-        public IVector3 DirLight0Direction { get; set; }
+        public Vector3 DirLight0Direction { get; set; }
 
-        public IVector3 DirLight0DiffuseColor { get; set; }
+        public Vector3 DirLight0DiffuseColor { get; set; }
 
         public SimpleModelRenderParameter()
         {

@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using HimaLib.Math;
 
 namespace HimaLib.Camera
 {
     public static class CameraUtil
     {
-        public static Matrix GetViewMatrix(ICamera camera)
+        public static Microsoft.Xna.Framework.Matrix GetViewMatrix(ICamera camera)
         {
-            return Matrix.CreateLookAt(
-                Math.Vector3.CreateXnaVector(camera.Eye),
-                Math.Vector3.CreateXnaVector(camera.At),
-                Math.Vector3.CreateXnaVector(camera.Up));
+            return MathUtilXna.ToXnaMatrix(HimaLib.Math.Matrix.CreateLookAt(camera.Eye, camera.At, camera.Up));
         }
 
-        public static Matrix GetProjMatrix(ICamera camera)
+        public static Microsoft.Xna.Framework.Matrix GetProjMatrix(ICamera camera)
         {
-            return Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(camera.FovY), camera.Aspect, camera.Near, camera.Far);
+            return MathUtilXna.ToXnaMatrix(HimaLib.Math.Matrix.CreatePerspectiveFieldOfView(MathUtil.ToRadians(camera.FovY), camera.Aspect, camera.Near, camera.Far));
         }
     }
 }

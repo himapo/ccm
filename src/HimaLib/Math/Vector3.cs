@@ -2,19 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Xna.Framework;
 
 namespace HimaLib.Math
 {
-    public struct Vector3 : IVector3, IEquatable<Vector3>
+    public struct Vector3 : IEquatable<Vector3>
     {
-        Microsoft.Xna.Framework.Vector3 XnaVector;
+        public float X;
 
-        public float X { get { return XnaVector.X; } set { XnaVector.X = value; } }
+        public float Y;
 
-        public float Y { get { return XnaVector.Y; } set { XnaVector.Y = value; } }
-
-        public float Z { get { return XnaVector.Z; } set { XnaVector.Z = value; } }
+        public float Z;
 
         public static Vector3 Forward { get { return new Vector3(0.0f, 0.0f, -1.0f); } }
 
@@ -30,77 +27,72 @@ namespace HimaLib.Math
 
         public static Vector3 Zero { get { return new Vector3(0.0f); } }
 
-        public static Microsoft.Xna.Framework.Vector3 CreateXnaVector(IVector3 vector)
-        {
-            return new Microsoft.Xna.Framework.Vector3(vector.X, vector.Y, vector.Z);
-        }
-
         public Vector3(float value)
         {
-            XnaVector = new Microsoft.Xna.Framework.Vector3(value);
-        }
-        
-        public Vector3(float x, float y, float z)
-        {
-            XnaVector = new Microsoft.Xna.Framework.Vector3(x, y, z);
+            X = Y = Z = value;
         }
 
-        public Vector3(Microsoft.Xna.Framework.Vector3 xnaVector)
+        public Vector3(float x, float y, float z)
         {
-            XnaVector = xnaVector;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         public static Vector3 operator -(Vector3 value1, Vector3 value2)
         {
-            return new Vector3(value1.XnaVector - value2.XnaVector);
+            return new Vector3(value1.X - value2.X, value1.Y - value2.Y, value1.Z - value2.Z);
         }
 
         public static Vector3 operator *(float scaleFactor, Vector3 value)
         {
-            return new Vector3(scaleFactor * value.XnaVector);
+            return new Vector3(scaleFactor * value.X, scaleFactor * value.Y, scaleFactor * value.Z);
         }
 
         public static Vector3 operator *(Vector3 value, float scaleFactor)
         {
-            return new Vector3(value.XnaVector * scaleFactor);
+            return new Vector3(value.X * scaleFactor, value.Y * scaleFactor, value.Z * scaleFactor);
         }
 
         public static Vector3 operator +(Vector3 value1, Vector3 value2)
         {
-            return new Vector3(value1.XnaVector + value2.XnaVector);
+            return new Vector3(value1.X + value2.X, value1.Y + value2.Y, value1.Z + value2.Z);
         }
 
         public bool Equals(Vector3 other)
         {
-            return XnaVector.Equals(other.XnaVector);
+            return (X == other.X && Y == other.Y && Z == other.Z);
         }
 
         public static Vector3 Cross(Vector3 vector1, Vector3 vector2)
         {
-            return new Vector3(Microsoft.Xna.Framework.Vector3.Cross(vector1.XnaVector, vector2.XnaVector));
+            return new Vector3(0);
         }
 
         public float Length()
         {
-            return XnaVector.Length();
+            return (float)global::System.Math.Sqrt(LengthSquared());
         }
 
         public float LengthSquared()
         {
-            return XnaVector.LengthSquared();
+            return (X * X + Y * Y + Z * Z);
         }
 
         public void Normalize()
         {
-            XnaVector.Normalize();
+            var length = Length();
+            X = X / length;
+            Y = Y / length;
+            Z = Z / length;
         }
 
         public static Vector3 Transform(Vector3 vector, Matrix matrix)
         {
             return new Vector3(
-                Microsoft.Xna.Framework.Vector3.Transform(
-                    Vector3.CreateXnaVector(vector),
-                    Matrix.CreateXnaMatrix(matrix)));
+                vector.X * matrix.M11 + vector.Y * matrix.M21 + vector.Z * matrix.M31,
+                vector.X * matrix.M12 + vector.Y * matrix.M22 + vector.Z * matrix.M32,
+                vector.X * matrix.M13 + vector.Y * matrix.M23 + vector.Z * matrix.M33);
         }
     }
 }

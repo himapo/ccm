@@ -31,7 +31,7 @@ namespace ccm.Player
         AffineTransform transform = new AffineTransform();
         public AffineTransform Transform { get { return transform; } }
 
-        float attackCount;
+        float attackCount = 0.0f;
 
         public ICamera Camera { get; set; }
 

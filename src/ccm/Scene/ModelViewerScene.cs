@@ -45,7 +45,7 @@ namespace ccm.Scene
 
         void InitCamera()
         {
-            camera.Eye.Z = 30.0f;
+            camera.Eye = new Vector3(0.0f, 0.0f, 30.0f);
             camera.Far = 300.0f;
         }
 

@@ -13,8 +13,8 @@ namespace HimaLib.Render
     {
         public void SetParameter(ToonModelRenderParameter param)
         {
-            MMDXCore.Instance.Camera.Position = Vector3.CreateXnaVector(param.Camera.Eye);
-            MMDXCore.Instance.Camera.SetVector(Vector3.CreateXnaVector(param.Camera.At) - Vector3.CreateXnaVector(param.Camera.Eye));
+            MMDXCore.Instance.Camera.Position = MathUtilXna.ToXnaVector(param.Camera.Eye);
+            MMDXCore.Instance.Camera.SetVector(MathUtilXna.ToXnaVector(param.Camera.At) - MathUtilXna.ToXnaVector(param.Camera.Eye));
             MMDXCore.Instance.Camera.FieldOfView = MathUtil.ToRadians(param.Camera.FovY);
             MMDXCore.Instance.Camera.Near = param.Camera.Near;
             MMDXCore.Instance.Camera.Far = param.Camera.Far;
@@ -22,7 +22,7 @@ namespace HimaLib.Render
 
         public void Render(MMDXModel model, AffineTransform transform)
         {
-            model.Transform = Matrix.CreateXnaMatrix(transform.WorldMatrix);
+            model.Transform = MathUtilXna.ToXnaMatrix(transform.WorldMatrix);
             model.Draw();
         }
 

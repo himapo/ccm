@@ -30,9 +30,9 @@ namespace HimaLib.Render
             lambert.View = CameraUtil.GetViewMatrix(param.Camera);
             lambert.Projection = CameraUtil.GetProjMatrix(param.Camera);
             lambert.Alpha = param.Alpha;
-            lambert.AmbientLightColor = Vector3.CreateXnaVector(param.AmbientLightColor);
-            lambert.DirLight0Direction = Vector3.CreateXnaVector(param.DirLight0Direction);
-            lambert.DirLight0DiffuseColor = Vector3.CreateXnaVector(param.DirLight0DiffuseColor);
+            lambert.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
+            lambert.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirLight0Direction);
+            lambert.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirLight0DiffuseColor);
         }
 
         public void Render()
@@ -53,7 +53,7 @@ namespace HimaLib.Render
         public void Render(Microsoft.Xna.Framework.Graphics.Model model, AffineTransform transform)
         {
             lambert.Model = model;
-            lambert.World = Matrix.CreateXnaMatrix(transform.WorldMatrix);
+            lambert.World = MathUtilXna.ToXnaMatrix(transform.WorldMatrix);
 
             lambert.RenderModel();
         }
@@ -65,7 +65,7 @@ namespace HimaLib.Render
 
         Microsoft.Xna.Framework.Matrix GetWorldMatrix()
         {
-            return Matrix.CreateXnaMatrix(Transform.WorldMatrix);
+            return MathUtilXna.ToXnaMatrix(Transform.WorldMatrix);
         }
 
         Microsoft.Xna.Framework.Matrix GetViewMatrix()
