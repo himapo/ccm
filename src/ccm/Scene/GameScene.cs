@@ -35,7 +35,7 @@ namespace ccm.Scene
                 MaxEyeZ = 110.0f,
                 MinEyeZ = 40.0f,
                 EyeZInterval = 0.2f,
-                EnableCameraKey = true
+                EnableCameraKey = true,
             };
         }
 

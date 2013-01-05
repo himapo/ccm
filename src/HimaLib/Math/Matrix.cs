@@ -109,25 +109,25 @@ namespace HimaLib.Math
         {
             return new Matrix(
                 1.0f, 0.0f, 0.0f, 0.0f,
-                0.0f, (float)global::System.Math.Cos(radians), (float)-global::System.Math.Sin(radians), 0.0f,
-                0.0f, (float)global::System.Math.Sin(radians), (float)global::System.Math.Cos(radians), 0.0f,
+                0.0f, (float)global::System.Math.Cos(radians), (float)global::System.Math.Sin(radians), 0.0f,
+                0.0f, (float)-global::System.Math.Sin(radians), (float)global::System.Math.Cos(radians), 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f);
         }
 
         public static Matrix CreateRotationY(float radians)
         {
             return new Matrix(
-                (float)global::System.Math.Cos(radians), 0.0f, (float)global::System.Math.Sin(radians), 0.0f,
+                (float)global::System.Math.Cos(radians), 0.0f, (float)-global::System.Math.Sin(radians), 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
-                (float)-global::System.Math.Sin(radians), 0.0f, (float)global::System.Math.Cos(radians), 0.0f,
+                (float)global::System.Math.Sin(radians), 0.0f, (float)global::System.Math.Cos(radians), 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f);
         }
 
         public static Matrix CreateRotationZ(float radians)
         {
             return new Matrix(
-                (float)global::System.Math.Cos(radians), (float)-global::System.Math.Sin(radians), 0.0f, 0.0f,
-                (float)global::System.Math.Sin(radians), (float)global::System.Math.Cos(radians), 0.0f, 0.0f,
+                (float)global::System.Math.Cos(radians), (float)global::System.Math.Sin(radians), 0.0f, 0.0f,
+                (float)-global::System.Math.Sin(radians), (float)global::System.Math.Cos(radians), 0.0f, 0.0f,
                 0.0f, 0.0f, 1.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f);
         }
@@ -148,12 +148,29 @@ namespace HimaLib.Math
 
         public static Matrix CreateLookAt(Vector3 eye, Vector3 at, Vector3 up)
         {
-            return new Matrix();
+            var zaxis = eye - at;
+            zaxis.Normalize();
+            var xaxis = Vector3.Cross(up, zaxis);
+            xaxis.Normalize();
+            var yaxis = Vector3.Cross(zaxis, xaxis);
+
+            return new Matrix(
+                xaxis.X, yaxis.X, zaxis.X, 0.0f,
+                xaxis.Y, yaxis.Y, zaxis.Y, 0.0f,
+                xaxis.Z, yaxis.Z, zaxis.Z, 0.0f,
+                -Vector3.Dot(xaxis, eye), -Vector3.Dot(yaxis, eye), -Vector3.Dot(zaxis, eye), 1.0f);
         }
 
         public static Matrix CreatePerspectiveFieldOfView(float fov, float aspect, float near, float far)
         {
-            return new Matrix();
+            var yScale = (float)(1.0 / global::System.Math.Tan(fov / 2.0));
+            var xScale = yScale / aspect;
+
+            return new Matrix(
+                xScale, 0.0f, 0.0f, 0.0f,
+                0.0f, yScale, 0.0f, 0.0f,
+                0.0f, 0.0f, far / (near - far), -1.0f,
+                0.0f, 0.0f, near * far / (near - far), 0.0f);
         }
     }
 }

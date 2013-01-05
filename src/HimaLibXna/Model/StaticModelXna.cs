@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Render;
-using HimaLib.Math;
 
 namespace HimaLib.Model
 {
@@ -12,8 +11,6 @@ namespace HimaLib.Model
         public string Name { get; set; }
 
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
-
-        AffineTransform transform = new AffineTransform();
 
         public StaticModelXna()
         {
@@ -26,7 +23,7 @@ namespace HimaLib.Model
         public void Render(IModelRenderParameter param)
         {
             var renderer = ModelRendererFactoryXna.Instance.Create(param);
-            renderer.Render(Model, transform);
+            renderer.Render(Model);
         }
 
         public void AddAttachment(string name)

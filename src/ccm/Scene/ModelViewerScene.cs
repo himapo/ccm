@@ -28,7 +28,16 @@ namespace ccm.Scene
 
             Name = "ModelViewer";
 
-            cameraUpdater = new ModelViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));
+            cameraUpdater = new ModelViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main))
+            {
+                InitRotX = -MathUtil.PiOver4,
+                InitRotY = MathUtil.PiOver4,
+                InitEyeZ = 30.0f,
+                MaxEyeZ = 110.0f,
+                MinEyeZ = 10.0f,
+                EyeZInterval = 0.1f,
+                //EnableCameraKey = true,
+            };
         }
 
         void UpdateStateInit()
@@ -45,13 +54,14 @@ namespace ccm.Scene
 
         void InitCamera()
         {
-            camera.Eye = new Vector3(0.0f, 0.0f, 30.0f);
             camera.Far = 300.0f;
+            cameraUpdater.Reset();
         }
 
         void InitRenderer()
         {
             renderParam.Camera = camera;
+            renderParam.Transform = new AffineTransform();
             renderParam.Alpha = 1.0f;
             renderParam.AmbientLightColor = Vector3.One * 0.4f;
             renderParam.DirLight0Direction = Vector3.One * -1.0f;

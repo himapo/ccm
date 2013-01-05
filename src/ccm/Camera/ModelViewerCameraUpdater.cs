@@ -81,9 +81,9 @@ namespace ccm.Camera
             if (controller.IsPress((int)BooleanDeviceLabel.MouseSub))
             {
                 rotX += 0.04f * controller.GetMoveY((int)PointingDeviceLabel.Mouse0);
-                
-                rotX = MathUtil.Clamp(rotX, MinRotX, MaxRotX);
                 rotY -= 0.04f * controller.GetMoveX((int)PointingDeviceLabel.Mouse0);
+
+                rotX = MathUtil.Clamp(rotX, MinRotX, MaxRotX);
             }
 
             // zoom

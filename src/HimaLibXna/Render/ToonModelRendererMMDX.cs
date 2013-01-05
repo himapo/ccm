@@ -11,6 +11,8 @@ namespace HimaLib.Render
 {
     public class ToonModelRendererMMDX : IModelRendererMMDX
     {
+        AffineTransform Transform;
+
         public void SetParameter(ToonModelRenderParameter param)
         {
             MMDXCore.Instance.Camera.Position = MathUtilXna.ToXnaVector(param.Camera.Eye);
@@ -18,11 +20,13 @@ namespace HimaLib.Render
             MMDXCore.Instance.Camera.FieldOfView = MathUtil.ToRadians(param.Camera.FovY);
             MMDXCore.Instance.Camera.Near = param.Camera.Near;
             MMDXCore.Instance.Camera.Far = param.Camera.Far;
+
+            Transform = param.Transform;
         }
 
-        public void Render(MMDXModel model, AffineTransform transform)
+        public void Render(MMDXModel model)
         {
-            model.Transform = MathUtilXna.ToXnaMatrix(transform.WorldMatrix);
+            model.Transform = MathUtilXna.ToXnaMatrix(Transform.WorldMatrix);
             model.Draw();
         }
 

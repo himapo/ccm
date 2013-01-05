@@ -22,6 +22,7 @@ namespace ccm.Player
         public void Draw(IModel model, AffineTransform transform)
         {
             renderParam.Camera = Camera;
+            renderParam.Transform = transform;
 
             model.Render(renderParam);
         }

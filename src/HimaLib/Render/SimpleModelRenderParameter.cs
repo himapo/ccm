@@ -13,6 +13,8 @@ namespace HimaLib.Render
 
         public ICamera Camera { get; set; }
 
+        public AffineTransform Transform { get; set; }
+
         public float Alpha { get; set; }
 
         public Vector3 AmbientLightColor { get; set; }

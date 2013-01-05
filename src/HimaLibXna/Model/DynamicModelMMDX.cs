@@ -19,8 +19,6 @@ namespace HimaLib.Model
 
         List<MMDAccessory> accessoryModels = new List<MMDAccessory>();
 
-        AffineTransform transform = new AffineTransform();
-
         MMDAccessoryLoader accessoryLoader = new MMDAccessoryLoader();
 
         MMDVACLoader vacLoader = new MMDVACLoader();
@@ -53,7 +51,7 @@ namespace HimaLib.Model
         public void Render(IModelRenderParameter param)
         {
             var renderer = ModelRendererFactoryMMDX.Instance.Create(param);
-            renderer.Render(Model, transform);
+            renderer.Render(Model);
 
             foreach (var accessory in accessoryModels)
             {

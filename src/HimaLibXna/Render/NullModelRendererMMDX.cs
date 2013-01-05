@@ -10,7 +10,7 @@ namespace HimaLib.Render
 {
     public class NullModelRendererMMDX : IModelRendererMMDX
     {
-        public void Render(MMDXModel model, AffineTransform transform)
+        public void Render(MMDXModel model)
         {
         }
 

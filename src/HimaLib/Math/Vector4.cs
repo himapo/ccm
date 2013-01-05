@@ -54,6 +54,11 @@ namespace HimaLib.Math
             return (X == other.X && Y == other.Y && Z == other.Z && W == other.W);
         }
 
+        public static float Dot(Vector4 vector1, Vector4 vector2)
+        {
+            return (vector1.X * vector2.X + vector1.Y * vector2.Y + vector1.Z * vector2.Z + vector1.W * vector2.W);
+        }
+
         public float Length()
         {
             return (float)global::System.Math.Sqrt(LengthSquared());

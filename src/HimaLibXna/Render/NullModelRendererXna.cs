@@ -8,7 +8,7 @@ namespace HimaLib.Render
 {
     public class NullModelRendererXna : IModelRendererXna
     {
-        public void Render(Microsoft.Xna.Framework.Graphics.Model model, AffineTransform transform)
+        public void Render(Microsoft.Xna.Framework.Graphics.Model model)
         {
         }
     }
