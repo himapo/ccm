@@ -7,20 +7,20 @@ using HimaLib.Camera;
 
 namespace HimaLib.Render
 {
-    public class SimpleModelRenderParameter : IModelRenderParameter
+    public class SimpleInstancingRenderParameter : IModelRenderParameter
     {
-        public ModelRendererType Type { get { return ModelRendererType.Simple; } }
+        public ModelRendererType Type { get { return ModelRendererType.SimpleInstancing; } }
 
         public ICamera Camera { get; set; }
 
-        public AffineTransform Transform { get; set; }
-
-        public float Alpha { get; set; }
+        public List<AffineTransform> Transforms { get; set; }
 
         public Vector3 AmbientLightColor { get; set; }
 
         public Vector3 DirLight0Direction { get; set; }
 
         public Vector3 DirLight0DiffuseColor { get; set; }
+
+        public Vector3 DirLight0SpecularColor { get; set; }
     }
 }

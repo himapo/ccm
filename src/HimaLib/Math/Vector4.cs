@@ -40,6 +40,11 @@ namespace HimaLib.Math
             W = w;
         }
 
+        public static Vector4 operator -(Vector4 value)
+        {
+            return new Vector4(-value.X, -value.Y, -value.Z, -value.W);
+        }
+
         public static Vector4 operator -(Vector4 value1, Vector4 value2)
         {
             return new Vector4(

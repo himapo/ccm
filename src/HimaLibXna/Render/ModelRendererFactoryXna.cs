@@ -22,9 +22,17 @@ namespace HimaLib.Render
             switch (param.Type)
             {
                 case ModelRendererType.Simple:
-                    var result = new SimpleModelRendererXna();
-                    result.SetParameter(param as SimpleModelRenderParameter);
-                    return result;
+                    {
+                        var result = new SimpleModelRendererXna();
+                        result.SetParameter(param as SimpleModelRenderParameter);
+                        return result;
+                    }
+                case ModelRendererType.SimpleInstancing:
+                    {
+                        var result = new SimpleInstancingRendererXna();
+                        result.SetParameter(param as SimpleInstancingRenderParameter);
+                        return result;
+                    }
                 default:
                     break;
             }

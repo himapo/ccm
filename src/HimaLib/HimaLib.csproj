@@ -122,6 +122,7 @@
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Render\IModelRenderParameter.cs" />
+    <Compile Include="Render\SimpleInstancingRenderParameter.cs" />
     <Compile Include="Render\SimpleModelRenderParameter.cs" />
     <Compile Include="Render\ToonModelRenderParameter.cs" />
     <Compile Include="System\IColor.cs" />

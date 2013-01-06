@@ -123,7 +123,7 @@
     <Compile Include="Render\ModelRendererFactoryXna.cs" />
     <Compile Include="Render\NullModelRendererMMDX.cs" />
     <Compile Include="Render\NullModelRendererXna.cs" />
-    <Compile Include="Render\SimpleInstancingRenderer.cs" />
+    <Compile Include="Render\SimpleInstancingRendererXna.cs" />
     <Compile Include="Render\SimpleModelRendererXna.cs" />
     <Compile Include="Render\ToonModelRendererMMDX.cs" />
     <Compile Include="Render\UIBillboardRenderer.cs" />

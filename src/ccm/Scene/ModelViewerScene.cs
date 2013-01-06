@@ -13,7 +13,7 @@ namespace ccm.Scene
 {
     public class ModelViewerScene : SceneBase
     {
-        BasicCamera camera = new BasicCamera();
+        BasicCamera camera = new BasicCamera() { Far = 300.0f };
 
         ModelViewerCameraUpdater cameraUpdater;
 
@@ -54,7 +54,6 @@ namespace ccm.Scene
 
         void InitCamera()
         {
-            camera.Far = 300.0f;
             cameraUpdater.Reset();
         }
 

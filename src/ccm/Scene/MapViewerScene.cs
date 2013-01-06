@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using HimaLib.Debug;
 using HimaLib.Render;
+using HimaLib.Model;
+using HimaLib.Math;
 using ccm.Input;
 using ccm.Camera;
 using ccm.DungeonLogic;
@@ -12,15 +14,17 @@ namespace ccm.Scene
 {
     public class MapViewerScene : SceneBase
     {
-        SimpleInstancingRenderer renderer;
-
-        BasicCamera camera;
+        BasicCamera camera = new BasicCamera() { Near = 10.0f, Far = 10000.0f };
 
         MapViewerCameraUpdater cameraUpdater;
 
         DungeonMap dungeonMap;
 
-        HimaLib.Math.SystemRand rand;
+        HimaLib.Math.SystemRand rand = new HimaLib.Math.SystemRand();
+
+        SimpleInstancingRenderParameter renderParam = new SimpleInstancingRenderParameter();
+
+        IModel dungeonCubeModel;
 
         public MapViewerScene()
         {
@@ -29,47 +33,64 @@ namespace ccm.Scene
 
             Name = "MapViewer";
 
-            camera = new BasicCamera() { Near = 10.0f, Far = 10000.0f };
-            cameraUpdater = new MapViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));
-            rand = new HimaLib.Math.SystemRand();
-            rand.Init(Environment.TickCount);
-            dungeonMap = new DungeonMap() { Rand = rand };
+            cameraUpdater = new MapViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));          
         }
 
         void UpdateStateInit()
         {
+            InitCamera();
+
             InitRenderer();
 
-            ResetMap();
+            InitModel();
+
+            InitDungeon();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
         }
 
+        void InitCamera()
+        {
+        }
+
         void InitRenderer()
         {
-            renderer = new SimpleInstancingRenderer();
+            renderParam.Camera = camera;
+            renderParam.Transforms = new List<AffineTransform>();
+            renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
+            renderParam.DirLight0Direction = -Vector3.One;
+            renderParam.DirLight0Direction.Normalize();
+            renderParam.DirLight0DiffuseColor = new Vector3(0.5f, 0.6f, 0.8f);
+            renderParam.DirLight0SpecularColor = Vector3.One;
+        }
 
-            renderer.ModelName = "Model/cube000";          
-            renderer.Camera = camera;
+        void InitModel()
+        {
+            dungeonCubeModel = ModelFactory.Instance.Create("cube000");
+        }
+
+        void InitDungeon()
+        {
+            rand.Init(Environment.TickCount);
+            dungeonMap = new DungeonMap() { Rand = rand };
+            ResetMap();
         }
 
         void ResetMap()
         {
             dungeonMap.Generate();
-            renderer.Transforms.Clear();
+            renderParam.Transforms.Clear();
 
             var cubePosList = dungeonMap.GetCubePosList();
             foreach (var pos in cubePosList)
             {
-                renderer.Transforms.Add(
+                renderParam.Transforms.Add(
                     new HimaLib.Math.AffineTransform(
                         HimaLib.Math.Vector3.One,
                         HimaLib.Math.Vector3.Zero,
                         pos));
             }
-
-            renderer.SetUp();
         }
 
         void DrawStateInit()
@@ -96,7 +117,7 @@ namespace ccm.Scene
 
         void DrawStateMain()
         {
-            renderer.Render();
+            dungeonCubeModel.Render(renderParam);
         }
 
     }
