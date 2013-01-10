@@ -13,6 +13,8 @@ namespace HimaLib.System
 
         public StateMachine()
         {
+            UpdateState = () => { };
+            DrawState = () => { };
         }
 
         public void Update()

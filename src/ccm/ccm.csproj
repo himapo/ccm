@@ -196,7 +196,9 @@
     <Compile Include="PlayerOld\Player.cs" />
     <Compile Include="PlayerOld\PlayerModel.cs" />
     <Compile Include="PlayerOld\PlayerModelMMD.cs" />
+    <Compile Include="Player\DungeonPlayerUpdater.cs" />
     <Compile Include="Player\IPlayerDrawer.cs" />
+    <Compile Include="Player\IPlayerUpdater.cs" />
     <Compile Include="Player\Player.cs" />
     <Compile Include="Player\PlayerDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

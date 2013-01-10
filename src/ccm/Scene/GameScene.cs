@@ -20,6 +20,8 @@ namespace ccm.Scene
 
         ModelViewerCameraUpdater cameraUpdater;
 
+        DungeonPlayerUpdater DungeonPlayerUpdater = new DungeonPlayerUpdater();
+
         public GameScene()
         {
             UpdateState = UpdateStateInit;
@@ -54,7 +56,7 @@ namespace ccm.Scene
             Player.AddAttachment("bonbon");
             Player.AddAttachment("negi");
 
-            Player.Camera = Camera;
+            DungeonPlayerUpdater.Camera = Camera;
         }
 
         void InitCamera()
@@ -76,7 +78,7 @@ namespace ccm.Scene
                 return;
             }
 
-            Player.Update();
+            Player.Update(DungeonPlayerUpdater);
             UpdateCamera();
         }
 
