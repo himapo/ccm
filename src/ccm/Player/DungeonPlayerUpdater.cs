@@ -35,6 +35,7 @@ namespace ccm.Player
         bool PressWalk { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Walk); } }
         bool PressCrouch { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Crouch); } }
         bool PressJump { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Jump); } }
+        bool PressAttack { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
 
         bool IsMove { get { return PressUp || PressDown || PressLeft || PressRight; } }
 
@@ -42,12 +43,16 @@ namespace ccm.Player
         float VelocityWalk { get { return 0.1f; } }
         float VelocityRotate { get { return 20.0f; } }
 
+        float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
+
         IModel Model;
         AffineTransform Transform;
 
         float rotDegreeY;
 
         Vector3 position = new Vector3();
+
+        float attackCount;
 
         public DungeonPlayerUpdater()
         {
@@ -71,7 +76,12 @@ namespace ccm.Player
 
         void UpdateStateStand()
         {
-            if (PressCrouch)
+            if (PressAttack)
+            {
+                GoToAttack();
+                return;
+            }
+            else if (PressCrouch)
             {
                 GoToCrouch();
                 return;
@@ -96,7 +106,12 @@ namespace ccm.Player
 
         void UpdateStateRun()
         {
-            if (PressCrouch)
+            if (PressAttack)
+            {
+                GoToAttack();
+                return;
+            }
+            else if (PressCrouch)
             {
                 GoToCrouch();
                 return;
@@ -119,7 +134,12 @@ namespace ccm.Player
 
         void UpdateStateWalk()
         {
-            if (PressCrouch)
+            if (PressAttack)
+            {
+                GoToAttack();
+                return;
+            }
+            else if (PressCrouch)
             {
                 GoToCrouch();
                 return;
@@ -231,7 +251,12 @@ namespace ccm.Player
 
         void UpdateStateCrouch()
         {
-            if (!PressCrouch)
+            if (PressAttack)
+            {
+                GoToAttack();
+                return;
+            }
+            else if (!PressCrouch)
             {
                 GoToStand();
             }
@@ -239,6 +264,15 @@ namespace ccm.Player
 
         void UpdateStateAttack()
         {
+            if (attackCount > 0.0f)
+            {
+                attackCount -= UpdateTimeScale;
+            }
+            else
+            {
+                GoToStand();
+                return;
+            }
         }
 
         void GoToStand()
@@ -269,6 +303,7 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
+            attackCount = 20.0f;
         }
     }
 }
