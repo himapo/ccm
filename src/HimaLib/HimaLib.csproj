@@ -80,6 +80,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera\ICamera.cs" />
+    <Compile Include="Collision\CollisionInfo.cs" />
+    <Compile Include="Collision\CollisionManager.cs" />
+    <Compile Include="Collision\CollisionDetectorFactory.cs" />
+    <Compile Include="Collision\CylinderCollisionPrimitive.cs" />
+    <Compile Include="Collision\CylinderCylinderCpollisionDetector.cs" />
+    <Compile Include="Collision\ICollisionDetector.cs" />
+    <Compile Include="Collision\ICollisionDrawer.cs" />
+    <Compile Include="Collision\ICollisionPrimitive.cs" />
+    <Compile Include="Collision\SphereCollisionPrimitive.cs" />
+    <Compile Include="Collision\SphereSphereCollisionDetector.cs" />
     <Compile Include="Debug\ConsoleDebugPrint.cs" />
     <Compile Include="Debug\DebugMenu.cs" />
     <Compile Include="Debug\DebugMenuNode.cs" />
@@ -118,6 +128,7 @@
     <Compile Include="Math\Point.cs" />
     <Compile Include="Math\Rectangle.cs" />
     <Compile Include="Math\SystemRand.cs" />
+    <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Model\IModel.cs" />

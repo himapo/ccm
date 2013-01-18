@@ -156,10 +156,10 @@
     <Compile Include="CameraOld\ManualCamera.cs" />
     <Compile Include="CameraOld\ModelViewerCamera.cs" />
     <Compile Include="CameraOld\UICamera.cs" />
-    <Compile Include="Collision\CollisionManager.cs" />
-    <Compile Include="Collision\CollisionOpponent.cs" />
-    <Compile Include="Collision\CollisionShape.cs" />
-    <Compile Include="Collision\ICollisionService.cs" />
+    <Compile Include="CollisionOld\CollisionManager.cs" />
+    <Compile Include="CollisionOld\CollisionOpponent.cs" />
+    <Compile Include="CollisionOld\CollisionShape.cs" />
+    <Compile Include="CollisionOld\ICollisionService.cs" />
     <Compile Include="Debug\DebugAxis.cs" />
     <Compile Include="Debug\DebugFontManager.cs" />
     <Compile Include="Debug\DebugSampleManager.cs" />
@@ -314,6 +314,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Collision\" />
     <Folder Include="Demo\" />
     <Folder Include="Model\" />
   </ItemGroup>

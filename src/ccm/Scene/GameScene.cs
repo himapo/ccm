@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HimaLib.Debug;
 using HimaLib.Math;
+using HimaLib.Collision;
 using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
@@ -79,7 +80,15 @@ namespace ccm.Scene
             }
 
             Player.Update(DungeonPlayerUpdater);
+
+            UpdateCollision();
+
             UpdateCamera();
+        }
+
+        void UpdateCollision()
+        {
+            HimaLib.Collision.CollisionManager.Instance.Detect();
         }
 
         void UpdateCamera()
