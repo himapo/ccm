@@ -19,6 +19,9 @@ namespace HimaLib.Collision
         // コリジョングループ
         public Func<int> Group { get; set; }
 
+        // 応答前処理
+        public Action<int, int> PreReaction { get; set; }
+
         // 応答
         public Action<int, int> Reaction { get; set; }
     }
