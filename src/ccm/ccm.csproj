@@ -146,6 +146,7 @@
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
     <Compile Include="Enemy\DungeonEnemyUpdater.cs" />
     <Compile Include="Enemy\Enemy.cs" />
+    <Compile Include="Enemy\EnemyDrawer.cs" />
     <Compile Include="Enemy\IEnemyDrawer.cs" />
     <Compile Include="Enemy\IEnemyUpdater.cs" />
     <Compile Include="Input\ControllerLabel.cs" />

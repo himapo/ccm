@@ -26,6 +26,11 @@ namespace ccm.Enemy
             Model = ModelFactory.Instance.Create(modelName);
         }
 
+        public void Appear(AffineTransform transform)
+        {
+            Transform = transform;
+        }
+
         public void Update(IEnemyUpdater updater)
         {
             updater.Update(Model, Transform);
