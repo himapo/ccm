@@ -144,6 +144,10 @@
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
+    <Compile Include="Enemy\DungeonEnemyUpdater.cs" />
+    <Compile Include="Enemy\Enemy.cs" />
+    <Compile Include="Enemy\IEnemyDrawer.cs" />
+    <Compile Include="Enemy\IEnemyUpdater.cs" />
     <Compile Include="Input\ControllerLabel.cs" />
     <Compile Include="Input\DigitalDeviceLabel.cs" />
     <Compile Include="Input\InputAccessor.cs" />
@@ -167,9 +171,9 @@
     <Compile Include="Deco\Deco.cs" />
     <Compile Include="Deco\DecoManager.cs" />
     <Compile Include="Deco\IDecoService.cs" />
-    <Compile Include="Enemy\EnemyCube.cs" />
-    <Compile Include="Enemy\EnemyManager.cs" />
-    <Compile Include="Enemy\IEnemyService.cs" />
+    <Compile Include="EnemyOld\EnemyCube.cs" />
+    <Compile Include="EnemyOld\EnemyManager.cs" />
+    <Compile Include="EnemyOld\IEnemyService.cs" />
     <Compile Include="Game\ComponentOrder.cs" />
     <Compile Include="Game\GameProperty.cs" />
     <Compile Include="Game\MyGameComponent.cs" />
