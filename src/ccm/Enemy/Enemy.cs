@@ -9,9 +9,13 @@ namespace ccm.Enemy
 {
     public class Enemy
     {
-        IModel Model;
-        
-        AffineTransform Transform = new AffineTransform();
+        public IModel Model { get; set; }
+
+        public AffineTransform Transform { get; set; }
+
+        public IEnemyUpdater Updater { get; set; }
+
+        public IEnemyDrawer Drawer { get; set; }
 
         // AI
 
@@ -21,24 +25,14 @@ namespace ccm.Enemy
         {
         }
 
-        public void InitModel(string modelName)
+        public void Update()
         {
-            Model = ModelFactory.Instance.Create(modelName);
+            Updater.Update(Model, Transform);
         }
 
-        public void Appear(AffineTransform transform)
+        public void Draw()
         {
-            Transform = transform;
-        }
-
-        public void Update(IEnemyUpdater updater)
-        {
-            updater.Update(Model, Transform);
-        }
-
-        public void Draw(IEnemyDrawer drawer)
-        {
-            drawer.Draw(Model, Transform);
+            Drawer.Draw(Model, Transform);
         }
     }
 }

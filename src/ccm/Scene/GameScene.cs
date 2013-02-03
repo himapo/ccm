@@ -9,6 +9,7 @@ using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
 using ccm.Enemy;
+using ccm.Dungeon;
 
 namespace ccm.Scene
 {
@@ -29,6 +30,8 @@ namespace ccm.Scene
         BasicCamera Camera = new BasicCamera();
 
         ModelViewerCameraUpdater cameraUpdater;
+
+        ccm.Dungeon.Dungeon Dungeon = new ccm.Dungeon.Dungeon();
 
         public GameScene()
         {
@@ -70,7 +73,6 @@ namespace ccm.Scene
 
         void InitEnemy()
         {
-            Enemy.InitModel("cube003");
             DungeonEnemyUpdater.Player = Player;
         }
 
@@ -95,11 +97,11 @@ namespace ccm.Scene
 
             Player.Update(DungeonPlayerUpdater);
 
-            Enemy.Update(DungeonEnemyUpdater);
-
             UpdateCollision();
 
             UpdateCamera();
+
+            Dungeon.Update();
         }
 
         void UpdateCollision()
@@ -119,7 +121,7 @@ namespace ccm.Scene
             PlayerDrawer.Camera = Camera;
             Player.Draw(PlayerDrawer);
 
-            Enemy.Draw(EnemyDrawer);
+            Dungeon.Draw();
         }
     }
 }

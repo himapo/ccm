@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Math;
+using HimaLib.Model;
 
 namespace ccm.Enemy
 {
@@ -14,8 +15,26 @@ namespace ccm.Enemy
 
     public class EnemyCreator
     {
-        public void Create(EnemyType type, AffineTransform transform)
+        Dictionary<EnemyType, string> ModelNameDic = new Dictionary<EnemyType,string>();
+
+        public Enemy Create(
+            EnemyType type, 
+            AffineTransform transform,
+            IEnemyUpdater updater,
+            IEnemyDrawer drawer)
         {
+            return new Enemy()
+            {
+                Model = LoadModel(type),
+                Transform = transform,
+                Updater = updater,
+                Drawer = drawer
+            };
+        }
+
+        IModel LoadModel(EnemyType type)
+        {
+            return ModelFactory.Instance.Create(ModelNameDic[type]);
         }
     }
 }
