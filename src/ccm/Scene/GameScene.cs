@@ -8,6 +8,7 @@ using HimaLib.Collision;
 using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
+using ccm.Enemy;
 
 namespace ccm.Scene
 {
@@ -15,13 +16,19 @@ namespace ccm.Scene
     {
         Player.Player Player = new Player.Player();
 
+        DungeonPlayerUpdater DungeonPlayerUpdater = new DungeonPlayerUpdater();
+
         PlayerDrawer PlayerDrawer = new PlayerDrawer();
+
+        Enemy.Enemy Enemy = new Enemy.Enemy();
+
+        DungeonEnemyUpdater DungeonEnemyUpdater = new DungeonEnemyUpdater();
+
+        EnemyDrawer EnemyDrawer = new EnemyDrawer();
 
         BasicCamera Camera = new BasicCamera();
 
         ModelViewerCameraUpdater cameraUpdater;
-
-        DungeonPlayerUpdater DungeonPlayerUpdater = new DungeonPlayerUpdater();
 
         public GameScene()
         {
@@ -45,6 +52,7 @@ namespace ccm.Scene
         void UpdateStateInit()
         {
             InitPlayer();
+            InitEnemy();
             InitCamera();
 
             UpdateState = UpdateStateMain;
@@ -58,6 +66,12 @@ namespace ccm.Scene
             Player.AddAttachment("negi");
 
             DungeonPlayerUpdater.Camera = Camera;
+        }
+
+        void InitEnemy()
+        {
+            Enemy.InitModel("cube003");
+            DungeonEnemyUpdater.Player = Player;
         }
 
         void InitCamera()
@@ -81,6 +95,8 @@ namespace ccm.Scene
 
             Player.Update(DungeonPlayerUpdater);
 
+            Enemy.Update(DungeonEnemyUpdater);
+
             UpdateCollision();
 
             UpdateCamera();
@@ -102,6 +118,8 @@ namespace ccm.Scene
         {
             PlayerDrawer.Camera = Camera;
             Player.Draw(PlayerDrawer);
+
+            Enemy.Draw(EnemyDrawer);
         }
     }
 }
