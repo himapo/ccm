@@ -30,7 +30,7 @@ namespace ccm.Enemy
         {
             RenderParam.Alpha = 1.0f;
             RenderParam.AmbientLightColor = Vector3.One * 0.2f;
-            RenderParam.DirLight0Direction = new Vector3(0.4f, -0.5f, 0.3f);
+            RenderParam.DirLight0Direction = new Vector3(0.4f, -0.5f, -0.3f);
             RenderParam.DirLight0Direction.Normalize();
             RenderParam.DirLight0DiffuseColor = Vector3.One;
         }

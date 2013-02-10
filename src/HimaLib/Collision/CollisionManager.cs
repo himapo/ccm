@@ -10,6 +10,8 @@ namespace HimaLib.Collision
         static readonly CollisionManager instance = new CollisionManager();
         public static CollisionManager Instance { get { return instance; } set { } }
 
+        public ICollisionDrawer Drawer { get; set; }
+
         List<CollisionInfo> infoList = new List<CollisionInfo>();
 
         // 衝突判定をもつものに対して1個発行
@@ -85,7 +87,7 @@ namespace HimaLib.Collision
             }
         }
 
-        public void Draw(ICollisionDrawer drawer)
+        public void Draw()
         {
             var activeQuery = GetActiveQuery();
 
@@ -93,7 +95,7 @@ namespace HimaLib.Collision
             {
                 foreach (var primitive in info.Primitives)
                 {
-                    primitive.Draw(drawer, true);
+                    primitive.Draw(Drawer, true);
                 }
             }
         }

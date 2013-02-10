@@ -56,6 +56,7 @@ namespace ccm.Scene
         {
             InitPlayer();
             InitCamera();
+            InitCollision();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -73,6 +74,11 @@ namespace ccm.Scene
         void InitCamera()
         {
             cameraUpdater.Reset();
+        }
+
+        void InitCollision()
+        {
+            HimaLib.Collision.CollisionManager.Instance.Drawer = new WireCollisionDrawer(Camera);
         }
 
         void DrawStateInit()
@@ -114,6 +120,8 @@ namespace ccm.Scene
         {
             PlayerDrawer.Camera = Camera;
             Player.Draw(PlayerDrawer);
+
+            HimaLib.Collision.CollisionManager.Instance.Draw();
 
             Dungeon.Draw();
         }

@@ -132,6 +132,7 @@
     <Compile Include="Camera\BasicCamera.cs" />
     <Compile Include="Camera\MapViewerCameraUpdater.cs" />
     <Compile Include="Camera\ModelViewerCameraUpdater.cs" />
+    <Compile Include="Collision\CollisionGroup.cs" />
     <Compile Include="DebugMenu\DebugMenuNode.cs" />
     <Compile Include="DebugMenu\DebugMenuManager.cs" />
     <Compile Include="DebugMenu\DebugMenuNodeExecutable.cs" />
@@ -323,7 +324,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Collision\" />
     <Folder Include="Demo\" />
     <Folder Include="Model\" />
   </ItemGroup>

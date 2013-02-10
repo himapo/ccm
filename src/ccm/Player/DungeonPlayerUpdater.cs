@@ -6,6 +6,7 @@ using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.System;
 using HimaLib.Camera;
+using HimaLib.Collision;
 using ccm.Input;
 
 namespace ccm.Player
@@ -54,8 +55,26 @@ namespace ccm.Player
 
         float attackCount;
 
+        HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
+
+        HimaLib.Collision.CollisionInfo BodyCollision = new HimaLib.Collision.CollisionInfo()
+        {
+            Active = () => true,
+            Primitives = new List<ICollisionPrimitive>(),
+            Group = () => (int)ccm.Collision.CollisionGroup.PlayerBody,
+            PreReaction = (id, count) => { },
+            Reaction = (id, count) => { },
+        };
+
         public DungeonPlayerUpdater()
         {
+            BodyCollisionPrimitive = new CylinderCollisionPrimitive()
+            {
+                Base = () => Transform.Translation,
+                Radius = () => 3.0f,
+                Height = () => 12.0f,
+            };
+
             UpdateState = UpdateStateInit;
         }
 
@@ -71,7 +90,17 @@ namespace ccm.Player
 
         void UpdateStateInit()
         {
+            InitCollision();
+
             GoToStand();
+        }
+
+        void InitCollision()
+        {
+            BodyCollision.Primitives.Clear();
+            BodyCollision.Primitives.Add(BodyCollisionPrimitive);
+
+            HimaLib.Collision.CollisionManager.Instance.Add(BodyCollision);
         }
 
         void UpdateStateStand()
