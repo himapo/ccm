@@ -62,7 +62,7 @@ namespace ccm.Dungeon
 
         bool IsTimeToCreateEnemy()
         {
-            if (++Frame >= 300)
+            if (++Frame >= 120)
             {
                 Frame = 0;
                 return true;
@@ -73,7 +73,7 @@ namespace ccm.Dungeon
         AffineTransform CalcEnemyAppearPosition()
         {
             return new AffineTransform(
-                Vector3.One,
+                Vector3.One * 1.5f,
                 Vector3.Zero,
                 new Vector3(Rand.NextFloat(-100.0f, 100.0f), 1.5f, Rand.NextFloat(-100.0f, 100.0f)));
         }
