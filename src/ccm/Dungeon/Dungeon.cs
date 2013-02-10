@@ -3,13 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Math;
+using HimaLib.Camera;
 using ccm.Enemy;
+using ccm.Player;
 
 namespace ccm.Dungeon
 {
     public class Dungeon
     {
+        // フロア情報
         public int Floor { get; set; }
+
+        public ICamera Camera
+        {
+            set { EnemyDrawer.Camera = value; }
+        }
+
+        public Player.Player Player
+        {
+            set { EnemyUpdater.Player = value; }
+        }
 
         EnemyCreator EnemyCreator = new EnemyCreator();
 
@@ -19,19 +32,50 @@ namespace ccm.Dungeon
 
         EnemyDrawer EnemyDrawer = new EnemyDrawer();
 
+        int Frame = 0;
+
+        IRand Rand
+        {
+            get { return GameProperty.gameRand; }
+            set { }
+        }
+
         public Dungeon()
         {
-            
+            Floor = 1;
         }
 
         public void Update()
         {
             EnemyManager.Update();
+
+            if (IsTimeToCreateEnemy())
+            {
+                CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
+            }
         }
 
         public void Draw()
         {
             EnemyManager.Draw();
+        }
+
+        bool IsTimeToCreateEnemy()
+        {
+            if (++Frame >= 300)
+            {
+                Frame = 0;
+                return true;
+            }
+            return false;
+        }
+
+        AffineTransform CalcEnemyAppearPosition()
+        {
+            return new AffineTransform(
+                Vector3.One,
+                Vector3.Zero,
+                new Vector3(Rand.NextFloat(-100.0f, 100.0f), 1.5f, Rand.NextFloat(-100.0f, 100.0f)));
         }
 
         void CreateEnemy(EnemyType type, AffineTransform transform)

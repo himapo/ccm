@@ -38,6 +38,7 @@ namespace ccm.Enemy
 
         void UpdateStateInit()
         {
+            UpdateState = UpdateStateMain;
         }
 
         void UpdateStateMain()

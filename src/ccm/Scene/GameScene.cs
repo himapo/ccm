@@ -21,17 +21,11 @@ namespace ccm.Scene
 
         PlayerDrawer PlayerDrawer = new PlayerDrawer();
 
-        Enemy.Enemy Enemy = new Enemy.Enemy();
-
-        DungeonEnemyUpdater DungeonEnemyUpdater = new DungeonEnemyUpdater();
-
-        EnemyDrawer EnemyDrawer = new EnemyDrawer();
-
         BasicCamera Camera = new BasicCamera();
 
         ModelViewerCameraUpdater cameraUpdater;
 
-        ccm.Dungeon.Dungeon Dungeon = new ccm.Dungeon.Dungeon();
+        ccm.Dungeon.Dungeon Dungeon;
 
         public GameScene()
         {
@@ -50,12 +44,17 @@ namespace ccm.Scene
                 EyeZInterval = 0.2f,
                 EnableCameraKey = true,
             };
+
+            Dungeon = new Dungeon.Dungeon()
+            {
+                Camera = this.Camera,
+                Player = this.Player,
+            };
         }
 
         void UpdateStateInit()
         {
             InitPlayer();
-            InitEnemy();
             InitCamera();
 
             UpdateState = UpdateStateMain;
@@ -69,11 +68,6 @@ namespace ccm.Scene
             Player.AddAttachment("negi");
 
             DungeonPlayerUpdater.Camera = Camera;
-        }
-
-        void InitEnemy()
-        {
-            DungeonEnemyUpdater.Player = Player;
         }
 
         void InitCamera()

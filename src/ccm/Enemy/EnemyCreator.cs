@@ -10,12 +10,17 @@ namespace ccm.Enemy
     public enum EnemyType
     {
         Cube,
-        Seeker,
+        //Seeker,
     }
 
     public class EnemyCreator
     {
         Dictionary<EnemyType, string> ModelNameDic = new Dictionary<EnemyType,string>();
+
+        public EnemyCreator()
+        {
+            ModelNameDic[EnemyType.Cube] = "cube003";
+        }
 
         public Enemy Create(
             EnemyType type, 

@@ -19,6 +19,8 @@ namespace ccm.Enemy
 
         // AI
 
+        // ステータス
+
         // スキル情報
 
         public Enemy()
