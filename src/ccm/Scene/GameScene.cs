@@ -78,6 +78,7 @@ namespace ccm.Scene
 
         void InitCollision()
         {
+            HimaLib.Collision.CollisionManager.Instance.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
             HimaLib.Collision.CollisionManager.Instance.Drawer = new WireCollisionDrawer(Camera);
         }
 
@@ -97,11 +98,11 @@ namespace ccm.Scene
 
             Player.Update(DungeonPlayerUpdater);
 
+            Dungeon.Update();
+
             UpdateCollision();
 
             UpdateCamera();
-
-            Dungeon.Update();
         }
 
         void UpdateCollision()

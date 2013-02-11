@@ -9,5 +9,9 @@ namespace ccm.Collision
     {
         PlayerBody,
         PlayerAttack,
+        AllyBody,
+        AllyAttack,
+        EnemyBody,
+        EnemyAttack,
     }
 }

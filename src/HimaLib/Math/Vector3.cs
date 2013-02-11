@@ -39,6 +39,13 @@ namespace HimaLib.Math
             Z = z;
         }
 
+        public Vector3(Vector3 v)
+        {
+            X = v.X;
+            Y = v.Y;
+            Z = v.Z;
+        }
+
         public static Vector3 operator -(Vector3 value)
         {
             return new Vector3(-value.X, -value.Y, -value.Z);

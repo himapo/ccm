@@ -47,17 +47,16 @@ namespace ccm.Player
         float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
 
         IModel Model;
-        AffineTransform Transform;
 
-        float rotDegreeY;
+        AffineTransform Transform = new AffineTransform();
 
-        Vector3 position = new Vector3();
+        AffineTransform PrevTransform = new AffineTransform();
 
         Vector3 Direction
         {
             get
             {
-                var rotMat = Matrix.CreateRotationY(MathUtil.ToRadians(rotDegreeY));
+                var rotMat = Matrix.CreateRotationY(Transform.Rotation.Y);
                 return Vector3.Transform(Vector3.UnitZ, rotMat);
             }
         }
@@ -66,24 +65,11 @@ namespace ccm.Player
 
         HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
 
-        HimaLib.Collision.CollisionInfo BodyCollision = new HimaLib.Collision.CollisionInfo()
-        {
-            Active = () => true,
-            Primitives = new List<ICollisionPrimitive>(),
-            Group = () => (int)ccm.Collision.CollisionGroup.PlayerBody,
-            PreReaction = (id, count) => { },
-            Reaction = (id, count) => { },
-        };
+        HimaLib.Collision.CollisionInfo BodyCollision;
 
         HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
 
-        HimaLib.Collision.CollisionInfo AttackCollision = new HimaLib.Collision.CollisionInfo()
-        {
-            Primitives = new List<ICollisionPrimitive>(),
-            Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack,
-            PreReaction = (id, count) => { },
-            Reaction = (id, count) => { },
-        };
+        HimaLib.Collision.CollisionInfo AttackCollision;
 
         public DungeonPlayerUpdater()
         {
@@ -94,10 +80,30 @@ namespace ccm.Player
                 Height = () => 12.0f,
             };
 
+            BodyCollision = new HimaLib.Collision.CollisionInfo()
+            {
+                Active = () => true,
+                Primitives = new List<ICollisionPrimitive>(),
+                Group = () => (int)ccm.Collision.CollisionGroup.PlayerBody,
+                PreReaction = (id, count) => { },
+                Reaction = (id, count) => 
+                { 
+                    Transform.Translation = PrevTransform.Translation; 
+                },
+            };
+
             AttackCollisionPrimitive = new SphereCollisionPrimitive()
             {
-                Center = () => position + Direction * 4.0f + Vector3.UnitY * 5.0f,
+                Center = () => Transform.Translation + Direction * 4.0f + Vector3.UnitY * 5.0f,
                 Radius = () => 3.0f,
+            };
+
+            AttackCollision = new HimaLib.Collision.CollisionInfo()
+            {
+                Primitives = new List<ICollisionPrimitive>(),
+                Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack,
+                PreReaction = (id, count) => { },
+                Reaction = (id, count) => { },
             };
 
             UpdateState = UpdateStateInit;
@@ -106,6 +112,7 @@ namespace ccm.Player
         public void Update(IModel model, AffineTransform transform)
         {
             Model = model;
+            PrevTransform = new AffineTransform(Transform);
             Transform = transform;
 
             Update();
@@ -220,13 +227,16 @@ namespace ccm.Player
 
         void Move(float velocity)
         {
-            var rotMat = Matrix.CreateRotationY(MathUtil.ToRadians(GetMoveAngle()));
-            var move = Vector3.Transform(CameraEyeVector, rotMat);
+            var move = GetMoveVector();
 
             MovePosition(move, velocity);
             MoveRotation(move);
+        }
 
-            UpdateTransform();
+        Vector3 GetMoveVector()
+        {
+            var rotMat = Matrix.CreateRotationY(MathUtil.ToRadians(GetMoveAngle()));
+            return Vector3.Transform(CameraEyeVector, rotMat);
         }
 
         float GetMoveAngle()
@@ -255,7 +265,7 @@ namespace ccm.Player
 
         void MovePosition(Vector3 move, float velocity)
         {
-            position += move * velocity;
+            Transform.Translation += move * velocity;
         }
 
         void MoveRotation(Vector3 move)
@@ -273,6 +283,9 @@ namespace ccm.Player
             {
                 eyeAngle = MathUtil.ToDegrees((float)Math.Atan2(move.X, move.Z));
             }
+
+            var rotY = Transform.Rotation.Y;
+            var rotDegreeY = MathUtil.ToDegrees(rotY);
 
             var rotDiff = eyeAngle - rotDegreeY;
             if (rotDiff > 180.0f)
@@ -296,15 +309,8 @@ namespace ccm.Player
                     rotAngle = -VelocityRotate;
             }
 
-            rotDegreeY += rotAngle;
-        }
-
-        void UpdateTransform()
-        {
-            var rot = Transform.Rotation;
-            rot.Y = MathUtil.ToRadians(rotDegreeY);
-            Transform.Rotation = rot;
-            Transform.Translation = position;
+            rotY += MathUtil.ToRadians(rotAngle);
+            Transform.Rotation = Vector3.UnitY * rotY;
         }
 
         void UpdateStateCrouch()

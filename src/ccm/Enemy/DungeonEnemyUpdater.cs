@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.System;
+using HimaLib.Collision;
 using ccm.Player;
 
 namespace ccm.Enemy
@@ -22,23 +23,57 @@ namespace ccm.Enemy
 
         IModel Model;
 
-        AffineTransform Transform;
+        AffineTransform Transform = new AffineTransform();
+
+        AffineTransform PrevTransform = new AffineTransform();
+
+        HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
+
+        HimaLib.Collision.CollisionInfo BodyCollision;
 
         public DungeonEnemyUpdater()
         {
+            BodyCollisionPrimitive = new CylinderCollisionPrimitive()
+            {
+                Base = () => { return new Vector3(Transform.Translation - Vector3.UnitY * 2.0f); },
+                Radius = () => 2.0f,
+                Height = () => 4.0f,
+            };
+
+            BodyCollision = new HimaLib.Collision.CollisionInfo()
+            {
+                Active = () => true,
+                Primitives = new List<ICollisionPrimitive>(),
+                Group = () => (int)ccm.Collision.CollisionGroup.EnemyBody,
+                PreReaction = (id, count) => { },
+                Reaction = (id, count) => 
+                { 
+                    Transform.Translation = PrevTransform.Translation; 
+                },
+            };
+
             UpdateState = UpdateStateInit;
         }
 
         public void Update(IModel model, AffineTransform transform)
         {
             Model = model;
+            PrevTransform = new AffineTransform(Transform);
             Transform = transform;
             UpdateState();
         }
 
         void UpdateStateInit()
         {
+            InitCollision();
             UpdateState = UpdateStateMain;
+        }
+
+        void InitCollision()
+        {
+            BodyCollision.Primitives.Clear();
+            BodyCollision.Primitives.Add(BodyCollisionPrimitive);
+            HimaLib.Collision.CollisionManager.Instance.Add(BodyCollision);
         }
 
         void UpdateStateMain()

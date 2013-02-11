@@ -36,5 +36,10 @@ namespace HimaLib.Math
             : this(Vector3.One, Vector3.Zero, Vector3.Zero)
         {
         }
+
+        public AffineTransform(AffineTransform src)
+            : this(src.Scale, src.Rotation, src.Translation)
+        {
+        }
     }
 }

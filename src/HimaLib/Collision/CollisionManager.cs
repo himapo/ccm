@@ -32,6 +32,12 @@ namespace HimaLib.Collision
         {
         }
 
+        // 衝突が起きるグループのペアを追加
+        public void AddGroupPair(int a, int b)
+        {
+            groupPairList.Add(new KeyValuePair<int, int>(a, b));
+        }
+
         public void Add(CollisionInfo info)
         {
             // 未登録ならID発行

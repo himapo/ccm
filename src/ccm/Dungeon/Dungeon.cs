@@ -19,16 +19,11 @@ namespace ccm.Dungeon
             set { EnemyDrawer.Camera = value; }
         }
 
-        public Player.Player Player
-        {
-            set { EnemyUpdater.Player = value; }
-        }
+        public Player.Player Player { private get; set; }
 
         EnemyCreator EnemyCreator = new EnemyCreator();
 
         ccm.Enemy.EnemyManager EnemyManager = new ccm.Enemy.EnemyManager();
-
-        DungeonEnemyUpdater EnemyUpdater = new DungeonEnemyUpdater();
 
         EnemyDrawer EnemyDrawer = new EnemyDrawer();
 
@@ -83,7 +78,10 @@ namespace ccm.Dungeon
             var enemy = EnemyCreator.Create(
                 type,
                 transform,
-                EnemyUpdater,
+                new DungeonEnemyUpdater()
+                {
+                    Player = this.Player,
+                },
                 EnemyDrawer);
 
             EnemyManager.Add(enemy);
