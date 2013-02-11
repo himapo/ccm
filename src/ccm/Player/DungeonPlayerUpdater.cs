@@ -53,6 +53,15 @@ namespace ccm.Player
 
         Vector3 position = new Vector3();
 
+        Vector3 Direction
+        {
+            get
+            {
+                var rotMat = Matrix.CreateRotationY(MathUtil.ToRadians(rotDegreeY));
+                return Vector3.Transform(Vector3.UnitZ, rotMat);
+            }
+        }
+
         float attackCount;
 
         HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
@@ -66,6 +75,16 @@ namespace ccm.Player
             Reaction = (id, count) => { },
         };
 
+        HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
+
+        HimaLib.Collision.CollisionInfo AttackCollision = new HimaLib.Collision.CollisionInfo()
+        {
+            Primitives = new List<ICollisionPrimitive>(),
+            Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack,
+            PreReaction = (id, count) => { },
+            Reaction = (id, count) => { },
+        };
+
         public DungeonPlayerUpdater()
         {
             BodyCollisionPrimitive = new CylinderCollisionPrimitive()
@@ -73,6 +92,12 @@ namespace ccm.Player
                 Base = () => Transform.Translation,
                 Radius = () => 3.0f,
                 Height = () => 12.0f,
+            };
+
+            AttackCollisionPrimitive = new SphereCollisionPrimitive()
+            {
+                Center = () => position + Direction * 4.0f + Vector3.UnitY * 5.0f,
+                Radius = () => 3.0f,
             };
 
             UpdateState = UpdateStateInit;
@@ -99,8 +124,12 @@ namespace ccm.Player
         {
             BodyCollision.Primitives.Clear();
             BodyCollision.Primitives.Add(BodyCollisionPrimitive);
-
             HimaLib.Collision.CollisionManager.Instance.Add(BodyCollision);
+
+            AttackCollision.Active = () => attackCount > 0.0f;
+            AttackCollision.Primitives.Clear();
+            AttackCollision.Primitives.Add(AttackCollisionPrimitive);
+            HimaLib.Collision.CollisionManager.Instance.Add(AttackCollision);
         }
 
         void UpdateStateStand()

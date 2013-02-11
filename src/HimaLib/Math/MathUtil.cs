@@ -39,5 +39,15 @@ namespace HimaLib.Math
         {
             return radians * 180.0f / Pi;
         }
+
+        public static float Sin(float radians)
+        {
+            return (float)global::System.Math.Sin(radians);
+        }
+
+        public static float Cos(float radians)
+        {
+            return (float)global::System.Math.Cos(radians);
+        }
     }
 }

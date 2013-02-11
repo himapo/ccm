@@ -30,12 +30,63 @@ namespace HimaLib.Collision
         {
             Camera = camera;
             InitEffect();
+            InitSphere();
             InitCylinder();
         }
 
         void InitEffect()
         {
             basicEffect.VertexColorEnabled = true;
+        }
+
+        void InitSphere()
+        {
+            // 球の頂点初期化
+            sphereVertices = new VertexPositionColor[12 * 5 + 2];
+
+            for (var i = 0; i < 5; ++i)
+            {
+                var theta = MathUtil.ToRadians(30.0f * (i + 1));
+                for (var j = 0; j < 12; ++j)
+                {
+                    var phi = MathUtil.ToRadians(30.0f * j);
+                    sphereVertices[i * 12 + j].Position = new Microsoft.Xna.Framework.Vector3(
+                        MathUtil.Sin(theta) * MathUtil.Sin(phi),
+                        MathUtil.Cos(theta),
+                        MathUtil.Sin(theta) * MathUtil.Cos(phi));
+                    sphereVertices[i * 12 + j].Color = Microsoft.Xna.Framework.Color.Red;
+                }
+            }
+            sphereVertices[60].Position = Microsoft.Xna.Framework.Vector3.UnitY;
+            sphereVertices[60].Color = Microsoft.Xna.Framework.Color.Red;
+            sphereVertices[61].Position = -Microsoft.Xna.Framework.Vector3.UnitY;
+            sphereVertices[61].Color = Microsoft.Xna.Framework.Color.Red;
+
+            sphereIndices = new short[13 * (6 + 5)];
+
+            // 垂直に6枚の円
+            for (var i = 0; i < 6; ++i)
+            {
+                sphereIndices[i * 13 + 0] = 60;
+                sphereIndices[i * 13 + 6] = 61;
+                sphereIndices[i * 13 + 12] = 60;
+                for (var j = 0; j < 5; ++j)
+                {
+                    sphereIndices[i * 13 + j + 1] = (short)(j * 12 + i);
+                    sphereIndices[i * 13 + 11 - j] = (short)(j * 12 + i + 6);
+                }
+            }
+
+            // 水平に5枚の円
+            var offset = 13 * 6;
+            for (var i = 0; i < 5; ++i)
+            {
+                for (var j = 0; j < 12; ++j)
+                {
+                    sphereIndices[i * 13 + j + offset] = (short)(i * 12 + j);
+                }
+                sphereIndices[i * 13 + 12 + offset] = sphereIndices[i * 13 + offset];
+            }
         }
 
         void InitCylinder()
@@ -65,6 +116,20 @@ namespace HimaLib.Collision
         public void DrawSphere(SphereCollisionPrimitive primitive, bool active)
         {
             UpdateCamera();
+
+            var scaleMat = Matrix.CreateScale(primitive.Radius());
+            var transMat = Matrix.CreateTranslation(primitive.Center());
+            basicEffect.World = MathUtilXna.ToXnaMatrix(scaleMat * transMat);
+
+            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                for (var i = 0; i < 11; ++i)
+                {
+                    GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionColor>(PrimitiveType.LineStrip, sphereVertices, 0, sphereVertices.Length, sphereIndices, i * 13, 12);
+                }
+            }
         }
 
         public void DrawCylinder(CylinderCollisionPrimitive primitive, bool active)

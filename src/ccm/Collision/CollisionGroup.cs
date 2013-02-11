@@ -8,5 +8,6 @@ namespace ccm.Collision
     public enum CollisionGroup
     {
         PlayerBody,
+        PlayerAttack,
     }
 }
