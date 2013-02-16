@@ -9,23 +9,51 @@ using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
 using ccm.Enemy;
-using ccm.Dungeon;
 
 namespace ccm.Scene
 {
     public class GameScene : SceneBase
     {
+        // プレイヤー
         Player.Player Player = new Player.Player();
 
         DungeonPlayerUpdater DungeonPlayerUpdater = new DungeonPlayerUpdater();
 
         PlayerDrawer PlayerDrawer = new PlayerDrawer();
 
+        // 敵
+        EnemyCreator EnemyCreator = new EnemyCreator();
+
+        ccm.Enemy.EnemyManager EnemyManager = new ccm.Enemy.EnemyManager();
+
+        EnemyDrawer EnemyDrawer = new EnemyDrawer();
+
+        // 味方
+
+        // マップ
+
+        // コリジョン
+        HimaLib.Collision.CollisionManager CollisionManager = new HimaLib.Collision.CollisionManager();
+
+        // カメラ
         BasicCamera Camera = new BasicCamera();
 
         ModelViewerCameraUpdater cameraUpdater;
 
-        ccm.Dungeon.Dungeon Dungeon;
+        // デコ
+
+        // HUD
+
+        // その他
+        int Floor = 1;
+
+        int Frame = 0;
+
+        IRand Rand
+        {
+            get { return GameProperty.gameRand; }
+            set { }
+        }
 
         public GameScene()
         {
@@ -33,6 +61,12 @@ namespace ccm.Scene
             DrawState = DrawStateInit;
 
             Name = "GameScene";
+
+            DungeonPlayerUpdater.CollisionManager = CollisionManager;
+            DungeonPlayerUpdater.Camera = Camera;
+            PlayerDrawer.Camera = Camera;
+
+            EnemyDrawer.Camera = Camera;
 
             cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
@@ -44,19 +78,13 @@ namespace ccm.Scene
                 EyeZInterval = 0.2f,
                 EnableCameraKey = true,
             };
-
-            Dungeon = new Dungeon.Dungeon()
-            {
-                Camera = this.Camera,
-                Player = this.Player,
-            };
         }
 
         void UpdateStateInit()
         {
             InitPlayer();
-            InitCamera();
             InitCollision();
+            InitCamera();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -67,19 +95,17 @@ namespace ccm.Scene
             Player.InitModel();
             Player.AddAttachment("bonbon");
             Player.AddAttachment("negi");
+        }
 
-            DungeonPlayerUpdater.Camera = Camera;
+        void InitCollision()
+        {
+            CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
+            CollisionManager.Drawer = new WireCollisionDrawer(Camera);
         }
 
         void InitCamera()
         {
             cameraUpdater.Reset();
-        }
-
-        void InitCollision()
-        {
-            HimaLib.Collision.CollisionManager.Instance.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
-            HimaLib.Collision.CollisionManager.Instance.Drawer = new WireCollisionDrawer(Camera);
         }
 
         void DrawStateInit()
@@ -98,16 +124,54 @@ namespace ccm.Scene
 
             Player.Update(DungeonPlayerUpdater);
 
-            Dungeon.Update();
+            EnemyManager.Update();
+
+            if (IsTimeToCreateEnemy())
+            {
+                CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
+            }
 
             UpdateCollision();
 
             UpdateCamera();
         }
 
+        bool IsTimeToCreateEnemy()
+        {
+            if (++Frame >= 120)
+            {
+                Frame = 0;
+                return true;
+            }
+            return false;
+        }
+
+        AffineTransform CalcEnemyAppearPosition()
+        {
+            return new AffineTransform(
+                Vector3.One * 1.5f,
+                Vector3.Zero,
+                new Vector3(Rand.NextFloat(-100.0f, 100.0f), 1.5f, Rand.NextFloat(-100.0f, 100.0f)));
+        }
+
+        void CreateEnemy(EnemyType type, AffineTransform transform)
+        {
+            var enemy = EnemyCreator.Create(
+                type,
+                transform,
+                new DungeonEnemyUpdater()
+                {
+                    Player = this.Player,
+                    CollisionManager = this.CollisionManager,
+                },
+                EnemyDrawer);
+
+            EnemyManager.Add(enemy);
+        }
+
         void UpdateCollision()
         {
-            HimaLib.Collision.CollisionManager.Instance.Detect();
+            CollisionManager.Detect();
         }
 
         void UpdateCamera()
@@ -119,12 +183,16 @@ namespace ccm.Scene
 
         void DrawStateMain()
         {
-            PlayerDrawer.Camera = Camera;
             Player.Draw(PlayerDrawer);
 
-            HimaLib.Collision.CollisionManager.Instance.Draw();
+            EnemyManager.Draw();
 
-            Dungeon.Draw();
+            DrawCollision();
+        }
+
+        void DrawCollision()
+        {
+            CollisionManager.Draw();
         }
     }
 }

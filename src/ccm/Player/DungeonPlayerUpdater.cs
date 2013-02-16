@@ -15,6 +15,8 @@ namespace ccm.Player
     {
         public ICamera Camera { get; set; }
 
+        public HimaLib.Collision.CollisionManager CollisionManager { get; set; }
+
         Vector3 CameraEyeVector
         {
             get
@@ -131,12 +133,12 @@ namespace ccm.Player
         {
             BodyCollision.Primitives.Clear();
             BodyCollision.Primitives.Add(BodyCollisionPrimitive);
-            HimaLib.Collision.CollisionManager.Instance.Add(BodyCollision);
+            CollisionManager.Add(BodyCollision);
 
             AttackCollision.Active = () => attackCount > 0.0f;
             AttackCollision.Primitives.Clear();
             AttackCollision.Primitives.Add(AttackCollisionPrimitive);
-            HimaLib.Collision.CollisionManager.Instance.Add(AttackCollision);
+            CollisionManager.Add(AttackCollision);
         }
 
         void UpdateStateStand()

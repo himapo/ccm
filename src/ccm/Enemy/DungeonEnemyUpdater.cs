@@ -15,6 +15,9 @@ namespace ccm.Enemy
         // プレイヤー情報
         public Player.Player Player { get; set; }
 
+        // コリジョン
+        public HimaLib.Collision.CollisionManager CollisionManager { get; set; }
+
         // ダンジョン情報
 
         float Speed = GameProperty.gameRand.NextFloat() * 0.2f + 0.4f;
@@ -73,7 +76,7 @@ namespace ccm.Enemy
         {
             BodyCollision.Primitives.Clear();
             BodyCollision.Primitives.Add(BodyCollisionPrimitive);
-            HimaLib.Collision.CollisionManager.Instance.Add(BodyCollision);
+            CollisionManager.Add(BodyCollision);
         }
 
         void UpdateStateMain()

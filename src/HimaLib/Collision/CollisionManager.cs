@@ -7,8 +7,8 @@ namespace HimaLib.Collision
 {
     public class CollisionManager
     {
-        static readonly CollisionManager instance = new CollisionManager();
-        public static CollisionManager Instance { get { return instance; } set { } }
+        //static readonly CollisionManager instance = new CollisionManager();
+        //public static CollisionManager Instance { get { return instance; } set { } }
 
         public ICollisionDrawer Drawer { get; set; }
 
@@ -28,7 +28,7 @@ namespace HimaLib.Collision
 
         CollisionDetectorFactory DetectorFactory = new CollisionDetectorFactory();
 
-        CollisionManager()
+        public CollisionManager()
         {
         }
 

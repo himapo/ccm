@@ -145,7 +145,6 @@
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
-    <Compile Include="Dungeon\Dungeon.cs" />
     <Compile Include="Enemy\DungeonEnemyUpdater.cs" />
     <Compile Include="Enemy\Enemy.cs" />
     <Compile Include="Enemy\EnemyDrawer.cs" />
@@ -325,6 +324,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Demo\" />
+    <Folder Include="Dungeon\" />
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>
