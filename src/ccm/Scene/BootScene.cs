@@ -64,7 +64,7 @@ namespace ccm.Scene
                 ExecFunc = () =>
                 {
                     Console.WriteLine("Execute Test Game");
-                    ChangeScene(new GameScene());
+                    ChangeScene(new DungeonScene());
                     SwitchController(false);
                 }
             });

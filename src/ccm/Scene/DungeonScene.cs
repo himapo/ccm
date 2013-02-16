@@ -12,7 +12,7 @@ using ccm.Enemy;
 
 namespace ccm.Scene
 {
-    public class GameScene : SceneBase
+    public class DungeonScene : SceneBase
     {
         // プレイヤー
         Player.Player Player = new Player.Player();
@@ -55,12 +55,12 @@ namespace ccm.Scene
             set { }
         }
 
-        public GameScene()
+        public DungeonScene()
         {
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
 
-            Name = "GameScene";
+            Name = "DungeonScene";
 
             DungeonPlayerUpdater.CollisionManager = CollisionManager;
             DungeonPlayerUpdater.Camera = Camera;
