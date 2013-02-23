@@ -9,6 +9,6 @@ namespace ccm.Enemy
 {
     public interface IEnemyUpdater
     {
-        void Update(IModel model, AffineTransform transform);
+        void Update(Enemy enemy);
     }
 }

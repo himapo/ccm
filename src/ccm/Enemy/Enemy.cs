@@ -29,12 +29,12 @@ namespace ccm.Enemy
 
         public void Update()
         {
-            Updater.Update(Model, Transform);
+            Updater.Update(this);
         }
 
         public void Draw()
         {
-            Drawer.Draw(Model, Transform);
+            Drawer.Draw(this);
         }
     }
 }

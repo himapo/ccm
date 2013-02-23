@@ -35,12 +35,12 @@ namespace ccm.Enemy
             RenderParam.DirLight0DiffuseColor = Vector3.One;
         }
 
-        public void Draw(IModel model, AffineTransform transform)
+        public void Draw(Enemy enemy)
         {
             RenderParam.Camera = Camera;
-            RenderParam.Transform = transform;
+            RenderParam.Transform = enemy.Transform;
             //RenderParam.Alpha = 0.5f;
-            model.Render(RenderParam);
+            enemy.Model.Render(RenderParam);
         }
     }
 }

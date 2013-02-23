@@ -9,6 +9,6 @@ namespace ccm.Enemy
 {
     public interface IEnemyDrawer
     {
-        void Draw(IModel model, AffineTransform transform);
+        void Draw(Enemy enemy);
     }
 }

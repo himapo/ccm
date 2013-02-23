@@ -7,11 +7,15 @@ using HimaLib.Model;
 using HimaLib.System;
 using HimaLib.Collision;
 using ccm.Player;
+using ccm.Enemy;
 
 namespace ccm.Enemy
 {
     public class DungeonEnemyUpdater : StateMachine, IEnemyUpdater
     {
+        // 敵アクセス
+        public EnemyManager EnemyManager { get; set; }
+
         // プレイヤー情報
         public Player.Player Player { get; set; }
 
@@ -24,15 +28,28 @@ namespace ccm.Enemy
 
         float Distance = GameProperty.gameRand.NextFloat() * 40.0f + 10.0f;
 
-        IModel Model;
+        // 実体
+        Enemy Enemy;
 
-        AffineTransform Transform = new AffineTransform();
+        IModel Model
+        {
+            get { return Enemy.Model; }
+            set { }
+        }
+
+        AffineTransform Transform
+        {
+            get { return Enemy.Transform; }
+            set { }
+        }
 
         AffineTransform PrevTransform = new AffineTransform();
 
         HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
 
         HimaLib.Collision.CollisionInfo BodyCollision;
+
+        int Frame = 0;
 
         public DungeonEnemyUpdater()
         {
@@ -58,12 +75,12 @@ namespace ccm.Enemy
             UpdateState = UpdateStateInit;
         }
 
-        public void Update(IModel model, AffineTransform transform)
+        public void Update(Enemy enemy)
         {
-            Model = model;
+            Enemy = enemy;
             PrevTransform = new AffineTransform(Transform);
-            Transform = transform;
-            UpdateState();
+
+            Update();
         }
 
         void UpdateStateInit()
@@ -82,10 +99,17 @@ namespace ccm.Enemy
         void UpdateStateMain()
         {
             MoveToPlayer();
+
+            if (++Frame == 600)
+            {
+                UpdateState = UpdateStateTerm;
+            }
         }
 
         void UpdateStateTerm()
         {
+            CollisionManager.Remove(BodyCollision);
+            EnemyManager.DeleteEnemy(Enemy);
         }
 
         void MoveToPlayer()

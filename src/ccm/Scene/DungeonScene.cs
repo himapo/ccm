@@ -22,11 +22,7 @@ namespace ccm.Scene
         PlayerDrawer PlayerDrawer = new PlayerDrawer();
 
         // 敵
-        EnemyCreator EnemyCreator = new EnemyCreator();
-
-        ccm.Enemy.EnemyManager EnemyManager = new ccm.Enemy.EnemyManager();
-
-        EnemyDrawer EnemyDrawer = new EnemyDrawer();
+        ccm.Enemy.EnemyManager EnemyManager;
 
         // 味方
 
@@ -66,7 +62,30 @@ namespace ccm.Scene
             DungeonPlayerUpdater.Camera = Camera;
             PlayerDrawer.Camera = Camera;
 
-            EnemyDrawer.Camera = Camera;
+            var EnemyCreator = new Enemy.EnemyCreator()
+            {
+                UpdaterCreator = () =>
+                {
+                    return new DungeonEnemyUpdater()
+                    {
+                        EnemyManager = this.EnemyManager,
+                        Player = this.Player,
+                        CollisionManager = this.CollisionManager,
+                    };
+                },
+                DrawerCreator = () =>
+                {
+                    return new EnemyDrawer()
+                    {
+                        Camera = this.Camera
+                    };
+                },
+            };
+
+            EnemyManager = new Enemy.EnemyManager()
+            {
+                Creator = EnemyCreator
+            };
 
             cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
@@ -156,17 +175,7 @@ namespace ccm.Scene
 
         void CreateEnemy(EnemyType type, AffineTransform transform)
         {
-            var enemy = EnemyCreator.Create(
-                type,
-                transform,
-                new DungeonEnemyUpdater()
-                {
-                    Player = this.Player,
-                    CollisionManager = this.CollisionManager,
-                },
-                EnemyDrawer);
-
-            EnemyManager.Add(enemy);
+            EnemyManager.CreateEnemy(type, transform);
         }
 
         void UpdateCollision()

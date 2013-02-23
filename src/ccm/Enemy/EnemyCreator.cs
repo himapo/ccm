@@ -15,6 +15,10 @@ namespace ccm.Enemy
 
     public class EnemyCreator
     {
+        public Func<IEnemyUpdater> UpdaterCreator { get; set; }
+
+        public Func<IEnemyDrawer> DrawerCreator { get; set; }
+
         Dictionary<EnemyType, string> ModelNameDic = new Dictionary<EnemyType,string>();
 
         public EnemyCreator()
@@ -24,16 +28,14 @@ namespace ccm.Enemy
 
         public Enemy Create(
             EnemyType type, 
-            AffineTransform transform,
-            IEnemyUpdater updater,
-            IEnemyDrawer drawer)
+            AffineTransform transform)
         {
             return new Enemy()
             {
                 Model = LoadModel(type),
                 Transform = transform,
-                Updater = updater,
-                Drawer = drawer
+                Updater = UpdaterCreator(),
+                Drawer = DrawerCreator()
             };
         }
 
