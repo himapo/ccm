@@ -11,6 +11,8 @@ namespace HimaLib.Render
 
         public static ModelRendererFactoryMMDX Instance { get { return instance; } set { } }
 
+        Dictionary<ModelRendererType, IModelRendererMMDX> RendererDic = new Dictionary<ModelRendererType, IModelRendererMMDX>();
+
         ModelRendererFactoryMMDX()
         {
         }
@@ -22,7 +24,11 @@ namespace HimaLib.Render
             switch (param.Type)
             {
                 case ModelRendererType.Toon:
-                    var result = new ToonModelRendererMMDX();
+                    if (!RendererDic.ContainsKey(param.Type))
+                    {
+                        RendererDic[param.Type] = new ToonModelRendererMMDX();
+                    }
+                    var result = RendererDic[param.Type] as ToonModelRendererMMDX;
                     result.SetParameter(param as ToonModelRenderParameter);
                     return result;
                 default:
