@@ -132,6 +132,14 @@ namespace HimaLib.Math
                 0.0f, 0.0f, 0.0f, 1.0f);
         }
 
+        public static Matrix CreateRotation(Vector4 vector)
+        {
+            return
+                CreateRotationZ(vector.Z) *
+                CreateRotationY(vector.Y) *
+                CreateRotationX(vector.X);
+        }
+
         public static Matrix CreateTranslation(float xPosition, float yPosition, float zPosition)
         {
             return new Matrix(
@@ -171,6 +179,24 @@ namespace HimaLib.Math
                 0.0f, yScale, 0.0f, 0.0f,
                 0.0f, 0.0f, far / (near - far), -1.0f,
                 0.0f, 0.0f, near * far / (near - far), 0.0f);
+        }
+
+        public static Matrix Invert(Matrix matrix)
+        {
+            var a = new float[][]
+            {
+                new float[]{ matrix.M11, matrix.M12, matrix.M13, matrix.M14 },
+                new float[]{ matrix.M21, matrix.M22, matrix.M23, matrix.M24 },
+                new float[]{ matrix.M31, matrix.M32, matrix.M33, matrix.M34 },
+                new float[]{ matrix.M41, matrix.M42, matrix.M43, matrix.M44 }
+            };
+            var i = MathUtil.MatrixInverse(a);
+
+            return new Matrix(
+                i[0][0], i[0][1], i[0][2], i[0][3],
+                i[1][0], i[1][1], i[1][2], i[1][3],
+                i[2][0], i[2][1], i[2][2], i[2][3],
+                i[3][0], i[3][1], i[3][2], i[3][3]);
         }
     }
 }
