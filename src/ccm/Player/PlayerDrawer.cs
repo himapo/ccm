@@ -15,6 +15,10 @@ namespace ccm.Player
 
         ToonModelRenderParameter renderParam = new ToonModelRenderParameter();
 
+        IBillboard Billboard = BillboardFactory.Instance.Create();
+
+        SimpleBillboardRenderParameter BillboardRenderParam = new SimpleBillboardRenderParameter();
+
         public PlayerDrawer()
         {
         }
@@ -25,6 +29,19 @@ namespace ccm.Player
             renderParam.Transform = transform;
 
             model.Render(renderParam);
+
+            BillboardRenderParam.Camera = Camera;
+            BillboardRenderParam.Alpha = 1.0f;
+            BillboardRenderParam.Transform = new AffineTransform();
+            BillboardRenderParam.Transform.Scale = Vector3.One * 0.004f;
+            BillboardRenderParam.Transform.Rotation = Vector3.Zero;
+            BillboardRenderParam.Transform.Translation = new Vector3(
+                transform.Translation.X + 4.0f,
+                transform.Translation.Y + 8.5f,
+                transform.Translation.Z + 1.0f);
+            BillboardRenderParam.TextureName = "Texture/miki";
+
+            Billboard.Render(BillboardRenderParam);
         }
 
     }
