@@ -131,6 +131,7 @@
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Render\IBillboardRenderParameter.cs" />
     <Compile Include="Render\IModelRenderParameter.cs" />
