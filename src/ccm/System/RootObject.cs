@@ -7,6 +7,7 @@ using HimaLib.Debug;
 using HimaLib.System;
 using HimaLib.Input;
 using ccm.Input;
+using HimaLib.Updater;
 
 namespace ccm.System
 {
@@ -96,6 +97,8 @@ namespace ccm.System
             DebugFont.Clear();
 
             InputAccessor.Update();
+
+            HimaLib.Updater.UpdaterManager.Instance.Update(TimeKeeper.Instance.LastFrameMilliSeconds);
 
             CurrentScene.Update();
 

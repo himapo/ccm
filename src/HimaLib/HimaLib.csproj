@@ -148,6 +148,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="System\StateMachine.cs" />
     <Compile Include="System\SystemProperty.cs" />
+    <Compile Include="Updater\CircleUpdater.cs" />
+    <Compile Include="Updater\CylinderUpdater.cs" />
+    <Compile Include="Updater\IUpdater.cs" />
+    <Compile Include="Updater\IUpdaterManager.cs" />
+    <Compile Include="Updater\LinearUpdater.cs" />
+    <Compile Include="Updater\SinUpdater.cs" />
+    <Compile Include="Updater\UpdaterManager.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
