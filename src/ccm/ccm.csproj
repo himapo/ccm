@@ -145,6 +145,9 @@
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
+    <Compile Include="Map\Dungeon.cs" />
+    <Compile Include="Map\DungeonDrawer.cs" />
+    <Compile Include="Map\IDungeonDrawer.cs" />
     <Compile Include="Enemy\DungeonEnemyUpdater.cs" />
     <Compile Include="Enemy\Enemy.cs" />
     <Compile Include="Enemy\EnemyDrawer.cs" />
@@ -191,10 +194,10 @@
     <Compile Include="Light\LightManager.cs" />
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="DungeonLogic\DungeonMap.cs" />
-    <Compile Include="Map\MapCubeInstance.cs" />
-    <Compile Include="Map\MapCubeModel.cs" />
-    <Compile Include="Map\MapGenerator.cs" />
-    <Compile Include="Map\MapManager.cs" />
+    <Compile Include="MapOld\MapCubeInstance.cs" />
+    <Compile Include="MapOld\MapCubeModel.cs" />
+    <Compile Include="MapOld\MapGenerator.cs" />
+    <Compile Include="MapOld\MapManager.cs" />
     <Compile Include="Math\IRand.cs" />
     <Compile Include="Math\SystemRand.cs" />
     <Compile Include="Particle\IParticleService.cs" />
@@ -227,6 +230,8 @@
     <Compile Include="Scene\MapViewerScene.cs" />
     <Compile Include="Scene\ModelViewerScene.cs" />
     <Compile Include="Scene\SceneBase.cs" />
+    <Compile Include="System\DrawRand.cs" />
+    <Compile Include="System\GameRand.cs" />
     <Compile Include="System\RootObject.cs" />
     <Compile Include="SceneOld\MapViewer.cs" />
     <Compile Include="Script\Code\DecoScript.cs">
@@ -324,7 +329,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Demo\" />
-    <Folder Include="Dungeon\" />
     <Folder Include="Model\" />
   </ItemGroup>
   <ItemGroup>

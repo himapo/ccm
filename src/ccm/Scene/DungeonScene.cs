@@ -9,6 +9,8 @@ using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
 using ccm.Enemy;
+using ccm.Map;
+using ccm.System;
 
 namespace ccm.Scene
 {
@@ -27,6 +29,9 @@ namespace ccm.Scene
         // 味方
 
         // マップ
+        Dungeon Dungeon = new Dungeon();
+
+        DungeonDrawer DungeonDrawer = new DungeonDrawer();
 
         // コリジョン
         HimaLib.Collision.CollisionManager CollisionManager = new HimaLib.Collision.CollisionManager();
@@ -87,6 +92,8 @@ namespace ccm.Scene
                 Creator = EnemyCreator
             };
 
+            DungeonDrawer.Camera = Camera;
+
             cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
                 //InitRotX = -MathUtil.PiOver4,
@@ -102,6 +109,7 @@ namespace ccm.Scene
         void UpdateStateInit()
         {
             InitPlayer();
+            InitMap();
             InitCollision();
             InitCamera();
 
@@ -114,6 +122,12 @@ namespace ccm.Scene
             Player.InitModel();
             Player.AddAttachment("bonbon");
             Player.AddAttachment("negi");
+        }
+
+        void InitMap()
+        {
+            Dungeon.InitModel();
+            Dungeon.Generate();
         }
 
         void InitCollision()
@@ -196,12 +210,19 @@ namespace ccm.Scene
 
             EnemyManager.Draw();
 
+            DrawMap();
+
             DrawCollision();
         }
 
         void DrawCollision()
         {
             CollisionManager.Draw();
+        }
+
+        void DrawMap()
+        {
+            Dungeon.Draw(DungeonDrawer);
         }
     }
 }
