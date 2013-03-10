@@ -46,7 +46,7 @@ namespace ccm.Scene
         // HUD
 
         // その他
-        int Floor = 1;
+        //int Floor = 1;
 
         int Frame = 0;
 

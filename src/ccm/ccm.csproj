@@ -260,13 +260,13 @@
     <Compile Include="Shader\ShaderManager.cs" />
     <Compile Include="Util\GameUtil.cs" />
     <Compile Include="Util\GeneralUtil.cs" />
-    <Compile Include="Updater\CircleUpdater.cs" />
-    <Compile Include="Updater\CylinderUpdater.cs" />
-    <Compile Include="Updater\IUpdater.cs" />
-    <Compile Include="Updater\IUpdaterService.cs" />
-    <Compile Include="Updater\LinearUpdater.cs" />
-    <Compile Include="Updater\SinUpdater.cs" />
-    <Compile Include="Updater\UpdaterManager.cs" />
+    <Compile Include="UpdaterOld\CircleUpdater.cs" />
+    <Compile Include="UpdaterOld\CylinderUpdater.cs" />
+    <Compile Include="UpdaterOld\IUpdater.cs" />
+    <Compile Include="UpdaterOld\IUpdaterService.cs" />
+    <Compile Include="UpdaterOld\LinearUpdater.cs" />
+    <Compile Include="UpdaterOld\SinUpdater.cs" />
+    <Compile Include="UpdaterOld\UpdaterManager.cs" />
     <Compile Include="Util\RandomSelector.cs" />
     <Compile Include="Util\ShuffleList.cs" />
   </ItemGroup>

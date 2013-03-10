@@ -81,6 +81,15 @@ namespace HimaLib.Math
                 matrix1.M41 * matrix2.M14 + matrix1.M42 * matrix2.M24 + matrix1.M43 * matrix2.M34 + matrix1.M44 * matrix2.M44);
         }
 
+        public static Matrix operator /(Matrix matrix1, float divider)
+        {
+            return new Matrix(
+                matrix1.M11 / divider, matrix1.M12 / divider, matrix1.M13 / divider, matrix1.M14 / divider,
+                matrix1.M21 / divider, matrix1.M22 / divider, matrix1.M23 / divider, matrix1.M24 / divider,
+                matrix1.M31 / divider, matrix1.M32 / divider, matrix1.M33 / divider, matrix1.M34 / divider,
+                matrix1.M41 / divider, matrix1.M42 / divider, matrix1.M43 / divider, matrix1.M44 / divider);
+        }
+
         public bool Equals(Matrix other)
         {
             return false;
@@ -183,20 +192,74 @@ namespace HimaLib.Math
 
         public static Matrix Invert(Matrix matrix)
         {
-            var a = new float[][]
+            var det = matrix.Determinant();
+
+            var b = new float[4][];
+
+            for (var i = 0; i < 4; ++i)
             {
-                new float[]{ matrix.M11, matrix.M12, matrix.M13, matrix.M14 },
-                new float[]{ matrix.M21, matrix.M22, matrix.M23, matrix.M24 },
-                new float[]{ matrix.M31, matrix.M32, matrix.M33, matrix.M34 },
-                new float[]{ matrix.M41, matrix.M42, matrix.M43, matrix.M44 }
-            };
-            var i = MathUtil.MatrixInverse(a);
+                matrix.InvertHelper(i + 1, out b[i]);
+            }
 
             return new Matrix(
-                i[0][0], i[0][1], i[0][2], i[0][3],
-                i[1][0], i[1][1], i[1][2], i[1][3],
-                i[2][0], i[2][1], i[2][2], i[2][3],
-                i[3][0], i[3][1], i[3][2], i[3][3]);
+                b[0][0] / det, b[0][1] / det, b[0][2] / det, b[0][3] / det,
+                b[1][0] / det, b[1][1] / det, b[1][2] / det, b[1][3] / det,
+                b[2][0] / det, b[2][1] / det, b[2][2] / det, b[2][3] / det,
+                b[3][0] / det, b[3][1] / det, b[3][2] / det, b[3][3] / det);
+        }
+
+        public float Determinant()
+        {
+            float[] b;
+            InvertHelper(1, out b);
+            var d1 = M11 * b[0] + M21 * b[1] + M31 * b[2] + M41 * b[3];
+            //InvertHelper(2, out b);
+            //var d2 = M12 * b[0] + M22 * b[1] + M32 * b[2] + M42 * b[3];
+            //InvertHelper(3, out b);
+            //var d3 = M13 * b[0] + M23 * b[1] + M33 * b[2] + M43 * b[3];
+            //InvertHelper(4, out b);
+            //var d4 = M14 * b[0] + M24 * b[1] + M34 * b[2] + M44 * b[3];
+            return d1;
+        }
+
+        /// <summary>
+        /// row行目の余因子展開
+        /// </summary>
+        /// <param name="row"></param>
+        /// <param name="b"></param>
+        void InvertHelper(int row, out float[] b)
+        {
+            b = new float[4];
+
+            switch (row)
+            {
+                case 1:
+                    b[0] =  (M22 * (M33 * M44 - M34 * M43) + M23 * (M34 * M42 - M32 * M44) + M24 * (M32 * M43 - M33 * M42));
+                    b[1] = -(M32 * (M43 * M14 - M44 * M13) + M33 * (M44 * M12 - M42 * M14) + M34 * (M42 * M13 - M43 * M12));
+                    b[2] =  (M42 * (M13 * M24 - M14 * M23) + M43 * (M14 * M22 - M12 * M24) + M44 * (M12 * M23 - M13 * M22));
+                    b[3] = -(M12 * (M23 * M34 - M24 * M33) + M13 * (M24 * M32 - M22 * M34) + M14 * (M22 * M33 - M23 * M32));                  
+                    break;
+                case 2:
+                    b[0] = -(M23 * (M34 * M41 - M31 * M44) + M24 * (M31 * M43 - M33 * M41) + M21 * (M33 * M44 - M34 * M43));
+                    b[1] =  (M33 * (M44 * M11 - M41 * M14) + M34 * (M41 * M13 - M43 * M11) + M31 * (M43 * M14 - M44 * M13));
+                    b[2] = -(M43 * (M14 * M21 - M11 * M24) + M44 * (M11 * M23 - M13 * M21) + M41 * (M13 * M24 - M14 * M23));
+                    b[3] =  (M13 * (M24 * M31 - M21 * M34) + M14 * (M21 * M33 - M23 * M31) + M11 * (M23 * M34 - M24 * M33));
+                    break;
+                case 3:
+                    b[0] =  (M24 * (M31 * M42 - M32 * M41) + M21 * (M32 * M44 - M34 * M42) + M22 * (M34 * M41 - M31 * M44));
+                    b[1] = -(M34 * (M41 * M12 - M42 * M11) + M31 * (M42 * M14 - M44 * M12) + M32 * (M44 * M11 - M41 * M14));
+                    b[2] =  (M44 * (M11 * M22 - M12 * M21) + M41 * (M12 * M24 - M14 * M22) + M42 * (M14 * M21 - M11 * M24));
+                    b[3] = -(M14 * (M21 * M32 - M22 * M31) + M11 * (M22 * M34 - M24 * M32) + M12 * (M24 * M31 - M21 * M34));
+                    break;
+                case 4:
+                    b[0] = -(M21 * (M32 * M43 - M33 * M42) + M22 * (M33 * M41 - M31 * M43) + M23 * (M31 * M42 - M32 * M41));
+                    b[1] =  (M31 * (M42 * M13 - M43 * M12) + M32 * (M43 * M11 - M41 * M13) + M33 * (M41 * M12 - M42 * M11));
+                    b[2] = -(M41 * (M12 * M23 - M13 * M22) + M42 * (M13 * M21 - M11 * M23) + M43 * (M11 * M22 - M12 * M21));
+                    b[3] =  (M11 * (M22 * M33 - M23 * M32) + M12 * (M23 * M31 - M21 * M33) + M13 * (M21 * M32 - M22 * M31));
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

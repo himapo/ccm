@@ -24,13 +24,14 @@ namespace HimaLib.System
 
         public virtual float LastFrameSeconds
         {
-            get
-            {
-                return (float)XnaGameTime.ElapsedGameTime.TotalSeconds;
-            }
-            set
-            {
-            }
+            get { return (float)XnaGameTime.ElapsedGameTime.TotalSeconds; }
+            set { }
+        }
+
+        public virtual float LastFrameMilliSeconds
+        {
+            get { return (float)XnaGameTime.ElapsedGameTime.TotalMilliseconds; }
+            set { }
         }
 
         public float LastTimeScale
