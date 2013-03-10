@@ -6,9 +6,11 @@ using ccm.DungeonLogic;
 
 namespace ccm
 {
-    class MapGenerator
+    public class MapGenerator
     {
         static readonly MapGenerator instance = new MapGenerator();
+
+        public static MapGenerator Instance { get { return instance; } private set { } }
 
         HimaLib.Math.SystemRand rand;
 
@@ -19,11 +21,6 @@ namespace ccm
             rand = new HimaLib.Math.SystemRand();
             rand.Init(Environment.TickCount);
             dungeonMap = new DungeonMap() { Rand = rand };
-        }
-
-        public static MapGenerator GetInstance()
-        {
-            return instance;
         }
 
         public DungeonMap Generate()

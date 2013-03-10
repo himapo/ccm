@@ -11,6 +11,16 @@ namespace HimaLib.Math
 
         Random rand;
 
+        public SystemRand()
+            : this(Environment.TickCount)
+        {
+        }
+
+        public SystemRand(int seed)
+        {
+            Init(seed);
+        }
+
         public void Init(int s)
         {
             Seed = s;

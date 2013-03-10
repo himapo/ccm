@@ -138,7 +138,7 @@ namespace ccm
 
             cubePosSet.Clear();
 
-            var cubePosList = MapGenerator.GetInstance().Generate().GetCubePosList();
+            var cubePosList = MapGenerator.Instance.Generate().GetCubePosList();
 
             foreach (var pos in cubePosList)
             {

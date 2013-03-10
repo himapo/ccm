@@ -22,7 +22,10 @@ namespace HimaLib.Render
 
         public void SetParameter(SimpleInstancingRenderParameter param)
         {
-            SetInstanceTransforms(param.Transforms);
+            if (param.TransformsUpdated)
+            {
+                SetInstanceTransforms(param.Transforms);
+            }
 
             shader.View = CameraUtil.GetViewMatrix(param.Camera);
             shader.Projection = CameraUtil.GetProjMatrix(param.Camera);

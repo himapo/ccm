@@ -91,6 +91,8 @@ namespace ccm.Scene
                         HimaLib.Math.Vector3.Zero,
                         pos));
             }
+
+            renderParam.TransformsUpdated = true;
         }
 
         void DrawStateInit()
@@ -118,6 +120,7 @@ namespace ccm.Scene
         void DrawStateMain()
         {
             dungeonCubeModel.Render(renderParam);
+            renderParam.TransformsUpdated = false;
         }
 
     }
