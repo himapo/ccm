@@ -7,7 +7,16 @@ namespace HimaLib.Debug
 {
     public class DebugMenuNodeTunable<T> : DebugMenuNode
     {
-        protected T val;
+        public Func<T> Getter { get; set; }
+
+        public Action<T> Setter { get; set; }
+
+        T val;
+        protected T Val
+        {
+            get { return Getter(); }
+            set { Setter(value); }
+        }
 
         string label;
 
@@ -17,14 +26,15 @@ namespace HimaLib.Debug
             set { label = value; }
         }
 
-        public DebugMenuNodeTunable(T initial)
+        public DebugMenuNodeTunable()
         {
-            val = initial;
+            Getter = () => { return val; };
+            Setter = (v) => { val = v; };
         }
 
         protected virtual string GetValString()
         {
-            return val.ToString();
+            return Val.ToString();
         }
     }
 }

@@ -5,20 +5,20 @@ using System.Text;
 
 namespace HimaLib.Debug
 {
-    public class DebugMenuNodeTunableInt : DebugMenuNodeTunable<int>
+    public class DebugMenuNodeTunableBool : DebugMenuNodeTunable<bool>
     {
-        public DebugMenuNodeTunableInt()
+        public DebugMenuNodeTunableBool()
         {
         }
 
         public override void OnPushLeft()
         {
-            --Val;
+            Val = false;
         }
 
         public override void OnPushRight()
         {
-            ++Val;
+            Val = true;
         }
     }
 }

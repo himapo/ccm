@@ -11,6 +11,7 @@ using ccm.Camera;
 using ccm.Enemy;
 using ccm.Map;
 using ccm.System;
+using ccm.Debug;
 
 namespace ccm.Scene
 {
@@ -44,6 +45,13 @@ namespace ccm.Scene
         // デコ
 
         // HUD
+
+        // デバッグメニュー
+        DebugMenu debugMenu = new DebugMenu("Dungeon Debug Menu");
+
+        DebugMenuUpdater debugMenuUpdater;
+
+        DefaultDebugMenuDrawer debugMenuDrawer = new DefaultDebugMenuDrawer();
 
         // その他
         //int Floor = 1;
@@ -104,6 +112,8 @@ namespace ccm.Scene
                 EyeZInterval = 0.2f,
                 EnableCameraKey = true,
             };
+
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
         }
 
         void UpdateStateInit()
@@ -112,6 +122,7 @@ namespace ccm.Scene
             InitMap();
             InitCollision();
             InitCamera();
+            InitDebugMenu();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -141,12 +152,27 @@ namespace ccm.Scene
             cameraUpdater.Reset();
         }
 
+        void InitDebugMenu()
+        {
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeTunableBool()
+            {
+                Label = "Draw Map",
+                Selectable = true,
+                Getter = () => { return Dungeon.Drawable; },
+                Setter = (b) => { Dungeon.Drawable = b; },
+            });
+
+            InputAccessor.SwitchController(ControllerLabel.Debug, true);
+        }
+
         void DrawStateInit()
         {
         }
 
         void UpdateStateMain()
         {
+            debugMenuUpdater.Update();
+
             DebugFont.Add(Name, 50.0f, 60.0f);
 
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
@@ -213,6 +239,8 @@ namespace ccm.Scene
             DrawMap();
 
             DrawCollision();
+
+            debugMenu.Draw(debugMenuDrawer);
         }
 
         void DrawCollision()

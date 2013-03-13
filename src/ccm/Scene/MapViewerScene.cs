@@ -9,6 +9,7 @@ using HimaLib.Math;
 using ccm.Input;
 using ccm.Camera;
 using ccm.DungeonLogic;
+using ccm.Debug;
 
 namespace ccm.Scene
 {
@@ -26,6 +27,14 @@ namespace ccm.Scene
 
         IModel dungeonCubeModel;
 
+        DebugMenu debugMenu = new DebugMenu("MapViewer");
+
+        DebugMenuUpdater debugMenuUpdater;
+
+        DefaultDebugMenuDrawer debugMenuDrawer = new DefaultDebugMenuDrawer();
+
+        bool Drawable = true;
+
         public MapViewerScene()
         {
             UpdateState = UpdateStateInit;
@@ -33,7 +42,9 @@ namespace ccm.Scene
 
             Name = "MapViewer";
 
-            cameraUpdater = new MapViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));          
+            cameraUpdater = new MapViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));
+
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
         }
 
         void UpdateStateInit()
@@ -45,6 +56,8 @@ namespace ccm.Scene
             InitModel();
 
             InitDungeon();
+
+            InitDebugMenu();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -95,12 +108,27 @@ namespace ccm.Scene
             renderParam.TransformsUpdated = true;
         }
 
+        void InitDebugMenu()
+        {
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeTunableBool()
+            {
+                Label = "Draw Enable",
+                Selectable = true,
+                Getter = () => { return Drawable; },
+                Setter = (b) => { Drawable = b; },
+            });
+
+            InputAccessor.SwitchController(ControllerLabel.Debug, true);
+        }
+
         void DrawStateInit()
         {
         }
 
         void UpdateStateMain()
         {
+            debugMenuUpdater.Update();
+
             DebugFont.Add(Name, 50.0f, 60.0f);
 
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
@@ -119,8 +147,13 @@ namespace ccm.Scene
 
         void DrawStateMain()
         {
-            dungeonCubeModel.Render(renderParam);
-            renderParam.TransformsUpdated = false;
+            if (Drawable)
+            {
+                dungeonCubeModel.Render(renderParam);
+                renderParam.TransformsUpdated = false;
+            }
+
+            debugMenu.Draw(debugMenuDrawer);
         }
 
     }

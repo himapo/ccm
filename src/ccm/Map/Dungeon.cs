@@ -15,6 +15,8 @@ namespace ccm.Map
     /// </summary>
     public class Dungeon
     {
+        public bool Drawable { get; set; }
+
         IModel CubeModel;
 
         DungeonMap DungeonMap = new DungeonMap() { Rand = GameRand.Instance };
@@ -47,6 +49,10 @@ namespace ccm.Map
 
         public void Draw(IDungeonDrawer drawer)
         {
+            if (!Drawable)
+            {
+                return;
+            }
             drawer.DrawMapCube(CubeModel, MapUpdated, CubeTransforms);
             MapUpdated = false;
         }
