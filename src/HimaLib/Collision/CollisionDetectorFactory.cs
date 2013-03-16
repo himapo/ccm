@@ -37,7 +37,7 @@ namespace HimaLib.Collision
                     break;
             }
 
-            return null;
+            return new NullCollisionDetector();
         }
     }
 }

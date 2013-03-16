@@ -8,6 +8,7 @@ using HimaLib.System;
 using HimaLib.Camera;
 using HimaLib.Collision;
 using ccm.Input;
+using ccm.Debug;
 
 namespace ccm.Player
 {
@@ -85,7 +86,6 @@ namespace ccm.Player
             BodyCollision = new HimaLib.Collision.CollisionInfo()
             {
                 Active = () => true,
-                Primitives = new List<ICollisionPrimitive>(),
                 Group = () => (int)ccm.Collision.CollisionGroup.PlayerBody,
                 PreReaction = (id, count) => { },
                 Reaction = (id, count) => 
@@ -102,10 +102,12 @@ namespace ccm.Player
 
             AttackCollision = new HimaLib.Collision.CollisionInfo()
             {
-                Primitives = new List<ICollisionPrimitive>(),
                 Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack,
                 PreReaction = (id, count) => { },
-                Reaction = (id, count) => { },
+                Reaction = (id, count) => 
+                {
+                    DebugUtil.PrintLine("Attack Hit");
+                },
             };
 
             UpdateState = UpdateStateInit;

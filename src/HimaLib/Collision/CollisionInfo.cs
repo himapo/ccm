@@ -14,7 +14,7 @@ namespace HimaLib.Collision
         public Func<bool> Active { get; set; }
 
         // コリジョン形状
-        public List<ICollisionPrimitive> Primitives { get; set; }
+        public List<ICollisionPrimitive> Primitives { get; private set; }
 
         // コリジョングループ
         public Func<int> Group { get; set; }
@@ -24,5 +24,10 @@ namespace HimaLib.Collision
 
         // 応答
         public Action<int, int> Reaction { get; set; }
+
+        public CollisionInfo()
+        {
+            Primitives = new List<ICollisionPrimitive>();
+        }
     }
 }

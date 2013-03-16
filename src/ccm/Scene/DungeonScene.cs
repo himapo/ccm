@@ -144,6 +144,8 @@ namespace ccm.Scene
         void InitCollision()
         {
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
+            CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyDamage);
+            CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyBody);
             CollisionManager.Drawer = new WireCollisionDrawer(Camera);
         }
 

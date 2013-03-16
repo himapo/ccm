@@ -88,6 +88,7 @@
     <Compile Include="Collision\ICollisionDetector.cs" />
     <Compile Include="Collision\ICollisionDrawer.cs" />
     <Compile Include="Collision\ICollisionPrimitive.cs" />
+    <Compile Include="Collision\NullCollisionDetector.cs" />
     <Compile Include="Collision\SphereCollisionPrimitive.cs" />
     <Compile Include="Collision\SphereSphereCollisionDetector.cs" />
     <Compile Include="Debug\ConsoleDebugPrint.cs" />

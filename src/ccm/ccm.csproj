@@ -133,6 +133,7 @@
     <Compile Include="Camera\MapViewerCameraUpdater.cs" />
     <Compile Include="Camera\ModelViewerCameraUpdater.cs" />
     <Compile Include="Collision\CollisionGroup.cs" />
+    <Compile Include="Collision\PlayerAttackInfo.cs" />
     <Compile Include="DebugMenu\DebugMenuNode.cs" />
     <Compile Include="DebugMenu\DebugMenuManager.cs" />
     <Compile Include="DebugMenu\DebugMenuNodeExecutable.cs" />

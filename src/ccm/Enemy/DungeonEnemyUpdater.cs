@@ -49,6 +49,10 @@ namespace ccm.Enemy
 
         HimaLib.Collision.CollisionInfo BodyCollision;
 
+        HimaLib.Collision.SphereCollisionPrimitive DamageCollisionPrimitive;
+
+        HimaLib.Collision.CollisionInfo DamageCollision;
+
         int Frame = 0;
 
         public DungeonEnemyUpdater()
@@ -63,12 +67,28 @@ namespace ccm.Enemy
             BodyCollision = new HimaLib.Collision.CollisionInfo()
             {
                 Active = () => true,
-                Primitives = new List<ICollisionPrimitive>(),
                 Group = () => (int)ccm.Collision.CollisionGroup.EnemyBody,
                 PreReaction = (id, count) => { },
                 Reaction = (id, count) => 
                 { 
                     Transform.Translation = PrevTransform.Translation; 
+                },
+            };
+
+            DamageCollisionPrimitive = new SphereCollisionPrimitive()
+            {
+                Center = () => Transform.Translation,
+                Radius = () => 3.0f,
+            };
+
+            DamageCollision = new HimaLib.Collision.CollisionInfo()
+            {
+                Active = () => true,
+                Group = () => (int)ccm.Collision.CollisionGroup.EnemyDamage,
+                PreReaction = (id, count) => { },
+                Reaction = (id, count) =>
+                {
+                    UpdateState = UpdateStateTerm;
                 },
             };
 
@@ -94,13 +114,17 @@ namespace ccm.Enemy
             BodyCollision.Primitives.Clear();
             BodyCollision.Primitives.Add(BodyCollisionPrimitive);
             CollisionManager.Add(BodyCollision);
+
+            DamageCollision.Primitives.Clear();
+            DamageCollision.Primitives.Add(DamageCollisionPrimitive);
+            CollisionManager.Add(DamageCollision);
         }
 
         void UpdateStateMain()
         {
             MoveToPlayer();
 
-            if (++Frame == 600)
+            if (++Frame == 6000)
             {
                 UpdateState = UpdateStateTerm;
             }
@@ -109,6 +133,7 @@ namespace ccm.Enemy
         void UpdateStateTerm()
         {
             CollisionManager.Remove(BodyCollision);
+            CollisionManager.Remove(DamageCollision);
             EnemyManager.DeleteEnemy(Enemy);
         }
 
