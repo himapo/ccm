@@ -125,12 +125,15 @@ namespace HimaLib.Collision
                         var collisionID = ++collisionIDCount;
 
                         // 応答の前処理（応答に必要な情報の交換など）
-                        a.PreReaction(collisionID, collisionCount);
-                        b.PreReaction(collisionID, collisionCount);
+                        //a.PreReaction(collisionID, collisionCount);
+                        //b.PreReaction(collisionID, collisionCount);
 
                         // 衝突応答
-                        a.Reaction(collisionID, collisionCount);
-                        b.Reaction(collisionID, collisionCount);
+                        //a.Reaction(collisionID, collisionCount);
+                        //b.Reaction(collisionID, collisionCount);
+
+                        a.Reactor.React(collisionID, collisionCount, b.Actor);
+                        b.Reactor.React(collisionID, collisionCount, a.Actor);
                     }
                 }
             }

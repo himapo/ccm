@@ -20,14 +20,21 @@ namespace HimaLib.Collision
         public Func<int> Group { get; set; }
 
         // 応答前処理
-        public Action<int, int> PreReaction { get; set; }
+        //public Action<int, int> PreReaction { get; set; }
 
         // 応答
-        public Action<int, int> Reaction { get; set; }
+        //public Action<int, int> Reaction { get; set; }
+
+        // 応答
+        public ICollisionReactor Reactor { get; set; }
+
+        // 相手の応答に渡す自分のパラメータ
+        public ICollisionActor Actor { get; set; }
 
         public CollisionInfo()
         {
             Primitives = new List<ICollisionPrimitive>();
+            Reactor = new NullCollisionReactor();
         }
     }
 }

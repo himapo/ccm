@@ -9,6 +9,7 @@ using HimaLib.Camera;
 using HimaLib.Collision;
 using ccm.Input;
 using ccm.Debug;
+using ccm.Collision;
 
 namespace ccm.Player
 {
@@ -68,9 +69,13 @@ namespace ccm.Player
 
         HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
 
+        CollisionReactor BodyCollisionReactor;
+
         HimaLib.Collision.CollisionInfo BodyCollision;
 
         HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
+
+        AttackCollisionActor AttackCollisionActor;
 
         HimaLib.Collision.CollisionInfo AttackCollision;
 
@@ -83,15 +88,19 @@ namespace ccm.Player
                 Height = () => 12.0f,
             };
 
+            BodyCollisionReactor = new CollisionReactor()
+            {
+                Reaction = (id, count) =>
+                {
+                    Transform.Translation = PrevTransform.Translation;
+                },
+            };
+
             BodyCollision = new HimaLib.Collision.CollisionInfo()
             {
                 Active = () => true,
                 Group = () => (int)ccm.Collision.CollisionGroup.PlayerBody,
-                PreReaction = (id, count) => { },
-                Reaction = (id, count) => 
-                { 
-                    Transform.Translation = PrevTransform.Translation; 
-                },
+                Reactor = BodyCollisionReactor,
             };
 
             AttackCollisionPrimitive = new SphereCollisionPrimitive()
@@ -100,14 +109,16 @@ namespace ccm.Player
                 Radius = () => 3.0f,
             };
 
+            AttackCollisionActor = new AttackCollisionActor()
+            {
+                Power = 5,
+            };
+
             AttackCollision = new HimaLib.Collision.CollisionInfo()
             {
+                Active = () => attackCount > 0.0f,
                 Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack,
-                PreReaction = (id, count) => { },
-                Reaction = (id, count) => 
-                {
-                    DebugUtil.PrintLine("Attack Hit");
-                },
+                Actor = AttackCollisionActor,
             };
 
             UpdateState = UpdateStateInit;
@@ -137,7 +148,6 @@ namespace ccm.Player
             BodyCollision.Primitives.Add(BodyCollisionPrimitive);
             CollisionManager.Add(BodyCollision);
 
-            AttackCollision.Active = () => attackCount > 0.0f;
             AttackCollision.Primitives.Clear();
             AttackCollision.Primitives.Add(AttackCollisionPrimitive);
             CollisionManager.Add(AttackCollision);

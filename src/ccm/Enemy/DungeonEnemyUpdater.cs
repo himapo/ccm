@@ -8,6 +8,7 @@ using HimaLib.System;
 using HimaLib.Collision;
 using ccm.Player;
 using ccm.Enemy;
+using ccm.Collision;
 
 namespace ccm.Enemy
 {
@@ -47,9 +48,13 @@ namespace ccm.Enemy
 
         HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
 
+        CollisionReactor BodyCollisionReactor;
+
         HimaLib.Collision.CollisionInfo BodyCollision;
 
         HimaLib.Collision.SphereCollisionPrimitive DamageCollisionPrimitive;
+
+        AttackCollisionReactor DamageCollisionReactor;
 
         HimaLib.Collision.CollisionInfo DamageCollision;
 
@@ -64,15 +69,19 @@ namespace ccm.Enemy
                 Height = () => 4.0f,
             };
 
+            BodyCollisionReactor = new CollisionReactor()
+            {
+                Reaction = (id, count) =>
+                {
+                    Transform.Translation = PrevTransform.Translation;
+                },
+            };
+
             BodyCollision = new HimaLib.Collision.CollisionInfo()
             {
                 Active = () => true,
                 Group = () => (int)ccm.Collision.CollisionGroup.EnemyBody,
-                PreReaction = (id, count) => { },
-                Reaction = (id, count) => 
-                { 
-                    Transform.Translation = PrevTransform.Translation; 
-                },
+                Reactor = BodyCollisionReactor,
             };
 
             DamageCollisionPrimitive = new SphereCollisionPrimitive()
@@ -81,15 +90,19 @@ namespace ccm.Enemy
                 Radius = () => 3.0f,
             };
 
+            DamageCollisionReactor = new AttackCollisionReactor()
+            {
+                AttackReaction = (id, count, actor) =>
+                {
+                    UpdateState = UpdateStateTerm;
+                }
+            };
+
             DamageCollision = new HimaLib.Collision.CollisionInfo()
             {
                 Active = () => true,
                 Group = () => (int)ccm.Collision.CollisionGroup.EnemyDamage,
-                PreReaction = (id, count) => { },
-                Reaction = (id, count) =>
-                {
-                    UpdateState = UpdateStateTerm;
-                },
+                Reactor = DamageCollisionReactor,
             };
 
             UpdateState = UpdateStateInit;
