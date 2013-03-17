@@ -6,9 +6,11 @@ using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.System;
 using HimaLib.Collision;
+using HimaLib.Camera;
 using ccm.Player;
 using ccm.Enemy;
 using ccm.Collision;
+using ccm.Deco;
 
 namespace ccm.Enemy
 {
@@ -24,6 +26,15 @@ namespace ccm.Enemy
         public HimaLib.Collision.CollisionManager CollisionManager { get; set; }
 
         // ダンジョン情報
+
+        // カメラ
+        public ICamera Camera { get; set; }
+
+        // デコ
+        public ccm.Deco.DecoManager DecoManager { get; set; }
+     
+        // システム
+        HimaLib.Math.IRand GameRand { get { return System.GameRand.Instance; } }
 
         float Speed = GameProperty.gameRand.NextFloat() * 0.2f + 0.4f;
 
@@ -95,6 +106,8 @@ namespace ccm.Enemy
                 AttackReaction = (id, count, actor) =>
                 {
                     UpdateState = UpdateStateTerm;
+
+                    DecoManager.Add(new ccm.Deco.Deco_Twister(Transform, Camera, GameRand));
                 }
             };
 

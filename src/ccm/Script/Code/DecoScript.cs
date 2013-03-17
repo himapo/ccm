@@ -11,7 +11,7 @@ namespace ccm
     /// </summary>
     public class Deco_Prototype : Deco_Common
     {
-        public static void Appear(Game game, Deco myself)
+        public static void Appear(Game game, DecoOld myself)
         {
             // パーティクル生成
             AddParticle(
@@ -27,7 +27,7 @@ namespace ccm
             );
         }
 
-        public static void Update(GameTime gameTime, Game game, Deco myself)
+        public static void Update(GameTime gameTime, Game game, DecoOld myself)
         {
         }
     }
@@ -44,7 +44,7 @@ namespace ccm
         }
 
         // パーティクル生成
-        protected static void AddParticle(Game game, Deco myself, ParticleInfo info)
+        protected static void AddParticle(Game game, DecoOld myself, ParticleInfo info)
         {
             GetService<IParticleService>(game).Add(info);
             myself.ParticleNum++;

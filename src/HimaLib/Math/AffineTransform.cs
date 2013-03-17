@@ -7,11 +7,11 @@ namespace HimaLib.Math
 {
     public class AffineTransform
     {
-        public Vector3 Scale { get; set; }
+        public Vector3 Scale;
 
-        public Vector3 Rotation { get; set; }
+        public Vector3 Rotation;
 
-        public Vector3 Translation { get; set; }
+        public Vector3 Translation;
 
         public Matrix WorldMatrix
         {

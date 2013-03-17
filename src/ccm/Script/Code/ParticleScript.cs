@@ -12,7 +12,7 @@ namespace ccm
     /// </summary>
     public class Particle_Prototype : Particle_Common
     {
-        public static void Appear(Game game, Particle myself, Vector3 basePosition)
+        public static void Appear(Game game, ParticleOld myself, Vector3 basePosition)
         {
             // パラメータ設定
             myself.DiffuseMap = ResourceManager.GetInstance().Load<Texture2D>("Texture/miki");
@@ -46,7 +46,7 @@ namespace ccm
                 () => { myself.KillMe(); });
         }
 
-        public static void Update(Game game, Particle myself, GameTime gameTime)
+        public static void Update(Game game, ParticleOld myself, GameTime gameTime)
         {
         }
     }

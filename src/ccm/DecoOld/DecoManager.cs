@@ -15,16 +15,16 @@ namespace ccm
     /// <summary>
     /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。
     /// </summary>
-    class ParticleManager : MyGameComponent, IParticleService
+    class DecoManager : MyGameComponent, IDecoService
     {
         readonly string[] scriptClassArray =
         {
-            "ccm.Particle_Prototype",
+            "ccm.Deco_Prototype",
         };
 
         List<int> deadIDList;   // 死んでいる（出現させられる）IDリスト
         List<int> aliveIDList;  // 生きているIDリスト
-        List<Particle> particleList;
+        List<DecoOld> decoList;
 
         public int InstanceNum { get; private set; }
 
@@ -38,15 +38,15 @@ namespace ccm
             get { return deadIDList.Count; }
         }
 
-        public ParticleManager(Game game)
+        public DecoManager(Game game)
             : base(game)
         {
-            UpdateOrder = (int)UpdateOrderLabel.PARTICLE;
-            game.Services.AddService(typeof(IParticleService), this);
+            UpdateOrder = (int)UpdateOrderLabel.DECO;
+            game.Services.AddService(typeof(IDecoService), this);
 
             deadIDList = new List<int>();
             aliveIDList = new List<int>();
-            particleList = new List<Particle>();
+            decoList = new List<DecoOld>();
             InstanceNum = 0;
 
             // TODO: ここで子コンポーネントを作成します。
@@ -60,7 +60,7 @@ namespace ccm
         {
             // TODO: ここに初期化のコードを追加します。
             var scriptService = GetService<IScriptService>();
-            var scriptName = "ParticleScript.cs";
+            var scriptName = "DecoScript.cs";
             if (!scriptService.Load(scriptName))
             {
                 Console.WriteLine("スクリプト読み込み失敗 : " + scriptName);
@@ -76,19 +76,19 @@ namespace ccm
         public override void Update(GameTime gameTime)
         {
             // TODO: ここにアップデートのコードを追加します。
-            particleList.ForEach(x => x.Update(gameTime));
+            decoList.ForEach(x => x.Update(gameTime));
 
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            particleList.ForEach(x => x.Draw(gameTime));
+            decoList.ForEach(x => x.Draw(gameTime));
 
             base.Draw(gameTime);
         }
 
-        public void Add(ParticleInfo info)
+        public void Add(DecoInfo info)
         {
             info.ScriptClass = scriptClassArray[(int)info.Type];
 
@@ -97,23 +97,34 @@ namespace ccm
                 var id = deadIDList[0];
                 deadIDList.Remove(id);
                 aliveIDList.Add(id);
-                particleList[id].Appear(info);
+                decoList[id].Appear(info);
             }
             else
             {
-                var particle = new Particle(Game);
-                particle.ID = InstanceNum++;
-                aliveIDList.Add(particle.ID);
-                particleList.Add(particle);
-                particle.Appear(info);
+                var deco = new DecoOld(Game);
+                deco.ID = InstanceNum++;
+                aliveIDList.Add(deco.ID);
+                decoList.Add(deco);
+                deco.Appear(info);
             }
         }
 
         public void Remove(int ID)
         {
-            particleList[ID].Disappear();
+            decoList[ID].Disappear();
             deadIDList.Add(ID);
             aliveIDList.Remove(ID);
+        }
+
+        public void NotifyFinishParticle(int decoID, int particleID)
+        {
+            if (deadIDList.Contains(decoID))
+            {
+                DebugUtil.PrintLine("Warning : すでに消えたデコのパーティクル死亡通知が来てる");
+                return;
+            }
+
+            decoList[decoID].NotifyFinishParticle();
         }
     }
 }

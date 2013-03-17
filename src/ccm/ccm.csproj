@@ -145,6 +145,9 @@
     <Compile Include="DebugMenu\IDebugMenuService.cs" />
     <Compile Include="Debug\DebugFontInfo.cs" />
     <Compile Include="Debug\DebugMenuUpdater.cs" />
+    <Compile Include="Deco\Deco.cs" />
+    <Compile Include="Deco\DecoManager.cs" />
+    <Compile Include="Deco\Deco_Twister.cs" />
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
@@ -179,9 +182,9 @@
     <Compile Include="Debug\DebugFontManager.cs" />
     <Compile Include="Debug\DebugSampleManager.cs" />
     <Compile Include="Debug\DebugUtil.cs" />
-    <Compile Include="Deco\Deco.cs" />
-    <Compile Include="Deco\DecoManager.cs" />
-    <Compile Include="Deco\IDecoService.cs" />
+    <Compile Include="DecoOld\DecoOld.cs" />
+    <Compile Include="DecoOld\DecoManager.cs" />
+    <Compile Include="DecoOld\IDecoService.cs" />
     <Compile Include="EnemyOld\EnemyCube.cs" />
     <Compile Include="EnemyOld\EnemyManager.cs" />
     <Compile Include="EnemyOld\IEnemyService.cs" />
@@ -203,9 +206,11 @@
     <Compile Include="MapOld\MapManager.cs" />
     <Compile Include="Math\IRand.cs" />
     <Compile Include="Math\SystemRand.cs" />
-    <Compile Include="Particle\IParticleService.cs" />
+    <Compile Include="ParticleOld\IParticleService.cs" />
+    <Compile Include="ParticleOld\ParticleOld.cs" />
+    <Compile Include="ParticleOld\ParticleManager.cs" />
     <Compile Include="Particle\Particle.cs" />
-    <Compile Include="Particle\ParticleManager.cs" />
+    <Compile Include="Particle\Particle_Twister.cs" />
     <Compile Include="Physics\IPhysicsService.cs" />
     <Compile Include="Physics\PhysicsManager.cs" />
     <Compile Include="PlayerOld\Player.cs" />

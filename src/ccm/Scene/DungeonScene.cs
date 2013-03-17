@@ -12,6 +12,7 @@ using ccm.Enemy;
 using ccm.Map;
 using ccm.System;
 using ccm.Debug;
+using ccm.Deco;
 
 namespace ccm.Scene
 {
@@ -43,6 +44,7 @@ namespace ccm.Scene
         ModelViewerCameraUpdater cameraUpdater;
 
         // デコ
+        ccm.Deco.DecoManager DecoManager = new Deco.DecoManager();
 
         // HUD
 
@@ -84,6 +86,8 @@ namespace ccm.Scene
                         EnemyManager = this.EnemyManager,
                         Player = this.Player,
                         CollisionManager = this.CollisionManager,
+                        Camera = this.Camera,
+                        DecoManager = this.DecoManager,
                     };
                 },
                 DrawerCreator = () =>
@@ -187,6 +191,8 @@ namespace ccm.Scene
 
             EnemyManager.Update();
 
+            DecoManager.Update();
+
             if (IsTimeToCreateEnemy())
             {
                 CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
@@ -237,6 +243,8 @@ namespace ccm.Scene
             Player.Draw(PlayerDrawer);
 
             EnemyManager.Draw();
+
+            DecoManager.Draw();
 
             DrawMap();
 
