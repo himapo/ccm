@@ -155,6 +155,7 @@
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
+    <Compile Include="Item\ItemWindow.cs" />
     <Compile Include="Map\Dungeon.cs" />
     <Compile Include="Map\DungeonDrawer.cs" />
     <Compile Include="Map\IDungeonDrawer.cs" />
@@ -190,9 +191,9 @@
     <Compile Include="Game\GameProperty.cs" />
     <Compile Include="Game\MyGameComponent.cs" />
     <Compile Include="Input\InputManager.cs" />
-    <Compile Include="Item\IItemService.cs" />
-    <Compile Include="Item\ItemManager.cs" />
-    <Compile Include="Item\ItemWindow.cs" />
+    <Compile Include="ItemOld\IItemService.cs" />
+    <Compile Include="ItemOld\ItemManager.cs" />
+    <Compile Include="ItemOld\ItemWindow.cs" />
     <Compile Include="Light\ILightService.cs" />
     <Compile Include="Light\LightBase.cs" />
     <Compile Include="Light\LightManager.cs" />

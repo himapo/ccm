@@ -22,6 +22,10 @@ namespace HimaLib.Render
 
         public HimaLib.Math.Vector3 Position { get; set; }
 
+        public HimaLib.Math.Vector2 RectOffset { get; set; }
+
+        public HimaLib.Math.Vector2 RectSize { get; set; }
+
         ConstantShader Shader { get; set; }
 
         TextureLoader TextureLoader { get; set; }
@@ -30,11 +34,16 @@ namespace HimaLib.Render
         {
             Shader = new ConstantShader();
             TextureLoader = new TextureLoader();
+
+            RectOffset = HimaLib.Math.Vector2.Zero;
+            RectSize = HimaLib.Math.Vector2.Zero;
         }
 
         public void Render()
         {
             Shader.Texture = GetTexture();
+            Shader.RectOffset = HimaLib.Math.MathUtilXna.ToXnaVector(RectOffset);
+            Shader.RectSize = HimaLib.Math.MathUtilXna.ToXnaVector(RectSize);
             Shader.World = GetWorldMatrix();
             Shader.View = GetViewMatrix();
             Shader.Projection = GetProjMatrix();

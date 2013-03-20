@@ -14,6 +14,7 @@ using ccm.System;
 using ccm.Debug;
 using ccm.Deco;
 using ccm.Ally;
+using ccm.Item;
 
 namespace ccm.Scene
 {
@@ -31,6 +32,9 @@ namespace ccm.Scene
 
         // 味方
         ccm.Ally.AllyManager AllyManager;
+
+        // アイテム
+        ccm.Item.ItemWindow ItemWindow = new Item.ItemWindow();
 
         // マップ
         Dungeon Dungeon = new Dungeon();
@@ -239,6 +243,8 @@ namespace ccm.Scene
 
             AllyManager.Update();
 
+            ItemWindow.Update();
+
             DecoManager.Update();
 
             if (IsTimeToCreateEnemy())
@@ -293,6 +299,8 @@ namespace ccm.Scene
             EnemyManager.Draw();
 
             AllyManager.Draw();
+
+            ItemWindow.Draw();
 
             DecoManager.Draw();
 

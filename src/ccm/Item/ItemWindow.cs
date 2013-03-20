@@ -1,17 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using ccm.CameraOld;
+using System.Text;
+using HimaLib.System;
+using HimaLib.Render;
+using HimaLib.Math;
+using ccm.Input;
 
-
-namespace ccm
+namespace ccm.Item
 {
     enum ItemIconState
     {
@@ -26,171 +22,75 @@ namespace ccm
         public ItemIconState State { get; set; }
     }
 
-    /// <summary>
-    /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。
-    /// </summary>
-    class ItemWindow : MyGameComponent
+    public class ItemWindow : StateMachine
     {
-        enum State
+        Vector3 Position = Vector3.Zero;
+
+        List<ItemIconInfo> IconInfoList = new List<ItemIconInfo>();
+
+        bool PushMouseMain { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
+        bool PressMouseMain { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
+        bool PushMouseSub { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.MouseSub); } }
+        bool PushItemWindow { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.ItemWindow); } }
+        int CursorX { get { return InputAccessor.GetX(ControllerLabel.Main, PointingDeviceLabel.Mouse0); } }
+        int CursorY { get { return InputAccessor.GetY(ControllerLabel.Main, PointingDeviceLabel.Mouse0); } }
+        int CursorMoveX { get { return InputAccessor.GetMoveX(ControllerLabel.Main, PointingDeviceLabel.Mouse0); } }
+        int CursorMoveY { get { return InputAccessor.GetMoveY(ControllerLabel.Main, PointingDeviceLabel.Mouse0); } }
+
+        bool Drag = false;
+
+        //float Rot;
+
+        UIBillboardRenderer Renderer = new UIBillboardRenderer();
+
+        public ItemWindow()
         {
-            Closed,
-            Opening,
-            Open,
-            Closing,
+            UpdateState = UpdateStateInit;
+            DrawState = DrawStateInit;
         }
 
-        State state;
-
-        Action<GameTime> updateFunc;
-        Action<GameTime> drawFunc;
-
-        Texture2D windowTexture;
-        Texture2D iconTexture;
-
-        bool drag = false;
-
-        Vector3 position;
-        public Vector3 Position { get { return position; } set { position = value; } }
-
-        float rot = 0.0f;
-
-        List<ItemIconInfo> iconInfoList;
-
-        public ItemWindow(Game game)
-            : base(game)
+        void UpdateStateInit()
         {
-            UpdateOrder = (int)UpdateOrderLabel.UI;
+            InitItem();
 
-            position = new Vector3(0.0f, 0.0f, 0.0f);
-
-            iconInfoList = new List<ItemIconInfo>();
-
-            // TODO: ここで子コンポーネントを作成します。
+            UpdateState = UpdateStateClosed;
+            DrawState = DrawStateClosed;
         }
 
-        /// <summary>
-        /// ゲーム コンポーネントの初期化を行います。
-        /// ここで、必要なサービスを照会して、使用するコンテンツを読み込むことができます。
-        /// </summary>
-        public override void Initialize()
+        void InitItem()
         {
-            // TODO: ここに初期化のコードを追加します。
-            SetState(State.Closed);
-
-            iconInfoList.Add(new ItemIconInfo { Type = 0, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 1, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 2, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 0, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 1, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 2, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 0, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 1, State = ItemIconState.Default });
-            iconInfoList.Add(new ItemIconInfo { Type = 2, State = ItemIconState.Default });
-
-            base.Initialize();
+            IconInfoList.Add(new ItemIconInfo { Type = 0, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 1, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 2, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 0, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 1, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 2, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 0, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 1, State = ItemIconState.Default });
+            IconInfoList.Add(new ItemIconInfo { Type = 2, State = ItemIconState.Default });
         }
 
-        protected override void LoadContent()
+        void UpdateStateClosed()
         {
-            windowTexture = ResourceManager.GetInstance().Load<Texture2D>("Texture/ItemWindow000");
-            iconTexture = ResourceManager.GetInstance().Load<Texture2D>("Texture/ItemIcon000");
-
-            base.LoadContent();
-        }
-
-        void SetState(State state)
-        {
-            if (state == State.Closed)
+            if (PushItemWindow)
             {
-                updateFunc = UpdateClosed;
-                drawFunc = DrawClosed;
-            }
-            else if (state == State.Opening)
-            {
-                updateFunc = UpdateOpening;
-                drawFunc = DrawOpening;
-            }
-            else if (state == State.Open)
-            {
-                updateFunc = UpdateOpen;
-                drawFunc = DrawOpen;
-            }
-            else if (state == State.Closing)
-            {
-                updateFunc = UpdateClosing;
-                drawFunc = DrawClosing;
-            }
-
-            this.state = state;
-        }
-
-        public override void OnSceneBegin(SceneLabel sceneLabel)
-        {
-            if (sceneLabel == SceneLabel.GAME_SCENE)
-            {
-                Enabled = true;
-                Visible = true;
-            }
-            else
-            {
-                Enabled = false;
-                Visible = false;
-            }
-
-            SetState(State.Closed);
-        }
-
-        /// <summary>
-        /// ゲーム コンポーネントが自身を更新するためのメソッドです。
-        /// </summary>
-        /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
-        public override void Update(GameTime gameTime)
-        {
-            // TODO: ここにアップデートのコードを追加します。
-            updateFunc(gameTime);
-
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            drawFunc(gameTime);
-
-            base.Draw(gameTime);
-        }
-
-        void UpdateClosed(GameTime gameTime)
-        {
-            var inputService = InputManager.GetInstance();
-
-            // 開く
-            if (inputService.IsPush(InputLabel.ItemWindow))
-            {
-                SetState(State.Opening);
+                UpdateState = UpdateStateOpening;
+                DrawState = DrawStateOpening;
             }
         }
 
-        void DrawClosed(GameTime gameTime)
+        void UpdateStateOpening()
         {
+            UpdateState = UpdateStateOpen;
+            DrawState = DrawStateOpen;
         }
 
-        void UpdateOpening(GameTime gameTime)
+        void UpdateStateOpen()
         {
-            SetState(State.Open);
-        }
-
-        void DrawOpening(GameTime gameTime)
-        {
-        }
-
-        void UpdateOpen(GameTime gameTime)
-        {
-            var inputService = InputManager.GetInstance();
-
             // ドラッグ処理
-            if (inputService.IsPush(InputLabel.MouseMain))
+            if (PushMouseMain)
             {
-                drag = false;
+                Drag = false;
 
                 // ドラッグ領域のウィンドウ中心からの相対位置
                 const float DRAG_RECT_TOP = 128.0f;
@@ -198,48 +98,44 @@ namespace ccm
                 const float DRAG_RECT_LEFT = -128.0f;
                 const float DRAG_RECT_RIGHT = 128.0f;
 
-                var x = (float)inputService.MouseX;
-                var y = (float)inputService.MouseY;
+                var x = (float)CursorX;
+                var y = (float)CursorY;
 
                 if (x > Position.X + DRAG_RECT_LEFT
                     && x < Position.X + DRAG_RECT_RIGHT
                     && y < Position.Y + DRAG_RECT_TOP
                     && y > Position.Y + DRAG_RECT_BOTTOM)
                 {
-                    drag = true;
+                    Drag = true;
                 }
             }
-            else if (drag && inputService.IsPress(InputLabel.MouseMain))
+            else if (Drag && PressMouseMain)
             {
-                position.X += inputService.MouseMoveX;
-                position.Y += inputService.MouseMoveY;
+                Position.X += CursorMoveX;
+                Position.Y += CursorMoveY;
             }
 
             // アイコンドラッグ処理
             DragIcon();
 
             // 閉じる
-            if (inputService.IsPush(InputLabel.ItemWindow))
+            if (PushItemWindow)
             {
-                SetState(State.Closing);
+                UpdateState = UpdateStateClosing;
+                DrawState = DrawStateClosing;
             }
         }
 
         void DragIcon()
         {
-            var inputService = InputManager.GetInstance();
-
-            var pushMain = inputService.IsPush(InputLabel.MouseMain);
-            var pushSub = inputService.IsPush(InputLabel.MouseSub);
-
             var mouseOnIcon = -1;   // マウスが乗ってるアイコン番号
 
-            for (var i = 0; i < iconInfoList.Count; ++i)
+            for (var i = 0; i < IconInfoList.Count; ++i)
             {
-                var iconInfo = iconInfoList[i];
+                var iconInfo = IconInfoList[i];
 
-                var x = (float)inputService.MouseX;
-                var y = (float)inputService.MouseY;
+                var x = (float)CursorX;
+                var y = (float)CursorY;
 
                 var iconPos = new Vector2();
                 iconPos.X = Position.X + 51.0f * (i % 5 - 2);
@@ -261,17 +157,17 @@ namespace ccm
             }
 
             // ドラッグされているものがあればそれを処理
-            for (var i = 0; i < iconInfoList.Count; ++i)
+            for (var i = 0; i < IconInfoList.Count; ++i)
             {
-                if(i == mouseOnIcon)
+                if (i == mouseOnIcon)
                     continue;
 
-                var iconInfo = iconInfoList[i];
+                var iconInfo = IconInfoList[i];
                 if (iconInfo.State == ItemIconState.Drag)
                 {
                     if (mouseOnIcon == -1)
                     {
-                        if (pushSub)
+                        if (PushMouseSub)
                         {
                             // 移動キャンセル
                             iconInfo.State = ItemIconState.Default;
@@ -279,23 +175,23 @@ namespace ccm
                     }
                     else
                     {
-                        if (pushMain)
+                        if (PushMouseMain)
                         {
                             // 入れ替え
                             iconInfo.State = ItemIconState.Default;
-                            iconInfoList[mouseOnIcon].State = ItemIconState.Default;
-                            GeneralUtil.Swap<ItemIconInfo>(iconInfoList, i, mouseOnIcon);
+                            IconInfoList[mouseOnIcon].State = ItemIconState.Default;
+                            GeneralUtil.Swap<ItemIconInfo>(IconInfoList, i, mouseOnIcon);
                         }
-                        else if (pushSub)
+                        else if (PushMouseSub)
                         {
                             // 移動キャンセル
                             iconInfo.State = ItemIconState.Default;
-                            iconInfoList[mouseOnIcon].State = ItemIconState.Default;
+                            IconInfoList[mouseOnIcon].State = ItemIconState.Default;
                         }
                         else
                         {
                             // ドラッグアイコンが上に乗ってたらドロップ状態にする
-                            iconInfoList[mouseOnIcon].State = ItemIconState.Drop;
+                            IconInfoList[mouseOnIcon].State = ItemIconState.Drop;
                         }
                     }
 
@@ -304,44 +200,56 @@ namespace ccm
             }
 
             // ドラッグされているものがなければ新たにドラッグされたか判定
-            if (pushMain && mouseOnIcon != -1)
+            if (PushMouseMain && mouseOnIcon != -1)
             {
-                iconInfoList[mouseOnIcon].State = ItemIconState.Drag;
+                IconInfoList[mouseOnIcon].State = ItemIconState.Drag;
             }
         }
 
-        void DrawOpen(GameTime gameTime)
+        void UpdateStateClosing()
         {
-            var inputService = InputManager.GetInstance();
+            UpdateState = UpdateStateClosed;
+            DrawState = DrawStateClosed;
+        }
 
-            // ウィンドウの描画
+        void DrawStateInit()
+        {
+        }
+
+        void DrawStateClosed()
+        {
+        }
+
+        void DrawStateOpening()
+        {
+        }
+
+        void DrawStateOpen()
+        {
+            DrawWindow();
+            DrawIcons();
+        }
+
+        void DrawWindow()
+        {
+            Renderer.TextureName = "Texture/ItemWindow000";
+            Renderer.Scale = 1.0f;
+            Renderer.Rotation = Vector3.Zero;
+            Renderer.Position = Position;
+            Renderer.Alpha = 1.0f;
+            Renderer.RectOffset = Vector2.Zero;
+            Renderer.RectSize = Vector2.Zero;
+
+            Renderer.Render();
+        }
+
+        void DrawIcons()
+        {
+            for (var i = 0; i < IconInfoList.Count; ++i)
             {
-                //rot += GameProperty.GetUpdateScale(gameTime) * 1.0f;
-                var renderParam = new UIRenderParameter();
-                renderParam.cameraLabel = CameraLabel.UI;
-                renderParam.DiffuseMap = windowTexture;
-                renderParam.world =
-                    Matrix.CreateScale(1.0f) *
-                    Matrix.CreateRotationZ(MathHelper.ToRadians(rot)) *
-                    Matrix.CreateTranslation(Position);
-                renderParam.renderer = RendererLabel.UI;
-                renderParam.cullEnable = false;
+                var iconInfo = IconInfoList[i];
 
-                renderParam.RectOffset = new Vector2(0.0f, 0.0f);
-                renderParam.RectSize = new Vector2(256.0f, 256.0f);
-                renderParam.Alpha = 1.0f;
-
-                RenderManager.GetInstance().Register(renderParam);
-            }
-
-            // アイコンの描画
-            for (var i = 0; i < iconInfoList.Count; ++i)
-            {
-                var iconInfo = iconInfoList[i];
-
-                var renderParam = new UIRenderParameter();
-                renderParam.cameraLabel = CameraLabel.UI;
-                renderParam.DiffuseMap = iconTexture;
+                Renderer.TextureName = "Texture/ItemIcon000";
                 var pos = new Vector3();
 
                 if (iconInfo.State == ItemIconState.Default)
@@ -352,8 +260,8 @@ namespace ccm
                 }
                 else if (iconInfo.State == ItemIconState.Drag)
                 {
-                    pos.X = inputService.MouseX;
-                    pos.Y = inputService.MouseY;
+                    pos.X = CursorX;
+                    pos.Y = CursorY;
                     pos.Z = -0.5f;
                 }
                 else if (iconInfo.State == ItemIconState.Drop)
@@ -363,26 +271,19 @@ namespace ccm
                     pos.Z = -0.1f;
                 }
 
-                renderParam.world = Matrix.CreateTranslation(pos);
-                renderParam.renderer = RendererLabel.UI;
-                renderParam.cullEnable = false;
+                Renderer.Position = pos;
 
-                renderParam.RectOffset = new Vector2(
+                Renderer.RectOffset = new Vector2(
                     1.0f + 51.0f * (iconInfo.Type % 5),
                     1.0f + 51.0f * (iconInfo.Type / 5));
-                renderParam.RectSize = new Vector2(50.0f, 50.0f);
-                renderParam.Alpha = 0.5f;
+                Renderer.RectSize = new Vector2(50.0f, 50.0f);
+                Renderer.Alpha = 0.5f;
 
-                RenderManager.GetInstance().Register(renderParam);
+                Renderer.Render();
             }
         }
 
-        void UpdateClosing(GameTime gameTime)
-        {
-            SetState(State.Closed);
-        }
-
-        void DrawClosing(GameTime gameTime)
+        void DrawStateClosing()
         {
         }
     }

@@ -59,5 +59,15 @@ namespace HimaLib.Input
         {
             return enables[controllerId] ? controllers[controllerId].GetY(pointingDeviceLabel) : 0;
         }
+
+        public static int GetMoveX(int controllerId, int pointingDeviceLabel)
+        {
+            return enables[controllerId] ? controllers[controllerId].GetMoveX(pointingDeviceLabel) : 0;
+        }
+
+        public static int GetMoveY(int controllerId, int pointingDeviceLabel)
+        {
+            return enables[controllerId] ? controllers[controllerId].GetMoveY(pointingDeviceLabel) : 0;
+        }
     }
 }

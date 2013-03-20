@@ -10,6 +10,11 @@ namespace HimaLib.Math
 {
     public class MathUtilXna
     {
+        public static Microsoft.Xna.Framework.Vector2 ToXnaVector(HimaLib.Math.Vector2 v)
+        {
+            return new Microsoft.Xna.Framework.Vector2(v.X, v.Y);
+        }
+
         public static Microsoft.Xna.Framework.Vector3 ToXnaVector(HimaLib.Math.Vector3 v)
         {
             return new Microsoft.Xna.Framework.Vector3(v.X, v.Y, v.Z);

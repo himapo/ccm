@@ -52,5 +52,15 @@ namespace ccm.Input
         {
             return HimaLib.Input.Input.GetY((int)controllerLabel, (int)deviceLabel);
         }
+
+        public static int GetMoveX(ControllerLabel controllerLabel, PointingDeviceLabel deviceLabel)
+        {
+            return HimaLib.Input.Input.GetMoveX((int)controllerLabel, (int)deviceLabel);
+        }
+
+        public static int GetMoveY(ControllerLabel controllerLabel, PointingDeviceLabel deviceLabel)
+        {
+            return HimaLib.Input.Input.GetMoveY((int)controllerLabel, (int)deviceLabel);
+        }
     }
 }
