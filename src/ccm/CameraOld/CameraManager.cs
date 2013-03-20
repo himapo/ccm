@@ -39,10 +39,10 @@ namespace ccm.CameraOld
             cameraDic = new Dictionary<CameraLabel, CameraBase>();
             
             // カメラ生成
-            AddCamera(CameraLabel.Game, new ManualCamera(game));
-            AddCamera(CameraLabel.UI, new UICamera(game));
-            AddCamera(CameraLabel.ModelViewer, new ModelViewerCamera(game));
-            AddCamera(CameraLabel.MapViewer, new FreeLookCamera(game));
+            //AddCamera(CameraLabel.Game, new ManualCamera(game));
+            //AddCamera(CameraLabel.UI, new UICamera(game));
+            //AddCamera(CameraLabel.ModelViewer, new ModelViewerCamera(game));
+            //AddCamera(CameraLabel.MapViewer, new FreeLookCamera(game));
 
             AddComponents();
         }

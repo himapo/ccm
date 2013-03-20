@@ -131,7 +131,6 @@
     <Compile Include="CameraOld\Camera.cs" />
     <Compile Include="CameraOld\CameraBase.cs" />
     <Compile Include="CameraOld\CameraManager.cs" />
-    <Compile Include="CameraOld\FreeLookCamera.cs" />
     <Compile Include="CameraOld\ICamera.cs" />
     <Compile Include="Camera\BasicCamera.cs" />
     <Compile Include="Camera\MapViewerCameraUpdater.cs" />
@@ -176,13 +175,6 @@
     <Compile Include="Input\BooleanDeviceLabel.cs" />
     <Compile Include="Input\PointingDeviceLabel.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
-    <Compile Include="CameraOld\ManualCamera.cs" />
-    <Compile Include="CameraOld\ModelViewerCamera.cs" />
-    <Compile Include="CameraOld\UICamera.cs" />
-    <Compile Include="CollisionOld\CollisionManager.cs" />
-    <Compile Include="CollisionOld\CollisionOpponent.cs" />
-    <Compile Include="CollisionOld\CollisionShape.cs" />
-    <Compile Include="CollisionOld\ICollisionService.cs" />
     <Compile Include="Debug\DebugAxis.cs" />
     <Compile Include="Debug\DebugFontManager.cs" />
     <Compile Include="Debug\DebugSampleManager.cs" />
@@ -191,9 +183,6 @@
     <Compile Include="Game\GameProperty.cs" />
     <Compile Include="Game\MyGameComponent.cs" />
     <Compile Include="Input\InputManager.cs" />
-    <Compile Include="ItemOld\IItemService.cs" />
-    <Compile Include="ItemOld\ItemManager.cs" />
-    <Compile Include="ItemOld\ItemWindow.cs" />
     <Compile Include="Light\ILightService.cs" />
     <Compile Include="Light\LightBase.cs" />
     <Compile Include="Light\LightManager.cs" />
@@ -205,9 +194,6 @@
     <Compile Include="Particle\Particle_Twister.cs" />
     <Compile Include="Physics\IPhysicsService.cs" />
     <Compile Include="Physics\PhysicsManager.cs" />
-    <Compile Include="PlayerOld\Player.cs" />
-    <Compile Include="PlayerOld\PlayerModel.cs" />
-    <Compile Include="PlayerOld\PlayerModelMMD.cs" />
     <Compile Include="Player\DungeonPlayerUpdater.cs" />
     <Compile Include="Player\IPlayerDrawer.cs" />
     <Compile Include="Player\IPlayerUpdater.cs" />
