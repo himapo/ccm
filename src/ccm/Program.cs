@@ -10,11 +10,6 @@ namespace ccm
         /// </summary>
         static void Main(string[] args)
         {
-            //using (Game1 game = new Game1())
-            //{
-            //    game.Run();
-            //}
-
             using (var game = new HimaLib.System.Game())
             {
                 var rootObject = new System.RootObject()

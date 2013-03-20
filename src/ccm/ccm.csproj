@@ -182,12 +182,6 @@
     <Compile Include="Debug\DebugFontManager.cs" />
     <Compile Include="Debug\DebugSampleManager.cs" />
     <Compile Include="Debug\DebugUtil.cs" />
-    <Compile Include="DecoOld\DecoOld.cs" />
-    <Compile Include="DecoOld\DecoManager.cs" />
-    <Compile Include="DecoOld\IDecoService.cs" />
-    <Compile Include="EnemyOld\EnemyCube.cs" />
-    <Compile Include="EnemyOld\EnemyManager.cs" />
-    <Compile Include="EnemyOld\IEnemyService.cs" />
     <Compile Include="Game\ComponentOrder.cs" />
     <Compile Include="Game\GameProperty.cs" />
     <Compile Include="Game\MyGameComponent.cs" />
@@ -200,15 +194,8 @@
     <Compile Include="Light\LightManager.cs" />
     <Compile Include="Light\PointLight.cs" />
     <Compile Include="DungeonLogic\DungeonMap.cs" />
-    <Compile Include="MapOld\MapCubeInstance.cs" />
-    <Compile Include="MapOld\MapCubeModel.cs" />
-    <Compile Include="MapOld\MapGenerator.cs" />
-    <Compile Include="MapOld\MapManager.cs" />
     <Compile Include="Math\IRand.cs" />
     <Compile Include="Math\SystemRand.cs" />
-    <Compile Include="ParticleOld\IParticleService.cs" />
-    <Compile Include="ParticleOld\ParticleOld.cs" />
-    <Compile Include="ParticleOld\ParticleManager.cs" />
     <Compile Include="Particle\Particle.cs" />
     <Compile Include="Particle\Particle_Twister.cs" />
     <Compile Include="Physics\IPhysicsService.cs" />
@@ -223,7 +210,6 @@
     <Compile Include="Player\PlayerDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Game1.cs" />
     <Compile Include="Render\BillboardRenderer.cs" />
     <Compile Include="Render\CubeBasicRenderer.cs" />
     <Compile Include="Render\CubeRenderer.cs" />
@@ -232,6 +218,7 @@
     <Compile Include="Render\Renderer.cs" />
     <Compile Include="Render\UIRenderer.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
+    <Compile Include="SceneOld\ISceneService.cs" />
     <Compile Include="Scene\BootScene.cs" />
     <Compile Include="Scene\FakeScene.cs" />
     <Compile Include="Scene\DungeonScene.cs" />
@@ -241,13 +228,6 @@
     <Compile Include="System\DrawRand.cs" />
     <Compile Include="System\GameRand.cs" />
     <Compile Include="System\RootObject.cs" />
-    <Compile Include="SceneOld\MapViewer.cs" />
-    <Compile Include="Script\Code\DecoScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="Script\Code\ParticleScript.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Shader\ConstantShader.cs" />
     <Compile Include="Shader\CubeShader.cs" />
     <Compile Include="Shader\InstancingPhongShader.cs" />
@@ -255,12 +235,6 @@
     <Compile Include="Shader\LambertShader.cs" />
     <Compile Include="Render\RenderManager.cs" />
     <Compile Include="Shader\PhongShader.cs" />
-    <Compile Include="SceneOld\BootScene.cs" />
-    <Compile Include="SceneOld\GameScene.cs" />
-    <Compile Include="SceneOld\ISceneService.cs" />
-    <Compile Include="SceneOld\ModelViewer.cs" />
-    <Compile Include="SceneOld\SceneManager.cs" />
-    <Compile Include="SceneOld\TitleScene.cs" />
     <Compile Include="Script\IScriptService.cs" />
     <Compile Include="Script\Script.cs" />
     <Compile Include="Script\ScriptManager.cs" />
@@ -268,13 +242,6 @@
     <Compile Include="Shader\ShaderManager.cs" />
     <Compile Include="Util\GameUtil.cs" />
     <Compile Include="Util\GeneralUtil.cs" />
-    <Compile Include="UpdaterOld\CircleUpdater.cs" />
-    <Compile Include="UpdaterOld\CylinderUpdater.cs" />
-    <Compile Include="UpdaterOld\IUpdater.cs" />
-    <Compile Include="UpdaterOld\IUpdaterService.cs" />
-    <Compile Include="UpdaterOld\LinearUpdater.cs" />
-    <Compile Include="UpdaterOld\SinUpdater.cs" />
-    <Compile Include="UpdaterOld\UpdaterManager.cs" />
     <Compile Include="Util\RandomSelector.cs" />
     <Compile Include="Util\ShuffleList.cs" />
   </ItemGroup>
