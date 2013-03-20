@@ -121,9 +121,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor\Actor.cs" />
-    <Compile Include="AllyOld\AllyCube.cs" />
-    <Compile Include="AllyOld\AllyManager.cs" />
-    <Compile Include="AllyOld\IAllyService.cs" />
     <Compile Include="Ally\Ally.cs" />
     <Compile Include="Ally\AllyCreator.cs" />
     <Compile Include="Ally\AllyDrawer.cs" />
