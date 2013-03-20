@@ -1,78 +1,53 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
+using System.Text;
+using HimaLib.Math;
 
-
-namespace ccm
+namespace ccm.Ally
 {
-    /// <summary>
-    /// IUpdateable インターフェイスを実装したゲーム コンポーネントです。
-    /// </summary>
-    class AllyManager : MyGameComponent, IAllyService
+    public class AllyManager
     {
-        public static readonly int ALLY_MAX = 6;
+        public AllyCreator Creator { get; set; }
 
-        List<AllyCube> allyCubeList;
+        List<Ally> AliveList = new List<Ally>();
 
-        public AllyManager(Game game)
-            : base(game)
+        List<Ally> DeleteList = new List<Ally>();
+
+        public AllyManager()
         {
-            game.Services.AddService(typeof(IAllyService), this);
-
-            allyCubeList = new List<AllyCube>();
-
-            // TODO: ここで子コンポーネントを作成します。
-            for (var i = 0; i < ALLY_MAX; ++i)
-            {
-                var ally = new AllyCube(game);
-                allyCubeList.Add(ally);
-                ChildComponents.Add(ally);
-            }
-
-            AddComponents();
         }
 
-        /// <summary>
-        /// ゲーム コンポーネントの初期化を行います。
-        /// ここで、必要なサービスを照会して、使用するコンテンツを読み込むことができます。
-        /// </summary>
-        public override void Initialize()
+        public void Update()
         {
-            // TODO: ここに初期化のコードを追加します。
+            foreach (var enemy in AliveList)
+            {
+                enemy.Update();
+            }
 
-            base.Initialize();
+            DeleteList.ForEach((enemy) =>
+            {
+                AliveList.Remove(enemy);
+            });
+            DeleteList.Clear();
         }
 
-        public override void OnSceneBegin(SceneLabel sceneLabel)
+        public void Draw()
         {
-            if (sceneLabel == SceneLabel.GAME_SCENE)
+            foreach (var enemy in AliveList)
             {
-                Enabled = true;
-                Visible = true;
-            }
-            else
-            {
-                Enabled = false;
-                Visible = false;
+                enemy.Draw();
             }
         }
 
-        /// <summary>
-        /// ゲーム コンポーネントが自身を更新するためのメソッドです。
-        /// </summary>
-        /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
-        public override void Update(GameTime gameTime)
+        public void CreateAlly(AllyType type, AffineTransform transform)
         {
-            // TODO: ここにアップデートのコードを追加します。
+            AliveList.Add(Creator.Create(type, transform));
+        }
 
-            base.Update(gameTime);
+        public void DeleteAlly(Ally enemy)
+        {
+            DeleteList.Add(enemy);
         }
     }
 }

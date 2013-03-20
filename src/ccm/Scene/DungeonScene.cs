@@ -13,6 +13,7 @@ using ccm.Map;
 using ccm.System;
 using ccm.Debug;
 using ccm.Deco;
+using ccm.Ally;
 
 namespace ccm.Scene
 {
@@ -29,6 +30,7 @@ namespace ccm.Scene
         ccm.Enemy.EnemyManager EnemyManager;
 
         // 味方
+        ccm.Ally.AllyManager AllyManager;
 
         // マップ
         Dungeon Dungeon = new Dungeon();
@@ -104,6 +106,33 @@ namespace ccm.Scene
                 Creator = EnemyCreator
             };
 
+            var AllyCreator = new Ally.AllyCreator()
+            {
+                UpdaterCreator = () =>
+                {
+                    return new DungeonAllyUpdater()
+                    {
+                        AllyManager = this.AllyManager,
+                        Player = this.Player,
+                        CollisionManager = this.CollisionManager,
+                        Camera = this.Camera,
+                        DecoManager = this.DecoManager,
+                    };
+                },
+                DrawerCreator = () =>
+                {
+                    return new AllyDrawer()
+                    {
+                        Camera = this.Camera
+                    };
+                },
+            };
+
+            AllyManager = new Ally.AllyManager()
+            {
+                Creator = AllyCreator
+            };
+
             DungeonDrawer.Camera = Camera;
 
             cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
@@ -123,6 +152,7 @@ namespace ccm.Scene
         void UpdateStateInit()
         {
             InitPlayer();
+            InitAlly();
             InitMap();
             InitCollision();
             InitCamera();
@@ -137,6 +167,22 @@ namespace ccm.Scene
             Player.InitModel();
             Player.AddAttachment("bonbon");
             Player.AddAttachment("negi");
+        }
+
+        void InitAlly()
+        {
+            for (var i = 0; i < 6; ++i)
+            {
+                AllyManager.CreateAlly(AllyType.Cube, CreateAllyTransform());
+            }
+        }
+
+        AffineTransform CreateAllyTransform()
+        {
+            return new AffineTransform(
+                Vector3.One,
+                Vector3.Zero,
+                new Vector3(Rand.NextFloat(-100.0f, 100.0f), 1.5f, Rand.NextFloat(-100.0f, 100.0f)));
         }
 
         void InitMap()
@@ -191,6 +237,8 @@ namespace ccm.Scene
 
             EnemyManager.Update();
 
+            AllyManager.Update();
+
             DecoManager.Update();
 
             if (IsTimeToCreateEnemy())
@@ -243,6 +291,8 @@ namespace ccm.Scene
             Player.Draw(PlayerDrawer);
 
             EnemyManager.Draw();
+
+            AllyManager.Draw();
 
             DecoManager.Draw();
 

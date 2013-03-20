@@ -121,9 +121,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor\Actor.cs" />
-    <Compile Include="Ally\AllyCube.cs" />
+    <Compile Include="AllyOld\AllyCube.cs" />
+    <Compile Include="AllyOld\AllyManager.cs" />
+    <Compile Include="AllyOld\IAllyService.cs" />
+    <Compile Include="Ally\Ally.cs" />
+    <Compile Include="Ally\AllyCreator.cs" />
+    <Compile Include="Ally\AllyDrawer.cs" />
     <Compile Include="Ally\AllyManager.cs" />
-    <Compile Include="Ally\IAllyService.cs" />
+    <Compile Include="Ally\DungeonAllyUpdater.cs" />
+    <Compile Include="Ally\IAllyDrawer.cs" />
+    <Compile Include="Ally\IAllyUpdater.cs" />
     <Compile Include="CameraOld\Camera.cs" />
     <Compile Include="CameraOld\CameraBase.cs" />
     <Compile Include="CameraOld\CameraManager.cs" />
