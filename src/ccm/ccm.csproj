@@ -120,7 +120,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actor\Actor.cs" />
     <Compile Include="Ally\Ally.cs" />
     <Compile Include="Ally\AllyCreator.cs" />
     <Compile Include="Ally\AllyDrawer.cs" />
@@ -161,16 +160,8 @@
     <Compile Include="Input\MainController.cs" />
     <Compile Include="Input\BooleanDeviceLabel.cs" />
     <Compile Include="Input\PointingDeviceLabel.cs" />
-    <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Game\ComponentOrder.cs" />
-    <Compile Include="Game\MyGameComponent.cs" />
-    <Compile Include="Light\ILightService.cs" />
-    <Compile Include="Light\LightBase.cs" />
-    <Compile Include="Light\LightManager.cs" />
-    <Compile Include="Light\PointLight.cs" />
     <Compile Include="DungeonLogic\DungeonMap.cs" />
-    <Compile Include="Math\IRand.cs" />
-    <Compile Include="Math\SystemRand.cs" />
     <Compile Include="Particle\Particle.cs" />
     <Compile Include="Particle\Particle_Twister.cs" />
     <Compile Include="Player\DungeonPlayerUpdater.cs" />
@@ -180,8 +171,6 @@
     <Compile Include="Player\PlayerDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Resource\ResourceManager.cs" />
-    <Compile Include="SceneOld\ISceneService.cs" />
     <Compile Include="Scene\BootScene.cs" />
     <Compile Include="Scene\FakeScene.cs" />
     <Compile Include="Scene\DungeonScene.cs" />
@@ -191,9 +180,6 @@
     <Compile Include="System\DrawRand.cs" />
     <Compile Include="System\GameRand.cs" />
     <Compile Include="System\RootObject.cs" />
-    <Compile Include="Script\IScriptService.cs" />
-    <Compile Include="Script\Script.cs" />
-    <Compile Include="Script\ScriptManager.cs" />
     <Compile Include="Util\GameUtil.cs" />
     <Compile Include="Util\GeneralUtil.cs" />
     <Compile Include="Util\RandomSelector.cs" />
@@ -257,9 +243,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Demo\" />
-    <Folder Include="Model\" />
-    <Folder Include="Physics\" />
+    <Folder Include="Script\Code\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

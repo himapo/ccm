@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ccm
+namespace ccm.Util
 {
     /// <summary>
     /// ランダムに1個ずつ抜けていくくじ引き型リスト

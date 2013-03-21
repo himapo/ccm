@@ -1,5 +1,5 @@
 ﻿
-namespace ccm
+namespace ccm.Game
 {
     enum UpdateOrderLabel
     {

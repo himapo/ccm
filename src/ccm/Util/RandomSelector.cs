@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ccm
+namespace ccm.Util
 {
     /// <summary>
     /// 指定した確率分布でランダムに選択する
