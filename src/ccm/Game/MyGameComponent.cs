@@ -17,7 +17,7 @@ namespace ccm
             return (ServiceType)Game.Services.GetService(typeof(ServiceType));
         }
 
-        public MyGameComponent(Game game)
+        public MyGameComponent(Microsoft.Xna.Framework.Game game)
             : base(game)
         {
             UpdateOrder = (int)UpdateOrderLabel.DEFAULT;

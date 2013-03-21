@@ -38,8 +38,8 @@ namespace ccm.System
         {
             DebugFont.Initialize("SpriteFont/Kootenay");
 
-            GameProperty.gameRand.Init(Environment.TickCount);
-            GameProperty.drawRand.Init(Environment.TickCount);
+            GameRand.Instance.Init(Environment.TickCount);
+            DrawRand.Instance.Init(Environment.TickCount);
 
             InitController();
 

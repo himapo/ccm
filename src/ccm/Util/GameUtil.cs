@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ccm
+namespace ccm.Util
 {
     /// <summary>
     /// ゲームと関係のあるユーティリティ
@@ -10,7 +10,7 @@ namespace ccm
     {
         public static float FrameToSecond(int frame)
         {
-            return (float)frame / GameProperty.GAME_FPS;
+            return (float)frame / Game.GameProperty.GAME_FPS;
         }
 
         public static float FrameToMilliSecond(int frame)

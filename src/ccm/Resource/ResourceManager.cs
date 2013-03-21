@@ -10,11 +10,11 @@ namespace ccm
     {
         static ResourceManager instance;
 
-        Game Game { get; set; }
+        Microsoft.Xna.Framework.Game Game { get; set; }
 
         Dictionary<string, Object> resourceDic;
 
-        public static void CreateInstance(Game game)
+        public static void CreateInstance(Microsoft.Xna.Framework.Game game)
         {
             instance = new ResourceManager(game);
         }
@@ -24,7 +24,7 @@ namespace ccm
             return instance;
         }
 
-        ResourceManager(Game game)
+        ResourceManager(Microsoft.Xna.Framework.Game game)
         {
             Game = game;
             resourceDic = new Dictionary<string, object>();

@@ -66,9 +66,9 @@ namespace ccm.Scene
 
         int Frame = 0;
 
-        IRand Rand
+        HimaLib.Math.IRand Rand
         {
-            get { return GameProperty.gameRand; }
+            get { return GameRand.Instance; }
             set { }
         }
 

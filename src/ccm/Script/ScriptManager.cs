@@ -11,7 +11,7 @@ namespace ccm
     {
         Dictionary<string, Script> scriptDic;
 
-        public ScriptManager(Game game)
+        public ScriptManager(Microsoft.Xna.Framework.Game game)
             : base(game)
         {
             game.Services.AddService(typeof(IScriptService), this);

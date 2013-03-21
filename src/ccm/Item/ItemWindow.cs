@@ -6,6 +6,7 @@ using HimaLib.System;
 using HimaLib.Render;
 using HimaLib.Math;
 using ccm.Input;
+using ccm.Util;
 
 namespace ccm.Item
 {

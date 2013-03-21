@@ -20,7 +20,7 @@ namespace ccm
         List<DirectionalLight> directionalLights;
         List<PointLight> pointLights;
 
-        public LightManager(Game game)
+        public LightManager(Microsoft.Xna.Framework.Game game)
             : base(game)
         {
             directionalLights = new List<DirectionalLight>();

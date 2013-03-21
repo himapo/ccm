@@ -35,10 +35,6 @@ namespace ccm.Ally
         // システム
         HimaLib.Math.IRand GameRand { get { return System.GameRand.Instance; } }
 
-        float Speed = GameProperty.gameRand.NextFloat() * 0.2f + 0.4f;
-
-        float Distance = GameProperty.gameRand.NextFloat() * 40.0f + 10.0f;
-
         // 実体
         Ally Ally;
 
@@ -69,6 +65,10 @@ namespace ccm.Ally
         HimaLib.Collision.CollisionInfo DamageCollision;
 
         int Frame = 0;
+
+        float Speed;
+
+        float Distance;
 
         public DungeonAllyUpdater()
         {
@@ -116,6 +116,10 @@ namespace ccm.Ally
                 Group = () => (int)ccm.Collision.CollisionGroup.AllyDamage,
                 Reactor = DamageCollisionReactor,
             };
+
+            Speed = GameRand.NextFloat() * 0.2f + 0.4f;
+
+            Distance = GameRand.NextFloat() * 40.0f + 10.0f;
 
             UpdateState = UpdateStateInit;
         }

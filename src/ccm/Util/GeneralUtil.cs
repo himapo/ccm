@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ccm
+namespace ccm.Util
 {
     /// <summary>
     /// ゲームと無関係な汎用ユーティリティ
