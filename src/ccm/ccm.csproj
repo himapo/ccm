@@ -139,14 +139,8 @@
     <Compile Include="Collision\CollisionGroup.cs" />
     <Compile Include="Collision\CollisionReactor.cs" />
     <Compile Include="Collision\AttackCollisionReactor.cs" />
-    <Compile Include="DebugMenu\DebugMenuNode.cs" />
-    <Compile Include="DebugMenu\DebugMenuManager.cs" />
-    <Compile Include="DebugMenu\DebugMenuNodeExecutable.cs" />
-    <Compile Include="DebugMenu\DebugMenuNodeInternal.cs" />
-    <Compile Include="DebugMenu\DebugMenuNodeTunable.cs" />
-    <Compile Include="DebugMenu\DebugMenuNodeTunableInt.cs" />
-    <Compile Include="DebugMenu\IDebugMenuService.cs" />
     <Compile Include="Debug\DebugFontInfo.cs" />
+    <Compile Include="Debug\DebugFontManager.cs" />
     <Compile Include="Debug\DebugMenuUpdater.cs" />
     <Compile Include="Deco\Deco.cs" />
     <Compile Include="Deco\DecoManager.cs" />
@@ -176,7 +170,6 @@
     <Compile Include="Input\PointingDeviceLabel.cs" />
     <Compile Include="Light\DirectionalLight.cs" />
     <Compile Include="Debug\DebugAxis.cs" />
-    <Compile Include="Debug\DebugFontManager.cs" />
     <Compile Include="Debug\DebugSampleManager.cs" />
     <Compile Include="Debug\DebugUtil.cs" />
     <Compile Include="Game\ComponentOrder.cs" />
@@ -192,8 +185,6 @@
     <Compile Include="Math\SystemRand.cs" />
     <Compile Include="Particle\Particle.cs" />
     <Compile Include="Particle\Particle_Twister.cs" />
-    <Compile Include="Physics\IPhysicsService.cs" />
-    <Compile Include="Physics\PhysicsManager.cs" />
     <Compile Include="Player\DungeonPlayerUpdater.cs" />
     <Compile Include="Player\IPlayerDrawer.cs" />
     <Compile Include="Player\IPlayerUpdater.cs" />
@@ -296,6 +287,7 @@
   <ItemGroup>
     <Folder Include="Demo\" />
     <Folder Include="Model\" />
+    <Folder Include="Physics\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
