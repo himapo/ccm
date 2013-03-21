@@ -7,6 +7,7 @@ using HimaLib.Model;
 using HimaLib.System;
 using HimaLib.Collision;
 using HimaLib.Camera;
+using HimaLib.Debug;
 using ccm.Player;
 using ccm.Enemy;
 using ccm.Collision;
@@ -71,6 +72,8 @@ namespace ccm.Enemy
 
         int Frame = 0;
 
+        int HitPoint;
+
         public DungeonEnemyUpdater()
         {
             BodyCollisionPrimitive = new CylinderCollisionPrimitive()
@@ -103,12 +106,7 @@ namespace ccm.Enemy
 
             DamageCollisionReactor = new AttackCollisionReactor()
             {
-                AttackReaction = (id, count, actor) =>
-                {
-                    UpdateState = UpdateStateTerm;
-
-                    DecoManager.Add(new ccm.Deco.Deco_Twister(Transform, Camera, GameRand));
-                }
+                AttackReaction = Damage,
             };
 
             DamageCollision = new HimaLib.Collision.CollisionInfo()
@@ -119,6 +117,20 @@ namespace ccm.Enemy
             };
 
             UpdateState = UpdateStateInit;
+        }
+
+        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor)
+        {
+            if (HitPoint > 0 && collisionCount == 1)
+            {
+                HitPoint -= actor.Power;
+                DebugPrint.PrintLine("Enemy damage {0}, HP {1}", actor.Power, HitPoint);
+            }
+            if (HitPoint <= 0)
+            {
+                UpdateState = UpdateStateTerm;
+                DecoManager.Add(new ccm.Deco.Deco_Twister(Transform, Camera, GameRand));
+            }
         }
 
         public void Update(Enemy enemy)
@@ -132,6 +144,7 @@ namespace ccm.Enemy
         void UpdateStateInit()
         {
             InitCollision();
+            HitPoint = 10;
             UpdateState = UpdateStateMain;
         }
 

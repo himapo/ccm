@@ -348,6 +348,7 @@ namespace ccm.Player
             }
             else
             {
+                CollisionManager.ResetCollisionCount(AttackCollision.ID);
                 GoToStand();
                 return;
             }
