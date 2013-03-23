@@ -15,6 +15,7 @@ using ccm.Debug;
 using ccm.Deco;
 using ccm.Ally;
 using ccm.Item;
+using ccm.Sound;
 
 namespace ccm.Scene
 {
@@ -51,6 +52,9 @@ namespace ccm.Scene
 
         // デコ
         ccm.Deco.DecoManager DecoManager = new Deco.DecoManager();
+
+        // サウンド
+        SoundManager SoundManager { get { return SoundManager.Instance; } }
 
         // HUD
 
@@ -162,6 +166,8 @@ namespace ccm.Scene
             InitCamera();
             InitDebugMenu();
 
+            //SoundManager.PlaySoundStream("-Blue Time-");
+
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
         }
@@ -233,7 +239,8 @@ namespace ccm.Scene
 
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
             {
-                ChangeScene(new BootScene());
+                UpdateState = UpdateStateTerm;
+                DrawState = DrawStateTerm;
                 return;
             }
 
@@ -319,6 +326,16 @@ namespace ccm.Scene
         void DrawMap()
         {
             Dungeon.Draw(DungeonDrawer);
+        }
+
+        void UpdateStateTerm()
+        {
+            SoundManager.StopSoundStream("-Blue Time-");
+            ChangeScene(new BootScene());
+        }
+
+        void DrawStateTerm()
+        {
         }
     }
 }

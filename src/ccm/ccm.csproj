@@ -150,6 +150,7 @@
     <Compile Include="Scene\MapViewerScene.cs" />
     <Compile Include="Scene\ModelViewerScene.cs" />
     <Compile Include="Scene\SceneBase.cs" />
+    <Compile Include="Sound\SoundManager.cs" />
     <Compile Include="System\DrawRand.cs" />
     <Compile Include="System\GameRand.cs" />
     <Compile Include="System\RootObject.cs" />

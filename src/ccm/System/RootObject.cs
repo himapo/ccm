@@ -6,8 +6,9 @@ using HimaLib;
 using HimaLib.Debug;
 using HimaLib.System;
 using HimaLib.Input;
-using ccm.Input;
 using HimaLib.Updater;
+using ccm.Input;
+using ccm.Sound;
 
 namespace ccm.System
 {
@@ -22,6 +23,8 @@ namespace ccm.System
         MainController gameController;
 
         MainController debugController;
+
+        SoundManager SoundManager { get { return SoundManager.Instance; } }
 
         public RootObject()
         {
@@ -42,6 +45,8 @@ namespace ccm.System
             DrawRand.Instance.Init(Environment.TickCount);
 
             InitController();
+
+            SoundManager.Initialize();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -98,6 +103,8 @@ namespace ccm.System
             DebugFont.Clear();
 
             InputAccessor.Update();
+
+            SoundManager.Update();
 
             HimaLib.Updater.UpdaterManager.Instance.Update(TimeKeeper.Instance.LastFrameMilliSeconds);
 

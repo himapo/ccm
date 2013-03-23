@@ -10,6 +10,7 @@ using HimaLib.Collision;
 using ccm.Input;
 using ccm.Debug;
 using ccm.Collision;
+using ccm.Sound;
 
 namespace ccm.Player
 {
@@ -78,6 +79,8 @@ namespace ccm.Player
         AttackCollisionActor AttackCollisionActor;
 
         HimaLib.Collision.CollisionInfo AttackCollision;
+
+        SoundManager SoundManager { get { return SoundManager.Instance; } }
 
         public DungeonPlayerUpdater()
         {
@@ -383,6 +386,8 @@ namespace ccm.Player
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
             attackCount = 20.0f;
+
+            SoundManager.PlaySoundEffect("Body_Hit_40");
         }
     }
 }

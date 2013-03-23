@@ -146,6 +146,7 @@
     <Compile Include="Render\ToonModelRenderParameter.cs" />
     <Compile Include="Script\Script.cs" />
     <Compile Include="Script\ScriptManager.cs" />
+    <Compile Include="Sound\ISound.cs" />
     <Compile Include="System\IColor.cs" />
     <Compile Include="System\IGameInitializer.cs" />
     <Compile Include="System\IDrawer.cs" />
