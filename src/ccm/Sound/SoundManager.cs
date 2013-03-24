@@ -19,7 +19,8 @@ namespace ccm.Sound
             Sound = new SoundXACT()
             {
                 SettingsFile = @"Content\Sound\ccm.xgs",
-                WaveBankFile = @"Content\Sound\Wave Bank.xwb",
+                EffectWaveBankFile = @"Content\Sound\SE Bank.xwb",
+                StreamWaveBankFile = @"Content\Sound\BGM Bank.xwb",
                 SoundBankFile = @"Content\Sound\Sound Bank.xsb",
             };
         }
@@ -34,6 +35,11 @@ namespace ccm.Sound
             Sound.Update();
         }
 
+        public void PlaySoundEffect(string name)
+        {
+            Sound.PlaySoundEffect(name);
+        }
+
         public void PlaySoundStream(string name)
         {
             Sound.PlaySoundStream(name);
@@ -42,11 +48,6 @@ namespace ccm.Sound
         public void StopSoundStream(string name)
         {
             Sound.StopSoundStream(name);
-        }
-
-        public void PlaySoundEffect(string name)
-        {
-            Sound.PlaySoundEffect(name);
         }
     }
 }

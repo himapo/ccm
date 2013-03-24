@@ -218,15 +218,15 @@ Global Settings
 
 Wave Bank
 {
-    Name = Wave Bank;
-    Xbox File = Xbox\Wave Bank.xwb;
-    Windows File = Win\Wave Bank.xwb;
+    Name = SE Bank;
+    Xbox File = Xbox\SE Bank.xwb;
+    Windows File = Win\SE Bank.xwb;
     Xbox Bank Path Edited = 0;
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 615503460;
-    Bank Last Revised High = 30287791;
+    Bank Last Revised Low = 2815691288;
+    Bank Last Revised High = 30287918;
 
     Wave
     {
@@ -319,13 +319,27 @@ Wave Bank
             Last Modified High = 30005731;
         }
     }
+}
+
+Wave Bank
+{
+    Name = BGM Bank;
+    Xbox File = Xbox\BGM Bank.xwb;
+    Windows File = Win\BGM Bank.xwb;
+    Xbox Bank Path Edited = 0;
+    Windows Bank Path Edited = 0;
+    Streaming = 1;
+    Seek Tables = 1;
+    Compression Preset Name = <none>;
+    Bank Last Revised Low = 3528452055;
+    Bank Last Revised High = 30287918;
 
     Wave
     {
         Name = -Blue Time-;
         File = ..\..\..\..\..\dtm\mp3\convert\-Blue Time-.wav;
-        Build Settings Last Modified Low = 575091149;
-        Build Settings Last Modified High = 30287791;
+        Build Settings Last Modified Low = 3404964992;
+        Build Settings Last Modified High = 30287918;
 
         Cache
         {
@@ -388,7 +402,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = SE Bank;
                     Bank Index = 0;
                     Entry Name = Body_Hit_40;
                     Entry Index = 0;
@@ -435,7 +449,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = SE Bank;
                     Bank Index = 0;
                     Entry Name = Body_Hit_41;
                     Entry Index = 1;
@@ -482,7 +496,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = SE Bank;
                     Bank Index = 0;
                     Entry Name = Body_Hit_42;
                     Entry Index = 2;
@@ -529,7 +543,7 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
+                    Bank Name = SE Bank;
                     Bank Index = 0;
                     Entry Name = Body_Hit_43;
                     Entry Index = 3;
@@ -576,10 +590,10 @@ Sound Bank
 
                 Wave Entry
                 {
-                    Bank Name = Wave Bank;
-                    Bank Index = 0;
+                    Bank Name = BGM Bank;
+                    Bank Index = 1;
                     Entry Name = -Blue Time-;
-                    Entry Index = 4;
+                    Entry Index = 0;
                     Weight = 255;
                     Weight Min = 0;
                 }

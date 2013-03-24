@@ -12,13 +12,17 @@ namespace HimaLib.Sound
     {
         public string SettingsFile { get; set; }
 
-        public string WaveBankFile { get; set; }
+        public string EffectWaveBankFile { get; set; }
+
+        public string StreamWaveBankFile { get; set; }
         
         public string SoundBankFile { get; set; }
 
         AudioEngine AudioEngine;
 
-        WaveBank WaveBank;
+        WaveBank EffectWaveBank;
+
+        WaveBank StreamWaveBank;
 
         SoundBank SoundBank;
 
@@ -42,11 +46,21 @@ namespace HimaLib.Sound
 
             try
             {
-                WaveBank = new WaveBank(AudioEngine, WaveBankFile);
+                EffectWaveBank = new WaveBank(AudioEngine, EffectWaveBankFile);
             }
             catch (Exception)
             {
-                DebugPrint.PrintLine("WaveBankの生成に失敗");
+                DebugPrint.PrintLine("EffectWaveBankの生成に失敗");
+                return false;
+            }
+
+            try
+            {
+                StreamWaveBank = new WaveBank(AudioEngine, StreamWaveBankFile, 0, 4);
+            }
+            catch (Exception)
+            {
+                DebugPrint.PrintLine("StreamWaveBankの生成に失敗");
                 return false;
             }
 
@@ -68,6 +82,11 @@ namespace HimaLib.Sound
             AudioEngine.Update();
         }
 
+        public void PlaySoundEffect(string name)
+        {
+            SoundBank.PlayCue(name);
+        }
+
         public void PlaySoundStream(string name)
         {
             StopSoundStream(name);
@@ -81,11 +100,6 @@ namespace HimaLib.Sound
             {
                 StreamCueDic[name].Stop(AudioStopOptions.AsAuthored);
             }
-        }
-
-        public void PlaySoundEffect(string name)
-        {
-            SoundBank.PlayCue(name);
         }
     }
 }

@@ -11,10 +11,10 @@ namespace HimaLib.Sound
 
         void Update();
 
+        void PlaySoundEffect(string name);
+
         void PlaySoundStream(string name);
 
         void StopSoundStream(string name);
-
-        void PlaySoundEffect(string name);
     }
 }
