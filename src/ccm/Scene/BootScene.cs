@@ -64,8 +64,7 @@ namespace ccm.Scene
                 ExecFunc = () =>
                 {
                     Console.WriteLine("Execute Test Game");
-                    ChangeScene(new DungeonScene());
-                    SwitchController(false);
+                    ChangeScene(new HomeScene());
                 }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
@@ -82,7 +81,6 @@ namespace ccm.Scene
                 {
                     Console.WriteLine("Execute Model Viewer");
                     ChangeScene(new ModelViewerScene());
-                    SwitchController(false);
                 }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
@@ -93,18 +91,10 @@ namespace ccm.Scene
                 {
                     Console.WriteLine("Execute Map Viewer");
                     ChangeScene(new MapViewerScene());
-                    SwitchController(false);
                 }
             });
 
             debugMenu.Open();
-            SwitchController(true);
-        }
-
-        void SwitchController(bool debug)
-        {
-            InputAccessor.SwitchController(ControllerLabel.Main, !debug);
-            InputAccessor.SwitchController(ControllerLabel.Debug, debug);
         }
 
         void DrawStateInit()

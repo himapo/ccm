@@ -10,6 +10,8 @@ namespace ccm.Scene
     {
         public FakeScene()
         {
+            Name = "FakeScene";
+
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
         }

@@ -223,8 +223,6 @@ namespace ccm.Scene
                 Getter = () => { return Dungeon.Drawable; },
                 Setter = (b) => { Dungeon.Drawable = b; },
             });
-
-            InputAccessor.SwitchController(ControllerLabel.Debug, true);
         }
 
         void DrawStateInit()

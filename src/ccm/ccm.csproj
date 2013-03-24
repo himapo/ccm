@@ -147,6 +147,7 @@
     <Compile Include="Scene\BootScene.cs" />
     <Compile Include="Scene\FakeScene.cs" />
     <Compile Include="Scene\DungeonScene.cs" />
+    <Compile Include="Scene\HomeScene.cs" />
     <Compile Include="Scene\MapViewerScene.cs" />
     <Compile Include="Scene\ModelViewerScene.cs" />
     <Compile Include="Scene\SceneBase.cs" />
