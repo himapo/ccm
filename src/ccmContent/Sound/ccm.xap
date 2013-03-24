@@ -225,21 +225,15 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 2815691288;
-    Bank Last Revised High = 30287918;
+    Bank Last Revised Low = 1717709521;
+    Bank Last Revised High = 30287954;
 
     Wave
     {
         Name = Body_Hit_40;
-        File = ..\..\..\..\..\creative\sample\app_hub\SoundLab\SoundLab\Audio\Body_Hits\Body_Hit_40.wav;
-        Build Settings Last Modified Low = 2278703504;
-        Build Settings Last Modified High = 30287788;
+        File = ..\..\..\data\Sound\Body_Hit_40.wav;
+        Build Settings Last Modified Low = 1627504362;
+        Build Settings Last Modified High = 30287954;
 
         Cache
         {
@@ -260,9 +254,9 @@ Wave Bank
     Wave
     {
         Name = Body_Hit_41;
-        File = ..\..\..\..\..\creative\sample\app_hub\SoundLab\SoundLab\Audio\Body_Hits\Body_Hit_41.wav;
-        Build Settings Last Modified Low = 2278703504;
-        Build Settings Last Modified High = 30287788;
+        File = ..\..\..\data\Sound\Body_Hit_41.wav;
+        Build Settings Last Modified Low = 1666346584;
+        Build Settings Last Modified High = 30287954;
 
         Cache
         {
@@ -283,9 +277,9 @@ Wave Bank
     Wave
     {
         Name = Body_Hit_42;
-        File = ..\..\..\..\..\creative\sample\app_hub\SoundLab\SoundLab\Audio\Body_Hits\Body_Hit_42.wav;
-        Build Settings Last Modified Low = 2278703504;
-        Build Settings Last Modified High = 30287788;
+        File = ..\..\..\data\Sound\Body_Hit_42.wav;
+        Build Settings Last Modified Low = 1691688033;
+        Build Settings Last Modified High = 30287954;
 
         Cache
         {
@@ -306,9 +300,9 @@ Wave Bank
     Wave
     {
         Name = Body_Hit_43;
-        File = ..\..\..\..\..\creative\sample\app_hub\SoundLab\SoundLab\Audio\Body_Hits\Body_Hit_43.wav;
-        Build Settings Last Modified Low = 2278713504;
-        Build Settings Last Modified High = 30287788;
+        File = ..\..\..\data\Sound\Body_Hit_43.wav;
+        Build Settings Last Modified Low = 1717709521;
+        Build Settings Last Modified High = 30287954;
 
         Cache
         {
@@ -337,21 +331,15 @@ Wave Bank
     Streaming = 1;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Xbox Bank Last Modified Low = 0;
-    Xbox Bank Last Modified High = 0;
-    PC Bank Last Modified Low = 0;
-    PC Bank Last Modified High = 0;
-    Header Last Modified Low = 0;
-    Header Last Modified High = 0;
-    Bank Last Revised Low = 3528452055;
-    Bank Last Revised High = 30287918;
+    Bank Last Revised Low = 1590452243;
+    Bank Last Revised High = 30287954;
 
     Wave
     {
         Name = -Blue Time-;
-        File = ..\..\..\..\..\dtm\mp3\convert\-Blue Time-.wav;
-        Build Settings Last Modified Low = 3404964992;
-        Build Settings Last Modified High = 30287918;
+        File = ..\..\..\data\Sound\-Blue Time-.wav;
+        Build Settings Last Modified Low = 1590452243;
+        Build Settings Last Modified High = 30287954;
 
         Cache
         {
