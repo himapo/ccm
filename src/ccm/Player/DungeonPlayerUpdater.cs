@@ -7,6 +7,7 @@ using HimaLib.Model;
 using HimaLib.System;
 using HimaLib.Camera;
 using HimaLib.Collision;
+using HimaLib.Debug;
 using ccm.Input;
 using ccm.Debug;
 using ccm.Collision;
@@ -66,6 +67,8 @@ namespace ccm.Player
             }
         }
 
+        public int HitPoint { get; set; }
+
         float attackCount;
 
         HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
@@ -73,6 +76,12 @@ namespace ccm.Player
         CollisionReactor BodyCollisionReactor;
 
         HimaLib.Collision.CollisionInfo BodyCollision;
+
+        HimaLib.Collision.SphereCollisionPrimitive DamageCollisionPrimitive;
+
+        AttackCollisionReactor DamageCollisionReactor;
+
+        HimaLib.Collision.CollisionInfo DamageCollision;
 
         HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
 
@@ -106,6 +115,24 @@ namespace ccm.Player
                 Reactor = BodyCollisionReactor,
             };
 
+            DamageCollisionPrimitive = new SphereCollisionPrimitive()
+            {
+                Center = () => Transform.Translation + Vector3.UnitY * 1.5f,
+                Radius = () => 3.0f,
+            };
+
+            DamageCollisionReactor = new AttackCollisionReactor()
+            {
+                AttackReaction = Damage,
+            };
+
+            DamageCollision = new HimaLib.Collision.CollisionInfo()
+            {
+                Active = () => true,
+                Group = () => (int)ccm.Collision.CollisionGroup.PlayerDamage,
+                Reactor = DamageCollisionReactor,
+            };
+
             AttackCollisionPrimitive = new SphereCollisionPrimitive()
             {
                 Center = () => Transform.Translation + Direction * 4.0f + Vector3.UnitY * 5.0f,
@@ -127,6 +154,15 @@ namespace ccm.Player
             UpdateState = UpdateStateInit;
         }
 
+        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor)
+        {
+            if (HitPoint > 0 && collisionCount == 1)
+            {
+                HitPoint -= actor.Power;
+                DebugPrint.PrintLine("Player damage {0}, HP {1}", actor.Power, HitPoint);
+            }
+        }
+
         public void Update(IModel model, AffineTransform transform)
         {
             Model = model;
@@ -141,7 +177,7 @@ namespace ccm.Player
         void UpdateStateInit()
         {
             InitCollision();
-
+            HitPoint = 3;
             GoToStand();
         }
 
@@ -150,6 +186,10 @@ namespace ccm.Player
             BodyCollision.Primitives.Clear();
             BodyCollision.Primitives.Add(BodyCollisionPrimitive);
             CollisionManager.Add(BodyCollision);
+
+            DamageCollision.Primitives.Clear();
+            DamageCollision.Primitives.Add(DamageCollisionPrimitive);
+            CollisionManager.Add(DamageCollision);
 
             AttackCollision.Primitives.Clear();
             AttackCollision.Primitives.Add(AttackCollisionPrimitive);

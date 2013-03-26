@@ -55,6 +55,18 @@ namespace ccm.Scene
         void UpdateStateMain()
         {
             debugMenuUpdater.Update();
+
+            if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
+            {
+                UpdateState = UpdateStateTerm;
+                DrawState = DrawStateTerm;
+                return;
+            }
+        }
+
+        void UpdateStateTerm()
+        {
+            ChangeScene(new BootScene());
         }
 
         void DrawStateInit()
@@ -64,6 +76,10 @@ namespace ccm.Scene
         void DrawStateMain()
         {
             debugMenu.Draw(debugMenuDrawer);
+        }
+
+        void DrawStateTerm()
+        {
         }
     }
 }

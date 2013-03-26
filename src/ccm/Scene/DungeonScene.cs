@@ -205,7 +205,7 @@ namespace ccm.Scene
         {
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyDamage);
-            CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyBody);
+            CollisionManager.AddGroupPair((int)Collision.CollisionGroup.EnemyAttack, (int)Collision.CollisionGroup.PlayerDamage);
             CollisionManager.Drawer = new WireCollisionDrawer(Camera);
         }
 
@@ -235,13 +235,6 @@ namespace ccm.Scene
 
             DebugFont.Add(Name, 50.0f, 60.0f);
 
-            if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
-            {
-                UpdateState = UpdateStateTerm;
-                DrawState = DrawStateTerm;
-                return;
-            }
-
             Player.Update(DungeonPlayerUpdater);
 
             EnemyManager.Update();
@@ -260,6 +253,21 @@ namespace ccm.Scene
             UpdateCollision();
 
             UpdateCamera();
+
+            if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
+            {
+                UpdateState = UpdateStateTerm;
+                DrawState = DrawStateTerm;
+                return;
+            }
+
+            // TODO : この判定の仕方はない
+            if (DungeonPlayerUpdater.HitPoint <= 0)
+            {
+                UpdateState = UpdateStateTerm;
+                DrawState = DrawStateTerm;
+                return;
+            }
         }
 
         bool IsTimeToCreateEnemy()
@@ -329,7 +337,7 @@ namespace ccm.Scene
         void UpdateStateTerm()
         {
             SoundManager.StopSoundStream("-Blue Time-");
-            ChangeScene(new BootScene());
+            ChangeScene(new HomeScene());
         }
 
         void DrawStateTerm()

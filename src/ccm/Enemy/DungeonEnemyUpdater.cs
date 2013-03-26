@@ -66,6 +66,12 @@ namespace ccm.Enemy
 
         HimaLib.Collision.CollisionInfo DamageCollision;
 
+        HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
+
+        AttackCollisionActor AttackCollisionActor;
+
+        HimaLib.Collision.CollisionInfo AttackCollision;
+
         int Frame;
 
         int HitPoint;
@@ -116,6 +122,24 @@ namespace ccm.Enemy
                 Reactor = DamageCollisionReactor,
             };
 
+            AttackCollisionPrimitive = new SphereCollisionPrimitive()
+            {
+                Center = () => Transform.Translation,
+                Radius = () => 4.0f,
+            };
+
+            AttackCollisionActor = new AttackCollisionActor()
+            {
+                Power = 1,
+            };
+
+            AttackCollision = new HimaLib.Collision.CollisionInfo()
+            {
+                Active = () => Frame % 360 < 180,
+                Group = () => (int)ccm.Collision.CollisionGroup.EnemyAttack,
+                Actor = AttackCollisionActor,
+            };
+
             Speed = GameRand.NextFloat() * 0.2f + 0.4f;
 
             Distance = GameRand.NextFloat() * 40.0f + 10.0f;
@@ -161,6 +185,10 @@ namespace ccm.Enemy
             DamageCollision.Primitives.Clear();
             DamageCollision.Primitives.Add(DamageCollisionPrimitive);
             CollisionManager.Add(DamageCollision);
+
+            AttackCollision.Primitives.Clear();
+            AttackCollision.Primitives.Add(AttackCollisionPrimitive);
+            CollisionManager.Add(AttackCollision);
         }
 
         void UpdateStateMain()
