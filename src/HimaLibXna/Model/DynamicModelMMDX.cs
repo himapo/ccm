@@ -17,7 +17,7 @@ namespace HimaLib.Model
 
         public MMDXModel Model { get; set; }
 
-        List<MMDAccessory> accessoryModels = new List<MMDAccessory>();
+        Dictionary<string, MMDAccessory> accessoryModels = new Dictionary<string, MMDAccessory>();
 
         MMDAccessoryLoader accessoryLoader = new MMDAccessoryLoader();
 
@@ -53,7 +53,7 @@ namespace HimaLib.Model
             var renderer = ModelRendererFactoryMMDX.Instance.Create(param);
             renderer.Render(Model);
 
-            foreach (var accessory in accessoryModels)
+            foreach (var accessory in accessoryModels.Values)
             {
                 renderer.Render(accessory);
             }
@@ -64,7 +64,7 @@ namespace HimaLib.Model
             var accessory = accessoryLoader.Load("Accessory/" + name);
             var vac = vacLoader.Load("Accessory/" + name + "-vac");
             Model.BindAccessory(accessory, vac);
-            accessoryModels.Add(accessory);
+            accessoryModels[name] = accessory;
         }
 
         public void RemoveAttachment(string name)
@@ -114,6 +114,18 @@ namespace HimaLib.Model
                 Model.AnimationPlayer.AddMotion(name, motion, MMDMotionTrackOptions.UpdateWhenStopped);
             }
             motionNames.Add(name);
+        }
+
+        public Matrix GetBoneMatrix(string name)
+        {
+            return MathUtilXna.ToHimaLibMatrix(Model.BoneManager[name].GlobalTransform);
+        }
+
+        public Matrix GetAttachmentMatrix(string name)
+        {
+            Microsoft.Xna.Framework.Matrix m;
+            accessoryModels[name].GetPosition(out m);
+            return MathUtilXna.ToHimaLibMatrix(m);
         }
     }
 }

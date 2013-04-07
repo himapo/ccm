@@ -135,7 +135,11 @@ namespace ccm.Player
 
             AttackCollisionPrimitive = new SphereCollisionPrimitive()
             {
-                Center = () => Transform.Translation + Direction * 4.0f + Vector3.UnitY * 5.0f,
+                Center = () =>
+                {
+                    var world = Model.GetAttachmentMatrix("negi");
+                    return new Vector3(world.M41, world.M42, world.M43);
+                },
                 Radius = () => 3.0f,
             };
 
