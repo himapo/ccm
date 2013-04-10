@@ -43,6 +43,7 @@ namespace ccm.Player
         bool PressCrouch { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Crouch); } }
         bool PressJump { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Jump); } }
         bool PressAttack { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
+        bool PressGuard { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseSub); } }
 
         bool IsMove { get { return PressUp || PressDown || PressLeft || PressRight; } }
 
@@ -207,6 +208,11 @@ namespace ccm.Player
                 GoToAttack();
                 return;
             }
+            else if (PressGuard)
+            {
+                GoToGuard();
+                return;
+            }
             else if (PressCrouch)
             {
                 GoToCrouch();
@@ -235,6 +241,11 @@ namespace ccm.Player
             if (PressAttack)
             {
                 GoToAttack();
+                return;
+            }
+            else if (PressGuard)
+            {
+                GoToGuard();
                 return;
             }
             else if (PressCrouch)
@@ -401,6 +412,14 @@ namespace ccm.Player
             }
         }
 
+        void UpdateStateGuard()
+        {
+            if(!PressGuard)
+            {
+                GoToStand();
+            }
+        }
+
         void GoToStand()
         {
             UpdateState = UpdateStateStand;
@@ -432,6 +451,12 @@ namespace ccm.Player
             attackCount = 20.0f;
 
             SoundManager.PlaySoundEffect("Body_Hit_40");
+        }
+
+        void GoToGuard()
+        {
+            UpdateState = UpdateStateGuard;
+            Model.ChangeMotion("guard", 0.04f);
         }
     }
 }
