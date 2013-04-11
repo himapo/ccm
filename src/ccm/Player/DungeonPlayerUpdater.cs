@@ -84,6 +84,12 @@ namespace ccm.Player
 
         HimaLib.Collision.CollisionInfo DamageCollision;
 
+        HimaLib.Collision.SphereCollisionPrimitive GuardCollisionPrimitive;
+
+        AttackCollisionReactor GuardCollisionReactor;
+
+        HimaLib.Collision.CollisionInfo GuardCollision;
+
         HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
 
         AttackCollisionActor AttackCollisionActor;
@@ -118,8 +124,18 @@ namespace ccm.Player
 
             DamageCollisionPrimitive = new SphereCollisionPrimitive()
             {
-                Center = () => Transform.Translation + Vector3.UnitY * 1.5f,
-                Radius = () => 3.0f,
+                Center = () =>
+                {
+                    if (UpdateState == UpdateStateGuard)
+                    {
+                        return Transform.Translation + Vector3.UnitY * 1.5f - Direction * 1.5f;
+                    }
+                    else
+                    {
+                        return Transform.Translation + Vector3.UnitY * 1.5f;
+                    }
+                },
+                Radius = () => (UpdateState == UpdateStateGuard) ? 2.0f : 3.0f,
             };
 
             DamageCollisionReactor = new AttackCollisionReactor()
@@ -132,6 +148,24 @@ namespace ccm.Player
                 Active = () => true,
                 Group = () => (int)ccm.Collision.CollisionGroup.PlayerDamage,
                 Reactor = DamageCollisionReactor,
+            };
+
+            GuardCollisionPrimitive = new SphereCollisionPrimitive()
+            {
+                Center = () => Transform.Translation + Direction * 3.0f + Vector3.UnitY * 1.5f,
+                Radius = () => 4.0f,
+            };
+
+            GuardCollisionReactor = new AttackCollisionReactor()
+            {
+                AttackReaction = Guard,
+            };
+
+            GuardCollision = new HimaLib.Collision.CollisionInfo()
+            {
+                Active = () => (UpdateState == UpdateStateGuard),
+                Group = () => (int)ccm.Collision.CollisionGroup.PlayerDamage,
+                Reactor = GuardCollisionReactor,
             };
 
             AttackCollisionPrimitive = new SphereCollisionPrimitive()
@@ -168,6 +202,15 @@ namespace ccm.Player
             }
         }
 
+        void Guard(int collisionId, int collisionCount, AttackCollisionActor actor)
+        {
+            if (HitPoint > 0 && collisionCount == 1)
+            {
+                SoundManager.PlaySoundEffect("metal03");
+                DebugPrint.PrintLine("Player guard");
+            }
+        }
+
         public void Update(IModel model, AffineTransform transform)
         {
             Model = model;
@@ -195,6 +238,10 @@ namespace ccm.Player
             DamageCollision.Primitives.Clear();
             DamageCollision.Primitives.Add(DamageCollisionPrimitive);
             CollisionManager.Add(DamageCollision);
+
+            GuardCollision.Primitives.Clear();
+            GuardCollision.Primitives.Add(GuardCollisionPrimitive);
+            CollisionManager.Add(GuardCollision);
 
             AttackCollision.Primitives.Clear();
             AttackCollision.Primitives.Add(AttackCollisionPrimitive);
