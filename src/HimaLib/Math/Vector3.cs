@@ -107,12 +107,57 @@ namespace HimaLib.Math
             Z = Z / length;
         }
 
-        public static Vector3 Transform(Vector3 vector, Matrix matrix)
+        /// <summary>
+        /// w=1とした同次座標変換
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static Vector4 Transform(Vector3 vector, Matrix matrix)
+        {
+            return Vector4.Transform(
+                new Vector4(vector.X, vector.Y, vector.Z, 1.0f),
+                matrix);
+        }
+
+        /// <summary>
+        /// 同次座標をw除算して返す
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static Vector3 TransformCoord(Vector3 vector, Matrix matrix)
+        {
+            var v = Transform(vector, matrix);
+            return new Vector3(v.X / v.W, v.Y / v.W, v.Z / v.W);
+        }
+
+        /// <summary>
+        /// w除算を省略したアフィン変換専用のトランスフォーム
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="matrix">アフィン変換行列。すなわち4列目が(0,0,0,1)であること</param>
+        /// <returns></returns>
+        public static Vector3 TransformAffine(Vector3 vector, Matrix matrix)
         {
             return new Vector3(
-                vector.X * matrix.M11 + vector.Y * matrix.M21 + vector.Z * matrix.M31,
-                vector.X * matrix.M12 + vector.Y * matrix.M22 + vector.Z * matrix.M32,
-                vector.X * matrix.M13 + vector.Y * matrix.M23 + vector.Z * matrix.M33);
+                vector.X * matrix.M11 + vector.Y * matrix.M21 + vector.Z * matrix.M31 + matrix.M41,
+                vector.X * matrix.M12 + vector.Y * matrix.M22 + vector.Z * matrix.M32 + matrix.M42,
+                vector.X * matrix.M13 + vector.Y * matrix.M23 + vector.Z * matrix.M33 + matrix.M43);
+        }
+
+        /// <summary>
+        /// w=0として平行移動成分を除去して変換する
+        /// </summary>
+        /// <param name="vector"></param>
+        /// <param name="matrix"></param>
+        /// <returns></returns>
+        public static Vector3 TransformNormal(Vector3 vector, Matrix matrix)
+        {
+            var v = Vector4.Transform(
+                new Vector4(vector.X, vector.Y, vector.Z, 0.0f),
+                matrix);
+            return new Vector3(v.X, v.Y, v.Z);
         }
     }
 }

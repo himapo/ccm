@@ -66,7 +66,7 @@ namespace ccm.Player
             get
             {
                 var rotMat = Matrix.CreateRotationY(Transform.Rotation.Y);
-                return Vector3.Transform(Vector3.UnitZ, rotMat);
+                return Vector3.TransformAffine(Vector3.UnitZ, rotMat);
             }
         }
 
@@ -178,8 +178,9 @@ namespace ccm.Player
             {
                 Center = () =>
                 {
-                    var world = Model.GetAttachmentMatrix("negi");
-                    return new Vector3(world.M41, world.M42, world.M43);
+                    // 判定をネギの先端(Z方向)に4ずらす
+                    var offset = new Vector3(0.0f, 0.0f, 4.0f);
+                    return Vector3.TransformAffine(offset, Model.GetAttachmentMatrix("negi"));
                 },
                 Radius = () => 3.0f,
             };
@@ -366,7 +367,7 @@ namespace ccm.Player
         Vector3 GetMoveVector()
         {
             var rotMat = Matrix.CreateRotationY(MathUtil.ToRadians(GetMoveAngle()));
-            return Vector3.Transform(CameraEyeVector, rotMat);
+            return Vector3.TransformAffine(CameraEyeVector, rotMat);
         }
 
         float GetMoveAngle()
@@ -526,7 +527,7 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
-            AttackCount = 20.0f;
+            AttackCount = 30.0f;
             SoundManager.PlaySoundEffect("Body_Hit_40");
         }
 
