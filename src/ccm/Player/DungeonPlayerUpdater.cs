@@ -43,6 +43,7 @@ namespace ccm.Player
         bool PressCrouch { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Crouch); } }
         bool PressJump { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Jump); } }
         bool PressAttack { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
+        bool PushAttack { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
         bool PressGuard { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseSub); } }
         bool PushStep { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Step); } }
 
@@ -257,7 +258,7 @@ namespace ccm.Player
 
         void UpdateStateStand()
         {
-            if (PressAttack)
+            if (PushAttack)
             {
                 GoToAttack();
                 return;
@@ -292,7 +293,7 @@ namespace ccm.Player
 
         void UpdateStateRun()
         {
-            if (PressAttack)
+            if (PushAttack)
             {
                 GoToAttack();
                 return;
@@ -330,7 +331,7 @@ namespace ccm.Player
 
         void UpdateStateWalk()
         {
-            if (PressAttack)
+            if (PushAttack)
             {
                 GoToAttack();
                 return;
@@ -474,6 +475,36 @@ namespace ccm.Player
             else
             {
                 CollisionManager.ResetCollisionCount(AttackCollision.ID);
+
+                if (PressAttack)
+                {
+                    GoToAttack2();
+                }
+                else
+                {
+                    GoToStand();
+                }
+            }
+        }
+
+        void UpdateStateAttack2()
+        {
+            if (AttackCount > 0.0f)
+            {
+                if (AttackCount > 5.0f)
+                {
+                    if (PushStep)
+                    {
+                        AttackCount = 0.0f;
+                        GoToStep();
+                        return;
+                    }
+                }
+                AttackCount -= UpdateTimeScale;
+            }
+            else
+            {
+                CollisionManager.ResetCollisionCount(AttackCollision.ID);
                 GoToStand();
             }
         }
@@ -527,8 +558,16 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
-            AttackCount = 30.0f;
+            AttackCount = 38.0f;
             SoundManager.PlaySoundEffect("Body_Hit_40");
+        }
+
+        void GoToAttack2()
+        {
+            UpdateState = UpdateStateAttack2;
+            Model.ChangeMotion("attack2", 0.01f);
+            AttackCount = 38.0f;
+            SoundManager.PlaySoundEffect("Body_Hit_43");
         }
 
         void GoToGuard()
