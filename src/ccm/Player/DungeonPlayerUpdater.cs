@@ -527,7 +527,6 @@ namespace ccm.Player
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
             AttackCount = 20.0f;
-
             SoundManager.PlaySoundEffect("Body_Hit_40");
         }
 
@@ -543,6 +542,7 @@ namespace ccm.Player
             Model.ChangeMotion("step", 0.01f);
             StepCount = 20.0f;
             StepDirection = GetMoveVector();
+            SoundManager.PlaySoundEffect("jump00");
         }
     }
 }
