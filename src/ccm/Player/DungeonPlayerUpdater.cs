@@ -559,7 +559,7 @@ namespace ccm.Player
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
             AttackCount = 38.0f;
-            SoundManager.PlaySoundEffect("Body_Hit_40");
+            SoundManager.PlaySoundEffect("hit_s03_a");
         }
 
         void GoToAttack2()
@@ -567,7 +567,7 @@ namespace ccm.Player
             UpdateState = UpdateStateAttack2;
             Model.ChangeMotion("attack2", 0.01f);
             AttackCount = 38.0f;
-            SoundManager.PlaySoundEffect("Body_Hit_43");
+            SoundManager.PlaySoundEffect("hit_s02");
         }
 
         void GoToGuard()
