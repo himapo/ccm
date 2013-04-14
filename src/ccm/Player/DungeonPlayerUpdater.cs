@@ -39,17 +39,19 @@ namespace ccm.Player
         bool PressDown { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Down); } }
         bool PressLeft { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Left); } }
         bool PressRight { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Right); } }
-        bool PressWalk { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Walk); } }
+        bool PressWalk { get { return false; } }
         bool PressCrouch { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Crouch); } }
         bool PressJump { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Jump); } }
         bool PressAttack { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
         bool PressGuard { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseSub); } }
+        bool PushStep { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Step); } }
 
         bool IsMove { get { return PressUp || PressDown || PressLeft || PressRight; } }
 
         float VelocityRun { get { return 0.5f; } }
         float VelocityWalk { get { return 0.1f; } }
         float VelocityRotate { get { return 20.0f; } }
+        float VelocityStep { get { return 1.2f; } }
 
         float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
 
@@ -70,7 +72,11 @@ namespace ccm.Player
 
         public int HitPoint { get; set; }
 
-        float attackCount;
+        float AttackCount;
+
+        float StepCount;
+
+        Vector3 StepDirection;
 
         HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
 
@@ -185,7 +191,7 @@ namespace ccm.Player
 
             AttackCollision = new HimaLib.Collision.CollisionInfo()
             {
-                Active = () => attackCount > 0.0f,
+                Active = () => AttackCount > 0.0f,
                 Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack,
                 Actor = AttackCollisionActor,
             };
@@ -293,6 +299,12 @@ namespace ccm.Player
             else if (PressGuard)
             {
                 GoToGuard();
+                return;
+            }
+            else if (PushStep)
+            {
+                StepDirection = GetMoveVector();
+                GoToStep();
                 return;
             }
             else if (PressCrouch)
@@ -437,7 +449,6 @@ namespace ccm.Player
             if (PressAttack)
             {
                 GoToAttack();
-                return;
             }
             else if (!PressCrouch)
             {
@@ -447,21 +458,33 @@ namespace ccm.Player
 
         void UpdateStateAttack()
         {
-            if (attackCount > 0.0f)
+            if (AttackCount > 0.0f)
             {
-                attackCount -= UpdateTimeScale;
+                AttackCount -= UpdateTimeScale;
             }
             else
             {
                 CollisionManager.ResetCollisionCount(AttackCollision.ID);
                 GoToStand();
-                return;
             }
         }
 
         void UpdateStateGuard()
         {
             if(!PressGuard)
+            {
+                GoToStand();
+            }
+        }
+
+        void UpdateStateStep()
+        {
+            if (StepCount > 0.0f)
+            {
+                MovePosition(StepDirection, VelocityStep);
+                StepCount -= UpdateTimeScale;
+            }
+            else
             {
                 GoToStand();
             }
@@ -495,7 +518,7 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
-            attackCount = 20.0f;
+            AttackCount = 20.0f;
 
             SoundManager.PlaySoundEffect("Body_Hit_40");
         }
@@ -504,6 +527,13 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateGuard;
             Model.ChangeMotion("guard", 0.04f);
+        }
+
+        void GoToStep()
+        {
+            UpdateState = UpdateStateStep;
+            Model.ChangeMotion("step", 0.01f);
+            StepCount = 20.0f;
         }
     }
 }
