@@ -303,7 +303,6 @@ namespace ccm.Player
             }
             else if (PushStep)
             {
-                StepDirection = GetMoveVector();
                 GoToStep();
                 return;
             }
@@ -460,6 +459,15 @@ namespace ccm.Player
         {
             if (AttackCount > 0.0f)
             {
+                if (AttackCount > 5.0f)
+                {
+                    if (PushStep)
+                    {
+                        AttackCount = 0.0f;
+                        GoToStep();
+                        return;
+                    }
+                }
                 AttackCount -= UpdateTimeScale;
             }
             else
@@ -534,6 +542,7 @@ namespace ccm.Player
             UpdateState = UpdateStateStep;
             Model.ChangeMotion("step", 0.01f);
             StepCount = 20.0f;
+            StepDirection = GetMoveVector();
         }
     }
 }
