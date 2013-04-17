@@ -9,6 +9,10 @@ namespace HimaLib.System
     {
         public IGameInitializer Initializer { get; set; }
 
+        public bool IsActive { get { return XnaGame.IsActive; } }
+
+        XnaGame XnaGame;
+
         public Game()
         {
             Initializer = new DefaultGameInitializer();
@@ -22,6 +26,7 @@ namespace HimaLib.System
         {
             using (var game = new XnaGame())
             {
+                XnaGame = game;
                 game.Initializer = Initializer;
                 game.RootUpdater = RootUpdater;
                 game.RootDrawer = RootDrawer;

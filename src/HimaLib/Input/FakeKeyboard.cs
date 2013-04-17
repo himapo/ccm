@@ -7,6 +7,8 @@ namespace HimaLib.Input
 {
     public class FakeKeyboard : IKeyboard
     {
+        public bool EnableOnBackGround { get; set; }
+
         public Dictionary<KeyboardKeyLabel, bool> KeyDownState { get; set; }
 
         public FakeKeyboard()

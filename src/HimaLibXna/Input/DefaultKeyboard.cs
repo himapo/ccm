@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Input;
+using HimaLib.System;
 
 namespace HimaLib.Input
 {
@@ -11,9 +12,23 @@ namespace HimaLib.Input
     /// </summary>
     public class DefaultKeyboard : IKeyboard
     {
+        public bool EnableOnBackGround { get; set; }
+
+        public Game Game { get; set; }
+
+        public DefaultKeyboard()
+        {
+            EnableOnBackGround = false;
+        }
+
         public bool IsKeyDown(KeyboardKeyLabel key)
         {
-            return Keyboard.GetState().IsKeyDown(ConvertKey(key));
+            return CheckActive(Keyboard.GetState().IsKeyDown(ConvertKey(key)));
+        }
+
+        bool CheckActive(bool b)
+        {
+            return (EnableOnBackGround || Game.IsActive) && b;
         }
 
         static Keys ConvertKey(KeyboardKeyLabel key)

@@ -7,6 +7,8 @@ namespace HimaLib.Input
 {
     public interface IKeyboard
     {
+        bool EnableOnBackGround { get; set; }
+
         bool IsKeyDown(KeyboardKeyLabel key);
     }
 }

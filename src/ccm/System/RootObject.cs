@@ -14,11 +14,13 @@ namespace ccm.System
 {
     public class RootObject : StateMachine
     {
+        public HimaLib.System.Game Game { get; set; }
+
         public Scene.SceneBase CurrentScene { get; set; }
 
-        DefaultKeyboard keyboard;
+        DefaultKeyboard keyboard = new DefaultKeyboard();
 
-        DefaultMouse mouse;
+        DefaultMouse mouse = new DefaultMouse();
 
         MainController gameController;
 
@@ -28,8 +30,6 @@ namespace ccm.System
 
         public RootObject()
         {
-            keyboard = new DefaultKeyboard();
-            mouse = new DefaultMouse();
             gameController = new MainController(keyboard, mouse);
             debugController = new MainController(keyboard, mouse);
 
@@ -43,6 +43,9 @@ namespace ccm.System
 
             GameRand.Instance.Init(Environment.TickCount);
             DrawRand.Instance.Init(Environment.TickCount);
+
+            keyboard.Game = Game;
+            mouse.Game = Game;
 
             InitController();
 

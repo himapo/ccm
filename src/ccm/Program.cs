@@ -14,7 +14,8 @@ namespace ccm
             {
                 var rootObject = new System.RootObject()
                 {
-                    CurrentScene = new Scene.BootScene()
+                    Game = game,
+                    CurrentScene = new Scene.BootScene(),
                 };
                 game.Run(rootObject, rootObject);
             }

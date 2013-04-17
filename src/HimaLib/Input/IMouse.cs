@@ -7,6 +7,8 @@ namespace HimaLib.Input
 {
     public interface IMouse
     {
+        bool EnableOnBackGround { get; set; }
+
         /// <summary>
         /// ゲーム画面中心を原点とするピクセル座標を返す
         /// </summary>
