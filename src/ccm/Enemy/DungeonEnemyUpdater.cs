@@ -205,6 +205,7 @@ namespace ccm.Enemy
         {
             CollisionManager.Remove(BodyCollision);
             CollisionManager.Remove(DamageCollision);
+            CollisionManager.Remove(AttackCollision);
             EnemyManager.DeleteEnemy(Enemy);
         }
 
