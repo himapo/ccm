@@ -94,7 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Ally\Ally.cs" />
+    <Compile Include="Ally\AllyBodyCollisionInfo.cs" />
     <Compile Include="Ally\AllyCreator.cs" />
+    <Compile Include="Ally\AllyDamageCollisionInfo.cs" />
     <Compile Include="Ally\AllyDrawer.cs" />
     <Compile Include="Ally\AllyManager.cs" />
     <Compile Include="Ally\DungeonAllyUpdater.cs" />

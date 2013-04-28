@@ -52,17 +52,9 @@ namespace ccm.Ally
 
         AffineTransform PrevTransform = new AffineTransform();
 
-        HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
+        AllyBodyCollisionInfo BodyCollision;
 
-        CollisionReactor BodyCollisionReactor;
-
-        HimaLib.Collision.CollisionInfo BodyCollision;
-
-        HimaLib.Collision.SphereCollisionPrimitive DamageCollisionPrimitive;
-
-        AttackCollisionReactor DamageCollisionReactor;
-
-        HimaLib.Collision.CollisionInfo DamageCollision;
+        AllyDamageCollisionInfo DamageCollision;
 
         int Frame = 0;
 
@@ -72,49 +64,24 @@ namespace ccm.Ally
 
         public DungeonAllyUpdater()
         {
-            BodyCollisionPrimitive = new CylinderCollisionPrimitive()
+            BodyCollision = new AllyBodyCollisionInfo()
             {
                 Base = () => { return new Vector3(Transform.Translation - Vector3.UnitY * 2.0f); },
-                Radius = () => 2.0f,
-                Height = () => 4.0f,
-            };
-
-            BodyCollisionReactor = new CollisionReactor()
-            {
                 Reaction = (id, count) =>
                 {
                     Transform.Translation = PrevTransform.Translation;
                 },
             };
 
-            BodyCollision = new HimaLib.Collision.CollisionInfo()
-            {
-                Active = () => true,
-                Group = () => (int)ccm.Collision.CollisionGroup.AllyBody,
-                Reactor = BodyCollisionReactor,
-            };
-
-            DamageCollisionPrimitive = new SphereCollisionPrimitive()
+            DamageCollision = new AllyDamageCollisionInfo()
             {
                 Center = () => Transform.Translation,
-                Radius = () => 3.0f,
-            };
-
-            DamageCollisionReactor = new AttackCollisionReactor()
-            {
                 AttackReaction = (id, count, actor) =>
                 {
                     UpdateState = UpdateStateTerm;
 
                     DecoManager.Add(new ccm.Deco.Deco_Twister(Transform, Camera, GameRand));
-                }
-            };
-
-            DamageCollision = new HimaLib.Collision.CollisionInfo()
-            {
-                Active = () => true,
-                Group = () => (int)ccm.Collision.CollisionGroup.AllyDamage,
-                Reactor = DamageCollisionReactor,
+                },
             };
 
             Speed = GameRand.NextFloat() * 0.2f + 0.4f;
@@ -140,12 +107,7 @@ namespace ccm.Ally
 
         void InitCollision()
         {
-            BodyCollision.Primitives.Clear();
-            BodyCollision.Primitives.Add(BodyCollisionPrimitive);
             CollisionManager.Add(BodyCollision);
-
-            DamageCollision.Primitives.Clear();
-            DamageCollision.Primitives.Add(DamageCollisionPrimitive);
             CollisionManager.Add(DamageCollision);
         }
 
