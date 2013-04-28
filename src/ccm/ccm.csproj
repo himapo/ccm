@@ -114,6 +114,9 @@
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />
     <Compile Include="DungeonLogic\DungeonRoom.cs" />
+    <Compile Include="Enemy\EnemyAttackCollisionInfo.cs" />
+    <Compile Include="Enemy\EnemyBodyCollisionInfo.cs" />
+    <Compile Include="Enemy\EnemyDamageCollisionInfo.cs" />
     <Compile Include="Game\GameProperty.cs" />
     <Compile Include="Item\ItemWindow.cs" />
     <Compile Include="Map\Dungeon.cs" />

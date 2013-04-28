@@ -54,23 +54,11 @@ namespace ccm.Enemy
 
         AffineTransform PrevTransform = new AffineTransform();
 
-        HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
+        EnemyBodyCollisionInfo BodyCollision;
 
-        CollisionReactor BodyCollisionReactor;
+        EnemyDamageCollisionInfo DamageCollision;
 
-        HimaLib.Collision.CollisionInfo BodyCollision;
-
-        HimaLib.Collision.SphereCollisionPrimitive DamageCollisionPrimitive;
-
-        AttackCollisionReactor DamageCollisionReactor;
-
-        HimaLib.Collision.CollisionInfo DamageCollision;
-
-        HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
-
-        AttackCollisionActor AttackCollisionActor;
-
-        HimaLib.Collision.CollisionInfo AttackCollision;
+        EnemyAttackCollisionInfo AttackCollision;
 
         int Frame;
 
@@ -82,62 +70,25 @@ namespace ccm.Enemy
 
         public DungeonEnemyUpdater()
         {
-            BodyCollisionPrimitive = new CylinderCollisionPrimitive()
+            BodyCollision = new EnemyBodyCollisionInfo()
             {
                 Base = () => { return new Vector3(Transform.Translation - Vector3.UnitY * 2.0f); },
-                Radius = () => 2.0f,
-                Height = () => 4.0f,
-            };
-
-            BodyCollisionReactor = new CollisionReactor()
-            {
                 Reaction = (id, count) =>
                 {
                     Transform.Translation = PrevTransform.Translation;
                 },
             };
 
-            BodyCollision = new HimaLib.Collision.CollisionInfo()
-            {
-                Active = () => true,
-                Group = () => (int)ccm.Collision.CollisionGroup.EnemyBody,
-                Reactor = BodyCollisionReactor,
-            };
-
-            DamageCollisionPrimitive = new SphereCollisionPrimitive()
+            DamageCollision = new EnemyDamageCollisionInfo()
             {
                 Center = () => Transform.Translation,
-                Radius = () => 3.0f,
-            };
-
-            DamageCollisionReactor = new AttackCollisionReactor()
-            {
                 AttackReaction = Damage,
             };
 
-            DamageCollision = new HimaLib.Collision.CollisionInfo()
-            {
-                Active = () => true,
-                Group = () => (int)ccm.Collision.CollisionGroup.EnemyDamage,
-                Reactor = DamageCollisionReactor,
-            };
-
-            AttackCollisionPrimitive = new SphereCollisionPrimitive()
-            {
-                Center = () => Transform.Translation,
-                Radius = () => 4.0f,
-            };
-
-            AttackCollisionActor = new AttackCollisionActor()
-            {
-                Power = 1,
-            };
-
-            AttackCollision = new HimaLib.Collision.CollisionInfo()
+            AttackCollision = new EnemyAttackCollisionInfo()
             {
                 Active = () => Frame % 360 < 180,
-                Group = () => (int)ccm.Collision.CollisionGroup.EnemyAttack,
-                Actor = AttackCollisionActor,
+                Center = () => Transform.Translation,                
             };
 
             Speed = GameRand.NextFloat() * 0.2f + 0.4f;
@@ -178,16 +129,8 @@ namespace ccm.Enemy
 
         void InitCollision()
         {
-            BodyCollision.Primitives.Clear();
-            BodyCollision.Primitives.Add(BodyCollisionPrimitive);
             CollisionManager.Add(BodyCollision);
-
-            DamageCollision.Primitives.Clear();
-            DamageCollision.Primitives.Add(DamageCollisionPrimitive);
             CollisionManager.Add(DamageCollision);
-
-            AttackCollision.Primitives.Clear();
-            AttackCollision.Primitives.Add(AttackCollisionPrimitive);
             CollisionManager.Add(AttackCollision);
         }
 

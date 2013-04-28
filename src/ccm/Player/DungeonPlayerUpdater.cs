@@ -134,8 +134,6 @@ namespace ccm.Player
                     var offset = new Vector3(0.0f, 0.0f, 4.0f);
                     return Vector3.TransformAffine(offset, Model.GetAttachmentMatrix("negi"));
                 },
-                Radius = () => 3.0f, 
-                Power = 5,
             };
 
             UpdateState = UpdateStateInit;

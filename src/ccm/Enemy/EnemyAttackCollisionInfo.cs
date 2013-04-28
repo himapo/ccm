@@ -6,12 +6,12 @@ using HimaLib.Collision;
 using HimaLib.Math;
 using ccm.Collision;
 
-namespace ccm.Player
+namespace ccm.Enemy
 {
     /// <summary>
     /// データ読みに対応するまでのプログラムによる構築
     /// </summary>
-    class PlayerAttackCollisionInfo : CollisionInfo
+    class EnemyAttackCollisionInfo : CollisionInfo
     {
         public Func<Vector3> Center { set { Primitive.Center = value; } }
 
@@ -23,15 +23,15 @@ namespace ccm.Player
 
         AttackCollisionActor AttackCollisionActor = new AttackCollisionActor();
 
-        public PlayerAttackCollisionInfo()
+        public EnemyAttackCollisionInfo()
         {
             Active = () => false;
-            Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack;
-            AttackCollisionActor.Power = 5;
+            Group = () => (int)ccm.Collision.CollisionGroup.EnemyAttack;
+            AttackCollisionActor.Power = 1;
             Actor = AttackCollisionActor;
 
             Primitive.Center = () => Vector3.Zero;
-            Primitive.Radius = () => 3.0f;
+            Primitive.Radius = () => 4.0f;
             Primitives.Add(Primitive);
         }
     }
