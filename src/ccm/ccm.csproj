@@ -141,6 +141,9 @@
     <Compile Include="Player\IPlayerDrawer.cs" />
     <Compile Include="Player\IPlayerUpdater.cs" />
     <Compile Include="Player\Player.cs" />
+    <Compile Include="Player\PlayerAttackCollisionInfo.cs" />
+    <Compile Include="Player\PlayerBodyCollisionInfo.cs" />
+    <Compile Include="Player\PlayerDamageCollisionInfo.cs" />
     <Compile Include="Player\PlayerDrawer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />

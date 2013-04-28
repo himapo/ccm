@@ -79,57 +79,28 @@ namespace ccm.Player
 
         Vector3 StepDirection;
 
-        HimaLib.Collision.CylinderCollisionPrimitive BodyCollisionPrimitive;
+        PlayerBodyCollisionInfo BodyCollision;
 
-        CollisionReactor BodyCollisionReactor;
+        PlayerDamageCollisionInfo DamageCollision;
 
-        HimaLib.Collision.CollisionInfo BodyCollision;
+        PlayerDamageCollisionInfo GuardCollision;
 
-        HimaLib.Collision.SphereCollisionPrimitive DamageCollisionPrimitive;
-
-        AttackCollisionReactor DamageCollisionReactor;
-
-        HimaLib.Collision.CollisionInfo DamageCollision;
-
-        HimaLib.Collision.SphereCollisionPrimitive GuardCollisionPrimitive;
-
-        AttackCollisionReactor GuardCollisionReactor;
-
-        HimaLib.Collision.CollisionInfo GuardCollision;
-
-        HimaLib.Collision.SphereCollisionPrimitive AttackCollisionPrimitive;
-
-        AttackCollisionActor AttackCollisionActor;
-
-        HimaLib.Collision.CollisionInfo AttackCollision;
+        PlayerAttackCollisionInfo AttackCollision;
 
         SoundManager SoundManager { get { return SoundManager.Instance; } }
 
         public DungeonPlayerUpdater()
         {
-            BodyCollisionPrimitive = new CylinderCollisionPrimitive()
+            BodyCollision = new PlayerBodyCollisionInfo()
             {
                 Base = () => Transform.Translation,
-                Radius = () => 3.0f,
-                Height = () => 12.0f,
-            };
-
-            BodyCollisionReactor = new CollisionReactor()
-            {
                 Reaction = (id, count) =>
                 {
                     Transform.Translation = PrevTransform.Translation;
                 },
             };
 
-            BodyCollision = new HimaLib.Collision.CollisionInfo()
-            {
-                Active = () => true,
-                Group = () => (int)ccm.Collision.CollisionGroup.PlayerBody,
-                Reactor = BodyCollisionReactor,
-            };
-
-            DamageCollisionPrimitive = new SphereCollisionPrimitive()
+            DamageCollision = new PlayerDamageCollisionInfo()
             {
                 Center = () =>
                 {
@@ -143,59 +114,28 @@ namespace ccm.Player
                     }
                 },
                 Radius = () => (UpdateState == UpdateStateGuard) ? 2.0f : 3.0f,
-            };
-
-            DamageCollisionReactor = new AttackCollisionReactor()
-            {
                 AttackReaction = Damage,
             };
 
-            DamageCollision = new HimaLib.Collision.CollisionInfo()
+            GuardCollision = new PlayerDamageCollisionInfo()
             {
-                Active = () => true,
-                Group = () => (int)ccm.Collision.CollisionGroup.PlayerDamage,
-                Reactor = DamageCollisionReactor,
-            };
-
-            GuardCollisionPrimitive = new SphereCollisionPrimitive()
-            {
+                Active = () => (UpdateState == UpdateStateGuard),
                 Center = () => Transform.Translation + Direction * 3.0f + Vector3.UnitY * 1.5f,
                 Radius = () => 4.0f,
-            };
-
-            GuardCollisionReactor = new AttackCollisionReactor()
-            {
                 AttackReaction = Guard,
             };
 
-            GuardCollision = new HimaLib.Collision.CollisionInfo()
+            AttackCollision = new PlayerAttackCollisionInfo()
             {
-                Active = () => (UpdateState == UpdateStateGuard),
-                Group = () => (int)ccm.Collision.CollisionGroup.PlayerDamage,
-                Reactor = GuardCollisionReactor,
-            };
-
-            AttackCollisionPrimitive = new SphereCollisionPrimitive()
-            {
+                Active = () => AttackCount > 0.0f,
                 Center = () =>
                 {
                     // 判定をネギの先端(Z方向)に4ずらす
                     var offset = new Vector3(0.0f, 0.0f, 4.0f);
                     return Vector3.TransformAffine(offset, Model.GetAttachmentMatrix("negi"));
                 },
-                Radius = () => 3.0f,
-            };
-
-            AttackCollisionActor = new AttackCollisionActor()
-            {
+                Radius = () => 3.0f, 
                 Power = 5,
-            };
-
-            AttackCollision = new HimaLib.Collision.CollisionInfo()
-            {
-                Active = () => AttackCount > 0.0f,
-                Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack,
-                Actor = AttackCollisionActor,
             };
 
             UpdateState = UpdateStateInit;
@@ -239,20 +179,9 @@ namespace ccm.Player
 
         void InitCollision()
         {
-            BodyCollision.Primitives.Clear();
-            BodyCollision.Primitives.Add(BodyCollisionPrimitive);
             CollisionManager.Add(BodyCollision);
-
-            DamageCollision.Primitives.Clear();
-            DamageCollision.Primitives.Add(DamageCollisionPrimitive);
             CollisionManager.Add(DamageCollision);
-
-            GuardCollision.Primitives.Clear();
-            GuardCollision.Primitives.Add(GuardCollisionPrimitive);
             CollisionManager.Add(GuardCollision);
-
-            AttackCollision.Primitives.Clear();
-            AttackCollision.Primitives.Add(AttackCollisionPrimitive);
             CollisionManager.Add(AttackCollision);
         }
 
