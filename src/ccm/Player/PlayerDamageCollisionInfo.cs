@@ -25,7 +25,7 @@ namespace ccm.Player
 
         public PlayerDamageCollisionInfo()
         {
-            Active = () => false;
+            Active = () => true;
             Group = () => (int)ccm.Collision.CollisionGroup.PlayerDamage;
 
             AttackReaction = (id, count, actor) => { };
