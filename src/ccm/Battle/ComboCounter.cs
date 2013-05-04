@@ -12,7 +12,7 @@ namespace ccm.Battle
     /// </summary>
     public class ComboCounter
     {
-        static readonly int ShockLimit = 2000;
+        static readonly int ShockLimit = 1000;
 
         /// <summary>
         /// ふらふら中（コンボ継続状態）か
@@ -46,8 +46,12 @@ namespace ccm.Battle
 
         public void Damage(int shock)
         {
+            if (Shocked)
+            {
+                Count++;
+            }
             Shock += shock;
-            DebugPrint.PrintLine("Shock {0}", Shock);
+            DebugPrint.PrintLine("{0}Hits. (Shock {1})", Count + 1, Shock);
         }
 
         public void Guard(int shock)

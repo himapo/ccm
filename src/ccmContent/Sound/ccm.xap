@@ -225,8 +225,8 @@ Wave Bank
     Windows Bank Path Edited = 0;
     Seek Tables = 1;
     Compression Preset Name = <none>;
-    Bank Last Revised Low = 3322802609;
-    Bank Last Revised High = 30292210;
+    Bank Last Revised Low = 2078927328;
+    Bank Last Revised High = 30296255;
 
     Wave
     {
@@ -639,6 +639,29 @@ Wave Bank
             File Type = 1;
             Last Modified Low = 679472896;
             Last Modified High = 29509524;
+        }
+    }
+
+    Wave
+    {
+        Name = puu17;
+        File = ..\..\..\data\Sound\puu17.wav;
+        Build Settings Last Modified Low = 2016533759;
+        Build Settings Last Modified High = 30296255;
+
+        Cache
+        {
+            Format Tag = 0;
+            Channels = 1;
+            Sampling Rate = 22050;
+            Bits Per Sample = 0;
+            Play Region Offset = 56;
+            Play Region Length = 33045;
+            Loop Region Offset = 0;
+            Loop Region Length = 0;
+            File Type = 1;
+            Last Modified Low = 2342453760;
+            Last Modified High = 29419565;
         }
     }
 }
@@ -1588,6 +1611,53 @@ Sound Bank
         }
     }
 
+    Sound
+    {
+        Name = puu17;
+        Volume = -1200;
+        Pitch = 0;
+        Priority = 0;
+
+        Category Entry
+        {
+            Name = Default;
+        }
+
+        Track
+        {
+            Volume = 0;
+            Use Filter = 0;
+
+            Play Wave Event
+            {
+                Break Loop = 0;
+                Use Speaker Position = 0;
+                Use Center Speaker = 1;
+                New Speaker Position On Loop = 1;
+                Speaker Position Angle = 0.000000;
+                Speaker Position Arc = 0.000000;
+
+                Event Header
+                {
+                    Timestamp = 0;
+                    Relative = 0;
+                    Random Recurrence = 0;
+                    Random Offset = 0;
+                }
+
+                Wave Entry
+                {
+                    Bank Name = SE Bank;
+                    Bank Index = 0;
+                    Entry Name = puu17;
+                    Entry Index = 18;
+                    Weight = 255;
+                    Weight Min = 0;
+                }
+            }
+        }
+    }
+
     Cue
     {
         Name = Body_Hit_40;
@@ -1963,6 +2033,26 @@ Sound Bank
         {
             Name = hit_s03_e;
             Index = 18;
+            Weight Min = 0;
+            Weight Max = 255;
+        }
+    }
+
+    Cue
+    {
+        Name = puu17;
+
+        Variation
+        {
+            Variation Type = 3;
+            Variation Table Type = 1;
+            New Variation on Loop = 0;
+        }
+
+        Sound Entry
+        {
+            Name = puu17;
+            Index = 19;
             Weight Min = 0;
             Weight Max = 255;
         }

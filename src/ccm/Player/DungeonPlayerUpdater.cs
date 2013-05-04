@@ -151,6 +151,10 @@ namespace ccm.Player
                 HitPoint -= actor.Power;
                 DebugPrint.PrintLine("Player damage {0}, HP {1}", actor.Power, HitPoint);
                 ComboCounter.Damage(actor.Shock);
+                if (ComboCounter.Shocked)
+                {
+                    GoToShocked();
+                }
             }
         }
 
@@ -161,6 +165,10 @@ namespace ccm.Player
                 SoundManager.PlaySoundEffect("metal03");
                 //DebugPrint.PrintLine("Player guard");
                 ComboCounter.Guard(actor.Shock);
+                if (ComboCounter.Shocked)
+                {
+                    GoToShocked();
+                }
             }
         }
 
@@ -180,7 +188,7 @@ namespace ccm.Player
         void UpdateStateInit()
         {
             InitCollision();
-            HitPoint = 3;
+            HitPoint = 3000;
             GoToStand();
         }
 
@@ -466,6 +474,14 @@ namespace ccm.Player
             }
         }
 
+        void UpdateStateShocked()
+        {
+            if (!ComboCounter.Shocked)
+            {
+                GoToStand();
+            }
+        }
+
         void GoToStand()
         {
             UpdateState = UpdateStateStand;
@@ -519,6 +535,13 @@ namespace ccm.Player
             StepCount = 20.0f;
             StepDirection = GetMoveVector();
             SoundManager.PlaySoundEffect("jump00");
+        }
+
+        void GoToShocked()
+        {
+            UpdateState = UpdateStateShocked;
+            Model.ChangeMotion("stand", 0.2f);
+            SoundManager.PlaySoundEffect("puu17");
         }
     }
 }

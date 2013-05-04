@@ -28,7 +28,7 @@ namespace ccm.Enemy
             Active = () => false;
             Group = () => (int)ccm.Collision.CollisionGroup.EnemyAttack;
             AttackCollisionActor.Power = 1;
-            AttackCollisionActor.Shock = 500;
+            AttackCollisionActor.Shock = 250;
             Actor = AttackCollisionActor;
 
             Primitive.Center = () => Vector3.Zero;
