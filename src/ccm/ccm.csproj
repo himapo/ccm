@@ -102,6 +102,7 @@
     <Compile Include="Ally\DungeonAllyUpdater.cs" />
     <Compile Include="Ally\IAllyDrawer.cs" />
     <Compile Include="Ally\IAllyUpdater.cs" />
+    <Compile Include="Battle\ComboCounter.cs" />
     <Compile Include="Camera\BasicCamera.cs" />
     <Compile Include="Camera\MapViewerCameraUpdater.cs" />
     <Compile Include="Camera\ModelViewerCameraUpdater.cs" />

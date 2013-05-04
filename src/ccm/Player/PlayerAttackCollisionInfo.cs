@@ -28,6 +28,7 @@ namespace ccm.Player
             Active = () => false;
             Group = () => (int)ccm.Collision.CollisionGroup.PlayerAttack;
             AttackCollisionActor.Power = 5;
+            AttackCollisionActor.Shock = 800;
             Actor = AttackCollisionActor;
 
             Primitive.Center = () => Vector3.Zero;

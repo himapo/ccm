@@ -12,6 +12,7 @@ using ccm.Player;
 using ccm.Enemy;
 using ccm.Collision;
 using ccm.Deco;
+using ccm.Battle;
 
 namespace ccm.Enemy
 {
@@ -68,6 +69,8 @@ namespace ccm.Enemy
 
         float Distance;
 
+        ComboCounter ComboCounter = new ComboCounter();
+
         public DungeonEnemyUpdater()
         {
             BodyCollision = new EnemyBodyCollisionInfo()
@@ -104,6 +107,7 @@ namespace ccm.Enemy
             {
                 HitPoint -= actor.Power;
                 DebugPrint.PrintLine("Enemy damage {0}, HP {1}", actor.Power, HitPoint);
+                ComboCounter.Damage(actor.Shock);
             }
             if (HitPoint <= 0)
             {

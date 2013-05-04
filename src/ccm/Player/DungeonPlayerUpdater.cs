@@ -12,6 +12,7 @@ using ccm.Input;
 using ccm.Debug;
 using ccm.Collision;
 using ccm.Sound;
+using ccm.Battle;
 
 namespace ccm.Player
 {
@@ -89,6 +90,10 @@ namespace ccm.Player
 
         SoundManager SoundManager { get { return SoundManager.Instance; } }
 
+        TimeKeeper TimeKeeper { get { return TimeKeeper.Instance; } }
+
+        ComboCounter ComboCounter = new ComboCounter();
+
         public DungeonPlayerUpdater()
         {
             BodyCollision = new PlayerBodyCollisionInfo()
@@ -145,6 +150,7 @@ namespace ccm.Player
             {
                 HitPoint -= actor.Power;
                 DebugPrint.PrintLine("Player damage {0}, HP {1}", actor.Power, HitPoint);
+                ComboCounter.Damage(actor.Shock);
             }
         }
 
@@ -153,7 +159,8 @@ namespace ccm.Player
             if (HitPoint > 0 && collisionCount == 1)
             {
                 SoundManager.PlaySoundEffect("metal03");
-                DebugPrint.PrintLine("Player guard");
+                //DebugPrint.PrintLine("Player guard");
+                ComboCounter.Guard(actor.Shock);
             }
         }
 
@@ -165,7 +172,9 @@ namespace ccm.Player
 
             Update();
 
-            Model.Update(TimeKeeper.Instance.LastFrameSeconds);
+            Model.Update(TimeKeeper.LastFrameSeconds);
+
+            ComboCounter.Update(TimeKeeper.LastTimeScale);
         }
 
         void UpdateStateInit()
