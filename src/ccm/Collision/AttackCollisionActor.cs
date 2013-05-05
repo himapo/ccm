@@ -14,8 +14,8 @@ namespace ccm.Collision
         public int Power { get; set; }
 
         /// <summary>
-        /// よろけ値
+        /// よろけ倍率
         /// </summary>
-        public int Shock { get; set; }
+        public float Shock { get; set; }
     }
 }
