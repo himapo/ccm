@@ -49,5 +49,24 @@ namespace HimaLib.Math
         {
             return (float)global::System.Math.Cos(radians);
         }
+
+        /// <summary>
+        /// ワールド座標をスクリーン座標に変換
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="view"></param>
+        /// <param name="projection"></param>
+        /// <param name="screenWidth"></param>
+        /// <param name="screenHeight"></param>
+        /// <returns></returns>
+        public static Vector2 Project(Vector3 position, Matrix view, Matrix projection, int screenWidth, int screenHeight)
+        {
+            var screenPosition = Vector3.TransformCoord(position, view * projection);
+
+            var x = (1.0f + screenPosition.X) * (screenWidth / 2);
+            var y = (1.0f - screenPosition.Y) * (screenHeight / 2);
+
+            return new Vector2(x, y);
+        }
     }
 }

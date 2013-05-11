@@ -24,6 +24,10 @@ namespace ccm.Camera
 
         public float Far { get; set; }
 
+        public Matrix View { get { return Matrix.CreateLookAt(Eye, At, Up); } }
+
+        public Matrix Projection { get { return Matrix.CreatePerspectiveFieldOfView(FovY, Aspect, Near, Far); } }
+
         public BasicCamera()
         {
             Eye = Vector3.Zero;

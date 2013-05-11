@@ -9,6 +9,6 @@ namespace ccm.Player
 {
     public interface IPlayerUpdater
     {
-        void Update(IModel model, AffineTransform transform);
+        void Update(Player player);
     }
 }

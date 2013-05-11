@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HimaLib.Math;
 using HimaLib.Model;
+using ccm.Battle;
 
 namespace ccm.Player
 {
@@ -11,13 +12,17 @@ namespace ccm.Player
     {
         string ModelName = "petit_miku_mix2";
 
-        IModel Model;
+        public IModel Model { get; private set; }
 
-        AffineTransform transform = new AffineTransform();
-        public AffineTransform Transform { get { return transform; } }
+        //AffineTransform transform = new AffineTransform();
+        public AffineTransform Transform { get; private set; }
+
+        public ComboCounter ComboCounter { get; private set; }
 
         public Player()
         {
+            Transform = new AffineTransform();
+            ComboCounter = new ComboCounter();
         }
 
         public void InitModel()
@@ -38,12 +43,12 @@ namespace ccm.Player
 
         public void Update(IPlayerUpdater updater)
         {
-            updater.Update(Model, Transform);
+            updater.Update(this);
         }
 
         public void Draw(IPlayerDrawer drawer)
         {
-            drawer.Draw(Model, Transform);
+            drawer.Draw(this);
         }
     }
 }

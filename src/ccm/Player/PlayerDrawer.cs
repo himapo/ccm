@@ -7,6 +7,8 @@ using HimaLib.Render;
 using HimaLib.Camera;
 using HimaLib.Model;
 using HimaLib.Updater;
+using HimaLib.Debug;
+using ccm.Game;
 
 namespace ccm.Player
 {
@@ -40,7 +42,7 @@ namespace ccm.Player
                 () => { CreateUpdater(); });
         }
 
-        public void Draw(IModel model, AffineTransform transform)
+        void Draw(IModel model, AffineTransform transform)
         {
             renderParam.Camera = Camera;
             renderParam.Transform = transform;
@@ -61,5 +63,29 @@ namespace ccm.Player
             Billboard.Render(BillboardRenderParam);
         }
 
+        public void Draw(Player player)
+        {
+            Draw(player.Model, player.Transform);
+            DrawCombo(player.ComboCounter.Count, player.Transform);
+        }
+
+        void DrawCombo(int count, AffineTransform transform)
+        {
+            if (count < 2)
+            {
+                return;
+            }
+
+            var screenPosition = MathUtil.Project(
+                transform.Translation,
+                Camera.View,
+                Camera.Projection,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight);
+
+            DebugFont.Add(string.Format("{0} Hit", count), 
+                screenPosition.X - 20.0f, 
+                screenPosition.Y - 120.0f);
+        }
     }
 }

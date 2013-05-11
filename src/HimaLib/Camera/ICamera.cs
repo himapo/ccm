@@ -22,5 +22,9 @@ namespace HimaLib.Camera
         float Near { get; set; }
         
         float Far { get; set; }
+
+        Matrix View { get; }
+
+        Matrix Projection { get; }
     }
 }

@@ -92,7 +92,7 @@ namespace ccm.Player
 
         TimeKeeper TimeKeeper { get { return TimeKeeper.Instance; } }
 
-        ComboCounter ComboCounter = new ComboCounter();
+        ComboCounter ComboCounter { get; set; }
 
         public DungeonPlayerUpdater()
         {
@@ -172,7 +172,7 @@ namespace ccm.Player
             }
         }
 
-        public void Update(IModel model, AffineTransform transform)
+        void Update(IModel model, AffineTransform transform)
         {
             Model = model;
             PrevTransform = new AffineTransform(Transform);
@@ -183,6 +183,12 @@ namespace ccm.Player
             Model.Update(TimeKeeper.LastFrameSeconds);
 
             ComboCounter.Update(TimeKeeper.LastTimeScale);
+        }
+
+        public void Update(Player player)
+        {
+            ComboCounter = player.ComboCounter;
+            Update(player.Model, player.Transform);
         }
 
         void UpdateStateInit()

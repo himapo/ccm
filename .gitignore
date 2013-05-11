@@ -2,3 +2,5 @@ bin
 obj
 *.cachefile
 *.suo
+/src/TestResult.xml
+/src/ccm.sln.VisualState.xml
