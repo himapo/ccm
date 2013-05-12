@@ -47,5 +47,12 @@ namespace ccm.Deco
         {
             AliveList.Add(deco);
         }
+
+        public void Remove(Deco deco)
+        {
+            // TODO : どっちがいい？
+            AliveList.Remove(deco);
+            //DeleteList.Add(deco);
+        }
     }
 }

@@ -13,6 +13,7 @@ using ccm.Debug;
 using ccm.Collision;
 using ccm.Sound;
 using ccm.Battle;
+using ccm.Deco;
 
 namespace ccm.Player
 {
@@ -93,6 +94,11 @@ namespace ccm.Player
         TimeKeeper TimeKeeper { get { return TimeKeeper.Instance; } }
 
         ComboCounter ComboCounter { get; set; }
+
+        // デコ
+        public DecoManager DecoManager { get; set; }
+
+        ccm.Deco.Deco ShockDeco;
 
         public DungeonPlayerUpdater()
         {
@@ -484,6 +490,8 @@ namespace ccm.Player
         {
             if (!ComboCounter.Shocked)
             {
+                DecoManager.Remove(ShockDeco);
+                ShockDeco = null;
                 GoToStand();
             }
         }
@@ -548,6 +556,20 @@ namespace ccm.Player
             UpdateState = UpdateStateShocked;
             Model.ChangeMotion("stand", 0.2f);
             SoundManager.PlaySoundEffect("puu17");
+
+            CreateShockDeco();
+        }
+
+        void CreateShockDeco()
+        {
+            if (ShockDeco != null)
+            {
+                return;
+            }
+            var decoTransform = new AffineTransform(Transform);
+            decoTransform.Translation.Y += 12.0f;
+            ShockDeco = new Deco_Shock(decoTransform, Camera);
+            DecoManager.Add(ShockDeco);
         }
     }
 }

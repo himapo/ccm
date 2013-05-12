@@ -8,21 +8,21 @@ using ccm.Particle;
 
 namespace ccm.Deco
 {
-    public class Deco_Twister : Deco
+    public class Deco_Shock : Deco
     {
-        public Deco_Twister(AffineTransform transform, ICamera camera, HimaLib.Math.IRand rand)
+        public Deco_Shock(AffineTransform transform, ICamera camera)
         {
-            for (var i = 0; i < 16; ++i)
+            for (var i = 0; i < 3; ++i)
             {
                 Particles.Add(new ccm.Particle.Particle_Twister(
                     transform,
                     camera,
-                    rand.NextFloat() * 100.0f + 900.0f,
-                    rand.NextFloat() * 360.0f,
-                    rand.NextFloat() * 180.0f + 300.0f,
-                    rand.NextFloat() * 10.0f + 5.0f,
-                    "Texture/particle000",
-                    false));
+                    2000.0f,
+                    120.0f * i,
+                    360.0f,
+                    0.0f,
+                    "Texture/particle001",
+                    true));
             }
         }
 

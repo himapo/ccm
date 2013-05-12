@@ -113,6 +113,7 @@
     <Compile Include="Debug\DebugMenuUpdater.cs" />
     <Compile Include="Deco\Deco.cs" />
     <Compile Include="Deco\DecoManager.cs" />
+    <Compile Include="Deco\Deco_Shock.cs" />
     <Compile Include="Deco\Deco_Twister.cs" />
     <Compile Include="DungeonLogic\DungeonPath.cs" />
     <Compile Include="DungeonLogic\DungeonPortal.cs" />

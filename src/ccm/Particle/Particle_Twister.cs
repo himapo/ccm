@@ -13,6 +13,8 @@ namespace ccm.Particle
     {
         SimpleBillboardRenderParameter SimpleBillboardRenderParameter = new SimpleBillboardRenderParameter();
 
+        Vector3 InitialPosition;
+
         AffineTransform Transform;
 
         bool Alive = true;
@@ -28,31 +30,72 @@ namespace ccm.Particle
             float finishMilliSeconds,
             float startDegree,
             float degreeDelta,
-            float endHeightDelta)
+            float endHeightDelta,
+            string textureName,
+            bool loop)
         {
+            InitialPosition = new Vector3(transform.Translation);
             Transform = new AffineTransform(transform);
-
-            new HimaLib.Updater.CylinderUpdater(
-                UpdaterManager,
-                finishMilliSeconds,
-                startDegree,
-                startDegree + degreeDelta,
-                new Vector2(Transform.Translation.X, Transform.Translation.Z),
-                new Vector2(5.0f, 5.0f),
-                a => { Transform.Translation.X = a; },
-                a => { Transform.Translation.Z = a; },
-                Transform.Translation.Y,
-                Transform.Translation.Y + endHeightDelta,
-                a => { Transform.Translation.Y = a; },
-                () => { Alive = false; });
 
             SimpleBillboardRenderParameter.Camera = camera;
             SimpleBillboardRenderParameter.Alpha = 0.8f;
             SimpleBillboardRenderParameter.Transform = Transform;
             SimpleBillboardRenderParameter.Transform.Scale = Vector3.One * 0.04f;
             SimpleBillboardRenderParameter.Transform.Rotation = Vector3.Zero;
-            SimpleBillboardRenderParameter.Transform.Translation = Transform.Translation;
-            SimpleBillboardRenderParameter.TextureName = "Texture/particle000";
+            SimpleBillboardRenderParameter.TextureName = textureName;
+
+            if (loop)
+            {
+                CreateUpdater(finishMilliSeconds, startDegree, degreeDelta, endHeightDelta);
+            }
+            else
+            {
+                CreateUpdater(finishMilliSeconds, startDegree, degreeDelta, endHeightDelta, () => { Alive = false; });
+            }
+        }
+
+        void CreateUpdater(
+           float finishMilliSeconds,
+           float startDegree,
+           float degreeDelta,
+           float endHeightDelta,
+           Action callback)
+        {
+            new HimaLib.Updater.CylinderUpdater(
+                UpdaterManager,
+                finishMilliSeconds,
+                startDegree,
+                startDegree + degreeDelta,
+                new Vector2(InitialPosition.X, InitialPosition.Z),
+                new Vector2(3.0f, 3.0f),
+                a => { Transform.Translation.X = a; },
+                a => { Transform.Translation.Z = a; },
+                InitialPosition.Y,
+                InitialPosition.Y + endHeightDelta,
+                a => { Transform.Translation.Y = a; },
+                callback);
+        }
+
+        void CreateUpdater(
+            float finishMilliSeconds,
+            float startDegree,
+            float degreeDelta,
+            float endHeightDelta)
+        {
+            CreateUpdater(
+                finishMilliSeconds,
+                startDegree,
+                degreeDelta,
+                endHeightDelta,
+                () =>
+                {
+                    CreateUpdater(
+                        finishMilliSeconds,
+                        startDegree,
+                        degreeDelta,
+                        endHeightDelta
+                        );
+                });
         }
 
         public override bool Update()

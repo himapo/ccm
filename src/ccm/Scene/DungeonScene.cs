@@ -85,6 +85,7 @@ namespace ccm.Scene
 
             DungeonPlayerUpdater.CollisionManager = CollisionManager;
             DungeonPlayerUpdater.Camera = Camera;
+            DungeonPlayerUpdater.DecoManager = DecoManager;
             PlayerDrawer.Camera = Camera;
 
             var EnemyCreator = new Enemy.EnemyCreator()
