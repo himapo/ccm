@@ -44,6 +44,8 @@ namespace ccm.Player
         bool PressWalk { get { return false; } }
         bool PressCrouch { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Crouch); } }
         bool PressJump { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.Jump); } }
+        bool PushJump { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Jump); } }
+        bool DoublePushJump { get { return PushJump && JumpCount > 0.0f; } }
         bool PressAttack { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
         bool PushAttack { get { return InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.MouseMain); } }
         bool PressGuard { get { return InputAccessor.IsPress(ControllerLabel.Main, BooleanDeviceLabel.MouseSub); } }
@@ -53,6 +55,7 @@ namespace ccm.Player
 
         float VelocityRun { get { return 0.5f; } }
         float VelocityWalk { get { return 0.1f; } }
+        float VelocityDash { get { return 0.9f; } }
         float VelocityRotate { get { return 20.0f; } }
         float VelocityStep { get { return 1.2f; } }
 
@@ -78,6 +81,8 @@ namespace ccm.Player
         float AttackCount;
 
         float StepCount;
+
+        float JumpCount;
 
         Vector3 StepDirection;
 
@@ -214,6 +219,25 @@ namespace ccm.Player
 
         void UpdateStateStand()
         {
+            if (JumpCount > 0.0f)
+            {
+                JumpCount -= UpdateTimeScale;
+                if (JumpCount < 0.0f)
+                {
+                    JumpCount = 0.0f;
+                }
+            }
+
+            if (DoublePushJump)
+            {
+                GoToDash();
+                return;
+            }
+            else if (PushJump)
+            {
+                JumpCount = 20.0f;
+            }
+            
             if (PushAttack)
             {
                 GoToAttack();
@@ -249,6 +273,25 @@ namespace ccm.Player
 
         void UpdateStateRun()
         {
+            if (JumpCount > 0.0f)
+            {
+                JumpCount -= UpdateTimeScale;
+                if (JumpCount < 0.0f)
+                {
+                    JumpCount = 0.0f;
+                }
+            }
+
+            if (DoublePushJump)
+            {
+                GoToDash();
+                return;
+            }
+            else if (PushJump)
+            {
+                JumpCount = 20.0f;
+            }
+
             if (PushAttack)
             {
                 GoToAttack();
@@ -283,6 +326,40 @@ namespace ccm.Player
                 return;
             }
             Move(VelocityRun);
+        }
+
+        void UpdateStateDash()
+        {
+            if (PushAttack)
+            {
+                GoToAttack();
+                return;
+            }
+            else if (PressGuard)
+            {
+                GoToGuard();
+                return;
+            }
+            else if (PushStep)
+            {
+                GoToStep();
+                return;
+            }
+            else if (PressCrouch)
+            {
+                GoToCrouch();
+                return;
+            }
+            else if (IsMove)
+            {
+                
+            }
+            else
+            {
+                GoToStand();
+                return;
+            }
+            Move(VelocityDash);
         }
 
         void UpdateStateWalk()
@@ -500,24 +577,28 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateStand;
             Model.ChangeMotion("stand", 0.2f);
+            JumpCount = 0.0f;
         }
 
         void GoToRun()
         {
             UpdateState = UpdateStateRun;
             Model.ChangeMotion("run", 0.2f);
+            JumpCount = 0.0f;
         }
 
         void GoToWalk()
         {
             UpdateState = UpdateStateWalk;
             Model.ChangeMotion("walk", 0.2f);
+            JumpCount = 0.0f;
         }
 
         void GoToCrouch()
         {
             UpdateState = UpdateStateCrouch;
             Model.ChangeMotion("crouch", 0.2f);
+            JumpCount = 0.0f;
         }
 
         void GoToAttack()
@@ -525,6 +606,7 @@ namespace ccm.Player
             UpdateState = UpdateStateAttack;
             Model.ChangeMotion("attack1", 0.01f);
             AttackCount = 38.0f;
+            JumpCount = 0.0f;
             SoundManager.PlaySoundEffect("hit_s03_a");
         }
 
@@ -533,6 +615,7 @@ namespace ccm.Player
             UpdateState = UpdateStateAttack2;
             Model.ChangeMotion("attack2", 0.01f);
             AttackCount = 38.0f;
+            JumpCount = 0.0f;
             SoundManager.PlaySoundEffect("hit_s02");
         }
 
@@ -540,6 +623,7 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateGuard;
             Model.ChangeMotion("guard", 0.04f);
+            JumpCount = 0.0f;
         }
 
         void GoToStep()
@@ -548,6 +632,7 @@ namespace ccm.Player
             Model.ChangeMotion("step", 0.01f);
             StepCount = 20.0f;
             StepDirection = GetMoveVector();
+            JumpCount = 0.0f;
             SoundManager.PlaySoundEffect("jump00");
         }
 
@@ -556,8 +641,16 @@ namespace ccm.Player
             UpdateState = UpdateStateShocked;
             Model.ChangeMotion("stand", 0.2f);
             SoundManager.PlaySoundEffect("puu17");
+            JumpCount = 0.0f;
 
             CreateShockDeco();
+        }
+
+        void GoToDash()
+        {
+            UpdateState = UpdateStateDash;
+            Model.ChangeMotion("dash", 0.2f);
+            JumpCount = 0.0f;
         }
 
         void CreateShockDeco()
