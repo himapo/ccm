@@ -7,17 +7,14 @@ namespace HimaLib.Input
 {
     public class Controller : IController
     {
-        Dictionary<int, IBooleanDevice> booleanDevices;
+        Dictionary<int, IBooleanDevice> booleanDevices = new Dictionary<int, IBooleanDevice>();
 
-        Dictionary<int, IPointingDevice> pointingDevices;
+        Dictionary<int, IPointingDevice> pointingDevices = new Dictionary<int,IPointingDevice>();
 
-        Dictionary<int, IDigitalDevice> digitalDevices;
+        Dictionary<int, IDigitalDevice> digitalDevices = new Dictionary<int,IDigitalDevice>();
 
         public Controller()
         {
-            booleanDevices = new Dictionary<int, IBooleanDevice>();
-            pointingDevices = new Dictionary<int, IPointingDevice>();
-            digitalDevices = new Dictionary<int, IDigitalDevice>();
         }
 
         public void Update()
@@ -40,47 +37,47 @@ namespace HimaLib.Input
 
         public bool IsPush(int label)
         {
-            return booleanDevices[label].IsPush();
+            return GetBooleanDevice(label).IsPush();
         }
 
         public bool IsPress(int label)
         {
-            return booleanDevices[label].IsPress();
+            return GetBooleanDevice(label).IsPress();
         }
 
         public bool IsRelease(int label)
         {
-            return booleanDevices[label].IsRelease();
+            return GetBooleanDevice(label).IsRelease();
         }
 
         public int GetX(int label)
         {
-            return pointingDevices[label].X;
+            return GetPointingDevice(label).X;
         }
 
         public int GetY(int label)
         {
-            return pointingDevices[label].Y;
+            return GetPointingDevice(label).Y;
         }
 
         public int GetMoveX(int label)
         {
-            return pointingDevices[label].MoveX;
+            return GetPointingDevice(label).MoveX;
         }
 
         public int GetMoveY(int label)
         {
-            return pointingDevices[label].MoveY;
+            return GetPointingDevice(label).MoveY;
         }
 
         public int GetDigitalValue(int label)
         {
-            return digitalDevices[label].Value;
+            return GetDigitalDevice(label).Value;
         }
 
         public int GetDigitalDelta(int label)
         {
-            return digitalDevices[label].Delta;
+            return GetDigitalDevice(label).Delta;
         }
 
         public void AddBooleanDevice(int label, IBooleanDevice device)
@@ -96,6 +93,39 @@ namespace HimaLib.Input
         public void AddDigitalDevice(int label, IDigitalDevice device)
         {
             digitalDevices[label] = device;
+        }
+
+        IBooleanDevice GetBooleanDevice(int label)
+        {
+            IBooleanDevice device;
+            if (!booleanDevices.TryGetValue(label, out device))
+            {
+                device = new NullBooleanDevice();
+                AddBooleanDevice(label, device);
+            }
+            return device;
+        }
+
+        IPointingDevice GetPointingDevice(int label)
+        {
+            IPointingDevice device;
+            if (!pointingDevices.TryGetValue(label, out device))
+            {
+                device = new NullPointingDevice();
+                AddPointingDevice(label, device);
+            }
+            return device;
+        }
+
+        IDigitalDevice GetDigitalDevice(int label)
+        {
+            IDigitalDevice device;
+            if (!digitalDevices.TryGetValue(label, out device))
+            {
+                device = new NullDigitalDevice();
+                AddDigitalDevice(label, device);
+            }
+            return device;
         }
     }
 }

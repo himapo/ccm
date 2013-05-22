@@ -126,6 +126,9 @@
     <Compile Include="Input\MouseButton.cs" />
     <Compile Include="Input\MouseButtonLabel.cs" />
     <Compile Include="Input\MouseWheel.cs" />
+    <Compile Include="Input\NullBooleanDevice.cs" />
+    <Compile Include="Input\NullDigitalDevice.cs" />
+    <Compile Include="Input\NullPointingDevice.cs" />
     <Compile Include="Math\AffineTransform.cs" />
     <Compile Include="Math\IRand.cs" />
     <Compile Include="Math\MathUtil.cs" />
