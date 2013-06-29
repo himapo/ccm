@@ -16,8 +16,14 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(SimpleModelRenderParameter param)
+        public void SetParameter(IModelRenderParameter p)
         {
+            var param = p as SimpleModelRenderParameter;
+            if (param == null)
+            {
+                return;
+            }
+
             lambert.World = MathUtilXna.ToXnaMatrix(param.Transform.WorldMatrix);
             lambert.View = CameraUtil.GetViewMatrix(param.Camera);
             lambert.Projection = CameraUtil.GetProjMatrix(param.Camera);

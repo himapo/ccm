@@ -19,35 +19,29 @@ namespace HimaLib.Render
 
         public IModelRendererXna Create(IModelRenderParameter param)
         {
-            // 悔しいがダウンキャストを使う（もっといい手が見つかるまで・・・）
-
             switch (param.Type)
             {
                 case ModelRendererType.Simple:
-                    {
-                        if (!RendererDic.ContainsKey(param.Type))
-                        {
-                            RendererDic[param.Type] = new SimpleModelRendererXna();
-                        }
-                        var result = RendererDic[param.Type] as SimpleModelRendererXna;
-                        result.SetParameter(param as SimpleModelRenderParameter);
-                        return result;
-                    }
+                    return Create<SimpleModelRendererXna>(param);
                 case ModelRendererType.SimpleInstancing:
-                    {
-                        if (!RendererDic.ContainsKey(param.Type))
-                        {
-                            RendererDic[param.Type] = new SimpleInstancingRendererXna();
-                        }
-                        var result = RendererDic[param.Type] as SimpleInstancingRendererXna;
-                        result.SetParameter(param as SimpleInstancingRenderParameter);
-                        return result;
-                    }
+                    return Create<SimpleInstancingRendererXna>(param);
                 default:
                     break;
             }
 
             return new NullModelRendererXna();
+        }
+
+        IModelRendererXna Create<RendererType>(IModelRenderParameter param)
+            where RendererType : IModelRendererXna, new()
+        {
+            if (!RendererDic.ContainsKey(param.Type))
+            {
+                RendererDic[param.Type] = new RendererType();
+            }
+            var result = RendererDic[param.Type];
+            result.SetParameter(param);
+            return result;
         }
     }
 }
