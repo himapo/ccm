@@ -20,8 +20,12 @@ namespace ccm.Scene
         ModelViewerCameraUpdater cameraUpdater;
 
         IModel model;
-        
-        SimpleModelRenderParameter renderParam = new SimpleModelRenderParameter();
+
+        IModelRenderParameter renderParam;
+
+        SimpleModelRenderParameter simpleRenderParam = new SimpleModelRenderParameter();
+
+        ToonModelRenderParameter toonRenderParam = new ToonModelRenderParameter();
 
         DebugMenu debugMenu;
 
@@ -73,12 +77,20 @@ namespace ccm.Scene
 
         void InitRenderer()
         {
-            renderParam.Camera = camera;
-            renderParam.Transform = new AffineTransform();
-            renderParam.Alpha = 1.0f;
-            renderParam.AmbientLightColor = Vector3.One * 0.4f;
-            renderParam.DirLight0Direction = Vector3.One * -1.0f;
-            renderParam.DirLight0DiffuseColor = new Vector3(0.5f, 0.6f, 0.8f);
+            InitSimpleRenderer();
+            InitToonRenderer();
+
+            renderParam = simpleRenderParam;
+        }
+
+        void InitSimpleRenderer()
+        {
+            simpleRenderParam.Camera = camera;
+        }
+
+        void InitToonRenderer()
+        {
+            toonRenderParam.Camera = camera;
         }
 
         void InitModel()
@@ -88,10 +100,22 @@ namespace ccm.Scene
 
         void InitDebugMenu()
         {
+            debugMenu.AddChild(debugMenu.RootNode.Label, new DebugMenuNodeInternal()
+            {
+                Label = "Model"
+            });
+            debugMenu.AddChild(debugMenu.RootNode.Label, new DebugMenuNodeInternal()
+            {
+                Label = "Renderer"
+            });
+
             EnumerateModelNames().ForEach((name) =>
             {
                 AddModel(Path.GetFileNameWithoutExtension(name));
             });
+
+            AddSimpleRenderer();
+            AddToonRenderer();
 
             debugMenu.Open();
         }
@@ -114,10 +138,9 @@ namespace ccm.Scene
 
         void AddModel(string name)
         {
-            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
+            debugMenu.AddChild("Model", new HimaLib.Debug.DebugMenuNodeExecutable()
             {
                 Label = name,
-                Selectable = true,
                 ExecFunc = () =>
                 {
                     LoadModel(name);
@@ -128,6 +151,40 @@ namespace ccm.Scene
         void LoadModel(string name)
         {
             model = ModelFactory.Instance.Create(name);
+        }
+
+        void AddSimpleRenderer()
+        {
+            debugMenu.AddChild("Renderer", new DebugMenuNodeInternal()
+            {
+                Label = "Simple"
+            });
+
+            debugMenu.AddChild("Simple", new DebugMenuNodeExecutable()
+            {
+                Label = "Apply0",
+                ExecFunc = () =>
+                {
+                    renderParam = simpleRenderParam;
+                }
+            });
+        }
+
+        void AddToonRenderer()
+        {
+            debugMenu.AddChild("Renderer", new DebugMenuNodeInternal()
+            {
+                Label = "Toon"
+            });
+
+            debugMenu.AddChild("Toon", new DebugMenuNodeExecutable()
+            {
+                Label = "Apply1",
+                ExecFunc = () =>
+                {
+                    renderParam = toonRenderParam;
+                }
+            });
         }
 
         void DrawStateInit()

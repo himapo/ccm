@@ -17,6 +17,7 @@ namespace HimaLib.Render
 
         public ToonModelRenderParameter()
         {
+            Transform = new AffineTransform();
         }
     }
 }
