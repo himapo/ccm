@@ -54,17 +54,19 @@ namespace HimaLib.Debug
             menuStack.Push(RootNode);
         }
 
-        public bool AddChild(string parent, DebugMenuNode node)
+        public bool AddChild(string parentFullPath, DebugMenuNode node)
         {
-            if (!nodeDic.ContainsKey(parent))
+            if (!nodeDic.ContainsKey(parentFullPath))
                 return false;
 
-            if (nodeDic.ContainsKey(node.Label))
+            var childFullPath = parentFullPath + "." + node.Label;
+
+            if (nodeDic.ContainsKey(childFullPath))
                 return false;
 
-            var parentNode = nodeDic[parent];
+            var parentNode = nodeDic[parentFullPath];
             parentNode.AddChild(node);
-            nodeDic[node.Label] = node;
+            nodeDic[childFullPath] = node;
 
             return true;
         }

@@ -138,7 +138,7 @@ namespace ccm.Scene
 
         void AddModel(string name)
         {
-            debugMenu.AddChild("Model", new HimaLib.Debug.DebugMenuNodeExecutable()
+            debugMenu.AddChild("ModelViewerMenu.Model", new HimaLib.Debug.DebugMenuNodeExecutable()
             {
                 Label = name,
                 ExecFunc = () =>
@@ -155,14 +155,16 @@ namespace ccm.Scene
 
         void AddSimpleRenderer()
         {
-            debugMenu.AddChild("Renderer", new DebugMenuNodeInternal()
+            var rendererName = debugMenu.RootNode.Label + ".Renderer";
+
+            debugMenu.AddChild(rendererName, new DebugMenuNodeInternal()
             {
                 Label = "Simple"
             });
 
-            debugMenu.AddChild("Simple", new DebugMenuNodeExecutable()
+            debugMenu.AddChild(rendererName + ".Simple", new DebugMenuNodeExecutable()
             {
-                Label = "Apply0",
+                Label = "Apply",
                 ExecFunc = () =>
                 {
                     renderParam = simpleRenderParam;
@@ -172,14 +174,16 @@ namespace ccm.Scene
 
         void AddToonRenderer()
         {
-            debugMenu.AddChild("Renderer", new DebugMenuNodeInternal()
+            var rendererName = debugMenu.RootNode.Label + ".Renderer";
+
+            debugMenu.AddChild(rendererName, new DebugMenuNodeInternal()
             {
                 Label = "Toon"
             });
 
-            debugMenu.AddChild("Toon", new DebugMenuNodeExecutable()
+            debugMenu.AddChild(rendererName + ".Toon", new DebugMenuNodeExecutable()
             {
-                Label = "Apply1",
+                Label = "Apply",
                 ExecFunc = () =>
                 {
                     renderParam = toonRenderParam;

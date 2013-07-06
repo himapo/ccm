@@ -4,3 +4,8 @@ obj
 *.suo
 /src/TestResult.xml
 /src/ccm.sln.VisualState.xml
+
+/src/UpgradeLog.XML
+
+/src/UpgradeLog.htm
+/src/_UpgradeReport_Files
