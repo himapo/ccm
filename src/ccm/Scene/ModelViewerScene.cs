@@ -33,6 +33,10 @@ namespace ccm.Scene
 
         DefaultDebugMenuDrawer debugMenuDrawer;
 
+        string ModelName = "Not Loaded";
+
+        string RendererName = "Simple";
+
         public ModelViewerScene()
         {
             UpdateState = UpdateStateInit;
@@ -144,6 +148,7 @@ namespace ccm.Scene
                 ExecFunc = () =>
                 {
                     LoadModel(name);
+                    ModelName = name;
                 }
             });
         }
@@ -168,6 +173,7 @@ namespace ccm.Scene
                 ExecFunc = () =>
                 {
                     renderParam = simpleRenderParam;
+                    RendererName = "Simple";
                 }
             });
         }
@@ -187,6 +193,7 @@ namespace ccm.Scene
                 ExecFunc = () =>
                 {
                     renderParam = toonRenderParam;
+                    RendererName = "Toon";
                 }
             });
         }
@@ -198,6 +205,9 @@ namespace ccm.Scene
         void UpdateStateMain()
         {
             DebugFont.Add(Name, 50.0f, 60.0f);
+
+            DebugFont.Add("Model    : " + ModelName, 800.0f, 60.0f);
+            DebugFont.Add("Renderer : " + RendererName, 800.0f, 82.0f);
 
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
             {
