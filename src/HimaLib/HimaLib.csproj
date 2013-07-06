@@ -99,6 +99,7 @@
     <Compile Include="Debug\DebugMenuNode.cs" />
     <Compile Include="Debug\DebugMenuNodeExecutable.cs" />
     <Compile Include="Debug\DebugMenuNodeInternal.cs" />
+    <Compile Include="Debug\DebugMenuNodeSelectable.cs" />
     <Compile Include="Debug\DebugMenuNodeTunable.cs" />
     <Compile Include="Debug\DebugMenuNodeTunableBool.cs" />
     <Compile Include="Debug\DebugMenuNodeTunableInt.cs" />
