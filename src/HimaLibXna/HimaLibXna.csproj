@@ -180,6 +180,10 @@
       <Project>{ABD2BF1E-FCC5-4FA7-9424-B7DCADAD70AE}</Project>
       <Name>HimaLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SkinnedModel\SkinnedModelWin.csproj">
+      <Project>{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}</Project>
+      <Name>SkinnedModelWin</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
