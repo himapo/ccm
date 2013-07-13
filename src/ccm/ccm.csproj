@@ -180,7 +180,7 @@
       <XnaReferenceType>Content</XnaReferenceType>
     </ProjectReference>
     <ProjectReference Include="..\HimaLibXna\HimaLibXna.csproj">
-      <Project>{87735AB2-56E5-475B-9A42-CD0879ABBB9F}</Project>
+      <Project>{A95E8C2D-2388-459D-AD38-5626777D0A21}</Project>
       <Name>HimaLibXna</Name>
     </ProjectReference>
     <ProjectReference Include="..\HimaLib\HimaLib.csproj">
