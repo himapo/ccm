@@ -160,10 +160,6 @@
       <Project>{ABD2BF1E-FCC5-4FA7-9424-B7DCADAD70AE}</Project>
       <Name>HimaLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SkinnedModel\SkinnedModelWindows.csproj">
-      <Project>{0D41E29B-829F-4255-BCA5-64DC2677DA6D}</Project>
-      <Name>SkinnedModelWindows</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
