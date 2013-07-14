@@ -132,6 +132,12 @@
     <Compile Include="ExtSrc\DebugSample\GameDebug\TimeRuler.cs" />
     <Compile Include="ExtSrc\DebugSample\Utils\Layout.cs" />
     <Compile Include="ExtSrc\DebugSample\Utils\StringBuilderExtensions.cs" />
+    <Compile Include="ExtSrc\SkinnedModel\AnimationClip.cs" />
+    <Compile Include="ExtSrc\SkinnedModel\AnimationPlayer.cs" />
+    <Compile Include="ExtSrc\SkinnedModel\Keyframe.cs" />
+    <Compile Include="ExtSrc\SkinnedModel\QuatTransform.cs" />
+    <Compile Include="ExtSrc\SkinnedModel\SkinningData.cs" />
+    <Compile Include="ExtSrc\SkinnedModel\TypeReaders.cs" />
     <Compile Include="Graphics\GraphicsDeviceUser.cs" />
     <Compile Include="Input\DefaultKeyboard.cs" />
     <Compile Include="Input\DefaultMouse.cs" />
@@ -179,10 +185,6 @@
     <ProjectReference Include="..\HimaLib\HimaLib.csproj">
       <Project>{ABD2BF1E-FCC5-4FA7-9424-B7DCADAD70AE}</Project>
       <Name>HimaLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SkinnedModel\SkinnedModelWin.csproj">
-      <Project>{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}</Project>
-      <Name>SkinnedModelWin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

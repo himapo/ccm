@@ -29,10 +29,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HimaLibTest", "HimaLibTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HimaLibXna", "HimaLibXna\HimaLibXna.csproj", "{A95E8C2D-2388-459D-AD38-5626777D0A21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinnedModelWin", "SkinnedModel\SkinnedModelWin.csproj", "{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkinnedModelPipeline", "SkinnedModelPipeline\SkinnedModelPipeline.csproj", "{B68015D5-9768-4AA5-8E81-A0B7A1E64561}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -121,18 +117,6 @@ Global
 		{A95E8C2D-2388-459D-AD38-5626777D0A21}.Profile|x86.Build.0 = Profile|x86
 		{A95E8C2D-2388-459D-AD38-5626777D0A21}.Release|x86.ActiveCfg = Release|x86
 		{A95E8C2D-2388-459D-AD38-5626777D0A21}.Release|x86.Build.0 = Release|x86
-		{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}.Debug|x86.ActiveCfg = Debug|x86
-		{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}.Debug|x86.Build.0 = Debug|x86
-		{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}.Profile|x86.ActiveCfg = Release|x86
-		{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}.Profile|x86.Build.0 = Release|x86
-		{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}.Release|x86.ActiveCfg = Release|x86
-		{88B5AEA5-D1CF-47E3-B8C2-4FC8DA9CA7F0}.Release|x86.Build.0 = Release|x86
-		{B68015D5-9768-4AA5-8E81-A0B7A1E64561}.Debug|x86.ActiveCfg = Debug|x86
-		{B68015D5-9768-4AA5-8E81-A0B7A1E64561}.Debug|x86.Build.0 = Debug|x86
-		{B68015D5-9768-4AA5-8E81-A0B7A1E64561}.Profile|x86.ActiveCfg = Release|x86
-		{B68015D5-9768-4AA5-8E81-A0B7A1E64561}.Profile|x86.Build.0 = Release|x86
-		{B68015D5-9768-4AA5-8E81-A0B7A1E64561}.Release|x86.ActiveCfg = Release|x86
-		{B68015D5-9768-4AA5-8E81-A0B7A1E64561}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

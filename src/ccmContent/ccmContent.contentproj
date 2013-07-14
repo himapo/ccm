@@ -52,10 +52,6 @@
       <Project>{8173E77F-C321-468B-8D05-F54CA260C7A0}</Project>
       <Name>ccmPipeline</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SkinnedModelPipeline\SkinnedModelPipeline.csproj">
-      <Project>{B68015D5-9768-4AA5-8E81-A0B7A1E64561}</Project>
-      <Name>SkinnedModelPipeline</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\petit_miku_mix2.pmd">
@@ -280,17 +276,17 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\petit_miku_mix2_fbx.fbx">
-      <Name>petit_miku_mix2_fbx</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>SkinnedModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Effect\SkinnedModel.fx">
       <Name>SkinnedModel</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\petit_miku_mix2_fbx.fbx">
+      <Name>petit_miku_mix2_fbx</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>SkinnedModelProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
