@@ -276,13 +276,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Effect\SkinnedModel.fx">
-      <Name>SkinnedModel</Name>
-      <Importer>EffectImporter</Importer>
-      <Processor>EffectProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Model\petit_miku_mix2_fbx.fbx">
       <Name>petit_miku_mix2_fbx</Name>
       <Importer>FbxImporter</Importer>
