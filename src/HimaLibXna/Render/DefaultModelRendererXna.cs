@@ -40,7 +40,14 @@ namespace HimaLib.Render
                 {
                     foreach (var dst in effect.Parameters)
                     {
-                        SetParameter(dst);
+                        if (dst.Name == "TechniqueName")
+                        {
+                            effect.CurrentTechnique = effect.Techniques[dst.GetValueString()];
+                        }
+                        else
+                        {
+                            SetParameter(dst);
+                        }
                     }
                 }
 

@@ -27,6 +27,13 @@ float3 Light2Color = float3(0.1, 0.3, 0.8);
 
 float3 AmbientColor = 0.2;
 
+float3 MaterialDiffuse = 1.0;
+float3 MaterialEmissive = 0.0;
+float3 MaterialSpecular = 1.0;
+float MaterialSpecularPower = 1.0;
+
+string TechniqueName;
+
 texture Texture;
 
 sampler Sampler = sampler_state
@@ -166,7 +173,7 @@ float4x4 CreateTransformFromBoneTexture( float4 boneIndices, float4 boneWeights 
 //-----------------------------------------------------------------------------
 // 頂点シェーダー
 //=============================================================================
-VS_OUTPUT SkinningVS(VS_INPUT input)
+VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
 {
     VS_OUTPUT output;
     
@@ -186,7 +193,14 @@ VS_OUTPUT SkinningVS(VS_INPUT input)
     float3 light1 = max(dot(normal, Light1Direction), 0) * Light1Color;
     float3 light2 = max(dot(normal, Light2Direction), 0) * Light2Color;
 
-    output.Lighting = light1 + light2 + AmbientColor;
+    output.Lighting = light1 + light2;
+    
+    if(useMaterial)
+    {
+    	output.Lighting *= MaterialDiffuse;
+    }
+
+    output.Lighting += AmbientColor;
 
     output.TexCoord = input.TexCoord;
     
@@ -204,10 +218,15 @@ struct PS_INPUT
 };
 
 // ピクセルシェーダー
-float4 SkinningPS(PS_INPUT input) : COLOR0
+float4 SkinningPS(PS_INPUT input, uniform bool useTexture) : COLOR0
 {
-    float4 color = tex2D(Sampler, input.TexCoord);
-
+    float4 color = 1.0;
+    
+    if(useTexture)
+    {
+    	color = tex2D(Sampler, input.TexCoord);
+	}
+	
     color.rgb *= input.Lighting;
     
     return color;
@@ -216,11 +235,29 @@ float4 SkinningPS(PS_INPUT input) : COLOR0
 //-----------------------------------------------------------------------------
 // 描画手法の宣言
 //=============================================================================
-technique SkinnedModelTechnique
+technique TextureTechnique
 {
     pass SkinnedModelPass
     {
-        VertexShader = compile vs_3_0 SkinningVS();
-        PixelShader = compile ps_3_0 SkinningPS();
+        VertexShader = compile vs_3_0 SkinningVS(false);
+        PixelShader = compile ps_3_0 SkinningPS(true);
+    }
+}
+
+technique MaterialTechnique
+{
+    pass SkinnedModelPass
+    {
+        VertexShader = compile vs_3_0 SkinningVS(true);
+        PixelShader = compile ps_3_0 SkinningPS(false);
+    }
+}
+
+technique MaterialTextureTechnique
+{
+    pass SkinnedModelPass
+    {
+        VertexShader = compile vs_3_0 SkinningVS(true);
+        PixelShader = compile ps_3_0 SkinningPS(true);
     }
 }

@@ -18,6 +18,7 @@
 #region Using ステートメント
 using System;
 using System.IO;
+using System.ComponentModel;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content.Pipeline;
@@ -37,6 +38,11 @@ namespace SkinnedModelPipeline
     {
         // このサンプルでは頂点テクスチャを使うので最大ボーン数は256個になる
         const int MaxBones = 256;
+
+        [DisplayName("マテリアルの使用")]
+        [DefaultValue(false)]
+        [Description("モデルに設定されたマテリアルパラメータをエフェクトに適用するかを指定します。")]
+        public bool UseMaterial { get; set; }
     
         /// <summary>
         /// コンテント・パイプライン内の中間データであるNodeContentから
@@ -299,7 +305,29 @@ namespace SkinnedModelPipeline
             if (basicMaterial.Texture != null)
                 effectMaterial.Textures.Add("Texture", basicMaterial.Texture);
 
-            //　ModelProcessorのonvertMaterialを呼ぶ
+            // マテリアルパラメータをエフェクトに設定
+            if (UseMaterial)
+            {
+                effectMaterial.OpaqueData.Add("TechniqueName", "MaterialTechnique");
+
+                if (basicMaterial.DiffuseColor != null)
+                    effectMaterial.OpaqueData.Add("MaterialDiffuse", basicMaterial.DiffuseColor);
+
+                if (basicMaterial.EmissiveColor != null)
+                    effectMaterial.OpaqueData.Add("MaterialEmissive", basicMaterial.EmissiveColor);
+
+                if (basicMaterial.SpecularColor != null)
+                    effectMaterial.OpaqueData.Add("MaterialSpecular", basicMaterial.SpecularColor);
+
+                if (basicMaterial.SpecularPower != null)
+                    effectMaterial.OpaqueData.Add("MaterialSpecularPower", basicMaterial.SpecularPower);
+            }
+            else
+            {
+                effectMaterial.OpaqueData.Add("TechniqueName", "TextureTechnique");
+            }
+
+            //　ModelProcessorのConvertMaterialを呼ぶ
             return base.ConvertMaterial(effectMaterial, context);
         }
     }
