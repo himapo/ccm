@@ -26,7 +26,7 @@ namespace ccm.Camera
 
         public Matrix View { get { return Matrix.CreateLookAt(Eye, At, Up); } }
 
-        public Matrix Projection { get { return Matrix.CreatePerspectiveFieldOfView(FovY, Aspect, Near, Far); } }
+        public Matrix Projection { get { return Matrix.CreatePerspectiveFieldOfView(MathUtil.ToRadians(FovY), Aspect, Near, Far); } }
 
         public BasicCamera()
         {
