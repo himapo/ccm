@@ -142,6 +142,7 @@
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
+    <Compile Include="Render\DefaultModelRenderParameter.cs" />
     <Compile Include="Render\IBillboardRenderParameter.cs" />
     <Compile Include="Render\IModelRenderParameter.cs" />
     <Compile Include="Render\SimpleBillboardRenderParameter.cs" />

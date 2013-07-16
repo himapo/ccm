@@ -7,6 +7,7 @@ namespace HimaLib.Render
 {
     public enum ModelRendererType
     {
+        Default,
         Simple,
         SimpleInstancing,
         Toon,

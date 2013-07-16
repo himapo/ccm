@@ -27,6 +27,8 @@ namespace ccm.Scene
 
         ToonModelRenderParameter toonRenderParam = new ToonModelRenderParameter();
 
+        DefaultModelRenderParameter defaultRenderParam = new DefaultModelRenderParameter();
+
         DebugMenu debugMenu;
 
         DebugMenuUpdater debugMenuUpdater;
@@ -83,6 +85,7 @@ namespace ccm.Scene
         {
             InitSimpleRenderer();
             InitToonRenderer();
+            InitDefaultRenderer();
 
             renderParam = simpleRenderParam;
         }
@@ -95,6 +98,15 @@ namespace ccm.Scene
         void InitToonRenderer()
         {
             toonRenderParam.Camera = camera;
+        }
+
+        void InitDefaultRenderer()
+        {
+            defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * -1.0f;
+            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.5f, 0.6f, 0.8f);
+            defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * 1.0f;
+            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.6f, 0.2f, 0.2f);
+            defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
         void InitModel()
@@ -120,6 +132,7 @@ namespace ccm.Scene
 
             AddSimpleRenderer();
             AddToonRenderer();
+            AddDefaultRenderer();
 
             debugMenu.Open();
         }
@@ -198,6 +211,26 @@ namespace ccm.Scene
             });
         }
 
+        void AddDefaultRenderer()
+        {
+            var rendererName = debugMenu.RootNode.Label + ".Renderer";
+
+            debugMenu.AddChild(rendererName, new DebugMenuNodeInternal()
+            {
+                Label = "Default"
+            });
+
+            debugMenu.AddChild(rendererName + ".Default", new DebugMenuNodeExecutable()
+            {
+                Label = "Apply",
+                ExecFunc = () =>
+                {
+                    renderParam = defaultRenderParam;
+                    RendererName = "Default";
+                }
+            });
+        }
+
         void DrawStateInit()
         {
         }
@@ -217,7 +250,16 @@ namespace ccm.Scene
 
             cameraUpdater.Update(Vector3.Zero);
 
+            UpdateDefaultRenderer();
+
             debugMenuUpdater.Update();
+        }
+
+        void UpdateDefaultRenderer()
+        {
+            defaultRenderParam.ParametersMatrix["World"] = Matrix.Identity;
+            defaultRenderParam.ParametersMatrix["View"] = camera.View;
+            defaultRenderParam.ParametersMatrix["Projection"] = camera.Projection;
         }
 
         void DrawStateMain()

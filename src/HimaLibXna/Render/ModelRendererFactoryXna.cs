@@ -25,6 +25,8 @@ namespace HimaLib.Render
                     return Create<SimpleModelRendererXna>(param);
                 case ModelRendererType.SimpleInstancing:
                     return Create<SimpleInstancingRendererXna>(param);
+                case ModelRendererType.Default:
+                    return Create<DefaultModelRendererXna>(param);
                 default:
                     break;
             }
