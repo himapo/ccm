@@ -134,6 +134,7 @@
     <Compile Include="ExtSrc\DebugSample\Utils\StringBuilderExtensions.cs" />
     <Compile Include="ExtSrc\SkinnedModel\AnimationClip.cs" />
     <Compile Include="ExtSrc\SkinnedModel\AnimationPlayer.cs" />
+    <Compile Include="ExtSrc\SkinnedModel\FlipTexture2D.cs" />
     <Compile Include="ExtSrc\SkinnedModel\Keyframe.cs" />
     <Compile Include="ExtSrc\SkinnedModel\QuatTransform.cs" />
     <Compile Include="ExtSrc\SkinnedModel\SkinningData.cs" />

@@ -123,9 +123,16 @@ namespace HimaLib.Render
         void SetParameterTexture(EffectParameter dst)
         {
             string value;
-            if (RenderParam.ParametersTexture.TryGetValue(dst.Name, out value))
+            if (RenderParam.ParametersTextureName.TryGetValue(dst.Name, out value))
             {
                 dst.SetValue(TextureLoader.Load(value));
+                return;
+            }
+
+            object texture;
+            if (RenderParam.ParametersTexture.TryGetValue(dst.Name, out texture))
+            {
+                dst.SetValue(texture as Microsoft.Xna.Framework.Graphics.Texture);
             }
         }
 

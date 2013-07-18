@@ -28,6 +28,10 @@ namespace HimaLib.Model
             {
                 return new DynamicModelMMDX() { Name = name, Model = modelLoaderMMDX.Load("Model/" + name) };
             }
+            else if(name == "petit_miku_mix2_fbx")
+            {
+                return new DynamicModelXna() { Name = name, Model = modelLoaderXna.Load("Model/" + name) };
+            }
 
             return new StaticModelXna() { Name = name, Model = modelLoaderXna.Load("Model/" + name) };
         }

@@ -24,9 +24,9 @@ namespace HimaLib.Render
 
         public Dictionary<string, Matrix> ParametersMatrix { get; private set; }
 
-        public Dictionary<string, string> ParametersTexture { get; private set; }
+        public Dictionary<string, string> ParametersTextureName { get; private set; }
 
-        // TODO : Texture
+        public Dictionary<string, object> ParametersTexture { get; private set; }
 
         public DefaultModelRenderParameter()
         {
@@ -37,7 +37,8 @@ namespace HimaLib.Render
             ParametersVector3 = new Dictionary<string, Vector3>();
             ParametersVector4 = new Dictionary<string, Vector4>();
             ParametersMatrix = new Dictionary<string, Matrix>();
-            ParametersTexture = new Dictionary<string, string>();
+            ParametersTextureName = new Dictionary<string, string>();
+            ParametersTexture = new Dictionary<string, object>();
         }
     }
 }

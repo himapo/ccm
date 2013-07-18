@@ -252,6 +252,11 @@ namespace ccm.Scene
 
             UpdateDefaultRenderer();
 
+            if (model != null)
+            {
+                model.Update(0.008333f);
+            }
+
             debugMenuUpdater.Update();
         }
 
