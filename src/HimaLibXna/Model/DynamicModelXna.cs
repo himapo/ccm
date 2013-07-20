@@ -61,9 +61,18 @@ namespace HimaLib.Model
                     ("このモデルのTagにはSkinningDataが設定されていません。\n" +
                         "プロセッサにSkinnedModelProcessorを指定してください");
 
+            if (SkinningData.AnimationClips.Count == 0)
+                throw new InvalidOperationException
+                    ("このモデルにはAnimationClipが存在しません。");
+
             AnimationPlayer = new AnimationPlayer(SkinningData);
 
-            ChangeMotion("Guard", 0.1f);
+            // 適当に最初のモーションを再生
+            foreach (var clip in SkinningData.AnimationClips.Values)
+            {
+                AnimationPlayer.StartClip(clip);
+                break;
+            }
 
             int width = AnimationPlayer.GetSkinRotations().Length;
             int height = 1;
