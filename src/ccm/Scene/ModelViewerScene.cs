@@ -17,7 +17,7 @@ namespace ccm.Scene
     {
         BasicCamera camera = new BasicCamera() { Far = 300.0f };
 
-        ModelViewerCameraUpdater cameraUpdater;
+        ViewerCameraUpdater cameraUpdater;
 
         IModel model;
 
@@ -46,15 +46,18 @@ namespace ccm.Scene
 
             Name = "ModelViewer";
 
-            cameraUpdater = new ModelViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main))
+            cameraUpdater = new ViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main))
             {
                 InitRotX = -MathUtil.PiOver4,
                 InitRotY = MathUtil.PiOver4,
                 InitEyeZ = 30.0f,
-                MaxEyeZ = 110.0f,
-                MinEyeZ = 10.0f,
-                EyeZInterval = 0.1f,
-                //EnableCameraKey = true,
+                //InitPan = Vector3.Up * 6.0f,
+                MaxEyeZ = 200.0f,
+                MinEyeZ = 1.0f,
+                EyeZInterval = 0.05f,
+                PanInterval = 0.2f,
+                EnableCameraKey = false,
+                EnablePan = true,
             };
 
             debugMenu = new DebugMenu("ModelViewerMenu");
@@ -103,9 +106,9 @@ namespace ccm.Scene
         void InitDefaultRenderer()
         {
             defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * -1.0f;
-            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.5f, 0.6f, 0.8f);
+            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.5f, 0.8f, 0.5f);
             defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * 1.0f;
-            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.6f, 0.2f, 0.2f);
+            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.2f, 0.2f, 0.4f);
             defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
         }
 

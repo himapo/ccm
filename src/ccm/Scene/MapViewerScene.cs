@@ -17,7 +17,7 @@ namespace ccm.Scene
     {
         BasicCamera camera = new BasicCamera() { Near = 10.0f, Far = 10000.0f };
 
-        MapViewerCameraUpdater cameraUpdater;
+        ViewerCameraUpdater cameraUpdater;
 
         DungeonMap dungeonMap;
 
@@ -42,7 +42,18 @@ namespace ccm.Scene
 
             Name = "MapViewer";
 
-            cameraUpdater = new MapViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main));
+            cameraUpdater = new ViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main))
+            {
+                InitRotX = -MathUtil.PiOver4,
+                InitRotY = MathUtil.PiOver4,
+                InitEyeZ = 3000.0f,
+                MaxEyeZ = 5000.0f,
+                MinEyeZ = 1.0f,
+                EyeZInterval = 1.0f,
+                RotInterval = 0.04f,
+                PanInterval = 10.0f,
+                EnablePan = true,
+            };
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu);
         }
@@ -65,6 +76,8 @@ namespace ccm.Scene
 
         void InitCamera()
         {
+            cameraUpdater.Reset();
+            cameraUpdater.Update(Vector3.Zero);
         }
 
         void InitRenderer()
@@ -142,7 +155,7 @@ namespace ccm.Scene
                 ResetMap();
             }
 
-            cameraUpdater.Update();
+            cameraUpdater.Update(Vector3.Zero);
         }
 
         void DrawStateMain()

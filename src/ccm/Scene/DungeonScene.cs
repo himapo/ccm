@@ -48,7 +48,7 @@ namespace ccm.Scene
         // カメラ
         BasicCamera Camera = new BasicCamera();
 
-        ModelViewerCameraUpdater cameraUpdater;
+        ViewerCameraUpdater cameraUpdater;
 
         // デコ
         ccm.Deco.DecoManager DecoManager = new Deco.DecoManager();
@@ -144,15 +144,19 @@ namespace ccm.Scene
 
             DungeonDrawer.Camera = Camera;
 
-            cameraUpdater = new ModelViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
+            cameraUpdater = new ViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
-                //InitRotX = -MathUtil.PiOver4,
-                //InitRotY = MathUtil.PiOver4,
+                InitRotX = -MathUtil.PiOver4,
+                InitRotY = MathUtil.PiOver4,
                 InitEyeZ = 60.0f,
                 MaxEyeZ = 110.0f,
                 MinEyeZ = 40.0f,
                 EyeZInterval = 0.2f,
+                RotInterval = 0.04f,
+                PanInterval = 0.2f,
+                MaxRotX = 0.0f,
                 EnableCameraKey = true,
+                EnablePan = false,
             };
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu);
