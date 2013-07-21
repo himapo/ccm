@@ -262,7 +262,7 @@ namespace ccm.Scene
 
         void UpdateDefaultRenderer()
         {
-            defaultRenderParam.ParametersMatrix["World"] = Matrix.Identity;
+            defaultRenderParam.ParametersMatrix["World"] = Matrix.CreateRotationX(MathUtil.ToRadians(-90.0f));
             defaultRenderParam.ParametersMatrix["View"] = camera.View;
             defaultRenderParam.ParametersMatrix["Projection"] = camera.Projection;
         }
