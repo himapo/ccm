@@ -235,6 +235,15 @@ float4 SkinningPS(PS_INPUT input, uniform bool useTexture) : COLOR0
 //-----------------------------------------------------------------------------
 // 描画手法の宣言
 //=============================================================================
+technique BasicTechnique
+{
+    pass SkinnedModelPass
+    {
+        VertexShader = compile vs_3_0 SkinningVS(false);
+        PixelShader = compile ps_3_0 SkinningPS(false);
+    }
+}
+
 technique TextureTechnique
 {
     pass SkinnedModelPass

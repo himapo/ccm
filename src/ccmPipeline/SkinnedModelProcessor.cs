@@ -43,6 +43,11 @@ namespace SkinnedModelPipeline
         [DefaultValue(false)]
         [Description("モデルに設定されたマテリアルパラメータをエフェクトに適用するかを指定します。")]
         public bool UseMaterial { get; set; }
+
+        [DisplayName("テクスチャの使用")]
+        [DefaultValue(false)]
+        [Description("モデルに設定されたテクスチャをエフェクトに適用するかを指定します。")]
+        public bool UseTexture { get; set; }
     
         /// <summary>
         /// コンテント・パイプライン内の中間データであるNodeContentから
@@ -306,25 +311,33 @@ namespace SkinnedModelPipeline
                 effectMaterial.Textures.Add("Texture", basicMaterial.Texture);
 
             // マテリアルパラメータをエフェクトに設定
-            if (UseMaterial)
+            if (basicMaterial.DiffuseColor != null)
+                effectMaterial.OpaqueData.Add("MaterialDiffuse", basicMaterial.DiffuseColor);
+
+            if (basicMaterial.EmissiveColor != null)
+                effectMaterial.OpaqueData.Add("MaterialEmissive", basicMaterial.EmissiveColor);
+
+            if (basicMaterial.SpecularColor != null)
+                effectMaterial.OpaqueData.Add("MaterialSpecular", basicMaterial.SpecularColor);
+
+            if (basicMaterial.SpecularPower != null)
+                effectMaterial.OpaqueData.Add("MaterialSpecularPower", basicMaterial.SpecularPower);
+
+            if (UseMaterial && UseTexture)
+            {
+                effectMaterial.OpaqueData.Add("TechniqueName", "MaterialTextureTechnique");
+            }
+            else if (UseMaterial)
             {
                 effectMaterial.OpaqueData.Add("TechniqueName", "MaterialTechnique");
-
-                if (basicMaterial.DiffuseColor != null)
-                    effectMaterial.OpaqueData.Add("MaterialDiffuse", basicMaterial.DiffuseColor);
-
-                if (basicMaterial.EmissiveColor != null)
-                    effectMaterial.OpaqueData.Add("MaterialEmissive", basicMaterial.EmissiveColor);
-
-                if (basicMaterial.SpecularColor != null)
-                    effectMaterial.OpaqueData.Add("MaterialSpecular", basicMaterial.SpecularColor);
-
-                if (basicMaterial.SpecularPower != null)
-                    effectMaterial.OpaqueData.Add("MaterialSpecularPower", basicMaterial.SpecularPower);
+            }
+            else if (UseTexture)
+            {
+                effectMaterial.OpaqueData.Add("TechniqueName", "TextureTechnique");
             }
             else
             {
-                effectMaterial.OpaqueData.Add("TechniqueName", "TextureTechnique");
+                effectMaterial.OpaqueData.Add("TechniqueName", "BasicTechnique");
             }
 
             //　ModelProcessorのConvertMaterialを呼ぶ
