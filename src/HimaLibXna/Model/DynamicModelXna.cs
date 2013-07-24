@@ -14,6 +14,8 @@ namespace HimaLib.Model
     {
         public string Name { get; set; }
 
+        public List<string> MotionNames { get; private set; }
+
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
         bool Initialized = false;
@@ -30,6 +32,7 @@ namespace HimaLib.Model
 
         public DynamicModelXna()
         {
+            MotionNames = new List<string>();
         }
 
         public void Update(float elapsedTimeSeconds)
@@ -66,6 +69,8 @@ namespace HimaLib.Model
                     ("このモデルにはAnimationClipが存在しません。");
 
             AnimationPlayer = new AnimationPlayer(SkinningData);
+
+            MotionNames.AddRange(SkinningData.AnimationClips.Keys);
 
             // 適当に最初のモーションを再生
             foreach (var clip in SkinningData.AnimationClips.Values)

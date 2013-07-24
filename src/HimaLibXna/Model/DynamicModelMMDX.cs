@@ -15,6 +15,16 @@ namespace HimaLib.Model
     {
         public string Name { get; set; }
 
+        public List<string> MotionNames
+        {
+            get
+            {
+                throw new NotImplementedException();
+                //return new List<string>(motionNames);
+            }
+            private set { }
+        }
+
         public MMDXModel Model { get; set; }
 
         Dictionary<string, MMDAccessory> accessoryModels = new Dictionary<string, MMDAccessory>();
@@ -34,6 +44,7 @@ namespace HimaLib.Model
 
         public DynamicModelMMDX()
         {
+
         }
 
         public void Update(float elapsedTimeSeconds)

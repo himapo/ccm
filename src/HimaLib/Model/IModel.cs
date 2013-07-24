@@ -12,6 +12,8 @@ namespace HimaLib.Model
     {
         string Name { get; set; }
 
+        List<string> MotionNames { get; }
+
         void Update(float elapsedTimeSeconds);
 
         void Render(IModelRenderParameter renderer);
