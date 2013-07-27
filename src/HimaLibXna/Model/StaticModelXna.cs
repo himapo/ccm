@@ -13,6 +13,8 @@ namespace HimaLib.Model
 
         public List<string> MotionNames { get; private set; }
 
+        public string CurrentMotionName { get; private set; }
+
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
         public StaticModelXna()

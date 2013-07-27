@@ -179,7 +179,7 @@ namespace ccm.Scene
         {
             model = ModelFactory.Instance.Create(name);
 
-            model.Update(0);
+            MotionName = model.CurrentMotionName;
 
             debugMenu.ClearChildren("ModelViewerMenu.Motion");
 

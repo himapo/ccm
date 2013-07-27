@@ -25,6 +25,8 @@ namespace HimaLib.Model
             private set { }
         }
 
+        public string CurrentMotionName { get { return nowMotion; } private set { } }
+
         public MMDXModel Model { get; set; }
 
         Dictionary<string, MMDAccessory> accessoryModels = new Dictionary<string, MMDAccessory>();

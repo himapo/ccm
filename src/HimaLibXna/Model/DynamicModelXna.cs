@@ -16,6 +16,8 @@ namespace HimaLib.Model
 
         public List<string> MotionNames { get; private set; }
 
+        public string CurrentMotionName { get; private set; }
+
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
         bool Initialized = false;
@@ -73,9 +75,10 @@ namespace HimaLib.Model
             MotionNames.AddRange(SkinningData.AnimationClips.Keys);
 
             // 適当に最初のモーションを再生
-            foreach (var clip in SkinningData.AnimationClips.Values)
+            foreach (var clip in SkinningData.AnimationClips)
             {
-                AnimationPlayer.StartClip(clip);
+                AnimationPlayer.StartClip(clip.Value);
+                CurrentMotionName = clip.Key;
                 break;
             }
 
@@ -135,6 +138,7 @@ namespace HimaLib.Model
         {
             AnimationClip clip = SkinningData.AnimationClips[name];
             AnimationPlayer.StartClip(clip);
+            CurrentMotionName = name;
         }
 
         public Matrix GetBoneMatrix(string name)

@@ -14,6 +14,8 @@ namespace HimaLib.Model
 
         List<string> MotionNames { get; }
 
+        string CurrentMotionName { get; }
+
         bool Init();
 
         void Update(float elapsedTimeSeconds);
