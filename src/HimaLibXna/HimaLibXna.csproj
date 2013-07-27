@@ -148,6 +148,7 @@
     <Compile Include="Model\DynamicModelMMDX.cs" />
     <Compile Include="Model\DynamicModelXna.cs" />
     <Compile Include="Model\ModelFactory.cs" />
+    <Compile Include="Model\NullModel.cs" />
     <Compile Include="Model\StaticModelXna.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\BillboardRendererFactoryXna.cs" />

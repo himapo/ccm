@@ -47,6 +47,11 @@ namespace HimaLib.Model
 
         }
 
+        public bool Init()
+        {
+            return true;
+        }
+
         public void Update(float elapsedTimeSeconds)
         {
             elapsedTime += elapsedTimeSeconds;

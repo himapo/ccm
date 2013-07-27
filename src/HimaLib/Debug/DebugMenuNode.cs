@@ -27,6 +27,10 @@ namespace HimaLib.Debug
         {
         }
 
+        public virtual void ClearChildren()
+        {
+        }
+
         public virtual void OnPushOK()
         {
         }

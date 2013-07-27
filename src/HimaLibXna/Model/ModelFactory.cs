@@ -24,16 +24,27 @@ namespace HimaLib.Model
         {
             // TODO : モデルの種類判定
 
+            IModel result;
+
             if (name == "petit_miku_mix2")
             {
-                return new DynamicModelMMDX() { Name = name, Model = modelLoaderMMDX.Load("Model/" + name) };
+                result = new DynamicModelMMDX() { Name = name, Model = modelLoaderMMDX.Load("Model/" + name) };
             }
-            else if(name == "petit_miku_mix2_fbx" || name == "dude")
+            else if (name == "petit_miku_mix2_fbx" || name == "dude")
             {
-                return new DynamicModelXna() { Name = name, Model = modelLoaderXna.Load("Model/" + name) };
+                result = new DynamicModelXna() { Name = name, Model = modelLoaderXna.Load("Model/" + name) };
+            }
+            else
+            {
+                result = new StaticModelXna() { Name = name, Model = modelLoaderXna.Load("Model/" + name) };
             }
 
-            return new StaticModelXna() { Name = name, Model = modelLoaderXna.Load("Model/" + name) };
+            if (!result.Init())
+            {
+                return new NullModel() { Name = name };
+            }
+
+            return result;
         }
     }
 }

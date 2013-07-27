@@ -38,6 +38,11 @@ namespace HimaLib.Debug
             children.Add(node);
         }
 
+        public override void ClearChildren()
+        {
+            children.Clear();
+        }
+
         public override void SelectPrevChild()
         {
             if (!HasChildren)

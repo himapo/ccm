@@ -37,7 +37,7 @@ namespace HimaLib.Model
 
         public void Update(float elapsedTimeSeconds)
         {
-            if (!Init())
+            if (!Initialized)
             {
                 return;
             }
@@ -45,7 +45,7 @@ namespace HimaLib.Model
             AnimationPlayer.Update(TimeSpan.FromSeconds(elapsedTimeSeconds), true);
         }
 
-        bool Init()
+        public bool Init()
         {
             if (Initialized)
             {

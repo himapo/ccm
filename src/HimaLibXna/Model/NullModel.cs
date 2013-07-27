@@ -7,15 +7,13 @@ using HimaLib.Math;
 
 namespace HimaLib.Model
 {
-    public class StaticModelXna : IModel
+    public class NullModel : IModel
     {
         public string Name { get; set; }
 
         public List<string> MotionNames { get; private set; }
 
-        public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
-
-        public StaticModelXna()
+        public NullModel()
         {
             MotionNames = new List<string>();
         }
@@ -29,10 +27,8 @@ namespace HimaLib.Model
         {
         }
 
-        public void Render(IModelRenderParameter param)
+        public void Render(IModelRenderParameter renderer)
         {
-            var renderer = ModelRendererFactoryXna.Instance.Create(param);
-            renderer.Render(Model);
         }
 
         public void AddAttachment(string name)
@@ -56,5 +52,6 @@ namespace HimaLib.Model
         {
             return Matrix.Identity;
         }
+
     }
 }

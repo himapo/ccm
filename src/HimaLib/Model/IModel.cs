@@ -14,6 +14,8 @@ namespace HimaLib.Model
 
         List<string> MotionNames { get; }
 
+        bool Init();
+
         void Update(float elapsedTimeSeconds);
 
         void Render(IModelRenderParameter renderer);

@@ -37,6 +37,8 @@ namespace ccm.Scene
 
         string ModelName = "Not Loaded";
 
+        string MotionName = "Not Loaded";
+
         string RendererName = "Simple";
 
         public ModelViewerScene()
@@ -125,6 +127,10 @@ namespace ccm.Scene
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new DebugMenuNodeInternal()
             {
+                Label = "Motion"
+            });
+            debugMenu.AddChild(debugMenu.RootNode.Label, new DebugMenuNodeInternal()
+            {
                 Label = "Renderer"
             });
 
@@ -172,6 +178,36 @@ namespace ccm.Scene
         void LoadModel(string name)
         {
             model = ModelFactory.Instance.Create(name);
+
+            model.Update(0);
+
+            debugMenu.ClearChildren("ModelViewerMenu.Motion");
+
+            foreach(var motionName in model.MotionNames)
+            {
+                AddMotion(motionName);
+            }
+        }
+
+        void AddMotion(string name)
+        {
+            debugMenu.AddChild("ModelViewerMenu.Motion", new HimaLib.Debug.DebugMenuNodeExecutable()
+            {
+                Label = name,
+                ExecFunc = () =>
+                {
+                    ChangeMotion(name);
+                    MotionName = name;
+                }
+            });
+        }
+
+        void ChangeMotion(string name)
+        {
+            if (model != null)
+            {
+                model.ChangeMotion(name, 0.0f);
+            }
         }
 
         void AddSimpleRenderer()
@@ -243,7 +279,8 @@ namespace ccm.Scene
             DebugFont.Add(Name, 50.0f, 60.0f);
 
             DebugFont.Add("Model    : " + ModelName, 800.0f, 60.0f);
-            DebugFont.Add("Renderer : " + RendererName, 800.0f, 82.0f);
+            DebugFont.Add("Motion   : " + MotionName, 800.0f, 82.0f);
+            DebugFont.Add("Renderer : " + RendererName, 800.0f, 104.0f);
 
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
             {

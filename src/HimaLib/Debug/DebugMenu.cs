@@ -71,6 +71,25 @@ namespace HimaLib.Debug
             return true;
         }
 
+        public bool ClearChildren(string parentFullPath)
+        {
+            if (!nodeDic.ContainsKey(parentFullPath))
+                return false;
+
+            nodeDic[parentFullPath].ClearChildren();
+
+            var children = nodeDic.Keys
+                .Where(key => { return key.Contains(parentFullPath + "."); })
+                .Select(key => key);
+
+            foreach (var key in children)
+            {
+                nodeDic.Remove(key);
+            }
+
+            return true;
+        }
+
         public void Open()
         {
             IsOpen = true;
