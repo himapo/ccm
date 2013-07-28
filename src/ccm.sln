@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HimaLibTest", "HimaLibTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HimaLibXna", "HimaLibXna\HimaLibXna.csproj", "{A95E8C2D-2388-459D-AD38-5626777D0A21}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccmPipelineDebug", "ccmPipelineDebug\ccmPipelineDebug.csproj", "{D6ED1C07-1C10-4E13-8A4E-5AF21DD2FAD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -117,6 +119,12 @@ Global
 		{A95E8C2D-2388-459D-AD38-5626777D0A21}.Profile|x86.Build.0 = Profile|x86
 		{A95E8C2D-2388-459D-AD38-5626777D0A21}.Release|x86.ActiveCfg = Release|x86
 		{A95E8C2D-2388-459D-AD38-5626777D0A21}.Release|x86.Build.0 = Release|x86
+		{D6ED1C07-1C10-4E13-8A4E-5AF21DD2FAD0}.Debug|x86.ActiveCfg = Debug|x86
+		{D6ED1C07-1C10-4E13-8A4E-5AF21DD2FAD0}.Debug|x86.Build.0 = Debug|x86
+		{D6ED1C07-1C10-4E13-8A4E-5AF21DD2FAD0}.Profile|x86.ActiveCfg = Release|x86
+		{D6ED1C07-1C10-4E13-8A4E-5AF21DD2FAD0}.Profile|x86.Build.0 = Release|x86
+		{D6ED1C07-1C10-4E13-8A4E-5AF21DD2FAD0}.Release|x86.ActiveCfg = Release|x86
+		{D6ED1C07-1C10-4E13-8A4E-5AF21DD2FAD0}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
