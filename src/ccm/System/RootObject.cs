@@ -39,7 +39,7 @@ namespace ccm.System
 
         void UpdateStateInit()
         {
-            DebugFont.Initialize("SpriteFont/Kootenay");
+            DebugFont.Initialize("SpriteFont/Debug");
 
             GameRand.Instance.Init(Environment.TickCount);
             DrawRand.Instance.Init(Environment.TickCount);

@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CubeModelProcessor.cs" />
+    <Compile Include="FontProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SkinnedModelProcessor.cs" />
     <Compile Include="TypeWriters.cs" />

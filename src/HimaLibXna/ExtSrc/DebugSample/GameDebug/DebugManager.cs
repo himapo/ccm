@@ -46,7 +46,7 @@ namespace DebugSample
             Game.Services.AddService(typeof(DebugManager), this);
 
             Content = new ContentManager(game.Services);
-            Content.RootDirectory = "Content/Debug";
+            Content.RootDirectory = "Content";
 
             // このコンポーネント自体はUpdate、Drawが呼ばれる必要はない
             this.Enabled = false;
@@ -58,7 +58,7 @@ namespace DebugSample
             // デバッグ用コンテントの読み込み
             SpriteBatch = new SpriteBatch(GraphicsDevice);
 
-            DebugFont = Content.Load<SpriteFont>("DebugFont");
+            DebugFont = Content.Load<SpriteFont>("SpriteFont/DebugSample");
 
             // 白テクスチャの生成
             WhiteTexture = new Texture2D(GraphicsDevice, 1, 1);

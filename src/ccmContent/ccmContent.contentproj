@@ -73,13 +73,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SpriteFont\Kootenay.spritefont">
-      <Name>Kootenay</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Accessory\bonbon.x">
       <Name>bonbon</Name>
       <Importer>XImporter</Importer>
@@ -129,8 +122,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Debug\DebugFont.spritefont">
-      <Name>DebugFont</Name>
+    <Compile Include="SpriteFont\DebugSample.spritefont">
+      <Name>DebugSample</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
     </Compile>
@@ -291,6 +284,21 @@
       <Processor>SkinnedModelProcessor</Processor>
       <ProcessorParameters_UseTexture>True</ProcessorParameters_UseTexture>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="SpriteFont\Debug.spritefont">
+      <Name>Debug</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FontCharacters.txt">
+      <Name>FontCharacters</Name>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 

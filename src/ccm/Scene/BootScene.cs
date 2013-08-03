@@ -107,6 +107,8 @@ namespace ccm.Scene
 
             DebugFont.Add(Name, 50.0f, 60.0f);
 
+            DebugFont.Add("●γ「」ゑ", 200.0f, 20.0f);
+
             ShowMousePosition();
         }
 
