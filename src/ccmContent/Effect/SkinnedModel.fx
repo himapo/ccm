@@ -226,7 +226,7 @@ float4 SkinningPS(PS_INPUT input, uniform bool useTexture) : COLOR0
     {
     	color = tex2D(Sampler, input.TexCoord);
 	}
-	
+    
     color.rgb *= input.Lighting;
     
     return color;

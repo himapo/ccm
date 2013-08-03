@@ -281,6 +281,7 @@
       <Importer>FbxImporter</Importer>
       <Processor>SkinnedModelProcessor</Processor>
       <ProcessorParameters_UseMaterial>True</ProcessorParameters_UseMaterial>
+      <ProcessorParameters_UseTexture>True</ProcessorParameters_UseTexture>
     </Compile>
   </ItemGroup>
   <ItemGroup>

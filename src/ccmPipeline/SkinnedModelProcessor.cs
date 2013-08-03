@@ -308,7 +308,13 @@ namespace SkinnedModelPipeline
 
             // BasicMaterialContentのテクスチャを新しいマテリアルに設定する
             if (basicMaterial.Texture != null)
+            {
                 effectMaterial.Textures.Add("Texture", basicMaterial.Texture);
+            }
+            else
+            {
+                UseTexture = false;
+            }
 
             // マテリアルパラメータをエフェクトに設定
             if (basicMaterial.DiffuseColor != null)

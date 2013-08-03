@@ -5,13 +5,14 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using HimaLib.Math;
 using HimaLib.Content;
+using HimaLib.Graphics;
 
 namespace HimaLib.Render
 {
     /// <summary>
     /// モデルに設定されたエフェクトでそのまま描画するレンダラ
     /// </summary>
-    public class DefaultModelRendererXna : IModelRendererXna
+    public class DefaultModelRendererXna : GraphicsDeviceUser, IModelRendererXna
     {
         DefaultModelRenderParameter RenderParam = new DefaultModelRenderParameter();
 
@@ -36,22 +37,57 @@ namespace HimaLib.Render
         {
             foreach (ModelMesh mesh in model.Meshes)
             {
-                foreach (Effect effect in mesh.Effects)
+                foreach (var part in mesh.MeshParts)
                 {
-                    foreach (var dst in effect.Parameters)
+                    var useTexture = false;
+
+                    foreach (var dst in part.Effect.Parameters)
                     {
                         if (dst.Name == "TechniqueName")
                         {
-                            effect.CurrentTechnique = effect.Techniques[dst.GetValueString()];
+                            //var techniqueName = dst.GetValueString();
+                            //part.Effect.CurrentTechnique = part.Effect.Techniques[techniqueName];
                         }
                         else
                         {
+                            if (dst.Name == "Texture")
+                            {
+                                var texture = dst.GetValueTexture2D();
+
+                                if (texture != null)
+                                {
+                                    useTexture = true;
+                                }
+                            }
+                            else
+                            {
+                                //part.Effect.CurrentTechnique = part.Effect.Techniques["MaterialTechnique"];
+                            }
+
                             SetParameter(dst);
                         }
                     }
-                }
 
-                mesh.Draw();
+                    if (useTexture)
+                    {
+                        part.Effect.CurrentTechnique = part.Effect.Techniques["TextureTechnique"];
+                    }
+                    else
+                    {
+                        part.Effect.CurrentTechnique = part.Effect.Techniques["MaterialTechnique"];
+                    }
+
+                    GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
+                    GraphicsDevice.Indices = part.IndexBuffer;
+
+                    foreach (var pass in part.Effect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+
+                        GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList,
+                            0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                    }
+                }
             }
         }
 
