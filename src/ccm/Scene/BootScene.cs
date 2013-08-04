@@ -28,7 +28,7 @@ namespace ccm.Scene
 
             Name = "BootScene";
 
-            debugMenu = new DebugMenu("BootMenu");
+            debugMenu = new DebugMenu("起動メニュー");
             debugMenuUpdater = new DebugMenuUpdater(debugMenu);
             debugMenuDrawer = new DefaultDebugMenuDrawer();
         }
@@ -59,7 +59,7 @@ namespace ccm.Scene
         {
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
-                Label = "Test Game",
+                Label = "ゲームシーン",
                 Selectable = true,
                 ExecFunc = () =>
                 {
@@ -69,13 +69,13 @@ namespace ccm.Scene
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
-                Label = "Main Game",
+                Label = "メインシーケンス",
                 Selectable = true,
                 ExecFunc = () => { Console.WriteLine("Execute Main Game"); }
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
-                Label = "Model Viewer",
+                Label = "モデルビューア",
                 Selectable = true,
                 ExecFunc = () =>
                 {
@@ -85,7 +85,7 @@ namespace ccm.Scene
             });
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
             {
-                Label = "Map Viewer",
+                Label = "マップビューア",
                 Selectable = true,
                 ExecFunc = () =>
                 {
