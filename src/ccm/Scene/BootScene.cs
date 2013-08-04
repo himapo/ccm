@@ -28,7 +28,7 @@ namespace ccm.Scene
 
             Name = "BootScene";
 
-            debugMenu = new DebugMenu("起動メニュー");
+            debugMenu = new DebugMenu("ブートメニュー");
             debugMenuUpdater = new DebugMenuUpdater(debugMenu);
             debugMenuDrawer = new DefaultDebugMenuDrawer();
         }
@@ -107,7 +107,7 @@ namespace ccm.Scene
 
             DebugFont.Add(Name, 50.0f, 60.0f);
 
-            DebugFont.Add("第一機動艦隊", 200.0f, 20.0f);
+            DebugFont.Add("あいうえお", 200.0f, 20.0f);
 
             ShowMousePosition();
         }

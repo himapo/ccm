@@ -94,7 +94,8 @@ namespace ccmPipelineDebug
         ///       Example:
         ///               private const string SingleItem = @"dude.fbx";
         /// </summary>
-        private const string SingleItem = @"SpriteFont\SpriteFont1.spritefont";
+        //private const string SingleItem = @"SpriteFont\SpriteFont1.spritefont";
+        private const string SingleItem = @"Model\petit_miku_mix2_fbx.fbx";
 
         /// <summary>
         /// TODO: Set the XnaProfile to HiDef or Reach, depending on your target graphics profile.
