@@ -39,42 +39,17 @@ namespace HimaLib.Render
             {
                 foreach (var part in mesh.MeshParts)
                 {
-                    var useTexture = false;
-
                     foreach (var dst in part.Effect.Parameters)
                     {
                         if (dst.Name == "TechniqueName")
                         {
-                            //var techniqueName = dst.GetValueString();
-                            //part.Effect.CurrentTechnique = part.Effect.Techniques[techniqueName];
+                            var techniqueName = dst.GetValueString();
+                            part.Effect.CurrentTechnique = part.Effect.Techniques[techniqueName];
                         }
                         else
                         {
-                            if (dst.Name == "Texture")
-                            {
-                                var texture = dst.GetValueTexture2D();
-
-                                if (texture != null)
-                                {
-                                    useTexture = true;
-                                }
-                            }
-                            else
-                            {
-                                //part.Effect.CurrentTechnique = part.Effect.Techniques["MaterialTechnique"];
-                            }
-
                             SetParameter(dst);
                         }
-                    }
-
-                    if (useTexture)
-                    {
-                        part.Effect.CurrentTechnique = part.Effect.Techniques["TextureTechnique"];
-                    }
-                    else
-                    {
-                        part.Effect.CurrentTechnique = part.Effect.Techniques["MaterialTechnique"];
                     }
 
                     GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);

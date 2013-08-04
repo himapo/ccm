@@ -306,6 +306,8 @@ namespace SkinnedModelPipeline
 
             effectMaterial.Effect = new ExternalReference<EffectContent>(effectPath);
 
+            bool useTexture = UseTexture;
+
             // BasicMaterialContentのテクスチャを新しいマテリアルに設定する
             if (basicMaterial.Texture != null)
             {
@@ -313,7 +315,7 @@ namespace SkinnedModelPipeline
             }
             else
             {
-                UseTexture = false;
+                useTexture = false;
             }
 
             // マテリアルパラメータをエフェクトに設定
@@ -329,7 +331,7 @@ namespace SkinnedModelPipeline
             if (basicMaterial.SpecularPower != null)
                 effectMaterial.OpaqueData.Add("MaterialSpecularPower", basicMaterial.SpecularPower);
 
-            if (UseMaterial && UseTexture)
+            if (UseMaterial && useTexture)
             {
                 effectMaterial.OpaqueData.Add("TechniqueName", "MaterialTextureTechnique");
             }
@@ -337,7 +339,7 @@ namespace SkinnedModelPipeline
             {
                 effectMaterial.OpaqueData.Add("TechniqueName", "MaterialTechnique");
             }
-            else if (UseTexture)
+            else if (useTexture)
             {
                 effectMaterial.OpaqueData.Add("TechniqueName", "TextureTechnique");
             }
