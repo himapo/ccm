@@ -125,7 +125,7 @@
     <Compile Include="SpriteFont\DebugSample.spritefont">
       <Name>DebugSample</Name>
       <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
+      <Processor>WpfFontDescriptionProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -289,7 +289,12 @@
     <Compile Include="SpriteFont\Debug.spritefont">
       <Name>Debug</Name>
       <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontProcessor</Processor>
+      <Processor>WpfFontDescriptionProcessor</Processor>
+      <ProcessorParameters_HasKatakana>True</ProcessorParameters_HasKatakana>
+      <ProcessorParameters_HasHiragana>True</ProcessorParameters_HasHiragana>
+      <ProcessorParameters_HasSpecialCharacters>True</ProcessorParameters_HasSpecialCharacters>
+      <ProcessorParameters_HasJisKanjiLevel1>True</ProcessorParameters_HasJisKanjiLevel1>
+      <ProcessorParameters_HasZenkakuLatinLetters>True</ProcessorParameters_HasZenkakuLatinLetters>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -297,9 +302,7 @@
       <Name>FontCharacters</Name>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Debug\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
