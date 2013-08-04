@@ -107,10 +107,10 @@ namespace ccm.Scene
 
         void InitDefaultRenderer()
         {
-            defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * -1.0f;
-            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.5f, 0.8f, 0.5f);
-            defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * 1.0f;
-            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.2f, 0.2f, 0.4f);
+            defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * 1.0f;
+            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
+            defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * -1.0f;
+            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.7f, 0.7f, 0.4f);
             defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
@@ -278,9 +278,9 @@ namespace ccm.Scene
         {
             DebugFont.Add(Name, 50.0f, 60.0f);
 
-            DebugFont.Add("Model    : " + ModelName, 800.0f, 60.0f);
-            DebugFont.Add("Motion   : " + MotionName, 800.0f, 82.0f);
-            DebugFont.Add("Renderer : " + RendererName, 800.0f, 104.0f);
+            DebugFont.Add("モデル     : " + ModelName, 800.0f, 60.0f);
+            DebugFont.Add("モーション : " + MotionName, 800.0f, 82.0f);
+            DebugFont.Add("レンダラ   : " + RendererName, 800.0f, 104.0f);
 
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
             {
