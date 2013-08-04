@@ -78,9 +78,11 @@ namespace HimaLib.Debug
 
             nodeDic[parentFullPath].ClearChildren();
 
+            // クエリで列挙しながらだとnodeDic.Remove()できないので
+            // ToListで完成リストにしてしまう
             var children = nodeDic.Keys
                 .Where(key => { return key.Contains(parentFullPath + "."); })
-                .Select(key => key);
+                .Select(key => key).ToList();
 
             foreach (var key in children)
             {

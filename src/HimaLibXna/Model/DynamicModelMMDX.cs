@@ -19,8 +19,8 @@ namespace HimaLib.Model
         {
             get
             {
-                throw new NotImplementedException();
-                //return new List<string>(motionNames);
+                //throw new NotImplementedException();
+                return new List<string>();
             }
             private set { }
         }
@@ -58,6 +58,11 @@ namespace HimaLib.Model
         {
             elapsedTime += elapsedTimeSeconds;
             elapsedTime = MathUtil.Clamp(elapsedTime, 0.0f, shiftTime);
+
+            if (nowMotion == "")
+            {
+                return;
+            }
 
             Model.AnimationPlayer[nowMotion].BlendingFactor = elapsedTime / shiftTime;
             if (prevMotion != "")
