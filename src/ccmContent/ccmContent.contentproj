@@ -275,6 +275,8 @@
       <Processor>SkinnedModelProcessor</Processor>
       <ProcessorParameters_UseMaterial>True</ProcessorParameters_UseMaterial>
       <ProcessorParameters_UseTexture>True</ProcessorParameters_UseTexture>
+      <ProcessorParameters_MergeAnimations>guard.fbx%3bwalk.fbx</ProcessorParameters_MergeAnimations>
+      <ProcessorParameters_AnimationPath>Motion\petit_miku</ProcessorParameters_AnimationPath>
     </Compile>
   </ItemGroup>
   <ItemGroup>

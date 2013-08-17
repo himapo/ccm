@@ -18,6 +18,7 @@
 #region Using ステートメント
 using System;
 using System.IO;
+using System.Linq;
 using System.ComponentModel;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
@@ -48,6 +49,12 @@ namespace SkinnedModelPipeline
         [DefaultValue(false)]
         [Description("モデルに設定されたテクスチャをエフェクトに適用するかを指定します。")]
         public bool UseTexture { get; set; }
+
+        [DisplayName("アニメーションファイルのパス")]
+        public string AnimationPath { get; set; }
+
+        [DisplayName("アニメーションファイル名")]
+        public string MergeAnimations { get; set; }
     
         /// <summary>
         /// コンテント・パイプライン内の中間データであるNodeContentから
@@ -56,6 +63,16 @@ namespace SkinnedModelPipeline
         public override ModelContent Process(NodeContent input,
                                              ContentProcessorContext context)
         {
+            if (!string.IsNullOrEmpty(MergeAnimations))
+            {
+                foreach (string mergeFile in MergeAnimations.Split(';')
+                                                            .Select(s => s.Trim())
+                                                            .Where(s => !string.IsNullOrEmpty(s)))
+                {
+                    MergeAnimation(input, context, AnimationPath + "\\" + mergeFile);
+                }
+            }
+
             ValidateMesh(input, context, null);
 
             // スケルトンを探す
@@ -104,6 +121,43 @@ namespace SkinnedModelPipeline
             return model;
         }
 
+        void MergeAnimation(NodeContent input, ContentProcessorContext context, string mergeFile)
+        {
+            NodeContent mergeModel = context.BuildAndLoadAsset<NodeContent, NodeContent>(
+                                                new ExternalReference<NodeContent>(mergeFile), null);
+
+            BoneContent rootBone = MeshHelper.FindSkeleton(input);
+
+            if (rootBone == null)
+            {
+                context.Logger.LogWarning(null, input.Identity, "Source model has no root bone.");
+                return;
+            }
+
+            BoneContent mergeRoot = MeshHelper.FindSkeleton(mergeModel);
+
+            if (mergeRoot == null)
+            {
+                context.Logger.LogWarning(null, input.Identity, "Merge model '{0}' has no root bone.", mergeFile);
+                return;
+            }
+
+            foreach (string animationName in mergeRoot.Animations.Keys)
+            {
+                if (rootBone.Animations.ContainsKey(animationName))
+                {
+                    context.Logger.LogWarning(null, input.Identity,
+                        "Cannot merge animation '{0}' from '{1}', because this animation already exists.",
+                        animationName, mergeFile);
+
+                    continue;
+                }
+
+                context.Logger.LogImportantMessage("Merging animation '{0}' from '{1}'.", animationName, mergeFile);
+
+                rootBone.Animations.Add(animationName, mergeRoot.Animations[animationName]);
+            }
+        }
 
         /// <summary>
         /// コンテント・パイプライン内の中間フォーマットである
