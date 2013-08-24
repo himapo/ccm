@@ -98,5 +98,9 @@ namespace SkinnedModel
             return result;
         }
 
+        public Matrix ToMatrix()
+        {
+            return Matrix.CreateFromQuaternion(Rotation) * Matrix.CreateTranslation(Translation);
+        }
     }
 }

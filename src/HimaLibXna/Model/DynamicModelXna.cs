@@ -26,6 +26,8 @@ namespace HimaLib.Model
 
         AnimationPlayer AnimationPlayer;
 
+        QuatTransform[] BoneTransforms;
+
         FlipTexture2D RotationTexture;
 
         FlipTexture2D TranslationTexture;
@@ -45,6 +47,8 @@ namespace HimaLib.Model
             }
 
             AnimationPlayer.Update(TimeSpan.FromSeconds(elapsedTimeSeconds), true);
+
+            AnimationPlayer.GetBoneTransforms().CopyTo(BoneTransforms, 0);
         }
 
         public bool Init()
@@ -81,6 +85,8 @@ namespace HimaLib.Model
                 CurrentMotionName = clip.Key;
                 break;
             }
+
+            BoneTransforms = new QuatTransform[SkinningData.BindPose.Count];
 
             int width = AnimationPlayer.GetSkinRotations().Length;
             int height = 1;
@@ -143,7 +149,9 @@ namespace HimaLib.Model
 
         public Matrix GetBoneMatrix(string name)
         {
-            return Matrix.Identity;
+            var boneIndex = SkinningData.BoneIndices[name];
+            var transform = BoneTransforms[boneIndex];
+            return MathUtilXna.ToHimaLibMatrix(transform.ToMatrix());
         }
 
         public Matrix GetAttachmentMatrix(string name)

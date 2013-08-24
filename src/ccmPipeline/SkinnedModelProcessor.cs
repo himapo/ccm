@@ -99,12 +99,14 @@ namespace SkinnedModelPipeline
             List<QuatTransform> bindPose = new List<QuatTransform>();
             List<QuatTransform> inverseBindPose = new List<QuatTransform>();
             List<int> skeletonHierarchy = new List<int>();
+            Dictionary<string, int> boneIndices = new Dictionary<string, int>();
 
             foreach (BoneContent bone in bones)
             {
                 bindPose.Add(QuatTransform.FromMatrix(bone.Transform));
                 inverseBindPose.Add(QuatTransform.FromMatrix(Matrix.Invert(bone.AbsoluteTransform)));
                 skeletonHierarchy.Add(bones.IndexOf(bone.Parent as BoneContent));
+                boneIndices.Add(bone.Name, boneIndices.Count);
             }
 
             // アニメーションデータをランタイム用フォーマットに変換する
@@ -116,7 +118,8 @@ namespace SkinnedModelPipeline
 
             // モデルのTagプロパティにカスタムアニメーションデータを設定する
             model.Tag = new SkinningData(animationClips, bindPose,
-                                         inverseBindPose, skeletonHierarchy);
+                                         inverseBindPose, skeletonHierarchy,
+                                         boneIndices);
 
             return model;
         }

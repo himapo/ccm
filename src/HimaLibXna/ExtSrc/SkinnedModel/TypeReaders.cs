@@ -35,14 +35,17 @@ namespace SkinnedModel
             IDictionary<string, AnimationClip> animationClips;
             IList<QuatTransform> bindPose, inverseBindPose;
             IList<int> skeletonHierarchy;
+            Dictionary<string, int> boneIndices;
 
             animationClips = input.ReadObject<IDictionary<string, AnimationClip>>();
             bindPose = input.ReadObject<IList<QuatTransform>>();
             inverseBindPose = input.ReadObject<IList<QuatTransform>>();
             skeletonHierarchy = input.ReadObject<IList<int>>();
+            boneIndices = input.ReadObject<Dictionary<string, int>>();
 
             return new SkinningData(animationClips, bindPose,
-                                    inverseBindPose, skeletonHierarchy);
+                                    inverseBindPose, skeletonHierarchy,
+                                    boneIndices);
         }
     }
 

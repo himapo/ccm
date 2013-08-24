@@ -40,12 +40,14 @@ namespace SkinnedModel
         /// </summary>
         public SkinningData(IDictionary<string, AnimationClip> animationClips,
                             IList<QuatTransform> bindPose, IList<QuatTransform> inverseBindPose,
-                            IList<int> skeletonHierarchy)
+                            IList<int> skeletonHierarchy,
+                            Dictionary<string, int> boneIndices)
         {
             animationClipsValue = animationClips;
             bindPoseValue = bindPose;
             inverseBindPoseValue = inverseBindPose;
             skeletonHierarchyValue = skeletonHierarchy;
+            BoneIndices = boneIndices;
         }
 
 
@@ -85,5 +87,11 @@ namespace SkinnedModel
         {
             get { return skeletonHierarchyValue; }
         }
+
+        /// <summary>
+        /// ボーン名を、上記のリスト内のそれらのインデックスにマッピングする辞書。
+        /// </summary>
+        //[ContentSerializer]
+        public Dictionary<string, int> BoneIndices { get; private set; }
     }
 }

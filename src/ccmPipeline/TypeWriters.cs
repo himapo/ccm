@@ -33,6 +33,7 @@ namespace SkinnedModelPipeline
             output.WriteObject(value.BindPose);
             output.WriteObject(value.InverseBindPose);
             output.WriteObject(value.SkeletonHierarchy);
+            output.WriteObject(value.BoneIndices);
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
