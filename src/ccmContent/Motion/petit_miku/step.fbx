@@ -10,10 +10,10 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2013
 		Month: 08
-		Day: 18
-		Hour: 21
-		Minute: 12
-		Second: 22
+		Day: 24
+		Hour: 15
+		Minute: 48
+		Second: 25
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2013-08-18 21:12:22:000"
+CreationTime: "2013-08-24 15:48:25:000"
 Creator: "Blender version 2.64 (sub 0)"
 
 ; Object definitions
@@ -12648,9 +12648,9 @@ Connections:  {
 ;----------------------------------------------------
 
 Takes:  {
-	Current: "Step"
-	Take: "Step" {
-		FileName: "Step.tak"
+	Current: "step"
+	Take: "step" {
+		FileName: "step.tak"
 		LocalTime: -769769299,30021002700
 		ReferenceTime: -769769299,30021002700
 
@@ -75566,7 +75566,7 @@ Version5:  {
 		SnapOnFrames: 0
 		ReferenceTimeIndex: -1
 		TimeLineStartTime: -769769299
-		TimeLineStopTime: 30021002700
+		TimeLineStopTime: 20783771100
 	}
 	RendererSetting:  {
 		DefaultCamera: "Producer Perspective"
