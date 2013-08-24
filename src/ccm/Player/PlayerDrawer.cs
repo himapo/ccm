@@ -16,7 +16,9 @@ namespace ccm.Player
     {
         public ICamera Camera { get; set; }
 
-        ToonModelRenderParameter renderParam = new ToonModelRenderParameter();
+        ToonModelRenderParameter toonRenderParam = new ToonModelRenderParameter();
+
+        DefaultModelRenderParameter defaultRenderParam = new DefaultModelRenderParameter();
 
         IBillboard Billboard = BillboardFactory.Instance.Create();
 
@@ -27,6 +29,7 @@ namespace ccm.Player
         public PlayerDrawer()
         {
             CreateUpdater();
+            InitDefaultRenderer();
         }
 
         void CreateUpdater()
@@ -42,10 +45,31 @@ namespace ccm.Player
                 () => { CreateUpdater(); });
         }
 
+        void InitDefaultRenderer()
+        {
+            defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * 1.0f;
+            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
+            defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * -1.0f;
+            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.7f, 0.7f, 0.4f);
+            defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
+        }
+
+        public void Draw(Player player)
+        {
+            Draw(player.Model, player.Transform);
+            DrawCombo(player.ComboCounter.Count, player.Transform);
+        }
+
         void Draw(IModel model, AffineTransform transform)
         {
-            renderParam.Camera = Camera;
-            renderParam.Transform = transform;
+            toonRenderParam.Camera = Camera;
+            toonRenderParam.Transform = transform;
+
+            defaultRenderParam.ParametersMatrix["World"] = Matrix.CreateRotationX(MathUtil.ToRadians(-90.0f)) * transform.WorldMatrix;
+            defaultRenderParam.ParametersMatrix["View"] = Camera.View;
+            defaultRenderParam.ParametersMatrix["Projection"] = Camera.Projection;
+
+            IModelRenderParameter renderParam = defaultRenderParam;
 
             model.Render(renderParam);
 
@@ -61,12 +85,6 @@ namespace ccm.Player
             BillboardRenderParam.TextureName = "Texture/miki";
 
             Billboard.Render(BillboardRenderParam);
-        }
-
-        public void Draw(Player player)
-        {
-            Draw(player.Model, player.Transform);
-            DrawCombo(player.ComboCounter.Count, player.Transform);
         }
 
         void DrawCombo(int count, AffineTransform transform)

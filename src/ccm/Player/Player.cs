@@ -10,7 +10,7 @@ namespace ccm.Player
 {
     public class Player
     {
-        string ModelName = "petit_miku_mix2";
+        string ModelName = "petit_miku_mix2_fbx";
 
         public IModel Model { get; private set; }
 
