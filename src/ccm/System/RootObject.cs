@@ -7,6 +7,8 @@ using HimaLib.Debug;
 using HimaLib.System;
 using HimaLib.Input;
 using HimaLib.Updater;
+using HimaLib.Render;
+using ccm.Render;
 using ccm.Input;
 using ccm.Sound;
 
@@ -51,6 +53,8 @@ namespace ccm.System
 
             SoundManager.Initialize();
 
+            InitRender();
+
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
         }
@@ -89,6 +93,13 @@ namespace ccm.System
             debugController.AddKeyboardKey(BooleanDeviceLabel.ToggleDebugMenu, KeyboardKeyLabel.F1);
 
             InputAccessor.AddController(ControllerLabel.Debug, debugController, true);
+        }
+
+        void InitRender()
+        {
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.OPAQUE,
+                RenderPathFactory.Instance.CreatePath("Opaque"));
         }
 
         void DrawStateInit()
@@ -130,6 +141,8 @@ namespace ccm.System
             DrawDebugFPS();
 
             DebugFont.Draw();
+
+            RenderSceneManager.Instance.Render();
 
             LoadProfiler.EndMark();
         }

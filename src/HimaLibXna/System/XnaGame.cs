@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 using MikuMikuDance.XNA;
 using HimaLib.Debug;
 using HimaLib.Content;
@@ -12,6 +13,10 @@ namespace HimaLib.System
 {
     public class XnaGame : Microsoft.Xna.Framework.Game
     {
+        static XnaGame instance;
+
+        public static XnaGame Instance { get { return instance; } private set { instance = value; } }
+
         public IGameInitializer Initializer { get; set; }
 
         public IUpdater RootUpdater { get; set; }
@@ -24,6 +29,8 @@ namespace HimaLib.System
 
         public XnaGame()
         {
+            Instance = this;
+
             graphics = new GraphicsDeviceManager(this);
 
             DebugSampleAccessor.CreateInstance(this);

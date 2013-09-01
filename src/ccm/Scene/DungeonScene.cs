@@ -16,6 +16,7 @@ using ccm.Deco;
 using ccm.Ally;
 using ccm.Item;
 using ccm.Sound;
+using ccm.Render;
 
 namespace ccm.Scene
 {
@@ -170,6 +171,7 @@ namespace ccm.Scene
             InitCollision();
             InitCamera();
             InitDebugMenu();
+            InitRender();
 
             //SoundManager.PlaySoundStream("-Blue Time-");
 
@@ -228,6 +230,11 @@ namespace ccm.Scene
                 Getter = () => { return Dungeon.Drawable; },
                 Setter = (b) => { Dungeon.Drawable = b; },
             });
+        }
+
+        void InitRender()
+        {
+            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
         }
 
         void DrawStateInit()

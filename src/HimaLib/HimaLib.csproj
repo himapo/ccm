@@ -145,6 +145,9 @@
     <Compile Include="Render\DefaultModelRenderParameter.cs" />
     <Compile Include="Render\IBillboardRenderParameter.cs" />
     <Compile Include="Render\IModelRenderParameter.cs" />
+    <Compile Include="Render\IRenderPath.cs" />
+    <Compile Include="Render\RenderPath.cs" />
+    <Compile Include="Render\RenderScene.cs" />
     <Compile Include="Render\SimpleBillboardRenderParameter.cs" />
     <Compile Include="Render\SimpleInstancingRenderParameter.cs" />
     <Compile Include="Render\SimpleModelRenderParameter.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="System\IDrawer.cs" />
     <Compile Include="System\IUpdater.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="System\Singleton.cs" />
     <Compile Include="System\StateMachine.cs" />
     <Compile Include="System\SystemProperty.cs" />
     <Compile Include="Updater\CircleUpdater.cs" />
