@@ -130,6 +130,9 @@
     <Compile Include="Input\NullBooleanDevice.cs" />
     <Compile Include="Input\NullDigitalDevice.cs" />
     <Compile Include="Input\NullPointingDevice.cs" />
+    <Compile Include="Light\DirectionalLight.cs" />
+    <Compile Include="Light\PointLight.cs" />
+    <Compile Include="Light\SpotLight.cs" />
     <Compile Include="Math\AffineTransform.cs" />
     <Compile Include="Math\Color.cs" />
     <Compile Include="Math\IRand.cs" />
