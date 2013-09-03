@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HimaLib.System;
+using HimaLib.Math;
 
 namespace HimaLib.Debug
 {
@@ -20,7 +20,7 @@ namespace HimaLib.Debug
         {
         }
 
-        public void Add(string output, float x, float y, IColor fontColor, IColor bgColor)
+        public void Add(string output, float x, float y, Color fontColor, Color bgColor)
         {
         }
 

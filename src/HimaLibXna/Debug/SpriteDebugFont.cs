@@ -80,9 +80,9 @@ namespace HimaLib.Debug
             infoList.Add(new DebugFontInfo(output, new Vector2(x, y)));
         }
 
-        public void Add(string output, float x, float y, System.IColor fontColor, System.IColor bgColor)
+        public void Add(string output, float x, float y, Math.Color fontColor, Math.Color bgColor)
         {
-            infoList.Add(new DebugFontInfo(output, new Vector2(x, y), System.Color.CreateXnaColor(fontColor), System.Color.CreateXnaColor(bgColor)));
+            infoList.Add(new DebugFontInfo(output, new Vector2(x, y), Math.MathUtilXna.ToXnaColor(fontColor), Math.MathUtilXna.ToXnaColor(bgColor)));
         }
 
         public void Draw()

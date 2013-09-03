@@ -8,8 +8,13 @@ using HimaLib.Math;
 
 namespace HimaLib.Math
 {
-    public class MathUtilXna
+    public static class MathUtilXna
     {
+        public static Microsoft.Xna.Framework.Color ToXnaColor(HimaLib.Math.Color c)
+        {
+            return new Microsoft.Xna.Framework.Color(c.R, c.G, c.B, c.A);
+        }
+
         public static Microsoft.Xna.Framework.Vector2 ToXnaVector(HimaLib.Math.Vector2 v)
         {
             return new Microsoft.Xna.Framework.Vector2(v.X, v.Y);

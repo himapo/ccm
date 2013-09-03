@@ -172,7 +172,6 @@
     <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\LambertShader.cs" />
     <Compile Include="Sound\SoundXACT.cs" />
-    <Compile Include="System\Color.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
     <Compile Include="System\Game.cs" />
     <Compile Include="System\TimeKeeper.cs" />

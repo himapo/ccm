@@ -109,6 +109,9 @@ namespace ccm.Scene
 
             DebugFont.Add("●「記号いける」", 200.0f, 20.0f);
 
+            var color = HimaLib.Math.Color.Yellow;
+            DebugFont.Add(color.ToString(), 200.0f, 36.0f);
+
             ShowMousePosition();
         }
 

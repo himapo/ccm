@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HimaLib.System;
+using HimaLib.Math;
 
 namespace HimaLib.Debug
 {
@@ -14,7 +14,7 @@ namespace HimaLib.Debug
 
         void Add(string output, float x, float y);
 
-        void Add(string output, float x, float y, IColor fontColor, IColor bgColor);
+        void Add(string output, float x, float y, Color fontColor, Color bgColor);
 
         void Draw();
     }
