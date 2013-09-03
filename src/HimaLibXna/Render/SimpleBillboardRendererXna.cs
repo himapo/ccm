@@ -23,13 +23,13 @@ namespace HimaLib.Render
         {
             ConstantShader.World = MathUtilXna.ToXnaMatrix(CalcWorldMatrix(param.Transform, param.Camera));
             
-            ConstantShader.View = CameraUtil.GetViewMatrix(param.Camera);
-            ConstantShader.Projection = CameraUtil.GetProjMatrix(param.Camera);
+            ConstantShader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
+            ConstantShader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             ConstantShader.Alpha = param.Alpha;
             ConstantShader.Texture = TextureLoader.Load(param.TextureName);
         }
 
-        Matrix CalcWorldMatrix(AffineTransform transform, ICamera camera)
+        Matrix CalcWorldMatrix(AffineTransform transform, CameraBase camera)
         {
             var scale = Matrix.CreateScale(transform.Scale);
             var rotat =
@@ -47,7 +47,7 @@ namespace HimaLib.Render
         /// </summary>
         /// <param name="camera"></param>
         /// <returns></returns>
-        Matrix CalcBillboardRotateMatrix(ICamera camera)
+        Matrix CalcBillboardRotateMatrix(CameraBase camera)
         {
             var rotatMatrix = Matrix.CreateLookAt(
                 Vector3.Zero,

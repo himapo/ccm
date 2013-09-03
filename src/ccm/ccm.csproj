@@ -103,7 +103,6 @@
     <Compile Include="Ally\IAllyDrawer.cs" />
     <Compile Include="Ally\IAllyUpdater.cs" />
     <Compile Include="Battle\ComboCounter.cs" />
-    <Compile Include="Camera\BasicCamera.cs" />
     <Compile Include="Camera\ViewerCameraUpdater.cs" />
     <Compile Include="Collision\AttackCollisionActor.cs" />
     <Compile Include="Collision\CollisionGroup.cs" />

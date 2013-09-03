@@ -19,7 +19,7 @@ namespace ccm.Player
 {
     public class DungeonPlayerUpdater : StateMachine, IPlayerUpdater
     {
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         public HimaLib.Collision.CollisionManager CollisionManager { get; set; }
 

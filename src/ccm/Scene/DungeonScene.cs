@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Debug;
 using HimaLib.Math;
 using HimaLib.Collision;
+using HimaLib.Camera;
 using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
@@ -47,7 +48,7 @@ namespace ccm.Scene
         HimaLib.Collision.CollisionManager CollisionManager = new HimaLib.Collision.CollisionManager();
 
         // カメラ
-        BasicCamera Camera = new BasicCamera();
+        CameraBase Camera = new CameraBase();
 
         ViewerCameraUpdater cameraUpdater;
 

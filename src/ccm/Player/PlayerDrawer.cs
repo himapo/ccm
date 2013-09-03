@@ -14,7 +14,7 @@ namespace ccm.Player
 {
     public class PlayerDrawer : IPlayerDrawer
     {
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         ToonModelRenderParameter toonRenderParam = new ToonModelRenderParameter();
 

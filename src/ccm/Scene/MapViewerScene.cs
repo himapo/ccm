@@ -6,6 +6,7 @@ using HimaLib.Debug;
 using HimaLib.Render;
 using HimaLib.Model;
 using HimaLib.Math;
+using HimaLib.Camera;
 using ccm.Input;
 using ccm.Camera;
 using ccm.DungeonLogic;
@@ -15,7 +16,7 @@ namespace ccm.Scene
 {
     public class MapViewerScene : SceneBase
     {
-        BasicCamera camera = new BasicCamera() { Near = 10.0f, Far = 10000.0f };
+        CameraBase camera = new CameraBase() { Near = 10.0f, Far = 10000.0f };
 
         ViewerCameraUpdater cameraUpdater;
 

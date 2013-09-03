@@ -12,7 +12,7 @@ namespace HimaLib.Collision
 {
     public class WireCollisionDrawer : GraphicsDeviceUser, ICollisionDrawer
     {
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         BasicEffect basicEffect = new BasicEffect(GraphicsDevice);
 
@@ -26,7 +26,7 @@ namespace HimaLib.Collision
 
         short[] cylinderIndices;
 
-        public WireCollisionDrawer(ICamera camera)
+        public WireCollisionDrawer(CameraBase camera)
         {
             Camera = camera;
             InitEffect();
@@ -156,8 +156,8 @@ namespace HimaLib.Collision
 
         void UpdateCamera()
         {
-            basicEffect.View = CameraUtil.GetViewMatrix(Camera);
-            basicEffect.Projection = CameraUtil.GetProjMatrix(Camera);
+            basicEffect.View = MathUtilXna.ToXnaMatrix(Camera.View);
+            basicEffect.Projection = MathUtilXna.ToXnaMatrix(Camera.Projection);
         }
     }
 }

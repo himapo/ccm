@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using HimaLib;
 using HimaLib.Math;
-using HimaLib.Camera;
 
-namespace ccm.Camera
+namespace HimaLib.Camera
 {
-    public class BasicCamera : ICamera
+    public class CameraBase
     {
         public Vector3 Eye { get; set; }
 
@@ -28,7 +27,7 @@ namespace ccm.Camera
 
         public Matrix Projection { get { return Matrix.CreatePerspectiveFieldOfView(MathUtil.ToRadians(FovY), Aspect, Near, Far); } }
 
-        public BasicCamera()
+        public CameraBase()
         {
             Eye = Vector3.Zero;
             At = Vector3.Forward;

@@ -33,8 +33,8 @@ namespace HimaLib.Render
                 SetInstanceTransforms(param.Transforms);
             }
 
-            shader.View = CameraUtil.GetViewMatrix(param.Camera);
-            shader.Projection = CameraUtil.GetProjMatrix(param.Camera);
+            shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
+            shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             shader.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
             shader.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirLight0Direction);
             shader.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirLight0DiffuseColor);

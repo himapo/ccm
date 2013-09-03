@@ -11,7 +11,7 @@ namespace HimaLib.Render
     {
         public ModelRendererType Type { get { return ModelRendererType.Simple; } }
 
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         public AffineTransform Transform { get; set; }
 

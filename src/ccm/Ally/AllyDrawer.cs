@@ -11,7 +11,7 @@ namespace ccm.Ally
 {
     public class AllyDrawer : IAllyDrawer
     {
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         SimpleModelRenderParameter RenderParam = new SimpleModelRenderParameter();
 

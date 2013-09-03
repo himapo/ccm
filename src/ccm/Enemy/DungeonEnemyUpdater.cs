@@ -30,7 +30,7 @@ namespace ccm.Enemy
         // ダンジョン情報
 
         // カメラ
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         // デコ
         public ccm.Deco.DecoManager DecoManager { get; set; }

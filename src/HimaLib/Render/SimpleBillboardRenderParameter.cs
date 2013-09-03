@@ -11,7 +11,7 @@ namespace HimaLib.Render
     {
         public BillboardRendererType Type { get { return BillboardRendererType.Simple; } }
 
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         public AffineTransform Transform { get; set; }
 

@@ -10,7 +10,7 @@ namespace HimaLib.Render
     {
         public string Name { get; set; }
 
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         public List<ModelInfo> ModelInfoList { get; set; }
 

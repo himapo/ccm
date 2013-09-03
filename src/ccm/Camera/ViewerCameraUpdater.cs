@@ -11,7 +11,7 @@ namespace ccm.Camera
 {
     public class ViewerCameraUpdater
     {
-        ICamera camera;
+        CameraBase camera;
 
         IController controller;
 
@@ -49,7 +49,7 @@ namespace ccm.Camera
 
         public bool EnablePan { get; set; }
 
-        public ViewerCameraUpdater(ICamera camera, IController controller)
+        public ViewerCameraUpdater(CameraBase camera, IController controller)
         {
             this.camera = camera;
             this.controller = controller;

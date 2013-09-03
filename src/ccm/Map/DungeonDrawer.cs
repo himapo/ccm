@@ -11,7 +11,7 @@ namespace ccm.Map
 {
     public class DungeonDrawer : IDungeonDrawer
     {
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         SimpleInstancingRenderParameter RenderParam = new SimpleInstancingRenderParameter();
 

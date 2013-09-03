@@ -106,7 +106,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera\CameraUtil.cs" />
     <Compile Include="Collision\WireCollisionDrawer.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentUser.cs" />

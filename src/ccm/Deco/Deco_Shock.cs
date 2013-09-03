@@ -10,7 +10,7 @@ namespace ccm.Deco
 {
     public class Deco_Shock : Deco
     {
-        public Deco_Shock(AffineTransform transform, ICamera camera)
+        public Deco_Shock(AffineTransform transform, CameraBase camera)
         {
             for (var i = 0; i < 3; ++i)
             {

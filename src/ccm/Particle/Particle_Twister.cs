@@ -26,7 +26,7 @@ namespace ccm.Particle
 
         public Particle_Twister(
             HimaLib.Math.AffineTransform transform, 
-            ICamera camera,
+            CameraBase camera,
             float finishMilliSeconds,
             float startDegree,
             float degreeDelta,

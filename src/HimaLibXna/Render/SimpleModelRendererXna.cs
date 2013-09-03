@@ -25,8 +25,8 @@ namespace HimaLib.Render
             }
 
             lambert.World = MathUtilXna.ToXnaMatrix(param.Transform.WorldMatrix);
-            lambert.View = CameraUtil.GetViewMatrix(param.Camera);
-            lambert.Projection = CameraUtil.GetProjMatrix(param.Camera);
+            lambert.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
+            lambert.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             lambert.Alpha = param.Alpha;
             lambert.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
             lambert.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirLight0Direction);

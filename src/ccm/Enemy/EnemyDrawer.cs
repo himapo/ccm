@@ -11,7 +11,7 @@ namespace ccm.Enemy
 {
     public class EnemyDrawer : IEnemyDrawer
     {
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         public float Alpha
         {

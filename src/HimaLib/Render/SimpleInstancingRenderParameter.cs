@@ -11,7 +11,7 @@ namespace HimaLib.Render
     {
         public ModelRendererType Type { get { return ModelRendererType.SimpleInstancing; } }
 
-        public ICamera Camera { get; set; }
+        public CameraBase Camera { get; set; }
 
         public bool TransformsUpdated { get; set; }
 

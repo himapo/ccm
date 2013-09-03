@@ -79,7 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Camera\ICamera.cs" />
+    <Compile Include="Camera\CameraBase.cs" />
     <Compile Include="Collision\CollisionInfo.cs" />
     <Compile Include="Collision\CollisionManager.cs" />
     <Compile Include="Collision\CollisionDetectorFactory.cs" />

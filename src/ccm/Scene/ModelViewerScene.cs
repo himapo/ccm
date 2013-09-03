@@ -7,6 +7,7 @@ using HimaLib.Debug;
 using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Model;
+using HimaLib.Camera;
 using ccm.Input;
 using ccm.Camera;
 using ccm.Debug;
@@ -15,7 +16,7 @@ namespace ccm.Scene
 {
     public class ModelViewerScene : SceneBase
     {
-        BasicCamera camera = new BasicCamera() { Far = 300.0f };
+        CameraBase camera = new CameraBase() { Far = 300.0f };
 
         ViewerCameraUpdater cameraUpdater;
 

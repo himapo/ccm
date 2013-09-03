@@ -10,7 +10,7 @@ namespace ccm.Deco
 {
     public class Deco_Twister : Deco
     {
-        public Deco_Twister(AffineTransform transform, ICamera camera, HimaLib.Math.IRand rand)
+        public Deco_Twister(AffineTransform transform, CameraBase camera, HimaLib.Math.IRand rand)
         {
             for (var i = 0; i < 16; ++i)
             {
