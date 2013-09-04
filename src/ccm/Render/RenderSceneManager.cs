@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Render;
 using HimaLib.System;
 using HimaLib.Model;
+using HimaLib.Light;
 
 namespace ccm.Render
 {
@@ -38,6 +39,21 @@ namespace ccm.Render
         public void RemovePath(RenderPathType index)
         {
             RenderScene.RemovePath((int)index);
+        }
+
+        public void AddDirectionalLight(DirectionalLight light)
+        {
+            RenderScene.AddDirectionalLight(light);
+        }
+
+        public void RemoveDirectionalLight(DirectionalLight light)
+        {
+            RenderScene.RemoveDirectionalLight(light);
+        }
+
+        public void ClearDirectionalLight()
+        {
+            RenderScene.ClearDirectionalLight();
         }
 
         public void RenderModel(IModel model, IModelRenderParameter renderParam)

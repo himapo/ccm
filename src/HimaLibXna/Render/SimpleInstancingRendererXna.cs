@@ -36,8 +36,8 @@ namespace HimaLib.Render
             shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             shader.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
-            shader.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirLight0Direction);
-            shader.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirLight0DiffuseColor);
+            shader.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirectionalLights[0].Direction);
+            shader.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirectionalLights[0].Color.ToVector3());
             shader.DirLight0SpecularColor = MathUtilXna.ToXnaVector(param.DirLight0SpecularColor);
             shader.EyePosition = MathUtilXna.ToXnaVector(param.Camera.Eye);
         }

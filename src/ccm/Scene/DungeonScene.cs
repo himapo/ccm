@@ -6,6 +6,7 @@ using HimaLib.Debug;
 using HimaLib.Math;
 using HimaLib.Collision;
 using HimaLib.Camera;
+using HimaLib.Light;
 using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
@@ -51,6 +52,9 @@ namespace ccm.Scene
         CameraBase Camera = new CameraBase();
 
         ViewerCameraUpdater cameraUpdater;
+
+        // ライト
+        DirectionalLight DirectionalLight0 = new DirectionalLight();
 
         // デコ
         ccm.Deco.DecoManager DecoManager = new Deco.DecoManager();
@@ -171,6 +175,7 @@ namespace ccm.Scene
             InitMap();
             InitCollision();
             InitCamera();
+            InitLight();
             InitDebugMenu();
             InitRender();
 
@@ -220,6 +225,15 @@ namespace ccm.Scene
         void InitCamera()
         {
             cameraUpdater.Reset();
+        }
+
+        void InitLight()
+        {
+            RenderSceneManager.Instance.ClearDirectionalLight();
+
+            DirectionalLight0.Direction = -Vector3.One;
+            DirectionalLight0.Color = Color.Magenta;
+            RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
         }
 
         void InitDebugMenu()

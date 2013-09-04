@@ -9,6 +9,7 @@ using HimaLib.Model;
 using HimaLib.Updater;
 using HimaLib.Debug;
 using ccm.Game;
+using ccm.Render;
 
 namespace ccm.Player
 {
@@ -47,10 +48,10 @@ namespace ccm.Player
 
         void InitDefaultRenderer()
         {
-            defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * 1.0f;
-            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
+            //defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * -1.0f;
+            //defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
             defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * -1.0f;
-            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.7f, 0.7f, 0.4f);
+            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.0f, 0.0f, 0.0f);
             defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
@@ -66,12 +67,10 @@ namespace ccm.Player
             toonRenderParam.Transform = transform;
 
             defaultRenderParam.ParametersMatrix["World"] = Matrix.CreateRotationX(MathUtil.ToRadians(-90.0f)) * transform.WorldMatrix;
-            defaultRenderParam.ParametersMatrix["View"] = Camera.View;
-            defaultRenderParam.ParametersMatrix["Projection"] = Camera.Projection;
 
             IModelRenderParameter renderParam = defaultRenderParam;
 
-            model.Render(renderParam);
+            RenderSceneManager.Instance.RenderModel(model, renderParam);
 
             BillboardRenderParam.Camera = Camera;
             BillboardRenderParam.Alpha = Alpha;

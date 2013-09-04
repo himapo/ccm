@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Math;
+using HimaLib.Camera;
+using HimaLib.Light;
 
 namespace HimaLib.Render
 {
     public class DefaultModelRenderParameter : IModelRenderParameter
     {
         public ModelRendererType Type { get { return ModelRendererType.Default; } }
+
+        public CameraBase Camera { get; set; }
+
+        public List<DirectionalLight> DirectionalLights { get; set; }
 
         public Dictionary<string, bool> ParametersBoolean { get; private set; }
 

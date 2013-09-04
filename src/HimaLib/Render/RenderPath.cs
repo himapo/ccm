@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Camera;
+using HimaLib.Light;
 
 namespace HimaLib.Render
 {
@@ -11,6 +12,8 @@ namespace HimaLib.Render
         public string Name { get; set; }
 
         public CameraBase Camera { get; set; }
+
+        public List<DirectionalLight> DirectionalLights { get; set; }
 
         public List<ModelInfo> ModelInfoList { get; set; }
 
@@ -45,6 +48,8 @@ namespace HimaLib.Render
 
             foreach (var modelInfo in ModelInfoList)
             {
+                modelInfo.RenderParam.Camera = Camera;
+                modelInfo.RenderParam.DirectionalLights = DirectionalLights;
                 modelInfo.Model.Render(modelInfo.RenderParam);
             }
         }

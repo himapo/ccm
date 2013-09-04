@@ -31,6 +31,15 @@ namespace HimaLib.Render
             }
 
             RenderParam = param;
+
+            RenderParam.ParametersMatrix["View"] = RenderParam.Camera.View;
+            RenderParam.ParametersMatrix["Projection"] = RenderParam.Camera.Projection;
+
+            for (var i = 0; i < RenderParam.DirectionalLights.Count; ++i)
+            {
+                RenderParam.ParametersVector3["Light" + (i+1) + "Direction"] = RenderParam.DirectionalLights[i].Direction;
+                RenderParam.ParametersVector3["Light" + (i+1) + "Color"] = RenderParam.DirectionalLights[i].Color.ToVector3();
+            }
         }
 
         public void Render(Microsoft.Xna.Framework.Graphics.Model model)

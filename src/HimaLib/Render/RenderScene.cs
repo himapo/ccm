@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Model;
+using HimaLib.Light;
 
 namespace HimaLib.Render
 {
@@ -15,6 +16,8 @@ namespace HimaLib.Render
     public class RenderScene
     {
         Dictionary<int, IRenderPath> PathDic = new Dictionary<int, IRenderPath>();
+
+        List<DirectionalLight> DirectionalLights = new List<DirectionalLight>();
 
         List<ModelInfo> ModelInfoList = new List<ModelInfo>();
 
@@ -37,6 +40,24 @@ namespace HimaLib.Render
             PathDic.Remove(index);
         }
 
+        public void AddDirectionalLight(DirectionalLight light)
+        {
+            if (!DirectionalLights.Contains(light))
+            {
+                DirectionalLights.Add(light);
+            }
+        }
+
+        public void RemoveDirectionalLight(DirectionalLight light)
+        {
+            DirectionalLights.Remove(light);
+        }
+
+        public void ClearDirectionalLight()
+        {
+            DirectionalLights.Clear();
+        }
+
         public void RenderModel(IModel model, IModelRenderParameter renderParam)
         {
             ModelInfoList.Add(new ModelInfo() { Model = model, RenderParam = renderParam });
@@ -52,6 +73,7 @@ namespace HimaLib.Render
         {
             foreach (var path in PathDic.Values)
             {
+                path.DirectionalLights = DirectionalLights;
                 path.ModelInfoList = ModelInfoList;
                 path.Render();
             }

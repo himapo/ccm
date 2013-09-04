@@ -7,10 +7,12 @@ using HimaLib.Render;
 using HimaLib.Model;
 using HimaLib.Math;
 using HimaLib.Camera;
+using HimaLib.Light;
 using ccm.Input;
 using ccm.Camera;
 using ccm.DungeonLogic;
 using ccm.Debug;
+using ccm.Render;
 
 namespace ccm.Scene
 {
@@ -19,6 +21,8 @@ namespace ccm.Scene
         CameraBase camera = new CameraBase() { Near = 10.0f, Far = 10000.0f };
 
         ViewerCameraUpdater cameraUpdater;
+
+        DirectionalLight DirectionalLight0 = new DirectionalLight();
 
         DungeonMap dungeonMap;
 
@@ -63,6 +67,8 @@ namespace ccm.Scene
         {
             InitCamera();
 
+            InitLight();
+
             InitRenderer();
 
             InitModel();
@@ -81,15 +87,24 @@ namespace ccm.Scene
             cameraUpdater.Update(Vector3.Zero);
         }
 
+        void InitLight()
+        {
+            RenderSceneManager.Instance.ClearDirectionalLight();
+
+            DirectionalLight0.Direction = -Vector3.One;
+            DirectionalLight0.Direction.Normalize();
+            DirectionalLight0.Color = new Color(0.5f, 0.6f, 0.8f);
+            RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
+        }
+
         void InitRenderer()
         {
             renderParam.Camera = camera;
             renderParam.Transforms = new List<AffineTransform>();
             renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
-            renderParam.DirLight0Direction = -Vector3.One;
-            renderParam.DirLight0Direction.Normalize();
-            renderParam.DirLight0DiffuseColor = new Vector3(0.5f, 0.6f, 0.8f);
             renderParam.DirLight0SpecularColor = Vector3.One;
+
+            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;            
         }
 
         void InitModel()
@@ -151,6 +166,8 @@ namespace ccm.Scene
                 return;
             }
 
+            renderParam.TransformsUpdated = false;
+
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Jump))
             {
                 ResetMap();
@@ -163,8 +180,7 @@ namespace ccm.Scene
         {
             if (Drawable)
             {
-                dungeonCubeModel.Render(renderParam);
-                renderParam.TransformsUpdated = false;
+                RenderSceneManager.Instance.RenderModel(dungeonCubeModel, renderParam);
             }
 
             debugMenu.Draw(debugMenuDrawer);

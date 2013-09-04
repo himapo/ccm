@@ -29,8 +29,8 @@ namespace HimaLib.Render
             lambert.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             lambert.Alpha = param.Alpha;
             lambert.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
-            lambert.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirLight0Direction);
-            lambert.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirLight0DiffuseColor);
+            lambert.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirectionalLights[0].Direction);
+            lambert.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirectionalLights[0].Color.ToVector3());
         }
 
         public void Render(Microsoft.Xna.Framework.Graphics.Model model)

@@ -8,9 +8,11 @@ using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.Camera;
+using HimaLib.Light;
 using ccm.Input;
 using ccm.Camera;
 using ccm.Debug;
+using ccm.Render;
 
 namespace ccm.Scene
 {
@@ -19,6 +21,8 @@ namespace ccm.Scene
         CameraBase camera = new CameraBase() { Far = 300.0f };
 
         ViewerCameraUpdater cameraUpdater;
+
+        DirectionalLight DirectionalLight0 = new DirectionalLight();
 
         IModel model;
 
@@ -72,6 +76,8 @@ namespace ccm.Scene
         {
             InitCamera();
 
+            InitLight();
+
             InitRenderer();
 
             InitModel();
@@ -87,6 +93,16 @@ namespace ccm.Scene
             cameraUpdater.Reset();
         }
 
+        void InitLight()
+        {
+            RenderSceneManager.Instance.ClearDirectionalLight();
+
+            DirectionalLight0.Direction = -Vector3.One;
+            DirectionalLight0.Direction.Normalize();
+            DirectionalLight0.Color = new Color(0.8f, 0.9f, 0.7f);
+            RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
+        }
+
         void InitRenderer()
         {
             InitSimpleRenderer();
@@ -94,6 +110,8 @@ namespace ccm.Scene
             InitDefaultRenderer();
 
             renderParam = simpleRenderParam;
+
+            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;            
         }
 
         void InitSimpleRenderer()
@@ -108,8 +126,8 @@ namespace ccm.Scene
 
         void InitDefaultRenderer()
         {
-            defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * 1.0f;
-            defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
+            //defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * 1.0f;
+            //defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
             defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * -1.0f;
             defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.7f, 0.7f, 0.4f);
             defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
@@ -304,15 +322,13 @@ namespace ccm.Scene
         void UpdateDefaultRenderer()
         {
             defaultRenderParam.ParametersMatrix["World"] = Matrix.CreateRotationX(MathUtil.ToRadians(-90.0f));
-            defaultRenderParam.ParametersMatrix["View"] = camera.View;
-            defaultRenderParam.ParametersMatrix["Projection"] = camera.Projection;
         }
 
         void DrawStateMain()
         {
             if (model != null)
             {
-                model.Render(renderParam);
+                RenderSceneManager.Instance.RenderModel(model, renderParam);
             }
 
             debugMenu.Draw(debugMenuDrawer);
