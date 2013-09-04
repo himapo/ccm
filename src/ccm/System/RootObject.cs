@@ -140,9 +140,9 @@ namespace ccm.System
 
             DrawDebugFPS();
 
-            DebugFont.Draw();
-
             RenderSceneManager.Instance.Render();
+
+            DebugFont.Draw();
 
             LoadProfiler.EndMark();
         }
