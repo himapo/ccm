@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework.Content;
+using HimaLib.System;
 
 namespace HimaLib.Content
 {
-    public class ContentLoader<ContentType> : ContentUser
+    public class ContentLoader<ContentType>
     {
+        ContentManager Content { get { return XnaGame.Instance.Content; } }
+
         protected static Dictionary<string, ContentType> resourceDic = new Dictionary<string, ContentType>();
 
         public ContentLoader()

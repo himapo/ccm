@@ -103,7 +103,6 @@ namespace HimaLib.System
         protected override void LoadContent()
         {
             Content.RootDirectory = "Content";
-            HimaLib.Content.ContentUser.Content = Content;
             base.LoadContent();
         }
 

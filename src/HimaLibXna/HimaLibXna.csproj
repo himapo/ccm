@@ -108,7 +108,6 @@
   <ItemGroup>
     <Compile Include="Collision\WireCollisionDrawer.cs" />
     <Compile Include="Content\ContentLoader.cs" />
-    <Compile Include="Content\ContentUser.cs" />
     <Compile Include="Content\EffectLoader.cs" />
     <Compile Include="Content\MMDAccessoryLoader.cs" />
     <Compile Include="Content\MMDMotionLoader.cs" />
