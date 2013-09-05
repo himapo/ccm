@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework.Graphics;
-using HimaLib.Graphics;
 using HimaLib.Math;
 using HimaLib.System;
 using HimaLib.Camera;
 
 namespace HimaLib.Collision
 {
-    public class WireCollisionDrawer : GraphicsDeviceUser, ICollisionDrawer
+    public class WireCollisionDrawer : ICollisionDrawer
     {
         public CameraBase Camera { get; set; }
 
-        BasicEffect basicEffect = new BasicEffect(GraphicsDevice);
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
+
+        BasicEffect basicEffect;
 
         VertexPositionColor[] sphereVertices;
         
@@ -29,6 +30,7 @@ namespace HimaLib.Collision
         public WireCollisionDrawer(CameraBase camera)
         {
             Camera = camera;
+            basicEffect = new BasicEffect(GraphicsDevice);
             InitEffect();
             InitSphere();
             InitCylinder();

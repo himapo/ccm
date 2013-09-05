@@ -5,15 +5,17 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using HimaLib.Math;
 using HimaLib.Content;
-using HimaLib.Graphics;
+using HimaLib.System;
 
 namespace HimaLib.Render
 {
     /// <summary>
     /// モデルに設定されたエフェクトでそのまま描画するレンダラ
     /// </summary>
-    public class DefaultModelRendererXna : GraphicsDeviceUser, IModelRendererXna
+    public class DefaultModelRendererXna : IModelRendererXna
     {
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
+
         DefaultModelRenderParameter RenderParam = new DefaultModelRenderParameter();
 
         TextureLoader TextureLoader = new TextureLoader();

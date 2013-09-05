@@ -138,7 +138,6 @@
     <Compile Include="ExtSrc\SkinnedModel\QuatTransform.cs" />
     <Compile Include="ExtSrc\SkinnedModel\SkinningData.cs" />
     <Compile Include="ExtSrc\SkinnedModel\TypeReaders.cs" />
-    <Compile Include="Graphics\GraphicsDeviceUser.cs" />
     <Compile Include="Input\DefaultKeyboard.cs" />
     <Compile Include="Input\DefaultMouse.cs" />
     <Compile Include="Math\MathUtilXna.cs" />

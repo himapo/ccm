@@ -9,7 +9,7 @@ namespace HimaLib.Render
 {
     public class RenderDeviceXna : IRenderDevice
     {
-        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } set { } }
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         public void ClearDepth()
         {

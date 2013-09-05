@@ -5,8 +5,7 @@ using System.Text;
 using HimaLib.Shader;
 using HimaLib.System;
 using HimaLib.Content;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -16,10 +15,6 @@ namespace HimaLib.Render
 
         public float Alpha { get; set; }
 
-        public HimaLib.Math.Vector2 RectOffset { get; set; }
-
-        public HimaLib.Math.Vector2 RectSize { get; set; }
-
         ConstantShader Shader { get; set; }
 
         TextureLoader TextureLoader { get; set; }
@@ -28,9 +23,6 @@ namespace HimaLib.Render
         {
             Shader = new ConstantShader();
             TextureLoader = new TextureLoader();
-
-            RectOffset = HimaLib.Math.Vector2.Zero;
-            RectSize = HimaLib.Math.Vector2.Zero;
         }
 
         public void SetParameter(IBillboardRenderParameter p)
@@ -42,11 +34,11 @@ namespace HimaLib.Render
             }
 
             Shader.Texture = TextureLoader.Load(param.TextureName);
-            Shader.RectOffset = HimaLib.Math.MathUtilXna.ToXnaVector(param.RectOffset);
-            Shader.RectSize = HimaLib.Math.MathUtilXna.ToXnaVector(param.RectSize);
-            Shader.World = GetWorldMatrix(param.Transform);
-            Shader.View = GetViewMatrix();
-            Shader.Projection = GetProjMatrix();
+            Shader.RectOffset = MathUtilXna.ToXnaVector(param.RectOffset);
+            Shader.RectSize = MathUtilXna.ToXnaVector(param.RectSize);
+            Shader.World = MathUtilXna.ToXnaMatrix(GetWorldMatrix(param.Transform));
+            Shader.View = MathUtilXna.ToXnaMatrix(GetViewMatrix());
+            Shader.Projection = MathUtilXna.ToXnaMatrix(GetProjMatrix());
             Shader.Alpha = param.Alpha;
         }
 
@@ -55,7 +47,7 @@ namespace HimaLib.Render
             Shader.RenderBillboard();
         }
 
-        Matrix GetWorldMatrix(HimaLib.Math.AffineTransform transform)
+        Matrix GetWorldMatrix(AffineTransform transform)
         {
             var result = Matrix.CreateScale(transform.Scale.X, transform.Scale.Y, transform.Scale.Z);
             result *= Matrix.CreateRotationZ(transform.Rotation.Z);

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HimaLib.System;
 
 namespace HimaLib.Shader
 {
-    public class ConstantShader : Graphics.GraphicsDeviceUser
+    public class ConstantShader
     {
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
@@ -47,6 +48,8 @@ namespace HimaLib.Shader
         public Matrix Projection { get; set; }
 
         public float Alpha { get; set; }
+
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
 

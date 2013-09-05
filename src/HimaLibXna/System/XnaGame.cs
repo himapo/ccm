@@ -67,8 +67,6 @@ namespace HimaLib.System
 
             InitializeSystemProperty();
 
-            Graphics.GraphicsDeviceUser.GraphicsDevice = GraphicsDevice;
-
             base.Initialize();
         }
 

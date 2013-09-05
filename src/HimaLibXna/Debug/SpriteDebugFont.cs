@@ -5,11 +5,11 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HimaLib;
-using HimaLib.Graphics;
+using HimaLib.System;
 
 namespace HimaLib.Debug
 {
-    public class SpriteDebugFont : GraphicsDeviceUser, IDebugFont
+    public class SpriteDebugFont : IDebugFont
     {
         class DebugFontInfo
         {
@@ -44,6 +44,8 @@ namespace HimaLib.Debug
                 BGColor = bgColor;
             }
         }
+
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         List<DebugFontInfo> infoList;
 

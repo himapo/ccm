@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HimaLib.System;
 
 namespace HimaLib.Shader
 {
-    public class LambertShader : Graphics.GraphicsDeviceUser
+    public class LambertShader
     {
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
@@ -26,6 +27,8 @@ namespace HimaLib.Shader
         public Vector3 DirLight0Direction { get; set; }
 
         public Vector3 DirLight0DiffuseColor { get; set; }
+
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
 

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using HimaLib.System;
 
 namespace HimaLib.Shader
 {
-    public class InstancingPhongShader : Graphics.GraphicsDeviceUser
+    public class InstancingPhongShader
     {
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
         
@@ -28,6 +29,8 @@ namespace HimaLib.Shader
         public Vector3 DirLight0SpecularColor { get; set; }
 
         public Vector3 EyePosition { get; set; }
+
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
 

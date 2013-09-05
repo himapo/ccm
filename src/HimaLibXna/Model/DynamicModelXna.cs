@@ -5,12 +5,13 @@ using System.Text;
 using Microsoft.Xna.Framework.Graphics;
 using HimaLib.Render;
 using HimaLib.Math;
+using HimaLib.System;
 using SkinnedModel;
 using TexSkinningSample;
 
 namespace HimaLib.Model
 {
-    public class DynamicModelXna : Graphics.GraphicsDeviceUser, IModel
+    public class DynamicModelXna : IModel
     {
         public string Name { get; set; }
 
@@ -21,6 +22,8 @@ namespace HimaLib.Model
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
         bool Initialized = false;
+
+        GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         SkinningData SkinningData;
 
