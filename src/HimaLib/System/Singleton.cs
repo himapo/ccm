@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HimaLib.System
 {
-    public class Singleton<T>
+    public sealed class Singleton<T>
         where T : class
     {
         static readonly T instance = null;
