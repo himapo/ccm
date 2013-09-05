@@ -16,10 +16,16 @@ namespace HimaLib.Render
 
         public List<DirectionalLight> DirectionalLights { get; set; }
 
+        public bool ShadowEnabled { get; set; }
+
+        public bool IsTranslucent { get; set; }
+
         public AffineTransform Transform { get; set; }
 
         public ToonModelRenderParameter()
         {
+            ShadowEnabled = true;
+            IsTranslucent = false;
             Transform = new AffineTransform();
         }
     }

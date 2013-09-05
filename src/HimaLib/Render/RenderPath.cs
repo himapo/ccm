@@ -7,7 +7,7 @@ using HimaLib.Light;
 
 namespace HimaLib.Render
 {
-    public abstract class RenderPath : IRenderPath
+    public class RenderPath : IRenderPath
     {
         public string Name { get; set; }
 
@@ -16,6 +16,8 @@ namespace HimaLib.Render
         public List<DirectionalLight> DirectionalLights { get; set; }
 
         public List<ModelInfo> ModelInfoList { get; set; }
+
+        public IRenderDevice RenderDevice { get; set; }
 
         public bool DepthSortEnabled { get; set; }
 
@@ -39,11 +41,11 @@ namespace HimaLib.Render
             {
             }
 
-            SetDepthState(DepthTestEnabled, DepthWriteEnabled);
+            RenderDevice.SetDepthState(DepthTestEnabled, DepthWriteEnabled);
 
             if (DepthClearEnabled)
             {
-                ClearDepth();
+                RenderDevice.ClearDepth();
             }
 
             foreach (var modelInfo in ModelInfoList)
@@ -54,8 +56,6 @@ namespace HimaLib.Render
             }
         }
 
-        protected abstract void ClearDepth();
-
-        protected abstract void SetDepthState(bool depthTestEnabled, bool depthWriteEnabled);
+        //protected abstract void RenderDetail();
     }
 }

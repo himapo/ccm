@@ -22,9 +22,28 @@ namespace HimaLib.Render
 
         public IRenderPath CreatePath(string name)
         {
-            return new RenderPathXna()
+            return new RenderPath()
             {
                 Name = name,
+                RenderDevice = new RenderDeviceXna(),
+            };
+        }
+
+        public IRenderPath CreatePath(
+            string name,
+            bool depthSortEnabled,
+            bool depthTestEnabled,
+            bool depthWriteEnabled,
+            bool depthClearEnabled)
+        {
+            return new RenderPath()
+            {
+                Name = name,
+                RenderDevice = new RenderDeviceXna(),
+                DepthSortEnabled = depthSortEnabled,
+                DepthTestEnabled = depthTestEnabled,
+                DepthWriteEnabled = depthWriteEnabled,
+                DepthClearEnabled = depthClearEnabled,
             };
         }
     }

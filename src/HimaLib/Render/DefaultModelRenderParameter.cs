@@ -16,6 +16,10 @@ namespace HimaLib.Render
 
         public List<DirectionalLight> DirectionalLights { get; set; }
 
+        public bool ShadowEnabled { get; set; }
+
+        public bool IsTranslucent { get; set; }
+
         public Dictionary<string, bool> ParametersBoolean { get; private set; }
 
         public Dictionary<string, int> ParametersInt32 { get; private set; }
@@ -36,6 +40,8 @@ namespace HimaLib.Render
 
         public DefaultModelRenderParameter()
         {
+            ShadowEnabled = true;
+            IsTranslucent = false;
             ParametersBoolean = new Dictionary<string, bool>();
             ParametersInt32 = new Dictionary<string, int>();
             ParametersSingle = new Dictionary<string, float>();

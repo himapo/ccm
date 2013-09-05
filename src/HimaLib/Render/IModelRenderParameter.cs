@@ -22,5 +22,9 @@ namespace HimaLib.Render
         CameraBase Camera { get; set; }
 
         List<DirectionalLight> DirectionalLights { get; set; }
+
+        bool ShadowEnabled { get; set; }
+
+        bool IsTranslucent { get; set; }
     }
 }

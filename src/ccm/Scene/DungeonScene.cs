@@ -225,6 +225,7 @@ namespace ccm.Scene
         void InitCamera()
         {
             cameraUpdater.Reset();
+            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
         }
 
         void InitLight()
@@ -249,7 +250,6 @@ namespace ccm.Scene
 
         void InitRender()
         {
-            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
         }
 
         void DrawStateInit()

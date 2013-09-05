@@ -160,8 +160,8 @@
     <Compile Include="Render\NullBillboardRendererXna.cs" />
     <Compile Include="Render\NullModelRendererMMDX.cs" />
     <Compile Include="Render\NullModelRendererXna.cs" />
+    <Compile Include="Render\RenderDeviceXna.cs" />
     <Compile Include="Render\RenderPathFactory.cs" />
-    <Compile Include="Render\RenderPathXna.cs" />
     <Compile Include="Render\SimpleBillboardRendererXna.cs" />
     <Compile Include="Render\SimpleInstancingRendererXna.cs" />
     <Compile Include="Render\SimpleModelRendererXna.cs" />

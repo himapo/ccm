@@ -18,14 +18,6 @@ namespace HimaLib.Render
 
         List<ModelInfo> ModelInfoList { get; set; }
 
-        bool DepthSortEnabled { get; set; }
-
-        bool DepthTestEnabled { get; set; }
-
-        bool DepthWriteEnabled { get; set; }
-
-        bool DepthClearEnabled { get; set; }
-
         void Render();
     }
 }

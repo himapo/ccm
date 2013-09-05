@@ -85,6 +85,7 @@ namespace ccm.Scene
         {
             cameraUpdater.Reset();
             cameraUpdater.Update(Vector3.Zero);
+            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;
         }
 
         void InitLight()
@@ -103,8 +104,6 @@ namespace ccm.Scene
             renderParam.Transforms = new List<AffineTransform>();
             renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
             renderParam.DirLight0SpecularColor = Vector3.One;
-
-            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;            
         }
 
         void InitModel()

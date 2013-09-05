@@ -149,6 +149,7 @@
     <Compile Include="Render\DefaultModelRenderParameter.cs" />
     <Compile Include="Render\IBillboardRenderParameter.cs" />
     <Compile Include="Render\IModelRenderParameter.cs" />
+    <Compile Include="Render\IRenderDevice.cs" />
     <Compile Include="Render\IRenderPath.cs" />
     <Compile Include="Render\RenderPath.cs" />
     <Compile Include="Render\RenderScene.cs" />

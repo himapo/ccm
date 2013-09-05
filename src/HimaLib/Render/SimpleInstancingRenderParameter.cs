@@ -16,6 +16,10 @@ namespace HimaLib.Render
 
         public List<DirectionalLight> DirectionalLights { get; set; }
 
+        public bool ShadowEnabled { get; set; }
+
+        public bool IsTranslucent { get; set; }
+
         public bool TransformsUpdated { get; set; }
 
         public List<AffineTransform> Transforms { get; set; }
@@ -23,5 +27,12 @@ namespace HimaLib.Render
         public Vector3 AmbientLightColor { get; set; }
 
         public Vector3 DirLight0SpecularColor { get; set; }
+
+        public SimpleInstancingRenderParameter()
+        {
+            ShadowEnabled = true;
+            IsTranslucent = false;
+            TransformsUpdated = false;
+        }
     }
 }

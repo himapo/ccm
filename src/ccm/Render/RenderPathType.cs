@@ -7,6 +7,10 @@ namespace ccm.Render
 {
     public enum RenderPathType
     {
+        SHADOW,
         OPAQUE,
+        TRANSLUCENT,
+        HUD,
+        DEBUG,
     }
 }

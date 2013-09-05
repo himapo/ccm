@@ -7,16 +7,16 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HimaLib.Render
 {
-    public class RenderPathXna : RenderPath
+    public class RenderDeviceXna : IRenderDevice
     {
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } set { } }
 
-        protected override void ClearDepth()
+        public void ClearDepth()
         {
             GraphicsDevice.Clear(ClearOptions.DepthBuffer, Microsoft.Xna.Framework.Color.Gray, 1.0f, 0);
         }
 
-        protected override void SetDepthState(bool depthTestEnabled, bool depthWriteEnabled)
+        public void SetDepthState(bool depthTestEnabled, bool depthWriteEnabled)
         {
             if (depthWriteEnabled)
             {
