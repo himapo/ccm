@@ -29,12 +29,43 @@ namespace HimaLib.Render
 
         public bool DepthClearEnabled { get; set; }
 
+        public bool RenderModelEnabled { get; set; }
+
+        public bool RenderShadowModelOnly { get; set; }
+
+        public bool RenderOpaqueModelOnly { get; set; }
+
+        public bool RenderTranslucentModelOnly { get; set; }
+
+        public bool RenderBillboardEnabled { get; set; }
+
+        public bool RenderShadowBillboardOnly { get; set; }
+
+        public bool RenderOpaqueBillboardOnly { get; set; }
+
+        public bool RenderTranslucentBillboardOnly { get; set; }
+
+        public bool RenderNoHudBillboardOnly { get; set; }
+
+        public bool RenderHudBillboardOnly { get; set; }
+
         public RenderPath()
         {
             DepthSortEnabled = false;
             DepthTestEnabled = true;
             DepthWriteEnabled = true;
             DepthClearEnabled = false;
+
+            RenderModelEnabled = true;
+            RenderShadowModelOnly = false;
+            RenderOpaqueModelOnly = false;
+            RenderTranslucentModelOnly = false;
+            RenderBillboardEnabled = true;
+            RenderShadowBillboardOnly = false;
+            RenderOpaqueBillboardOnly = false;
+            RenderTranslucentBillboardOnly = false;
+            RenderNoHudBillboardOnly = false;
+            RenderHudBillboardOnly = false;
         }
 
         public void Render()
@@ -50,18 +81,64 @@ namespace HimaLib.Render
                 RenderDevice.ClearDepth();
             }
 
-            foreach (var info in ModelInfoList)
+            if (RenderModelEnabled)
             {
-                info.RenderParam.Camera = Camera;
-                info.RenderParam.DirectionalLights = DirectionalLights;
-                info.Model.Render(info.RenderParam);
+                foreach (var info in ModelInfoList)
+                {
+                    if (RenderShadowModelOnly && !info.RenderParam.ShadowEnabled)
+                    {
+                        continue;
+                    }
+
+                    if (RenderOpaqueModelOnly && info.RenderParam.IsTranslucent)
+                    {
+                        continue;
+                    }
+
+                    if (RenderTranslucentModelOnly && !info.RenderParam.IsTranslucent)
+                    {
+                        continue;
+                    }
+
+                    info.RenderParam.Camera = Camera;
+                    info.RenderParam.DirectionalLights = DirectionalLights;
+                    info.Model.Render(info.RenderParam);
+                }
             }
 
-            foreach (var info in BillboardInfoList)
+            if (RenderBillboardEnabled)
             {
-                info.RenderParam.Camera = Camera;
-                info.RenderParam.DirectionalLights = DirectionalLights;
-                info.Billboard.Render(info.RenderParam);
+                foreach (var info in BillboardInfoList)
+                {
+                    if (RenderShadowBillboardOnly && !info.RenderParam.ShadowEnabled)
+                    {
+                        continue;
+                    }
+
+                    if (RenderOpaqueBillboardOnly && info.RenderParam.IsTranslucent)
+                    {
+                        continue;
+                    }
+
+                    if (RenderTranslucentBillboardOnly && !info.RenderParam.IsTranslucent)
+                    {
+                        continue;
+                    }
+
+                    if (RenderNoHudBillboardOnly && info.RenderParam.IsHud)
+                    {
+                        continue;
+                    }
+
+                    if (RenderHudBillboardOnly && !info.RenderParam.IsHud)
+                    {
+                        continue;
+                    }
+
+                    info.RenderParam.Camera = Camera;
+                    info.RenderParam.DirectionalLights = DirectionalLights;
+                    info.Billboard.Render(info.RenderParam);
+                }
             }
         }
     }

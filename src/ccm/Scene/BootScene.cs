@@ -57,6 +57,7 @@ namespace ccm.Scene
                 Vector3.One,
                 Vector3.Zero,
                 Vector3.Zero);
+            renderParam.IsTranslucent = false;
         }
 
         void InitRenderer()

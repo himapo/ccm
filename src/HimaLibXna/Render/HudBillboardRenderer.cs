@@ -11,10 +11,6 @@ namespace HimaLib.Render
 {
     public class HudBillboardRenderer : IBillboardRendererXna
     {
-        public string TextureName { get; set; }
-
-        public float Alpha { get; set; }
-
         ConstantShader Shader { get; set; }
 
         TextureLoader TextureLoader { get; set; }

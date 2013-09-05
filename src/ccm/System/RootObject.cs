@@ -99,17 +99,15 @@ namespace ccm.System
         {
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.OPAQUE,
-                RenderPathFactory.Instance.CreatePath("Opaque"));
+                RenderPathFactory.Instance.CreateOpaquePath("Opaque"));
 
-            //RenderSceneManager.Instance.AddPath(
-            //    RenderPathType.TRANSLUCENT,
-            //    RenderPathFactory.Instance.CreatePath("Translucent",
-            //        true, true, false, false));
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.TRANSLUCENT,
+                RenderPathFactory.Instance.CreateTranslucentPath("Translucent"));
 
-            //RenderSceneManager.Instance.AddPath(
-            //    RenderPathType.HUD,
-            //    RenderPathFactory.Instance.CreatePath("HUD",
-            //        false, true, true, true));
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.HUD,
+                RenderPathFactory.Instance.CreateHudPath("HUD"));
         }
 
         void DrawStateInit()

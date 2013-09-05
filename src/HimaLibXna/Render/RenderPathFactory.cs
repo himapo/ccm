@@ -20,30 +20,30 @@ namespace HimaLib.Render
         {
         }
 
-        public IRenderPath CreatePath(string name)
+        public IRenderPath CreateOpaquePath(string name)
         {
-            return new RenderPath()
+            return new OpaqueRenderPath()
             {
                 Name = name,
                 RenderDevice = new RenderDeviceXna(),
             };
         }
 
-        public IRenderPath CreatePath(
-            string name,
-            bool depthSortEnabled,
-            bool depthTestEnabled,
-            bool depthWriteEnabled,
-            bool depthClearEnabled)
+        public IRenderPath CreateTranslucentPath(string name)
         {
-            return new RenderPath()
+            return new TranslucentRenderPath()
             {
                 Name = name,
                 RenderDevice = new RenderDeviceXna(),
-                DepthSortEnabled = depthSortEnabled,
-                DepthTestEnabled = depthTestEnabled,
-                DepthWriteEnabled = depthWriteEnabled,
-                DepthClearEnabled = depthClearEnabled,
+            };
+        }
+
+        public IRenderPath CreateHudPath(string name)
+        {
+            return new HudRenderPath()
+            {
+                Name = name,
+                RenderDevice = new RenderDeviceXna(),
             };
         }
     }
