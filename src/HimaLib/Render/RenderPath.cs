@@ -17,6 +17,8 @@ namespace HimaLib.Render
 
         public List<ModelInfo> ModelInfoList { get; set; }
 
+        public List<BillboardInfo> BillboardInfoList { get; set; }
+
         public IRenderDevice RenderDevice { get; set; }
 
         public bool DepthSortEnabled { get; set; }
@@ -35,7 +37,7 @@ namespace HimaLib.Render
             DepthClearEnabled = false;
         }
 
-        public virtual void Render()
+        public void Render()
         {
             if (DepthSortEnabled)
             {
@@ -48,14 +50,19 @@ namespace HimaLib.Render
                 RenderDevice.ClearDepth();
             }
 
-            foreach (var modelInfo in ModelInfoList)
+            foreach (var info in ModelInfoList)
             {
-                modelInfo.RenderParam.Camera = Camera;
-                modelInfo.RenderParam.DirectionalLights = DirectionalLights;
-                modelInfo.Model.Render(modelInfo.RenderParam);
+                info.RenderParam.Camera = Camera;
+                info.RenderParam.DirectionalLights = DirectionalLights;
+                info.Model.Render(info.RenderParam);
+            }
+
+            foreach (var info in BillboardInfoList)
+            {
+                info.RenderParam.Camera = Camera;
+                info.RenderParam.DirectionalLights = DirectionalLights;
+                info.Billboard.Render(info.RenderParam);
             }
         }
-
-        //protected abstract void RenderDetail();
     }
 }

@@ -13,6 +13,12 @@ namespace HimaLib.Render
         public IModelRenderParameter RenderParam { get; set; }
     }
 
+    public class BillboardInfo
+    {
+        public IBillboard Billboard { get; set; }
+        public IBillboardRenderParameter RenderParam { get; set; }
+    }
+
     public class RenderScene
     {
         Dictionary<int, IRenderPath> PathDic = new Dictionary<int, IRenderPath>();
@@ -20,6 +26,8 @@ namespace HimaLib.Render
         List<DirectionalLight> DirectionalLights = new List<DirectionalLight>();
 
         List<ModelInfo> ModelInfoList = new List<ModelInfo>();
+
+        List<BillboardInfo> BillboardInfoList = new List<BillboardInfo>();
 
         public RenderScene()
         {
@@ -63,6 +71,11 @@ namespace HimaLib.Render
             ModelInfoList.Add(new ModelInfo() { Model = model, RenderParam = renderParam });
         }
 
+        public void RenderBillboard(IBillboard billboard, IBillboardRenderParameter renderParam)
+        {
+            BillboardInfoList.Add(new BillboardInfo() { Billboard = billboard, RenderParam = renderParam });
+        }
+
         public void Render()
         {
             // TODO : 別スレッド化
@@ -75,10 +88,12 @@ namespace HimaLib.Render
             {
                 path.DirectionalLights = DirectionalLights;
                 path.ModelInfoList = ModelInfoList;
+                path.BillboardInfoList = BillboardInfoList;
                 path.Render();
             }
 
             ModelInfoList.Clear();
+            BillboardInfoList.Clear();
         }
     }
 }

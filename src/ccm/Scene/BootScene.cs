@@ -6,14 +6,18 @@ using HimaLib.System;
 using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Debug;
+using HimaLib.Model;
 using ccm.Debug;
 using ccm.Input;
+using ccm.Render;
 
 namespace ccm.Scene
 {
     public class BootScene : SceneBase
     {
-        UIBillboardRenderer renderer;
+        IBillboard billboard = BillboardFactory.Instance.Create();
+
+        HudBillboardRenderParameter renderParam = new HudBillboardRenderParameter();
 
         DebugMenu debugMenu;
 
@@ -35,6 +39,8 @@ namespace ccm.Scene
 
         void UpdateStateInit()
         {
+            InitHud();
+
             InitRenderer();
 
             InitDebugMenu();
@@ -43,16 +49,18 @@ namespace ccm.Scene
             DrawState = DrawStateMain;
         }
 
+        void InitHud()
+        {
+            renderParam.TextureName = "Texture/miki";
+            renderParam.Alpha = 1.0f;
+            renderParam.Transform = new AffineTransform(
+                Vector3.One,
+                Vector3.Zero,
+                Vector3.Zero);
+        }
+
         void InitRenderer()
         {
-            // コンストラクタではContentの初期化ができてないのでここで
-            renderer = new UIBillboardRenderer();
-
-            renderer.TextureName = "Texture/miki";
-            renderer.Alpha = 1.0f;
-            renderer.Scale = 1.0f;
-            renderer.Rotation = new Vector3(0.0f);
-            renderer.Position = new Vector3(0.0f);
         }
 
         void InitDebugMenu()
@@ -117,7 +125,7 @@ namespace ccm.Scene
 
         void DrawStateMain()
         {
-            renderer.Render();
+            RenderSceneManager.Instance.RenderBillboard(billboard, renderParam);
 
             debugMenu.Draw(debugMenuDrawer);
         }

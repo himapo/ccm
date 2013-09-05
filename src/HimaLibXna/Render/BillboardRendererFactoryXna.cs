@@ -24,20 +24,26 @@ namespace HimaLib.Render
             switch (param.Type)
             {
                 case BillboardRendererType.Simple:
-                    {
-                        if (!RendererDic.ContainsKey(param.Type))
-                        {
-                            RendererDic[param.Type] = new SimpleBillboardRendererXna();
-                        }
-                        var result = RendererDic[param.Type] as SimpleBillboardRendererXna;
-                        result.SetParameter(param as SimpleBillboardRenderParameter);
-                        return result;
-                    }
+                    return Create<SimpleBillboardRendererXna>(param);
+                case BillboardRendererType.Hud:
+                    return Create<HudBillboardRenderer>(param);
                 default:
                     break;
             }
 
             return new NullBillboardRendererXna();
+        }
+
+        IBillboardRendererXna Create<RendererType>(IBillboardRenderParameter param)
+            where RendererType : IBillboardRendererXna, new()
+        {
+            if (!RendererDic.ContainsKey(param.Type))
+            {
+                RendererDic[param.Type] = new RendererType();
+            }
+            var result = RendererDic[param.Type];
+            result.SetParameter(param);
+            return result;
         }
     }
 }

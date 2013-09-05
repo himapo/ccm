@@ -10,17 +10,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace HimaLib.Render
 {
-    public class UIBillboardRenderer
+    public class HudBillboardRenderer : IBillboardRendererXna
     {
         public string TextureName { get; set; }
 
         public float Alpha { get; set; }
-
-        public float Scale { get; set; }
-
-        public HimaLib.Math.Vector3 Rotation { get; set; }
-
-        public HimaLib.Math.Vector3 Position { get; set; }
 
         public HimaLib.Math.Vector2 RectOffset { get; set; }
 
@@ -30,7 +24,7 @@ namespace HimaLib.Render
 
         TextureLoader TextureLoader { get; set; }
 
-        public UIBillboardRenderer()
+        public HudBillboardRenderer()
         {
             Shader = new ConstantShader();
             TextureLoader = new TextureLoader();
@@ -39,29 +33,33 @@ namespace HimaLib.Render
             RectSize = HimaLib.Math.Vector2.Zero;
         }
 
-        public void Render()
+        public void SetParameter(IBillboardRenderParameter p)
         {
-            Shader.Texture = GetTexture();
-            Shader.RectOffset = HimaLib.Math.MathUtilXna.ToXnaVector(RectOffset);
-            Shader.RectSize = HimaLib.Math.MathUtilXna.ToXnaVector(RectSize);
-            Shader.World = GetWorldMatrix();
+            var param = p as HudBillboardRenderParameter;
+            if (param == null)
+            {
+                return;
+            }
+
+            Shader.Texture = TextureLoader.Load(param.TextureName);
+            Shader.RectOffset = HimaLib.Math.MathUtilXna.ToXnaVector(param.RectOffset);
+            Shader.RectSize = HimaLib.Math.MathUtilXna.ToXnaVector(param.RectSize);
+            Shader.World = GetWorldMatrix(param.Transform);
             Shader.View = GetViewMatrix();
             Shader.Projection = GetProjMatrix();
-            Shader.Alpha = Alpha;
+            Shader.Alpha = param.Alpha;
+        }
 
+        public void Render()
+        {
             Shader.RenderBillboard();
         }
 
-        Texture2D GetTexture()
+        Matrix GetWorldMatrix(HimaLib.Math.AffineTransform transform)
         {
-            return TextureLoader.Load(TextureName);
-        }
-
-        Matrix GetWorldMatrix()
-        {
-            var result = Matrix.CreateScale(Scale);
-            result *= Matrix.CreateRotationZ(Rotation.Z);
-            result *= Matrix.CreateTranslation(Position.X, Position.Y, Position.Z);
+            var result = Matrix.CreateScale(transform.Scale.X, transform.Scale.Y, transform.Scale.Z);
+            result *= Matrix.CreateRotationZ(transform.Rotation.Z);
+            result *= Matrix.CreateTranslation(transform.Translation.X, transform.Translation.Y, transform.Translation.Z);
             return result;
         }
 

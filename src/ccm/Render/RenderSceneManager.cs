@@ -61,6 +61,11 @@ namespace ccm.Render
             RenderScene.RenderModel(model, renderParam);
         }
 
+        public void RenderBillboard(IBillboard billboard, IBillboardRenderParameter renderParam)
+        {
+            RenderScene.RenderBillboard(billboard, renderParam);
+        }
+
         public void Render()
         {
             RenderScene.Render();

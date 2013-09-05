@@ -18,6 +18,8 @@ namespace HimaLib.Render
 
         List<ModelInfo> ModelInfoList { get; set; }
 
+        List<BillboardInfo> BillboardInfoList { get; set; }
+
         void Render();
     }
 }

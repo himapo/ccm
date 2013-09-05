@@ -5,8 +5,10 @@ using System.Text;
 using HimaLib.System;
 using HimaLib.Render;
 using HimaLib.Math;
+using HimaLib.Model;
 using ccm.Input;
 using ccm.Util;
+using ccm.Render;
 
 namespace ccm.Item
 {
@@ -42,7 +44,9 @@ namespace ccm.Item
 
         //float Rot;
 
-        UIBillboardRenderer Renderer = new UIBillboardRenderer();
+        IBillboard Billboard = BillboardFactory.Instance.Create();
+
+        HudBillboardRenderParameter BillboardRenderParam = new HudBillboardRenderParameter();
 
         public ItemWindow()
         {
@@ -233,15 +237,14 @@ namespace ccm.Item
 
         void DrawWindow()
         {
-            Renderer.TextureName = "Texture/ItemWindow000";
-            Renderer.Scale = 1.0f;
-            Renderer.Rotation = Vector3.Zero;
-            Renderer.Position = Position;
-            Renderer.Alpha = 1.0f;
-            Renderer.RectOffset = Vector2.Zero;
-            Renderer.RectSize = Vector2.Zero;
+            BillboardRenderParam.TextureName = "Texture/ItemWindow000";
+            BillboardRenderParam.Transform = new AffineTransform(
+                Vector3.One,
+                Vector3.Zero,
+                Position);
+            BillboardRenderParam.Alpha = 1.0f;
 
-            Renderer.Render();
+            RenderSceneManager.Instance.RenderBillboard(Billboard, BillboardRenderParam);
         }
 
         void DrawIcons()
@@ -250,7 +253,9 @@ namespace ccm.Item
             {
                 var iconInfo = IconInfoList[i];
 
-                Renderer.TextureName = "Texture/ItemIcon000";
+                var renderParam = new HudBillboardRenderParameter();
+
+                renderParam.TextureName = "Texture/ItemIcon000";
                 var pos = new Vector3();
 
                 if (iconInfo.State == ItemIconState.Default)
@@ -272,15 +277,18 @@ namespace ccm.Item
                     pos.Z = -0.1f;
                 }
 
-                Renderer.Position = pos;
+                renderParam.Transform = new AffineTransform(
+                    Vector3.One,
+                    Vector3.Zero,
+                    pos);
 
-                Renderer.RectOffset = new Vector2(
+                renderParam.RectOffset = new Vector2(
                     1.0f + 51.0f * (iconInfo.Type % 5),
                     1.0f + 51.0f * (iconInfo.Type / 5));
-                Renderer.RectSize = new Vector2(50.0f, 50.0f);
-                Renderer.Alpha = 0.5f;
+                renderParam.RectSize = new Vector2(50.0f, 50.0f);
+                renderParam.Alpha = 0.5f;
 
-                Renderer.Render();
+                RenderSceneManager.Instance.RenderBillboard(Billboard, renderParam);
             }
         }
 

@@ -7,6 +7,8 @@ namespace HimaLib.Render
 {
     public interface IBillboardRendererXna
     {
+        void SetParameter(IBillboardRenderParameter param);
+
         void Render();
     }
 }

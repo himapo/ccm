@@ -166,7 +166,7 @@
     <Compile Include="Render\SimpleInstancingRendererXna.cs" />
     <Compile Include="Render\SimpleModelRendererXna.cs" />
     <Compile Include="Render\ToonModelRendererMMDX.cs" />
-    <Compile Include="Render\UIBillboardRenderer.cs" />
+    <Compile Include="Render\HudBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
     <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\LambertShader.cs" />

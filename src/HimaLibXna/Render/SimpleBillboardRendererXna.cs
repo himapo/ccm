@@ -19,8 +19,14 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(SimpleBillboardRenderParameter param)
+        public void SetParameter(IBillboardRenderParameter p)
         {
+            var param = p as SimpleBillboardRenderParameter;
+            if (param == null)
+            {
+                return;
+            }
+
             ConstantShader.World = MathUtilXna.ToXnaMatrix(CalcWorldMatrix(param.Transform, param.Camera));
             
             ConstantShader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
