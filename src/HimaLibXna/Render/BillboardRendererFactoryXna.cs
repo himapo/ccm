@@ -27,6 +27,8 @@ namespace HimaLib.Render
                     return Create<SimpleBillboardRendererXna>(param);
                 case BillboardRendererType.Hud:
                     return Create<HudBillboardRenderer>(param);
+                case BillboardRendererType.Depth:
+                    return Create<DepthRendererXna>(param);
                 default:
                     break;
             }

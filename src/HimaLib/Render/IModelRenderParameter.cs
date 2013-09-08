@@ -13,6 +13,7 @@ namespace HimaLib.Render
         Simple,
         SimpleInstancing,
         Toon,
+        Depth,
     }
 
     public interface IModelRenderParameter

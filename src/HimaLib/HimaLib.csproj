@@ -147,6 +147,8 @@
     <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Render\DefaultModelRenderParameter.cs" />
+    <Compile Include="Render\DepthBillboardRenderParameter.cs" />
+    <Compile Include="Render\DepthModelRenderParameter.cs" />
     <Compile Include="Render\HudBillboardRenderParameter.cs" />
     <Compile Include="Render\HudRenderPath.cs" />
     <Compile Include="Render\IBillboardRenderParameter.cs" />

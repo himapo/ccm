@@ -11,6 +11,7 @@ namespace HimaLib.Render
     {
         Simple,     // 常にカメラの視線と逆を向く
         Hud,         // スクリーン座標系で位置を指定
+        Depth,
     }
 
     public interface IBillboardRenderParameter
