@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.System;
+using HimaLib.Texture;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace HimaLib.Render
@@ -10,6 +11,8 @@ namespace HimaLib.Render
     public class RenderDeviceXna : IRenderDevice
     {
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
+
+        int PrevRenderTargetIndex;
 
         public void ClearDepth()
         {
@@ -34,12 +37,17 @@ namespace HimaLib.Render
 
         public void SetRenderTarget(int index)
         {
-            GraphicsDevice.SetRenderTarget(GetRenderTarget(index));
+            if (index == PrevRenderTargetIndex)
+            {
+                return;
+            }
+            PrevRenderTargetIndex = index;
+            GraphicsDevice.SetRenderTarget(index == 0 ? null : GetRenderTarget(index));
         }
 
         RenderTarget2D GetRenderTarget(int index)
         {
-            return null;
+            return RenderTargetManager.Instance.GetRenderTarget(index);
         }
     }
 }

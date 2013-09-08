@@ -72,6 +72,8 @@ namespace HimaLib.Render
 
         public void Render()
         {
+            RenderDevice.SetRenderTarget(RenderTargetIndex);
+
             if (DepthSortEnabled)
             {
             }

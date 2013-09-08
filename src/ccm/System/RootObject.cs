@@ -8,9 +8,11 @@ using HimaLib.System;
 using HimaLib.Input;
 using HimaLib.Updater;
 using HimaLib.Render;
+using HimaLib.Texture;
 using ccm.Render;
 using ccm.Input;
 using ccm.Sound;
+using ccm.Game;
 
 namespace ccm.System
 {
@@ -97,6 +99,11 @@ namespace ccm.System
 
         void InitRender()
         {
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.ShadowMap0,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight);
+
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.OPAQUE,
                 new OpaqueRenderPath()

@@ -14,24 +14,13 @@ namespace HimaLib.Texture
         {
             get
             {
-                if (RenderTarget == null)
-                {
-                    CreateRenderTarget();
-                }
-                return RenderTarget;
+                return RenderTargetManager.Instance.GetRenderTarget(Index);
             }
         }
-
-        RenderTarget2D RenderTarget;
 
         public RenderTargetTexture(int index)
         {
             Index = index;
-        }
-
-        public void CreateRenderTarget()
-        {
-            RenderTarget = RenderTargetManager.Instance.GetRenderTarget(Index, 1024, 1024);
         }
     }
 }

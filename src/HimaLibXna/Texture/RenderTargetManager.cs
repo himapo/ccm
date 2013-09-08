@@ -27,17 +27,19 @@ namespace HimaLib.Texture
         {
         }
 
-        public RenderTarget2D GetRenderTarget(int index, int width, int height)
+        public void AddRenderTarget(int index, int width, int height)
         {
-            RenderTarget2D result;
+            RenderTargetDic[index] = new RenderTarget2D(GraphicsDevice, width, height);
+        }
 
-            if (!RenderTargetDic.TryGetValue(index, out result))
-            {
-                result = new RenderTarget2D(GraphicsDevice, width, height);
-                RenderTargetDic[index] = result;
-            }
+        public void RemoveRenderTarget(int index)
+        {
+            RenderTargetDic.Remove(index);
+        }
 
-            return result;
+        public RenderTarget2D GetRenderTarget(int index)
+        {
+            return RenderTargetDic[index];
         }
 
         public void Cleanup()

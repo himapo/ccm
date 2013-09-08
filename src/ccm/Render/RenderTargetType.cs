@@ -7,7 +7,7 @@ namespace ccm.Render
 {
     public enum RenderTargetType
     {
-        BackBuffer,
+        BackBuffer = 0,
         ShadowMap0,
         PostProcess0,
         PostProcess1,
