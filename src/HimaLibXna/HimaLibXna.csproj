@@ -173,6 +173,11 @@
     <Compile Include="System\Game.cs" />
     <Compile Include="System\TimeKeeper.cs" />
     <Compile Include="System\XnaGame.cs" />
+    <Compile Include="Texture\ImageTexture.cs" />
+    <Compile Include="Texture\ITextureXna.cs" />
+    <Compile Include="Texture\RenderTargetManager.cs" />
+    <Compile Include="Texture\RenderTargetTexture.cs" />
+    <Compile Include="Texture\TextureFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\lib\MMDX_src\MikuMikuDanceCore\MikuMikuDanceCore.csproj">

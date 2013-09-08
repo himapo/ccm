@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Math;
 using HimaLib.Camera;
 using HimaLib.Light;
+using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
@@ -26,7 +27,7 @@ namespace HimaLib.Render
 
         public float Alpha { get; set; }
 
-        public string TextureName { get; set; }
+        public ITexture Texture { get; set; }
 
         public Vector2 RectOffset { get; set; }
 

@@ -6,14 +6,13 @@ using HimaLib.Shader;
 using HimaLib.Camera;
 using HimaLib.Math;
 using HimaLib.Content;
+using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
     public class SimpleBillboardRendererXna : IBillboardRendererXna
     {
         ConstantShader ConstantShader = new ConstantShader();
-
-        TextureLoader TextureLoader = new TextureLoader();
 
         public SimpleBillboardRendererXna()
         {
@@ -32,7 +31,7 @@ namespace HimaLib.Render
             ConstantShader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             ConstantShader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             ConstantShader.Alpha = param.Alpha;
-            ConstantShader.Texture = TextureLoader.Load(param.TextureName);
+            ConstantShader.Texture = (param.Texture as ITextureXna).Texture;
         }
 
         Matrix CalcWorldMatrix(AffineTransform transform, CameraBase camera)

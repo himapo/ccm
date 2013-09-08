@@ -7,6 +7,7 @@ using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Debug;
 using HimaLib.Model;
+using HimaLib.Texture;
 using ccm.Debug;
 using ccm.Input;
 using ccm.Render;
@@ -51,7 +52,7 @@ namespace ccm.Scene
 
         void InitHud()
         {
-            renderParam.TextureName = "Texture/miki";
+            renderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/miki");
             renderParam.Alpha = 1.0f;
             renderParam.Transform = new AffineTransform(
                 Vector3.One,

@@ -6,6 +6,7 @@ using HimaLib.Shader;
 using HimaLib.System;
 using HimaLib.Content;
 using HimaLib.Math;
+using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
@@ -13,12 +14,9 @@ namespace HimaLib.Render
     {
         ConstantShader Shader { get; set; }
 
-        TextureLoader TextureLoader { get; set; }
-
         public HudBillboardRenderer()
         {
             Shader = new ConstantShader();
-            TextureLoader = new TextureLoader();
         }
 
         public void SetParameter(IBillboardRenderParameter p)
@@ -29,7 +27,7 @@ namespace HimaLib.Render
                 return;
             }
 
-            Shader.Texture = TextureLoader.Load(param.TextureName);
+            Shader.Texture = (param.Texture as ITextureXna).Texture;
             Shader.RectOffset = MathUtilXna.ToXnaVector(param.RectOffset);
             Shader.RectSize = MathUtilXna.ToXnaVector(param.RectSize);
             Shader.World = MathUtilXna.ToXnaMatrix(GetWorldMatrix(param.Transform));

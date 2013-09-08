@@ -12,6 +12,8 @@ namespace HimaLib.Render
     {
         string Name { get; set; }
 
+        int RenderTargetIndex { get; set; }
+
         CameraBase Camera { get; set; }
 
         List<DirectionalLight> DirectionalLights { get; set; }        

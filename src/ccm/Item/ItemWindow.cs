@@ -6,6 +6,7 @@ using HimaLib.System;
 using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Model;
+using HimaLib.Texture;
 using ccm.Input;
 using ccm.Util;
 using ccm.Render;
@@ -237,7 +238,7 @@ namespace ccm.Item
 
         void DrawWindow()
         {
-            BillboardRenderParam.TextureName = "Texture/ItemWindow000";
+            BillboardRenderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/ItemWindow000");
             BillboardRenderParam.Transform = new AffineTransform(
                 Vector3.One,
                 Vector3.Zero,
@@ -255,7 +256,8 @@ namespace ccm.Item
 
                 var renderParam = new HudBillboardRenderParameter();
 
-                renderParam.TextureName = "Texture/ItemIcon000";
+                renderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/ItemIcon000");
+
                 var pos = new Vector3();
 
                 if (iconInfo.State == ItemIconState.Default)

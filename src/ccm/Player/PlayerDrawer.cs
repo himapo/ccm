@@ -8,6 +8,7 @@ using HimaLib.Camera;
 using HimaLib.Model;
 using HimaLib.Updater;
 using HimaLib.Debug;
+using HimaLib.Texture;
 using ccm.Game;
 using ccm.Render;
 
@@ -81,7 +82,7 @@ namespace ccm.Player
                 transform.Translation.X + 4.0f,
                 transform.Translation.Y + 8.5f,
                 transform.Translation.Z + 1.0f);
-            BillboardRenderParam.TextureName = "Texture/miki";
+            BillboardRenderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/miki");
 
             Billboard.Render(BillboardRenderParam);
         }

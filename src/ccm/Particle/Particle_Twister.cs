@@ -6,6 +6,7 @@ using HimaLib.Render;
 using HimaLib.Math;
 using HimaLib.Updater;
 using HimaLib.Camera;
+using HimaLib.Texture;
 
 namespace ccm.Particle
 {
@@ -42,7 +43,7 @@ namespace ccm.Particle
             SimpleBillboardRenderParameter.Transform = Transform;
             SimpleBillboardRenderParameter.Transform.Scale = Vector3.One * 0.04f;
             SimpleBillboardRenderParameter.Transform.Rotation = Vector3.Zero;
-            SimpleBillboardRenderParameter.TextureName = textureName;
+            SimpleBillboardRenderParameter.Texture = TextureFactory.Instance.CreateFromImage(textureName);
 
             if (loop)
             {

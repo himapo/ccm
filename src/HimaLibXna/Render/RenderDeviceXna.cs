@@ -31,5 +31,15 @@ namespace HimaLib.Render
                 GraphicsDevice.DepthStencilState = DepthStencilState.None;
             }
         }
+
+        public void SetRenderTarget(int index)
+        {
+            GraphicsDevice.SetRenderTarget(GetRenderTarget(index));
+        }
+
+        RenderTarget2D GetRenderTarget(int index)
+        {
+            return null;
+        }
     }
 }
