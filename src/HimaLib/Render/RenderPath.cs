@@ -70,7 +70,7 @@ namespace HimaLib.Render
             RenderHudBillboardOnly = false;
         }
 
-        public void Render()
+        public virtual void Render()
         {
             RenderDevice.SetRenderTarget(RenderTargetIndex);
 
