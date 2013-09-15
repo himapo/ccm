@@ -5,9 +5,9 @@ using System.Text;
 
 namespace HimaLib.Render
 {
-    public class DepthRenderPath : RenderPath
+    public class ShadowMapRenderPath : RenderPath
     {
-        public DepthRenderPath()
+        public ShadowMapRenderPath()
         {
             DepthSortEnabled = false;
             DepthTestEnabled = true;
