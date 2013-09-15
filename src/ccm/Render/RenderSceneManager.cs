@@ -56,12 +56,12 @@ namespace ccm.Render
             RenderScene.ClearDirectionalLight();
         }
 
-        public void RenderModel(IModel model, IModelRenderParameter renderParam)
+        public void RenderModel(IModel model, ModelRenderParameter renderParam)
         {
             RenderScene.RenderModel(model, renderParam);
         }
 
-        public void RenderBillboard(IBillboard billboard, IBillboardRenderParameter renderParam)
+        public void RenderBillboard(IBillboard billboard, BillboardRenderParameter renderParam)
         {
             RenderScene.RenderBillboard(billboard, renderParam);
         }

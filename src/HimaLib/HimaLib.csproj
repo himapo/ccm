@@ -152,8 +152,8 @@
     <Compile Include="Render\DepthRenderPath.cs" />
     <Compile Include="Render\HudBillboardRenderParameter.cs" />
     <Compile Include="Render\HudRenderPath.cs" />
-    <Compile Include="Render\IBillboardRenderParameter.cs" />
-    <Compile Include="Render\IModelRenderParameter.cs" />
+    <Compile Include="Render\BillboardRenderParameter.cs" />
+    <Compile Include="Render\ModelRenderParameter.cs" />
     <Compile Include="Render\IRenderDevice.cs" />
     <Compile Include="Render\IRenderPath.cs" />
     <Compile Include="Render\OpaqueRenderPath.cs" />

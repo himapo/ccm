@@ -7,7 +7,7 @@ namespace HimaLib.Render
 {
     public interface IModelRendererXna
     {
-        void SetParameter(IModelRenderParameter param);
+        void SetParameter(ModelRenderParameter param);
 
         void Render(Microsoft.Xna.Framework.Graphics.Model model);
     }

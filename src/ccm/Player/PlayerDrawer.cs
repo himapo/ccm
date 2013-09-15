@@ -69,7 +69,7 @@ namespace ccm.Player
 
             defaultRenderParam.ParametersMatrix["World"] = Matrix.CreateRotationX(MathUtil.ToRadians(-90.0f)) * transform.WorldMatrix;
 
-            IModelRenderParameter renderParam = defaultRenderParam;
+            ModelRenderParameter renderParam = defaultRenderParam;
 
             RenderSceneManager.Instance.RenderModel(model, renderParam);
 

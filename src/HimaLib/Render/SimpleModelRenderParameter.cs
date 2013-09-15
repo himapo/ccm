@@ -8,17 +8,9 @@ using HimaLib.Light;
 
 namespace HimaLib.Render
 {
-    public class SimpleModelRenderParameter : IModelRenderParameter
+    public class SimpleModelRenderParameter : ModelRenderParameter
     {
-        public ModelRendererType Type { get { return ModelRendererType.Simple; } }
-
-        public CameraBase Camera { get; set; }
-
-        public List<DirectionalLight> DirectionalLights { get; set; }
-
-        public bool ShadowEnabled { get; set; }
-
-        public bool IsTranslucent { get; set; }
+        public override ModelRendererType Type { get { return ModelRendererType.Simple; } }
 
         public AffineTransform Transform { get; set; }
 

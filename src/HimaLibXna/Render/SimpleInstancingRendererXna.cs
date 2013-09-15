@@ -20,7 +20,7 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(IModelRenderParameter p)
+        public void SetParameter(ModelRenderParameter p)
         {
             var param = p as SimpleInstancingRenderParameter;
             if (param == null)

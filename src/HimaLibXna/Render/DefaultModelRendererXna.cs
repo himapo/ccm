@@ -24,7 +24,7 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(IModelRenderParameter p)
+        public void SetParameter(ModelRenderParameter p)
         {
             var param = p as DefaultModelRenderParameter;
             if (param == null)

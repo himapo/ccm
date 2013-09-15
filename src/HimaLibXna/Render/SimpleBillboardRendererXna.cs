@@ -18,7 +18,7 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(IBillboardRenderParameter p)
+        public void SetParameter(BillboardRenderParameter p)
         {
             var param = p as SimpleBillboardRenderParameter;
             if (param == null)

@@ -17,7 +17,7 @@ namespace HimaLib.Render
         {
         }
 
-        public IBillboardRendererXna Create(IBillboardRenderParameter param)
+        public IBillboardRendererXna Create(BillboardRenderParameter param)
         {
             // 悔しいがダウンキャストを使う（もっといい手が見つかるまで・・・）
 
@@ -36,7 +36,7 @@ namespace HimaLib.Render
             return new NullBillboardRendererXna();
         }
 
-        IBillboardRendererXna Create<RendererType>(IBillboardRenderParameter param)
+        IBillboardRendererXna Create<RendererType>(BillboardRenderParameter param)
             where RendererType : IBillboardRendererXna, new()
         {
             if (!RendererDic.ContainsKey(param.Type))

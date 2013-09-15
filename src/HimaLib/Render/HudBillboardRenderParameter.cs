@@ -9,19 +9,9 @@ using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
-    public class HudBillboardRenderParameter : IBillboardRenderParameter
+    public class HudBillboardRenderParameter : BillboardRenderParameter
     {
-        public BillboardRendererType Type { get { return BillboardRendererType.Hud; } }
-
-        public CameraBase Camera { get; set; }
-
-        public List<DirectionalLight> DirectionalLights { get; set; }
-
-        public bool ShadowEnabled { get { return false; } set { } }
-
-        public bool IsTranslucent { get; set; }
-
-        public bool IsHud { get { return true; } set { } }
+        public override BillboardRendererType Type { get { return BillboardRendererType.Hud; } }
 
         public AffineTransform Transform { get; set; }
 
@@ -32,5 +22,11 @@ namespace HimaLib.Render
         public Vector2 RectOffset { get; set; }
 
         public Vector2 RectSize { get; set; }
+
+        public HudBillboardRenderParameter()
+        {
+            ShadowEnabled = false;
+            IsHud = true;
+        }
     }
 }

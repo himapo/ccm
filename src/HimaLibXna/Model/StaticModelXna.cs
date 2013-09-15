@@ -31,7 +31,7 @@ namespace HimaLib.Model
         {
         }
 
-        public void Render(IModelRenderParameter param)
+        public void Render(ModelRenderParameter param)
         {
             var renderer = ModelRendererFactoryXna.Instance.Create(param);
             renderer.Render(Model);

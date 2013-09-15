@@ -8,6 +8,6 @@ namespace HimaLib.Model
 {
     public interface IBillboard
     {
-        void Render(IBillboardRenderParameter param);
+        void Render(BillboardRenderParameter param);
     }
 }

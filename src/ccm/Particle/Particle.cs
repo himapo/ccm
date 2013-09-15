@@ -14,7 +14,7 @@ namespace ccm.Particle
     {
         IBillboard Billboard = BillboardFactory.Instance.Create();
 
-        protected abstract IBillboardRenderParameter BillboardRenderParameter { get; }
+        protected abstract BillboardRenderParameter BillboardRenderParameter { get; }
 
         protected virtual HimaLib.Updater.UpdaterManager UpdaterManager
         {

@@ -103,7 +103,7 @@ namespace HimaLib.Model
             return true;
         }
 
-        public void Render(IModelRenderParameter param)
+        public void Render(ModelRenderParameter param)
         {
             if (!Initialized)
             {

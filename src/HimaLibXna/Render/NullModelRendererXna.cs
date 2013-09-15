@@ -8,7 +8,7 @@ namespace HimaLib.Render
 {
     public class NullModelRendererXna : IModelRendererXna
     {
-        public void SetParameter(IModelRenderParameter param)
+        public void SetParameter(ModelRenderParameter param)
         {
         }
 

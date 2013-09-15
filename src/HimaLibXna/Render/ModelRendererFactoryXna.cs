@@ -17,7 +17,7 @@ namespace HimaLib.Render
         {
         }
 
-        public IModelRendererXna Create(IModelRenderParameter param)
+        public IModelRendererXna Create(ModelRenderParameter param)
         {
             switch (param.Type)
             {
@@ -36,7 +36,7 @@ namespace HimaLib.Render
             return new NullModelRendererXna();
         }
 
-        IModelRendererXna Create<RendererType>(IModelRenderParameter param)
+        IModelRendererXna Create<RendererType>(ModelRenderParameter param)
             where RendererType : IModelRendererXna, new()
         {
             if (!RendererDic.ContainsKey(param.Type))

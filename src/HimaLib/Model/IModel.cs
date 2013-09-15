@@ -20,7 +20,7 @@ namespace HimaLib.Model
 
         void Update(float elapsedTimeSeconds);
 
-        void Render(IModelRenderParameter renderer);
+        void Render(ModelRenderParameter renderer);
 
         void AddAttachment(string name);
 

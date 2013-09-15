@@ -8,17 +8,9 @@ using HimaLib.Math;
 
 namespace HimaLib.Render
 {
-    public class ToonModelRenderParameter : IModelRenderParameter
+    public class ToonModelRenderParameter : ModelRenderParameter
     {
-        public ModelRendererType Type { get { return ModelRendererType.Toon; } }
-
-        public CameraBase Camera { get; set; }
-
-        public List<DirectionalLight> DirectionalLights { get; set; }
-
-        public bool ShadowEnabled { get; set; }
-
-        public bool IsTranslucent { get; set; }
+        public override ModelRendererType Type { get { return ModelRendererType.Toon; } }
 
         public AffineTransform Transform { get; set; }
 

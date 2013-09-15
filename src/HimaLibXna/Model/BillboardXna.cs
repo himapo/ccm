@@ -12,7 +12,7 @@ namespace HimaLib.Model
         {
         }
 
-        public void Render(IBillboardRenderParameter param)
+        public void Render(BillboardRenderParameter param)
         {
             var renderer = BillboardRendererFactoryXna.Instance.Create(param);
             renderer.Render();

@@ -29,7 +29,7 @@ namespace HimaLib.Model
         {
         }
 
-        public void Render(IModelRenderParameter renderer)
+        public void Render(ModelRenderParameter renderer)
         {
         }
 

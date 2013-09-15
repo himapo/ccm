@@ -10,13 +10,13 @@ namespace HimaLib.Render
     public class ModelInfo
     {
         public IModel Model { get; set; }
-        public IModelRenderParameter RenderParam { get; set; }
+        public ModelRenderParameter RenderParam { get; set; }
     }
 
     public class BillboardInfo
     {
         public IBillboard Billboard { get; set; }
-        public IBillboardRenderParameter RenderParam { get; set; }
+        public BillboardRenderParameter RenderParam { get; set; }
     }
 
     public class RenderScene
@@ -66,12 +66,12 @@ namespace HimaLib.Render
             DirectionalLights.Clear();
         }
 
-        public void RenderModel(IModel model, IModelRenderParameter renderParam)
+        public void RenderModel(IModel model, ModelRenderParameter renderParam)
         {
             ModelInfoList.Add(new ModelInfo() { Model = model, RenderParam = renderParam });
         }
 
-        public void RenderBillboard(IBillboard billboard, IBillboardRenderParameter renderParam)
+        public void RenderBillboard(IBillboard billboard, BillboardRenderParameter renderParam)
         {
             BillboardInfoList.Add(new BillboardInfo() { Billboard = billboard, RenderParam = renderParam });
         }

@@ -8,22 +8,16 @@ using HimaLib.Math;
 
 namespace HimaLib.Render
 {
-    public class DepthModelRenderParameter : IModelRenderParameter
+    public class DepthModelRenderParameter : ModelRenderParameter
     {
-        public ModelRendererType Type { get { return ModelRendererType.Depth; } }
-
-        public CameraBase Camera { get; set; }
-
-        public List<DirectionalLight> DirectionalLights { get; set; }
-
-        public bool ShadowEnabled { get { return false; } set { } }
-
-        public bool IsTranslucent { get { return false; } set { } }
+        public override ModelRendererType Type { get { return ModelRendererType.Depth; } }
 
         public AffineTransform Transform { get; set; }
 
         public DepthModelRenderParameter()
         {
+            ShadowEnabled = false;
+            IsTranslucent = false;
         }
     }
 }

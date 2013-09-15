@@ -15,7 +15,7 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(IModelRenderParameter p)
+        public void SetParameter(ModelRenderParameter p)
         {
             var param = p as DepthModelRenderParameter;
             if (param == null)
@@ -28,7 +28,7 @@ namespace HimaLib.Render
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
         }
 
-        public void SetParameter(IBillboardRenderParameter p)
+        public void SetParameter(BillboardRenderParameter p)
         {
             var param = p as DepthBillboardRenderParameter;
             if (param == null)

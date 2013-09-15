@@ -26,7 +26,7 @@ namespace ccm.Scene
 
         IModel model;
 
-        IModelRenderParameter renderParam;
+        ModelRenderParameter renderParam;
 
         SimpleModelRenderParameter simpleRenderParam = new SimpleModelRenderParameter();
 

@@ -71,7 +71,7 @@ namespace HimaLib.Model
             }
         }
 
-        public void Render(IModelRenderParameter param)
+        public void Render(ModelRenderParameter param)
         {
             var renderer = ModelRendererFactoryMMDX.Instance.Create(param);
             renderer.Render(Model);

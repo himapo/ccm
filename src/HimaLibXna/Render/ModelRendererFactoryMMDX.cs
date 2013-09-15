@@ -17,7 +17,7 @@ namespace HimaLib.Render
         {
         }
 
-        public IModelRendererMMDX Create(IModelRenderParameter param)
+        public IModelRendererMMDX Create(ModelRenderParameter param)
         {
             // 悔しいがダウンキャストを使う（もっといい手が見つかるまで・・・）
 

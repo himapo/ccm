@@ -19,7 +19,7 @@ namespace HimaLib.Render
             Shader = new ConstantShader();
         }
 
-        public void SetParameter(IBillboardRenderParameter p)
+        public void SetParameter(BillboardRenderParameter p)
         {
             var param = p as HudBillboardRenderParameter;
             if (param == null)

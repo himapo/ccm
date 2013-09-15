@@ -20,7 +20,7 @@ namespace ccm.Particle
 
         bool Alive = true;
 
-        protected override IBillboardRenderParameter BillboardRenderParameter
+        protected override BillboardRenderParameter BillboardRenderParameter
         {
             get { return SimpleBillboardRenderParameter; }
         }
