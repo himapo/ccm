@@ -159,6 +159,7 @@
     <Compile Include="Render\OpaqueRenderPath.cs" />
     <Compile Include="Render\RenderPath.cs" />
     <Compile Include="Render\RenderScene.cs" />
+    <Compile Include="Render\ShadowModelRenderParameter.cs" />
     <Compile Include="Render\SimpleBillboardRenderParameter.cs" />
     <Compile Include="Render\SimpleInstancingRenderParameter.cs" />
     <Compile Include="Render\SimpleModelRenderParameter.cs" />

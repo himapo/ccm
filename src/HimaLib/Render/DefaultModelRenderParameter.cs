@@ -32,7 +32,7 @@ namespace HimaLib.Render
 
         public DefaultModelRenderParameter()
         {
-            ShadowEnabled = true;
+            IsShadowCaster = true;
             IsTranslucent = false;
             ParametersBoolean = new Dictionary<string, bool>();
             ParametersInt32 = new Dictionary<string, int>();

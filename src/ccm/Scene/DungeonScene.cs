@@ -83,6 +83,10 @@ namespace ccm.Scene
 
         HudBillboardRenderParameter ShadowMapHudRenderParam = new HudBillboardRenderParameter();
 
+        IModel StageModel;
+
+        SimpleModelRenderParameter StageRenderParam = new SimpleModelRenderParameter();
+
         HimaLib.Math.IRand Rand
         {
             get { return GameRand.Instance; }
@@ -186,6 +190,7 @@ namespace ccm.Scene
             InitDebugMenu();
             InitRender();
             InitShadowMapHud();
+            InitStage();
 
             //SoundManager.PlaySoundStream("-Blue Time-");
 
@@ -241,7 +246,7 @@ namespace ccm.Scene
             RenderSceneManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
-            DirectionalLight0.Color = Color.Magenta;
+            DirectionalLight0.Color = new Color(0.6f, 0.6f, 0.6f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
         }
 
@@ -269,6 +274,22 @@ namespace ccm.Scene
                 Vector3.Zero,
                 new Vector3(640.0f - 256.0f - 10.0f, 360.0f - 144.0f - 10.0f, 0.0f));
             ShadowMapHudRenderParam.IsTranslucent = false;
+        }
+
+        void InitStage()
+        {
+            StageModel = ModelFactory.Instance.Create("cube000");
+
+            StageRenderParam.Alpha = 1.0f;
+            StageRenderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
+            StageRenderParam.IsShadowCaster = false;
+            StageRenderParam.IsShadowReceiver = true;
+            StageRenderParam.Transform = new AffineTransform(
+                Vector3.One * 30.0f,
+                Vector3.Zero,
+                Vector3.UnitY * (-45.0f));
+            StageRenderParam.Camera = Camera;
+            StageRenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
         }
 
         void DrawStateInit()
@@ -366,6 +387,8 @@ namespace ccm.Scene
             DrawMap();
 
             DrawCollision();
+
+            RenderSceneManager.Instance.RenderModel(StageModel, StageRenderParam);
 
             RenderSceneManager.Instance.RenderBillboard(Billboard, ShadowMapHudRenderParam);
 

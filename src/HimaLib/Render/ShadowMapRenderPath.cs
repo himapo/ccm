@@ -44,27 +44,37 @@ namespace HimaLib.Render
 
             var casters = ModelInfoList.Where(info =>
             {
-                if (!info.RenderParam.ShadowEnabled)
+                // 影描画が有効なものを抽出
+                if (!(info.RenderParam is ShadowModelRenderParameter))
                 {
                     return false;
                 }
 
-                if (info.RenderParam.IsTranslucent)
+                var shadowParam = info.RenderParam as ShadowModelRenderParameter;
+                
+                if (info.RenderParam.IsShadowReceiver)
                 {
-                    return false;
+                    // 光源カメラをレンダーパラメータに渡す
+                    shadowParam.LightCamera = Camera;
                 }
 
-                if (info.RenderParam.ShadowMapRenderParameter == null)
+                if (!info.RenderParam.IsShadowCaster)
                 {
                     return false;
                 }
 
                 return true;
             }).Select(
-            info => new ModelInfo()
+            info =>
             {
-                Model = info.Model,
-                RenderParam = info.RenderParam.ShadowMapRenderParameter,
+                var shadowParam = info.RenderParam as ShadowModelRenderParameter;
+
+                // 深度レンダリング用のModelInfoを新たに生成する
+                return new ModelInfo()
+                {
+                    Model = info.Model,
+                    RenderParam = shadowParam.DepthModelRenderParameter,
+                };
             });
 
             ModelInfoList = casters;
@@ -79,8 +89,8 @@ namespace HimaLib.Render
                 Eye = Vector3.One * 50.0f,
                 At = Vector3.Zero,
                 Up = Vector3.Up,
-                Near = 10.0f,
-                Far = 1000.0f,
+                Near = 30.0f,
+                Far = 200.0f,
             };
         }
     }

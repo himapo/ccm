@@ -24,18 +24,16 @@ namespace HimaLib.Render
 
         public List<DirectionalLight> DirectionalLights { get; set; }
 
-        public bool ShadowEnabled { get; set; }
+        public bool IsShadowCaster { get; set; }
+
+        public bool IsShadowReceiver { get; set; }
 
         public bool IsTranslucent { get; set; }
 
-        public virtual ModelRenderParameter ShadowMapRenderParameter
-        {
-            get { return null; }
-        }
-
         public ModelRenderParameter()
         {
-            ShadowEnabled = true;
+            IsShadowCaster = true;
+            IsShadowReceiver = true;
             IsTranslucent = false;
         }
     }

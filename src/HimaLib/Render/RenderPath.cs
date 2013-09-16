@@ -101,7 +101,7 @@ namespace HimaLib.Render
             {
                 foreach (var info in ModelInfoList)
                 {
-                    if (RenderShadowModelOnly && !info.RenderParam.ShadowEnabled)
+                    if (RenderShadowModelOnly && !info.RenderParam.IsShadowCaster)
                     {
                         continue;
                     }

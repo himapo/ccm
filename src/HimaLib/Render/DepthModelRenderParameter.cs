@@ -16,7 +16,7 @@ namespace HimaLib.Render
 
         public DepthModelRenderParameter()
         {
-            ShadowEnabled = false;
+            IsShadowCaster = false;
             IsTranslucent = false;
         }
     }

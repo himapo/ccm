@@ -28,6 +28,12 @@ namespace HimaLib.Shader
 
         public Vector3 DirLight0DiffuseColor { get; set; }
 
+        public bool ShadowEnabled { get; set; }
+
+        public Texture2D ShadowMap { get; set; }
+
+        public Matrix LightViewProjection { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
@@ -47,7 +53,14 @@ namespace HimaLib.Shader
 
         public void RenderModel()
         {
-            SetUpEffect("PixelLighting");
+            if (ShadowEnabled)
+            {
+                SetUpEffect("PixelLightingShadow");
+            }
+            else
+            {
+                SetUpEffect("PixelLighting");
+            }
 
             foreach (var mesh in Model.Meshes)
             {
@@ -78,7 +91,10 @@ namespace HimaLib.Shader
             effect.Parameters["World"].SetValue(World);
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
+            effect.Parameters["LightViewProjection"].SetValue(LightViewProjection);
+
             effect.Parameters["DiffuseMap"].SetValue(Texture);
+            effect.Parameters["ShadowMap"].SetValue(ShadowMap);
 
             effect.Parameters["AmbientLightColor"].SetValue(AmbientLightColor);
             effect.Parameters["DirLight0Direction"].SetValue(DirLight0Direction);

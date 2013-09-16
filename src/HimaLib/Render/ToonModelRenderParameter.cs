@@ -16,7 +16,7 @@ namespace HimaLib.Render
 
         public ToonModelRenderParameter()
         {
-            ShadowEnabled = true;
+            IsShadowCaster = true;
             IsTranslucent = false;
             Transform = new AffineTransform();
         }

@@ -6,6 +6,7 @@ using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.Render;
 using HimaLib.Camera;
+using HimaLib.Texture;
 using ccm.Render;
 
 namespace ccm.Ally
@@ -25,6 +26,7 @@ namespace ccm.Ally
         {
             RenderParam.Alpha = 1.0f;
             RenderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
+            RenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
         }
 
         public void Draw(IModel model, AffineTransform transform)
