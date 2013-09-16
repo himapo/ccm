@@ -28,6 +28,11 @@ namespace HimaLib.Render
 
         public bool IsTranslucent { get; set; }
 
+        public virtual ModelRenderParameter ShadowMapRenderParameter
+        {
+            get { return null; }
+        }
+
         public ModelRenderParameter()
         {
             ShadowEnabled = true;

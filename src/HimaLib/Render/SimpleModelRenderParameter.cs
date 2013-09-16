@@ -12,11 +12,30 @@ namespace HimaLib.Render
     {
         public override ModelRendererType Type { get { return ModelRendererType.Simple; } }
 
-        public AffineTransform Transform { get; set; }
+        AffineTransform transform;
+        public AffineTransform Transform
+        {
+            get { return transform; }
+            set
+            {
+                transform = value;
+                DepthModelRenderParameter.Transform = value;
+            }
+        }
 
         public float Alpha { get; set; }
 
         public Vector3 AmbientLightColor { get; set; }
+
+        public override ModelRenderParameter ShadowMapRenderParameter
+        {
+            get
+            {
+                return DepthModelRenderParameter;
+            }
+        }
+
+        DepthModelRenderParameter DepthModelRenderParameter = new DepthModelRenderParameter();
 
         public SimpleModelRenderParameter()
         {

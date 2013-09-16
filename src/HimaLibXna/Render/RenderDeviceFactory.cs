@@ -16,13 +16,15 @@ namespace HimaLib.Render
             }
         }
 
+        RenderDeviceXna RenderDevice = new RenderDeviceXna();
+
         RenderDeviceFactory()
         {
         }
 
         public IRenderDevice Create()
         {
-            return new RenderDeviceXna();
+            return RenderDevice;
         }
     }
 }

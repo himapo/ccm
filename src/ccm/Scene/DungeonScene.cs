@@ -7,6 +7,9 @@ using HimaLib.Math;
 using HimaLib.Collision;
 using HimaLib.Camera;
 using HimaLib.Light;
+using HimaLib.Render;
+using HimaLib.Model;
+using HimaLib.Texture;
 using ccm.Input;
 using ccm.Player;
 using ccm.Camera;
@@ -75,6 +78,10 @@ namespace ccm.Scene
         //int Floor = 1;
 
         int Frame = 0;
+
+        IBillboard Billboard = BillboardFactory.Instance.Create();
+
+        HudBillboardRenderParameter ShadowMapHudRenderParam = new HudBillboardRenderParameter();
 
         HimaLib.Math.IRand Rand
         {
@@ -178,6 +185,7 @@ namespace ccm.Scene
             InitLight();
             InitDebugMenu();
             InitRender();
+            InitShadowMapHud();
 
             //SoundManager.PlaySoundStream("-Blue Time-");
 
@@ -250,6 +258,17 @@ namespace ccm.Scene
 
         void InitRender()
         {
+        }
+
+        void InitShadowMapHud()
+        {
+            ShadowMapHudRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
+            ShadowMapHudRenderParam.Alpha = 1.0f;
+            ShadowMapHudRenderParam.Transform = new AffineTransform(
+                Vector3.One * 0.4f,
+                Vector3.Zero,
+                new Vector3(640.0f - 256.0f - 10.0f, 360.0f - 144.0f - 10.0f, 0.0f));
+            ShadowMapHudRenderParam.IsTranslucent = false;
         }
 
         void DrawStateInit()
@@ -347,6 +366,8 @@ namespace ccm.Scene
             DrawMap();
 
             DrawCollision();
+
+            RenderSceneManager.Instance.RenderBillboard(Billboard, ShadowMapHudRenderParam);
 
             debugMenu.Draw(debugMenuDrawer);
         }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -10,6 +11,8 @@ namespace HimaLib.Render
     /// </summary>
     public interface IRenderDevice
     {
+        void Clear(Color color);
+
         void ClearDepth();
 
         void SetDepthState(bool depthTestEnabled, bool depthWriteEnabled);

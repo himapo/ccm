@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HimaLib.Camera;
 using HimaLib.Light;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -17,11 +18,15 @@ namespace HimaLib.Render
 
         public List<DirectionalLight> DirectionalLights { get; set; }
 
-        public List<ModelInfo> ModelInfoList { get; set; }
+        public IEnumerable<ModelInfo> ModelInfoList { get; set; }
 
         public List<BillboardInfo> BillboardInfoList { get; set; }
 
         public IRenderDevice RenderDevice { get; set; }
+
+        public bool ClearEnabled { get; set; }
+
+        public Color ClearColor { get; set; }
 
         public bool DepthSortEnabled { get; set; }
 
@@ -53,6 +58,9 @@ namespace HimaLib.Render
 
         public RenderPath()
         {
+            ClearEnabled = false;
+            ClearColor = Color.Gray;
+
             DepthSortEnabled = false;
             DepthTestEnabled = true;
             DepthWriteEnabled = true;
@@ -80,7 +88,11 @@ namespace HimaLib.Render
 
             RenderDevice.SetDepthState(DepthTestEnabled, DepthWriteEnabled);
 
-            if (DepthClearEnabled)
+            if (ClearEnabled)
+            {
+                RenderDevice.Clear(ClearColor);
+            }
+            else if (DepthClearEnabled)
             {
                 RenderDevice.ClearDepth();
             }

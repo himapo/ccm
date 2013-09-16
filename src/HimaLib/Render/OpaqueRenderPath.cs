@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -9,6 +10,9 @@ namespace HimaLib.Render
     {
         public OpaqueRenderPath()
         {
+            ClearEnabled = true;
+            ClearColor = Color.Gray;
+
             DepthSortEnabled = false;
             DepthTestEnabled = true;
             DepthWriteEnabled = true;

@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.System;
 using HimaLib.Texture;
 using Microsoft.Xna.Framework.Graphics;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -13,6 +14,11 @@ namespace HimaLib.Render
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         int PrevRenderTargetIndex;
+
+        public void Clear(Color color)
+        {
+            GraphicsDevice.Clear(MathUtilXna.ToXnaColor(color));
+        }
 
         public void ClearDepth()
         {

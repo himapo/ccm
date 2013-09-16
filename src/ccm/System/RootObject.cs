@@ -105,6 +105,15 @@ namespace ccm.System
                 GameProperty.resolutionHeight);
 
             RenderSceneManager.Instance.AddPath(
+                RenderPathType.SHADOW,
+                new ShadowMapRenderPath()
+                {
+                    Name = "ShadowMap",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.ShadowMap0,
+                });
+
+            RenderSceneManager.Instance.AddPath(
                 RenderPathType.OPAQUE,
                 new OpaqueRenderPath()
                 {

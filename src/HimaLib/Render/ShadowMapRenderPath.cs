@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.Camera;
+using HimaLib.Light;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -9,17 +12,20 @@ namespace HimaLib.Render
     {
         public ShadowMapRenderPath()
         {
+            ClearEnabled = true;
+            ClearColor = Color.White;
+
             DepthSortEnabled = false;
             DepthTestEnabled = true;
             DepthWriteEnabled = true;
-            DepthClearEnabled = true;
+            DepthClearEnabled = false;
 
             RenderModelEnabled = true;
-            RenderShadowModelOnly = true;
+            RenderShadowModelOnly = false;
             RenderOpaqueModelOnly = true;
             RenderTranslucentModelOnly = false;
             RenderBillboardEnabled = true;
-            RenderShadowBillboardOnly = true;
+            RenderShadowBillboardOnly = false;
             RenderOpaqueBillboardOnly = true;
             RenderTranslucentBillboardOnly = false;
             RenderNoHudBillboardOnly = true;
@@ -28,22 +34,54 @@ namespace HimaLib.Render
 
         public override void Render()
         {
-            foreach (var info in ModelInfoList)
+            if (DirectionalLights.Count == 0)
+            {
+                return;
+            }
+
+            // TODO : ライトをカメラに変換
+            Camera = LightToCamera(DirectionalLights[0]);
+
+            var casters = ModelInfoList.Where(info =>
             {
                 if (!info.RenderParam.ShadowEnabled)
                 {
-                    continue;
+                    return false;
                 }
 
                 if (info.RenderParam.IsTranslucent)
                 {
-                    continue;
+                    return false;
                 }
 
-                // TODO : 深度レンダラに差し替え
-            }
+                if (info.RenderParam.ShadowMapRenderParameter == null)
+                {
+                    return false;
+                }
+
+                return true;
+            }).Select(
+            info => new ModelInfo()
+            {
+                Model = info.Model,
+                RenderParam = info.RenderParam.ShadowMapRenderParameter,
+            });
+
+            ModelInfoList = casters;
 
             base.Render();
+        }
+
+        CameraBase LightToCamera(DirectionalLight light)
+        {
+            return new CameraBase()
+            {
+                Eye = Vector3.One * 50.0f,
+                At = Vector3.Zero,
+                Up = Vector3.Up,
+                Near = 10.0f,
+                Far = 1000.0f,
+            };
         }
     }
 }

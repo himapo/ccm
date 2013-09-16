@@ -29,7 +29,13 @@ namespace HimaLib.Texture
 
         public void AddRenderTarget(int index, int width, int height)
         {
-            RenderTargetDic[index] = new RenderTarget2D(GraphicsDevice, width, height);
+            RenderTargetDic[index] = new RenderTarget2D(
+                GraphicsDevice,
+                width,
+                height,
+                false,
+                SurfaceFormat.Color,
+                DepthFormat.Depth24Stencil8);
         }
 
         public void RemoveRenderTarget(int index)

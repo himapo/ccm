@@ -18,7 +18,7 @@ namespace HimaLib.Render
 
         List<DirectionalLight> DirectionalLights { get; set; }        
 
-        List<ModelInfo> ModelInfoList { get; set; }
+        IEnumerable<ModelInfo> ModelInfoList { get; set; }
 
         List<BillboardInfo> BillboardInfoList { get; set; }
 
