@@ -1,23 +1,22 @@
 // Materials
-const float3	DiffuseColor	: register(c0) = 1;
-const float		Alpha			: register(c1) = 1;
+float3	DiffuseColor;
+float	Alpha;
 
 // Other parameters
 
 // Lights
-const float3	AmbientLightColor;
-const float3	DirLight0Direction;
-const float3	DirLight0DiffuseColor;
+ float3	AmbientLightColor;
+float3	DirLight0Direction;
+float3	DirLight0DiffuseColor;
 
 // Matrices
-const float4x4	World		: World;
-const float4x4	View		: View;
-const float4x4	Projection	: Projection;
+float4x4	World		: World;
+float4x4	View		: View;
+float4x4	Projection	: Projection;
 
 // Textures
-uniform const texture DiffuseMap;
-
-uniform const sampler DiffuseMapSampler : register(s0) = sampler_state
+texture DiffuseMap;
+sampler DiffuseMapSampler = sampler_state
 {
 	Texture = (DiffuseMap);
 	MipFilter = Linear;
@@ -42,59 +41,52 @@ struct VSOutput
 	float3	Normal		: TEXCOORD1;
 };
 
-struct PSInput
-{
-	float4	Diffuse		: COLOR0;
-	float2	TexCoord	: TEXCOORD0;
-	float3	Normal		: TEXCOORD1;
-};
-
-VSOutput VSMain(VSInput vin,
+VSOutput VSMain(VSInput input,
 	uniform bool pixelLighting,
 	uniform bool useTexture)
 {
-	VSOutput vout;
+	VSOutput output;
 	
-	float4 pos_ws = mul(vin.Position, World);
+	float4 pos_ws = mul(input.Position, World);
 	float4 pos_vs = mul(pos_ws, View);
 	float4 pos_ps = mul(pos_vs, Projection);
-	vout.PositionPS	= pos_ps;
+	output.PositionPS	= pos_ps;
 
 	if(pixelLighting)
 	{
-		vout.Diffuse = float4(1, 1, 1, Alpha);
+		output.Diffuse = float4(1, 1, 1, Alpha);
 	}
 	else
 	{
-		float diffuseIntensity = saturate(dot(vin.Normal, -DirLight0Direction));
+		float diffuseIntensity = saturate(dot(input.Normal, -DirLight0Direction));
 		float3 d = saturate(DiffuseColor * DirLight0DiffuseColor * diffuseIntensity + AmbientLightColor);
-		vout.Diffuse = float4(d.rgb, Alpha);
+		output.Diffuse = float4(d.rgb, Alpha);
 	}
 	
-	vout.TexCoord = vin.TexCoord;
+	output.TexCoord = input.TexCoord;
 	
-	vout.Normal = normalize(mul(vin.Normal, (float3x3)World));
+	output.Normal = normalize(mul(input.Normal, (float3x3)World));
 	
-	return vout;
+	return output;
 }
 
-float4 PSMain(PSInput pin,
+float4 PSMain(VSOutput input,
 	uniform bool pixelLighting,
 	uniform bool useTexture) : COLOR
 {
-	float4 diffuseTextureColor = tex2D(DiffuseMapSampler, pin.TexCoord);
+	float4 diffuseTextureColor = tex2D(DiffuseMapSampler, input.TexCoord);
 	
 	float4 output;
 	
 	if(pixelLighting)
 	{
-		float diffuseIntensity = saturate(dot(pin.Normal, -DirLight0Direction));
+		float diffuseIntensity = saturate(dot(input.Normal, -DirLight0Direction));
 		float3 d = saturate(DiffuseColor * DirLight0DiffuseColor * diffuseIntensity + AmbientLightColor);
 		output = float4(d.rgb, Alpha);
 	}
 	else
 	{
-		output = pin.Diffuse;
+		output = input.Diffuse;
 	}
 	
 	if(useTexture)
