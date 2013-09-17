@@ -10,6 +10,8 @@ namespace HimaLib.Render
 {
     public class ShadowMapRenderPath : RenderPath
     {
+        CameraBase EyeCamera;
+
         public ShadowMapRenderPath()
         {
             ClearEnabled = true;
@@ -37,6 +39,11 @@ namespace HimaLib.Render
             if (DirectionalLights.Count == 0)
             {
                 return;
+            }
+
+            if (EyeCamera == null)
+            {
+                EyeCamera = Camera;
             }
 
             // TODO : ライトをカメラに変換
@@ -84,14 +91,16 @@ namespace HimaLib.Render
 
         CameraBase LightToCamera(DirectionalLight light)
         {
-            return new CameraBase()
-            {
-                Eye = Vector3.One * 50.0f,
-                At = Vector3.Zero,
-                Up = Vector3.Up,
-                Near = 30.0f,
-                Far = 200.0f,
-            };
+            return light.ToCamera(EyeCamera);
+
+            //return new CameraBase()
+            //{
+            //    Eye = Vector3.One * 50.0f,
+            //    At = Vector3.Zero,
+            //    Up = Vector3.Up,
+            //    Near = 30.0f,
+            //    Far = 200.0f,
+            //};
         }
     }
 }

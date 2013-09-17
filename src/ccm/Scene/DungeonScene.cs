@@ -238,6 +238,7 @@ namespace ccm.Scene
         void InitCamera()
         {
             cameraUpdater.Reset();
+            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
         }
 
