@@ -190,6 +190,15 @@ namespace HimaLib.Math
                 0.0f, 0.0f, near * far / (near - far), 0.0f);
         }
 
+        public static Matrix CreateOrthographic(float width, float height, float near, float far)
+        {
+            return new Matrix(
+                2.0f / width, 0.0f, 0.0f, 0.0f,
+                0.0f, 2.0f / height, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f / (near - far), 0.0f,
+                0.0f, 0.0f, near / (near - far), 1.0f);
+        }
+
         public static Matrix Invert(Matrix matrix)
         {
             var det = matrix.Determinant();

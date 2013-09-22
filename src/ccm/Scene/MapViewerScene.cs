@@ -18,7 +18,7 @@ namespace ccm.Scene
 {
     public class MapViewerScene : SceneBase
     {
-        CameraBase camera = new CameraBase() { Near = 10.0f, Far = 10000.0f };
+        PerspectiveCamera camera = new PerspectiveCamera() { Near = 10.0f, Far = 10000.0f };
 
         ViewerCameraUpdater cameraUpdater;
 

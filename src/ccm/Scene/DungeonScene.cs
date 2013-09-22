@@ -52,7 +52,7 @@ namespace ccm.Scene
         HimaLib.Collision.CollisionManager CollisionManager = new HimaLib.Collision.CollisionManager();
 
         // カメラ
-        CameraBase Camera = new CameraBase();
+        PerspectiveCamera Camera = new PerspectiveCamera();
 
         ViewerCameraUpdater cameraUpdater;
 

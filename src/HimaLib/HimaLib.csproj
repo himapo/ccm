@@ -80,6 +80,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera\CameraBase.cs" />
+    <Compile Include="Camera\OrthoCamera.cs" />
+    <Compile Include="Camera\PerspectiveCamera.cs" />
     <Compile Include="Collision\CollisionInfo.cs" />
     <Compile Include="Collision\CollisionManager.cs" />
     <Compile Include="Collision\CollisionDetectorFactory.cs" />

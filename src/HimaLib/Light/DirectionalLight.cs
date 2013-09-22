@@ -24,7 +24,7 @@ namespace HimaLib.Light
             var direction = Direction;
             direction.Normalize();
 
-            return new CameraBase()
+            return new OrthoCamera()
             {
                 Eye = camera.At - direction * 50.0f,
                 At = camera.At,

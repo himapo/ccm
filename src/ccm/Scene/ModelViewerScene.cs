@@ -18,7 +18,7 @@ namespace ccm.Scene
 {
     public class ModelViewerScene : SceneBase
     {
-        CameraBase camera = new CameraBase() { Far = 300.0f };
+        PerspectiveCamera camera = new PerspectiveCamera() { Far = 300.0f };
 
         ViewerCameraUpdater cameraUpdater;
 

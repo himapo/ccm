@@ -6,6 +6,7 @@ using MikuMikuDance.XNA;
 using MikuMikuDance.XNA.Model;
 using MikuMikuDance.XNA.Accessory;
 using HimaLib.Math;
+using HimaLib.Camera;
 
 namespace HimaLib.Render
 {
@@ -15,11 +16,12 @@ namespace HimaLib.Render
 
         public void SetParameter(ToonModelRenderParameter param)
         {
-            MMDXCore.Instance.Camera.Position = MathUtilXna.ToXnaVector(param.Camera.Eye);
-            MMDXCore.Instance.Camera.SetVector(MathUtilXna.ToXnaVector(param.Camera.At) - MathUtilXna.ToXnaVector(param.Camera.Eye));
-            MMDXCore.Instance.Camera.FieldOfView = MathUtil.ToRadians(param.Camera.FovY);
-            MMDXCore.Instance.Camera.Near = param.Camera.Near;
-            MMDXCore.Instance.Camera.Far = param.Camera.Far;
+            var camera = param.Camera as PerspectiveCamera;
+            MMDXCore.Instance.Camera.Position = MathUtilXna.ToXnaVector(camera.Eye);
+            MMDXCore.Instance.Camera.SetVector(MathUtilXna.ToXnaVector(camera.At) - MathUtilXna.ToXnaVector(camera.Eye));
+            MMDXCore.Instance.Camera.FieldOfView = MathUtil.ToRadians(camera.FovY);
+            MMDXCore.Instance.Camera.Near = camera.Near;
+            MMDXCore.Instance.Camera.Far = camera.Far;
 
             Transform = param.Transform;
         }
