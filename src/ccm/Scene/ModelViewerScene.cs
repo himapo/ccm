@@ -9,6 +9,7 @@ using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.Camera;
 using HimaLib.Light;
+using HimaLib.Texture;
 using ccm.Input;
 using ccm.Camera;
 using ccm.Debug;
@@ -91,6 +92,7 @@ namespace ccm.Scene
         void InitCamera()
         {
             cameraUpdater.Reset();
+            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;
         }
 
@@ -116,6 +118,8 @@ namespace ccm.Scene
         void InitSimpleRenderer()
         {
             simpleRenderParam.Camera = camera;
+            simpleRenderParam.IsShadowReceiver = false;
+            simpleRenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);            
         }
 
         void InitToonRenderer()
