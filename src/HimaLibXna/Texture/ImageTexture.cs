@@ -23,8 +23,6 @@ namespace HimaLib.Texture
             }
         }
 
-        TextureLoader TextureLoader = new TextureLoader();
-
         Texture2D TextureData;
 
         public ImageTexture(string name)
@@ -34,7 +32,8 @@ namespace HimaLib.Texture
 
         public void Load()
         {
-            TextureData = TextureLoader.Load(Name);
+            var loader = new TextureLoader();
+            TextureData = loader.Load(Name);
         }
     }
 }
