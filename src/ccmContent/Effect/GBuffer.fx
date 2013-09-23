@@ -31,15 +31,15 @@ struct VSOutput
 	float4	PositionPS	: POSITION;		// Position in projection space
 	float4	Diffuse		: COLOR0;
 	float2	TexCoord	: TEXCOORD0;
-	float3	Normal		: TEXCOORD1;
-	float	Depth		: TEXCOORD2;
+	float4	NormalDepth	: TEXCOORD1;
+	float4	PositionWS	: TEXCOORD2;
 };
 
 struct PSOutput
 {
 	float4	Albedo		: COLOR0;
-	float4	Depth		: COLOR1;
-	float4	Normal		: COLOR2;
+	float4	PositionWS	: COLOR1;
+	float4	NormalDepth	: COLOR2;
 	float4	Dummy3		: COLOR3;
 };
 
@@ -48,8 +48,8 @@ VSOutput VSMain(VSInput input,
 {
 	VSOutput output;
 	
-	float4 pos_ws = mul(input.Position, World);
-	float4 pos_vs = mul(pos_ws, View);
+	output.PositionWS = mul(input.Position, World);
+	float4 pos_vs = mul(output.PositionWS, View);
 	float4 pos_ps = mul(pos_vs, Projection);
 	output.PositionPS = pos_ps;
 	
@@ -57,9 +57,9 @@ VSOutput VSMain(VSInput input,
 	
 	output.TexCoord = input.TexCoord;
 	
-	output.Normal = normalize(mul(input.Normal, (float3x3)World));
+	output.NormalDepth.rgb = normalize(mul(input.Normal, (float3x3)World));
 	
-	output.Depth = output.PositionPS.z / output.PositionPS.w;
+	output.NormalDepth.a = output.PositionPS.z / output.PositionPS.w;
 	
 	return output;
 }
@@ -69,6 +69,8 @@ PSOutput PSMain(VSOutput input,
 {
 	PSOutput output;
 	
+	output.PositionWS = input.PositionWS;
+	
 	output.Albedo = input.Diffuse;
 	
 	if(useTexture)
@@ -76,10 +78,7 @@ PSOutput PSMain(VSOutput input,
 		output.Albedo *= tex2D(DiffuseMapSampler, input.TexCoord);
 	}
 	
-	output.Depth.rgb = input.Depth;
-	output.Depth.a = 1.0f;
-	
-	output.Normal = float4(input.Normal, 1.0f);
+	output.NormalDepth = input.NormalDepth;
 	
 	output.Dummy3 = 0;
 	
