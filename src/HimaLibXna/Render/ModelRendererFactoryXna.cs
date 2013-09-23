@@ -29,6 +29,8 @@ namespace HimaLib.Render
                     return Create<DefaultModelRendererXna>(param);
                 case ModelRendererType.Depth:
                     return Create<DepthRendererXna>(param);
+                case ModelRendererType.GBuffer:
+                    return Create<GBufferRendererXna>(param);
                 default:
                     break;
             }

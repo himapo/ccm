@@ -14,6 +14,7 @@ namespace HimaLib.Render
         SimpleInstancing,
         Toon,
         Depth,
+        GBuffer,
     }
 
     public abstract class ModelRenderParameter

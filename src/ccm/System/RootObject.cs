@@ -135,7 +135,7 @@ namespace ccm.System
 
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.GBUFFER,
-                new OpaqueRenderPath()
+                new GBufferRenderPath()
                 {
                     Name = "GBuffer",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),

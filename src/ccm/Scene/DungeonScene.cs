@@ -68,7 +68,7 @@ namespace ccm.Scene
         // HUD
 
         // デバッグメニュー
-        DebugMenu debugMenu = new DebugMenu("Dungeon Debug Menu");
+        DebugMenu debugMenu = new DebugMenu("DungeonMenu");
 
         DebugMenuUpdater debugMenuUpdater;
 
@@ -81,7 +81,9 @@ namespace ccm.Scene
 
         IBillboard Billboard = BillboardFactory.Instance.Create();
 
-        HudBillboardRenderParameter ShadowMapHudRenderParam = new HudBillboardRenderParameter();
+        HudBillboardRenderParameter TargetRenderParam = new HudBillboardRenderParameter();
+
+        bool ShowRenderTarget{ get; set; }
 
         IModel StageModel;
 
@@ -237,6 +239,9 @@ namespace ccm.Scene
 
         void InitCamera()
         {
+            Camera.Near = 30.0f;
+            Camera.Far = 300.0f;
+
             cameraUpdater.Reset();
             RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
@@ -256,11 +261,53 @@ namespace ccm.Scene
         {
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeTunableBool()
             {
-                Label = "Draw Map",
+                Label = "マップ描画",
                 Selectable = true,
                 Getter = () => { return Dungeon.Drawable; },
                 Setter = (b) => { Dungeon.Drawable = b; },
             });
+
+            var nodeShowTarget = new DebugMenuNodeSelectable()
+            {
+                Label = "レンダーターゲット表示",
+            };
+
+            nodeShowTarget.AddChoice("なし", () =>
+            {
+                ShowRenderTarget = false;
+            });
+
+            nodeShowTarget.AddChoice("シャドウマップ", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
+            });
+
+            nodeShowTarget.AddChoice("Gバッファ0", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0);
+            });
+
+            nodeShowTarget.AddChoice("Gバッファ1", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer1);
+            });
+
+            nodeShowTarget.AddChoice("Gバッファ2", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer2);
+            });
+
+            nodeShowTarget.AddChoice("Gバッファ3", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer3);
+            });
+
+            debugMenu.AddChild(debugMenu.RootNode.Label, nodeShowTarget);
         }
 
         void InitRender()
@@ -269,13 +316,13 @@ namespace ccm.Scene
 
         void InitShadowMapHud()
         {
-            ShadowMapHudRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
-            ShadowMapHudRenderParam.Alpha = 1.0f;
-            ShadowMapHudRenderParam.Transform = new AffineTransform(
+            TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
+            TargetRenderParam.Alpha = 1.0f;
+            TargetRenderParam.Transform = new AffineTransform(
                 Vector3.One * 0.4f,
                 Vector3.Zero,
                 new Vector3(640.0f - 256.0f - 10.0f, 360.0f - 144.0f - 10.0f, 0.0f));
-            ShadowMapHudRenderParam.IsTranslucent = false;
+            TargetRenderParam.IsTranslucent = false;
         }
 
         void InitStage()
@@ -392,7 +439,10 @@ namespace ccm.Scene
 
             RenderSceneManager.Instance.RenderModel(StageModel, StageRenderParam);
 
-            RenderSceneManager.Instance.RenderBillboard(Billboard, ShadowMapHudRenderParam);
+            if(ShowRenderTarget)
+            {
+                RenderSceneManager.Instance.RenderBillboard(Billboard, TargetRenderParam);
+            }
 
             debugMenu.Draw(debugMenuDrawer);
         }

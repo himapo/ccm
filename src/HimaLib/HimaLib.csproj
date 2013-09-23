@@ -151,6 +151,8 @@
     <Compile Include="Render\DefaultModelRenderParameter.cs" />
     <Compile Include="Render\DepthBillboardRenderParameter.cs" />
     <Compile Include="Render\DepthModelRenderParameter.cs" />
+    <Compile Include="Render\GBufferModelRenderParameter.cs" />
+    <Compile Include="Render\GBufferRenderPath.cs" />
     <Compile Include="Render\ShadowMapRenderPath.cs" />
     <Compile Include="Render\HudBillboardRenderParameter.cs" />
     <Compile Include="Render\HudRenderPath.cs" />
