@@ -190,8 +190,8 @@ VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
     // 法線変換
     float3 normal = normalize( mul( input.Normal, skinTransform));
     
-    float3 light1 = max(dot(normal, Light1Direction), 0) * Light1Color;
-    float3 light2 = max(dot(normal, Light2Direction), 0) * Light2Color;
+    float3 light1 = max(dot(normal, -Light1Direction), 0) * Light1Color;
+    float3 light2 = max(dot(normal, -Light2Direction), 0) * Light2Color;
 
     output.Lighting = light1 + light2;
     
