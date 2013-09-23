@@ -85,6 +85,8 @@ namespace ccm.Scene
         {
             cameraUpdater.Reset();
             cameraUpdater.Update(Vector3.Zero);
+            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;
         }
 

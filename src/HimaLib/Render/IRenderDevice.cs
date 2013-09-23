@@ -18,5 +18,7 @@ namespace HimaLib.Render
         void SetDepthState(bool depthTestEnabled, bool depthWriteEnabled);
 
         void SetRenderTarget(int index);
+
+        void SetRenderTargets(int[] indices);
     }
 }

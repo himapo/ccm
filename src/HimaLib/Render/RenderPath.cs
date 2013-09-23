@@ -14,6 +14,8 @@ namespace HimaLib.Render
 
         public int RenderTargetIndex { get; set; }
 
+        public int[] RenderTargetIndices { get; set; }
+
         public CameraBase Camera { get; set; }
 
         public List<DirectionalLight> DirectionalLights { get; set; }
@@ -80,7 +82,14 @@ namespace HimaLib.Render
 
         public virtual void Render()
         {
-            RenderDevice.SetRenderTarget(RenderTargetIndex);
+            if (RenderTargetIndices == null)
+            {
+                RenderDevice.SetRenderTarget(RenderTargetIndex);
+            }
+            else
+            {
+                RenderDevice.SetRenderTargets(RenderTargetIndices);
+            }
 
             if (DepthSortEnabled)
             {

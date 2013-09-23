@@ -92,15 +92,6 @@ namespace HimaLib.Render
         CameraBase LightToCamera(DirectionalLight light)
         {
             return light.ToCamera(EyeCamera);
-
-            //return new CameraBase()
-            //{
-            //    Eye = Vector3.One * 50.0f,
-            //    At = Vector3.Zero,
-            //    Up = Vector3.Up,
-            //    Near = 30.0f,
-            //    Far = 200.0f,
-            //};
         }
     }
 }

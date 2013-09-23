@@ -11,5 +11,9 @@ namespace ccm.Render
         ShadowMap0,
         PostProcess0,
         PostProcess1,
+        GBuffer0,
+        GBuffer1,
+        GBuffer2,
+        GBuffer3,
     }
 }

@@ -51,6 +51,26 @@ namespace HimaLib.Render
             GraphicsDevice.SetRenderTarget(index == 0 ? null : GetRenderTarget(index));
         }
 
+        public void SetRenderTargets(int[] indices)
+        {
+            if (indices.Length == 1)
+            {
+                SetRenderTarget(indices[0]);
+                return;
+            }
+
+            var targets = new RenderTargetBinding[indices.Length];
+
+            for (var i = 0; i < indices.Length; ++i)
+            {
+                targets[i] = new RenderTargetBinding(GetRenderTarget(indices[i]));
+            }
+
+            PrevRenderTargetIndex = -1;
+
+            GraphicsDevice.SetRenderTargets(targets);
+        }
+
         RenderTarget2D GetRenderTarget(int index)
         {
             return RenderTargetManager.Instance.GetRenderTarget(index);

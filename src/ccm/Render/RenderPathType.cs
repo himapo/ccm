@@ -8,6 +8,7 @@ namespace ccm.Render
     public enum RenderPathType
     {
         SHADOW,
+        GBUFFER,
         OPAQUE,
         TRANSLUCENT,
         HUD,

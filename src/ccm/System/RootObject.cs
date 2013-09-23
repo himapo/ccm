@@ -104,6 +104,26 @@ namespace ccm.System
                 GameProperty.resolutionWidth,
                 GameProperty.resolutionHeight);
 
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.GBuffer0,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.GBuffer1,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.GBuffer2,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.GBuffer3,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight);
+
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.SHADOW,
                 new ShadowMapRenderPath()
@@ -111,6 +131,21 @@ namespace ccm.System
                     Name = "ShadowMap",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndex = (int)RenderTargetType.ShadowMap0,
+                });
+
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.GBUFFER,
+                new OpaqueRenderPath()
+                {
+                    Name = "GBuffer",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndices = new int[]
+                    {
+                        (int)RenderTargetType.GBuffer0,
+                        (int)RenderTargetType.GBuffer1,
+                        (int)RenderTargetType.GBuffer2,
+                        (int)RenderTargetType.GBuffer3
+                    },
                 });
 
             RenderSceneManager.Instance.AddPath(
