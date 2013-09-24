@@ -12,6 +12,8 @@ namespace HimaLib.Render
     {
         public string Name { get; set; }
 
+        public bool Enabled { get; set; }
+
         public int RenderTargetIndex { get; set; }
 
         public int[] RenderTargetIndices { get; set; }
@@ -60,6 +62,8 @@ namespace HimaLib.Render
 
         public RenderPath()
         {
+            Enabled = true;
+
             ClearEnabled = false;
             ClearColor = Color.Gray;
 
@@ -82,6 +86,11 @@ namespace HimaLib.Render
 
         public virtual void Render()
         {
+            if (!Enabled)
+            {
+                return;
+            }
+
             if (RenderTargetIndices == null)
             {
                 RenderDevice.SetRenderTarget(RenderTargetIndex);

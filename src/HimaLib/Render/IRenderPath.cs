@@ -12,6 +12,8 @@ namespace HimaLib.Render
     {
         string Name { get; set; }
 
+        bool Enabled { get; set; }
+
         int RenderTargetIndex { get; set; }
 
         CameraBase Camera { get; set; }
