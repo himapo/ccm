@@ -9,6 +9,8 @@ using HimaLib.Input;
 using HimaLib.Updater;
 using HimaLib.Render;
 using HimaLib.Texture;
+using HimaLib.Model;
+using HimaLib.Math;
 using ccm.Render;
 using ccm.Input;
 using ccm.Sound;
@@ -149,9 +151,24 @@ namespace ccm.System
                 });
 
             RenderSceneManager.Instance.AddPath(
+                RenderPathType.DEFERRED,
+                new DeferredRenderPath()
+                {
+                    //Enabled = false,
+                    Name = "Deferred",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    Billboard = BillboardFactory.Instance.Create(),
+                    AlbedoMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),
+                    PositionMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer1),
+                    NormalDepthMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer2),
+                    ClearColor = Color.Gray,
+                });
+
+            RenderSceneManager.Instance.AddPath(
                 RenderPathType.OPAQUE,
                 new OpaqueRenderPath()
                 {
+                    Enabled = false,
                     Name = "Opaque",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                 });
@@ -160,6 +177,7 @@ namespace ccm.System
                 RenderPathType.TRANSLUCENT,
                 new TranslucentRenderPath()
                 {
+                    Enabled = false,
                     Name = "Translucent",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                 });

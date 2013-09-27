@@ -184,6 +184,7 @@ namespace ccm.Scene
         void UpdateStateInit()
         {
             InitPlayer();
+            InitEnemy();
             InitAlly();
             InitMap();
             InitCollision();
@@ -205,6 +206,13 @@ namespace ccm.Scene
             Player.InitModel();
             Player.AddAttachment("bonbon");
             Player.AddAttachment("negi");
+        }
+        void InitEnemy()
+        {
+            for (var i = 0; i < 20; ++i)
+            {
+                EnemyManager.CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
+            }
         }
 
         void InitAlly()
@@ -253,7 +261,7 @@ namespace ccm.Scene
             RenderSceneManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
-            DirectionalLight0.Color = new Color(0.6f, 0.6f, 0.6f);
+            DirectionalLight0.Color = new Color(0.8f, 0.8f, 0.8f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
         }
 
@@ -363,7 +371,7 @@ namespace ccm.Scene
 
             if (IsTimeToCreateEnemy())
             {
-                CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
+                //CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
             }
 
             UpdateCollision();
@@ -388,7 +396,7 @@ namespace ccm.Scene
 
         bool IsTimeToCreateEnemy()
         {
-            if (++Frame >= 120)
+            if (++Frame >= 300)
             {
                 Frame = 0;
                 return true;

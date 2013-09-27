@@ -117,7 +117,7 @@ namespace ccm.Ally
 
             if (++Frame == 6000)
             {
-                UpdateState = UpdateStateTerm;
+                //UpdateState = UpdateStateTerm;
             }
         }
 

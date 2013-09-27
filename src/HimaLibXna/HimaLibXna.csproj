@@ -150,6 +150,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\BillboardRendererFactoryXna.cs" />
     <Compile Include="Render\DefaultModelRendererXna.cs" />
+    <Compile Include="Render\DeferredRenderer.cs" />
     <Compile Include="Render\DepthRendererXna.cs" />
     <Compile Include="Render\GBufferRendererXna.cs" />
     <Compile Include="Render\IBillboardRendererXna.cs" />
@@ -168,8 +169,10 @@
     <Compile Include="Render\ToonModelRendererMMDX.cs" />
     <Compile Include="Render\HudBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
+    <Compile Include="Shader\DeferredShader.cs" />
     <Compile Include="Shader\DepthShader.cs" />
     <Compile Include="Shader\GBufferShader.cs" />
+    <Compile Include="Shader\HudBillboard.cs" />
     <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\LambertShader.cs" />
     <Compile Include="Sound\SoundXACT.cs" />

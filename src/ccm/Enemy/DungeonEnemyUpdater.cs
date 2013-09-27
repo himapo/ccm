@@ -144,7 +144,7 @@ namespace ccm.Enemy
 
             if (++Frame == 6000)
             {
-                UpdateState = UpdateStateTerm;
+                //UpdateState = UpdateStateTerm;
             }
         }
 

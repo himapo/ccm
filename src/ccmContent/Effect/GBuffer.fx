@@ -29,7 +29,6 @@ struct VSInput
 struct VSOutput
 {
 	float4	PositionPS	: POSITION;		// Position in projection space
-	float4	Diffuse		: COLOR0;
 	float2	TexCoord	: TEXCOORD0;
 	float4	NormalDepth	: TEXCOORD1;
 	float4	PositionWS	: TEXCOORD2;
@@ -53,11 +52,9 @@ VSOutput VSMain(VSInput input,
 	float4 pos_ps = mul(pos_vs, Projection);
 	output.PositionPS = pos_ps;
 	
-	output.Diffuse = float4(DiffuseColor, Alpha);
-	
 	output.TexCoord = input.TexCoord;
 	
-	output.NormalDepth.rgb = normalize(mul(input.Normal, (float3x3)World));
+	output.NormalDepth.rgb = (normalize(mul(input.Normal, (float3x3)World)) + 1.0f) * 0.5f;
 	
 	output.NormalDepth.a = output.PositionPS.z / output.PositionPS.w;
 	
@@ -71,7 +68,7 @@ PSOutput PSMain(VSOutput input,
 	
 	output.PositionWS = input.PositionWS;
 	
-	output.Albedo = input.Diffuse;
+	output.Albedo = float4(DiffuseColor, Alpha);
 	
 	if(useTexture)
 	{
@@ -89,6 +86,7 @@ Technique GBuffer
 {
 	Pass P0
 	{
+		AlphaBlendEnable = FALSE;
 		VertexShader	= compile vs_2_0 VSMain(false);
 		PixelShader		= compile ps_2_0 PSMain(false);
 	}
@@ -98,6 +96,7 @@ Technique GBufferTexture
 {
 	Pass P0
 	{
+		AlphaBlendEnable = FALSE;
 		VertexShader	= compile vs_2_0 VSMain(true);
 		PixelShader		= compile ps_2_0 PSMain(true);
 	}

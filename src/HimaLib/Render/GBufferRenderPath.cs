@@ -13,7 +13,7 @@ namespace HimaLib.Render
         public GBufferRenderPath()
         {
             ClearEnabled = true;
-            ClearColor = Color.White;
+            ClearColor = Color.Gray;
 
             DepthSortEnabled = false;
             DepthTestEnabled = true;

@@ -10,8 +10,9 @@ namespace HimaLib.Render
     public enum BillboardRendererType
     {
         Simple,     // 常にカメラの視線と逆を向く
-        Hud,         // スクリーン座標系で位置を指定
+        Hud,        // スクリーン座標系で位置を指定
         Depth,
+        Deferred,   // Deferred Shading のライティングパス
     }
 
     public abstract class BillboardRenderParameter
