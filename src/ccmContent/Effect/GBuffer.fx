@@ -1,6 +1,5 @@
 // Materials
 float3	DiffuseColor;
-float	Alpha;
 
 // Matrices
 float4x4	World		: World;
@@ -28,10 +27,16 @@ struct VSInput
 
 struct VSOutput
 {
-	float4	PositionPS	: POSITION;		// Position in projection space
+	float4	PositionPS	: POSITION;
 	float2	TexCoord	: TEXCOORD0;
 	float4	NormalDepth	: TEXCOORD1;
 	float4	PositionWS	: TEXCOORD2;
+};
+
+struct VSOutputND
+{
+	float4	PositionPS	: POSITION;
+	float4	NormalDepth	: TEXCOORD0;
 };
 
 struct PSOutput
@@ -42,8 +47,12 @@ struct PSOutput
 	float4	Dummy3		: COLOR3;
 };
 
-VSOutput VSMain(VSInput input,
-	uniform bool useTexture)
+struct PSOutputND
+{
+	float4	NormalDepth	: COLOR0;
+};
+
+VSOutput VSMain(VSInput input)
 {
 	VSOutput output;
 	
@@ -61,6 +70,22 @@ VSOutput VSMain(VSInput input,
 	return output;
 }
 
+VSOutputND VSMainND(VSInput input)
+{
+	VSOutputND output;
+	
+	float4 pos_ws = mul(input.Position, World);
+	float4 pos_vs = mul(pos_ws, View);
+	float4 pos_ps = mul(pos_vs, Projection);
+	output.PositionPS = pos_ps;
+	
+	output.NormalDepth.rgb = (normalize(mul(input.Normal, (float3x3)World)) + 1.0f) * 0.5f;
+	
+	output.NormalDepth.a = output.PositionPS.z / output.PositionPS.w;
+	
+	return output;
+}
+
 PSOutput PSMain(VSOutput input,
 	uniform bool useTexture)
 {
@@ -68,7 +93,7 @@ PSOutput PSMain(VSOutput input,
 	
 	output.PositionWS = input.PositionWS;
 	
-	output.Albedo = float4(DiffuseColor, Alpha);
+	output.Albedo = float4(DiffuseColor, 1.0f);
 	
 	if(useTexture)
 	{
@@ -82,12 +107,21 @@ PSOutput PSMain(VSOutput input,
 	return output;
 }
 
+PSOutputND PSMainND(VSOutputND input)
+{
+	PSOutputND output;
+	
+	output.NormalDepth = input.NormalDepth;
+	
+	return output;
+}
+
 Technique GBuffer
 {
 	Pass P0
 	{
 		AlphaBlendEnable = FALSE;
-		VertexShader	= compile vs_2_0 VSMain(false);
+		VertexShader	= compile vs_2_0 VSMain();
 		PixelShader		= compile ps_2_0 PSMain(false);
 	}
 }
@@ -97,7 +131,17 @@ Technique GBufferTexture
 	Pass P0
 	{
 		AlphaBlendEnable = FALSE;
-		VertexShader	= compile vs_2_0 VSMain(true);
+		VertexShader	= compile vs_2_0 VSMain();
 		PixelShader		= compile ps_2_0 PSMain(true);
+	}
+}
+
+Technique GBufferND
+{
+	Pass P0
+	{
+		AlphaBlendEnable = FALSE;
+		VertexShader	= compile vs_2_0 VSMainND();
+		PixelShader		= compile ps_2_0 PSMainND();
 	}
 }

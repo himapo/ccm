@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Math;
+using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
     public class OpaqueRenderPath : RenderPath
     {
+        public ITexture ShadowMap { get; set; }
+
+        public ITexture DiffuseLightMap { get; set; }
+
+        public ITexture SpecularLightMap { get; set; }
+
         public OpaqueRenderPath()
         {
             ClearEnabled = true;
@@ -28,6 +35,11 @@ namespace HimaLib.Render
             RenderTranslucentBillboardOnly = false;
             RenderNoHudBillboardOnly = true;
             RenderHudBillboardOnly = false;
+        }
+
+        public override void Render()
+        {
+            base.Render();
         }
     }
 }

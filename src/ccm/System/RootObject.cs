@@ -101,30 +101,13 @@ namespace ccm.System
 
         void InitRender()
         {
-            RenderTargetManager.Instance.AddRenderTarget(
-                (int)RenderTargetType.ShadowMap0,
-                GameProperty.resolutionWidth,
-                GameProperty.resolutionHeight);
-
-            RenderTargetManager.Instance.AddRenderTarget(
-                (int)RenderTargetType.GBuffer0,
-                GameProperty.resolutionWidth,
-                GameProperty.resolutionHeight);
-
-            RenderTargetManager.Instance.AddRenderTarget(
-                (int)RenderTargetType.GBuffer1,
-                GameProperty.resolutionWidth,
-                GameProperty.resolutionHeight);
-
-            RenderTargetManager.Instance.AddRenderTarget(
-                (int)RenderTargetType.GBuffer2,
-                GameProperty.resolutionWidth,
-                GameProperty.resolutionHeight);
-
-            RenderTargetManager.Instance.AddRenderTarget(
-                (int)RenderTargetType.GBuffer3,
-                GameProperty.resolutionWidth,
-                GameProperty.resolutionHeight);
+            for (var i = 0; i < (int)RenderTargetType.Length; ++i)
+            {
+                RenderTargetManager.Instance.AddRenderTarget(
+                    i,
+                    GameProperty.resolutionWidth,
+                    GameProperty.resolutionHeight);
+            }
 
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.SHADOW,
@@ -144,17 +127,34 @@ namespace ccm.System
                     RenderTargetIndices = new int[]
                     {
                         (int)RenderTargetType.GBuffer0,
-                        (int)RenderTargetType.GBuffer1,
-                        (int)RenderTargetType.GBuffer2,
-                        (int)RenderTargetType.GBuffer3
+                        //(int)RenderTargetType.GBuffer1,
+                        //(int)RenderTargetType.GBuffer2,
+                        //(int)RenderTargetType.GBuffer3
                     },
+                });
+
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.LIGHTBUFFER,
+                new LightBufferRenderPath()
+                {
+                    //Enabled = false,
+                    Name = "LightBuffer",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndices = new int[]
+                    {
+                        (int)RenderTargetType.DiffuseLightMap,
+                        (int)RenderTargetType.SpecularLightMap,
+                    },
+                    Billboard = BillboardFactory.Instance.Create(),
+                    NormalDepthMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),
+                    ClearColor = Color.Gray,
                 });
 
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.DEFERRED,
                 new DeferredRenderPath()
                 {
-                    //Enabled = false,
+                    Enabled = false,
                     Name = "Deferred",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     Billboard = BillboardFactory.Instance.Create(),
@@ -168,9 +168,11 @@ namespace ccm.System
                 RenderPathType.OPAQUE,
                 new OpaqueRenderPath()
                 {
-                    Enabled = false,
+                    //Enabled = false,
                     Name = "Opaque",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    DiffuseLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap),
+                    SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
                 });
 
             RenderSceneManager.Instance.AddPath(

@@ -9,11 +9,13 @@ namespace ccm.Render
     {
         BackBuffer = 0,
         ShadowMap0,
-        PostProcess0,
-        PostProcess1,
+        DiffuseLightMap,
+        SpecularLightMap,
         GBuffer0,
         GBuffer1,
         GBuffer2,
         GBuffer3,
+
+        Length,
     }
 }

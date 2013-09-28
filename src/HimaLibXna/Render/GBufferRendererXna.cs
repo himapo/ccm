@@ -27,7 +27,6 @@ namespace HimaLib.Render
             Shader.World = MathUtilXna.ToXnaMatrix(param.Transform.WorldMatrix);
             Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
-            Shader.Alpha = param.Alpha;
             if (param.Texture != null)
             {
                 Shader.Texture = (param.Texture as ITextureXna).Texture;

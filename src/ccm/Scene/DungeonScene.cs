@@ -315,6 +315,12 @@ namespace ccm.Scene
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer3);
             });
 
+            nodeShowTarget.AddChoice("拡散反射マップ", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap);
+            });
+
             debugMenu.AddChild(debugMenu.RootNode.Label, nodeShowTarget);
         }
 

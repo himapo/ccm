@@ -13,15 +13,12 @@ namespace HimaLib.Render
 
         public AffineTransform Transform { get; set; }
 
-        public float Alpha { get; set; }
-
         public ITexture Texture { get; set; }
 
         public GBufferModelRenderParameter()
         {
             IsShadowCaster = false;
             IsTranslucent = false;
-            Alpha = 1.0f;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace ccm.Render
     {
         SHADOW,
         GBUFFER,
+        LIGHTBUFFER,
         DEFERRED,
         OPAQUE,
         TRANSLUCENT,

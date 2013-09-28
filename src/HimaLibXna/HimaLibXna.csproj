@@ -156,6 +156,7 @@
     <Compile Include="Render\IBillboardRendererXna.cs" />
     <Compile Include="Render\IModelRendererMMDX.cs" />
     <Compile Include="Render\IModelRendererXna.cs" />
+    <Compile Include="Render\LightBufferRenderer.cs" />
     <Compile Include="Render\ModelRendererFactoryMMDX.cs" />
     <Compile Include="Render\ModelRendererFactoryXna.cs" />
     <Compile Include="Render\NullBillboardRendererXna.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="Render\NullModelRendererXna.cs" />
     <Compile Include="Render\RenderDeviceFactory.cs" />
     <Compile Include="Render\RenderDeviceXna.cs" />
+    <Compile Include="Render\ScreenBillboardRenderer.cs" />
     <Compile Include="Render\SimpleBillboardRendererXna.cs" />
     <Compile Include="Render\SimpleInstancingRendererXna.cs" />
     <Compile Include="Render\SimpleModelRendererXna.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Shader\HudBillboard.cs" />
     <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\LambertShader.cs" />
+    <Compile Include="Shader\LightBufferShader.cs" />
     <Compile Include="Sound\SoundXACT.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
     <Compile Include="System\Game.cs" />

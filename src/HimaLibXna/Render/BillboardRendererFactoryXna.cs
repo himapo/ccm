@@ -31,6 +31,8 @@ namespace HimaLib.Render
                     return Create<DepthRendererXna>(param);
                 case BillboardRendererType.Deferred:
                     return Create<DeferredRenderer>(param);
+                case BillboardRendererType.DiectionalLight:
+                    return Create<LightBufferRenderer>(param);
                 default:
                     break;
             }

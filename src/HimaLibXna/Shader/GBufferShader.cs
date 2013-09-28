@@ -20,8 +20,6 @@ namespace HimaLib.Shader
         
         public Matrix Projection { get; set; }
 
-        public float Alpha { get; set; }
-
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
@@ -31,7 +29,6 @@ namespace HimaLib.Shader
             World = Matrix.Identity;
             View = Matrix.Identity;
             Projection = Matrix.Identity;
-            Alpha = 1.0f;
 
             var contentLoader = new Content.EffectLoader();
             effect = contentLoader.Load("Effect/GBuffer");
@@ -41,7 +38,7 @@ namespace HimaLib.Shader
         {
             if (Texture == null)
             {
-                SetUpEffect("GBuffer");
+                SetUpEffect("GBufferND");
             }
             else
             {
@@ -89,7 +86,6 @@ namespace HimaLib.Shader
                 return;
 
             effect.Parameters["DiffuseColor"].SetValue(src.DiffuseColor);
-            effect.Parameters["Alpha"].SetValue(src.Alpha * Alpha);
         }
     }
 }
