@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using HimaLib.Camera;
 using HimaLib.Light;
+using HimaLib.Texture;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -23,7 +25,11 @@ namespace HimaLib.Render
 
         public CameraBase Camera { get; set; }
 
+        public CameraBase LightCamera { get; set; }
+
         public List<DirectionalLight> DirectionalLights { get; set; }
+
+        public AffineTransform Transform { get; set; }
 
         public bool IsShadowCaster { get; set; }
 
@@ -31,11 +37,20 @@ namespace HimaLib.Render
 
         public bool IsTranslucent { get; set; }
 
+        public bool GBufferEnabled { get; set; }
+
+        public ITexture ShadowMap { get; set; }
+
+        public ITexture DiffuseLightMap { get; set; }
+
+        public ITexture SpecularLightMap { get; set; }
+
         public ModelRenderParameter()
         {
             IsShadowCaster = true;
             IsShadowReceiver = true;
             IsTranslucent = false;
+            GBufferEnabled = true;
         }
     }
 }

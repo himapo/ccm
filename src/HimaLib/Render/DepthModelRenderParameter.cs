@@ -12,8 +12,6 @@ namespace HimaLib.Render
     {
         public override ModelRendererType Type { get { return ModelRendererType.Depth; } }
 
-        public AffineTransform Transform { get; set; }
-
         public DepthModelRenderParameter()
         {
             IsShadowCaster = false;

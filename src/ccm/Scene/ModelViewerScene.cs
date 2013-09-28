@@ -119,17 +119,27 @@ namespace ccm.Scene
         void InitSimpleRenderer()
         {
             simpleRenderParam.Camera = camera;
+            simpleRenderParam.Transform = new AffineTransform();
             simpleRenderParam.IsShadowReceiver = false;
             simpleRenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);            
         }
 
         void InitToonRenderer()
         {
+            toonRenderParam.IsShadowCaster = false;
+            toonRenderParam.IsShadowReceiver = false;
+            toonRenderParam.GBufferEnabled = false;
+
             toonRenderParam.Camera = camera;
+            toonRenderParam.Transform = new AffineTransform();
         }
 
         void InitDefaultRenderer()
         {
+            defaultRenderParam.IsShadowCaster = false;
+            defaultRenderParam.IsShadowReceiver = false;
+            defaultRenderParam.GBufferEnabled = false;
+
             //defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * 1.0f;
             //defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
             defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * -1.0f;

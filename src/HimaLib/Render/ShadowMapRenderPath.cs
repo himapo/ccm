@@ -51,20 +51,13 @@ namespace HimaLib.Render
 
             var casters = ModelInfoList.Where(info =>
             {
-                // 影描画が有効なものを抽出
-                if (!(info.RenderParam is ShadowModelRenderParameter))
-                {
-                    return false;
-                }
-
-                var shadowParam = info.RenderParam as ShadowModelRenderParameter;
-                
                 if (info.RenderParam.IsShadowReceiver)
                 {
                     // 光源カメラをレンダーパラメータに渡す
-                    shadowParam.LightCamera = Camera;
+                    info.RenderParam.LightCamera = Camera;
                 }
 
+                // 影描画が有効なものを抽出
                 if (!info.RenderParam.IsShadowCaster)
                 {
                     return false;
@@ -74,13 +67,16 @@ namespace HimaLib.Render
             }).Select(
             info =>
             {
-                var shadowParam = info.RenderParam as ShadowModelRenderParameter;
+                var depthParam = new DepthModelRenderParameter()
+                {
+                    Transform = info.RenderParam.Transform
+                };
 
                 // 深度レンダリング用のModelInfoを新たに生成する
                 return new ModelInfo()
                 {
                     Model = info.Model,
-                    RenderParam = shadowParam.DepthModelRenderParameter,
+                    RenderParam = depthParam,
                 };
             });
 

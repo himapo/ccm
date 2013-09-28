@@ -11,8 +11,6 @@ namespace HimaLib.Render
     {
         public override ModelRendererType Type { get { return ModelRendererType.GBuffer; } }
 
-        public AffineTransform Transform { get; set; }
-
         public ITexture Texture { get; set; }
 
         public GBufferModelRenderParameter()

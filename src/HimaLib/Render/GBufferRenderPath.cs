@@ -37,17 +37,14 @@ namespace HimaLib.Render
             ModelInfoList = ModelInfoList.Where(
             info =>
             {
-                return info.RenderParam is ShadowModelRenderParameter;
-            }
-            ).Select(
+                return info.RenderParam.GBufferEnabled;
+            }).Select(
             info =>
             {
-                var shadowParam = info.RenderParam as ShadowModelRenderParameter;
-
                 // Gバッファ用のModelInfoを新たに生成する
                 var gbufferParam = new GBufferModelRenderParameter()
                 {
-                    Transform = shadowParam.Transform,
+                    Transform = info.RenderParam.Transform,
                 };
 
                 return new ModelInfo()

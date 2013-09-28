@@ -9,7 +9,7 @@ using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
-    public class SimpleModelRenderParameter : ShadowModelRenderParameter
+    public class SimpleModelRenderParameter : ModelRenderParameter
     {
         public override ModelRendererType Type { get { return ModelRendererType.Simple; } }
 
@@ -19,7 +19,6 @@ namespace HimaLib.Render
 
         public SimpleModelRenderParameter()
         {
-            Transform = new AffineTransform();
             Alpha = 1.0f;
             AmbientLightColor = Vector3.One * 0.4f;
         }
