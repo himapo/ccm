@@ -17,6 +17,7 @@ namespace HimaLib.Render
         Toon,
         Depth,
         GBuffer,
+        PointLight,
     }
 
     public abstract class ModelRenderParameter

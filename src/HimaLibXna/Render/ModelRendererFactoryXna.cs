@@ -31,6 +31,8 @@ namespace HimaLib.Render
                     return Create<DepthRendererXna>(param);
                 case ModelRendererType.GBuffer:
                     return Create<GBufferRendererXna>(param);
+                case ModelRendererType.PointLight:
+                    return Create<LightBufferRenderer>(param);
                 default:
                     break;
             }

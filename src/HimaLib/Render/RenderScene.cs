@@ -23,6 +23,8 @@ namespace HimaLib.Render
     {
         Dictionary<int, IRenderPath> PathDic = new Dictionary<int, IRenderPath>();
 
+        List<PointLight> PointLights = new List<PointLight>();
+
         List<DirectionalLight> DirectionalLights = new List<DirectionalLight>();
 
         List<ModelInfo> ModelInfoList = new List<ModelInfo>();
@@ -46,6 +48,24 @@ namespace HimaLib.Render
         public void RemovePath(int index)
         {
             PathDic.Remove(index);
+        }
+
+        public void AddPointLight(PointLight light)
+        {
+            if (!PointLights.Contains(light))
+            {
+                PointLights.Add(light);
+            }
+        }
+
+        public void RemovePointLight(PointLight light)
+        {
+            PointLights.Remove(light);
+        }
+
+        public void ClearPointLight()
+        {
+            PointLights.Clear();
         }
 
         public void AddDirectionalLight(DirectionalLight light)
@@ -86,6 +106,7 @@ namespace HimaLib.Render
         {
             foreach (var path in PathDic.Values)
             {
+                path.PointLights = PointLights;
                 path.DirectionalLights = DirectionalLights;
                 path.ModelInfoList = ModelInfoList;
                 path.BillboardInfoList = BillboardInfoList;

@@ -10,14 +10,17 @@ namespace HimaLib.Light
     {
         public Vector3 Position { get; set; }
 
-        public float Radius { get; set; }
+        public float AttenuationBegin { get; set; }
+
+        public float AttenuationEnd { get; set; }
 
         public Color Color { get; set; }
 
         public PointLight()
         {
             Position = Vector3.Zero;
-            Radius = 10.0f;
+            AttenuationBegin = 0.0f;
+            AttenuationEnd = 10.0f;
             Color = Color.White;
         }
     }

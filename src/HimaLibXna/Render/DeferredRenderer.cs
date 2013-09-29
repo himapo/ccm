@@ -27,7 +27,7 @@ namespace HimaLib.Render
 
             Shader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
             Shader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            Shader.Projection = MathUtilXna.ToXnaMatrix(GetProjMatrix());
+            Shader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
 
             Shader.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirectionalLight.Direction);
             Shader.DirLight0DiffuseColor = MathUtilXna.ToXnaColor(param.DirectionalLight.Color).ToVector3();

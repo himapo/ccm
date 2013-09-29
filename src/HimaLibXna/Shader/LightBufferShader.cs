@@ -10,6 +10,8 @@ namespace HimaLib.Shader
 {
     public class LightBufferShader
     {
+        public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
+
         public Matrix World { get; set; }
         
         public Matrix View { get; set; }
@@ -19,6 +21,14 @@ namespace HimaLib.Shader
         public Vector3 DirLight0Direction { get; set; }
 
         public Vector3 DirLight0DiffuseColor { get; set; }
+
+        public Vector3 PointLightPosition { get; set; }
+
+        public float PointLightAttenuationBegin { get; set; }
+
+        public float PointLightAttenuationEnd { get; set; }      
+
+        public Vector3 PointLightColor { get; set; }
 
         public Texture2D NormalDepthMap { get; set; }
 
@@ -46,6 +56,29 @@ namespace HimaLib.Shader
 
         public void RenderPoint()
         {
+            SetUpEffect("Point");
+
+            Effect.Parameters["gPointLight"].StructureMembers["Position"].SetValue(PointLightPosition);
+            Effect.Parameters["gPointLight"].StructureMembers["AttenuationBegin"].SetValue(PointLightAttenuationBegin);
+            Effect.Parameters["gPointLight"].StructureMembers["Color"].SetValue(PointLightColor);
+            Effect.Parameters["gPointLight"].StructureMembers["AttenuationEnd"].SetValue(PointLightAttenuationEnd);
+
+            foreach (var mesh in Model.Meshes)
+            {
+                foreach (var part in mesh.MeshParts)
+                {
+                    GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
+                    GraphicsDevice.Indices = part.IndexBuffer;
+
+                    foreach (var pass in Effect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+
+                        GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList,
+                            0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                    }
+                }
+            }
         }
 
         public void RenderSpot()
@@ -55,6 +88,9 @@ namespace HimaLib.Shader
         public void RenderDirectional()
         {
             SetUpEffect("Directional");
+
+            Effect.Parameters["DirLight0Direction"].SetValue(DirLight0Direction);
+            Effect.Parameters["DirLight0DiffuseColor"].SetValue(DirLight0DiffuseColor);
 
             HudBillboard.Render(Effect);
         }
@@ -66,9 +102,6 @@ namespace HimaLib.Shader
             Effect.Parameters["Projection"].SetValue(Projection);
 
             Effect.Parameters["NormalDepthMap"].SetValue(NormalDepthMap);
-
-            Effect.Parameters["DirLight0Direction"].SetValue(DirLight0Direction);
-            Effect.Parameters["DirLight0DiffuseColor"].SetValue(DirLight0DiffuseColor);
 
             Effect.CurrentTechnique = Effect.Techniques[techniqueName];
         }

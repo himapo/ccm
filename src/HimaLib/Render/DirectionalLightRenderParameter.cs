@@ -13,7 +13,10 @@ namespace HimaLib.Render
     /// </summary>
     public class DirectionalLightRenderParameter : BillboardRenderParameter
     {
-        public override BillboardRendererType Type { get { return BillboardRendererType.DiectionalLight; } }
+        public override BillboardRendererType Type
+        {
+            get { return BillboardRendererType.DiectionalLight; }
+        }
 
         public ITexture NormalDepthMap { get; set; }
 

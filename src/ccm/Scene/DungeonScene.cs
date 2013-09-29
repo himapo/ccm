@@ -59,6 +59,8 @@ namespace ccm.Scene
         // ライト
         DirectionalLight DirectionalLight0 = new DirectionalLight();
 
+        PointLight PointLight0 = new PointLight();
+
         // デコ
         ccm.Deco.DecoManager DecoManager = new Deco.DecoManager();
 
@@ -253,6 +255,7 @@ namespace ccm.Scene
             cameraUpdater.Reset();
             RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
         }
 
@@ -263,6 +266,11 @@ namespace ccm.Scene
             DirectionalLight0.Direction = -Vector3.One;
             DirectionalLight0.Color = new Color(0.8f, 0.8f, 0.8f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
+
+            PointLight0.Position = new Vector3(0.0f, 8.0f, 0.0f);
+            PointLight0.Color = Color.LightBlue;
+            PointLight0.AttenuationEnd = 5.0f;
+            RenderSceneManager.Instance.AddPointLight(PointLight0);
         }
 
         void InitDebugMenu()
@@ -291,6 +299,18 @@ namespace ccm.Scene
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
             });
 
+            nodeShowTarget.AddChoice("拡散反射マップ", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap);
+            });
+
+            nodeShowTarget.AddChoice("鏡面反射マップ", () =>
+            {
+                ShowRenderTarget = true;
+                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap);
+            });
+
             nodeShowTarget.AddChoice("Gバッファ0", () =>
             {
                 ShowRenderTarget = true;
@@ -313,12 +333,6 @@ namespace ccm.Scene
             {
                 ShowRenderTarget = true;
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer3);
-            });
-
-            nodeShowTarget.AddChoice("拡散反射マップ", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap);
             });
 
             debugMenu.AddChild(debugMenu.RootNode.Label, nodeShowTarget);

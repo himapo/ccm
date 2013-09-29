@@ -18,6 +18,8 @@ namespace HimaLib.Render
 
         CameraBase Camera { get; set; }
 
+        List<PointLight> PointLights { get; set; }
+
         List<DirectionalLight> DirectionalLights { get; set; }        
 
         IEnumerable<ModelInfo> ModelInfoList { get; set; }

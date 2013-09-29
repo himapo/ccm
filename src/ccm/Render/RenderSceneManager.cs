@@ -41,6 +41,21 @@ namespace ccm.Render
             RenderScene.RemovePath((int)index);
         }
 
+        public void AddPointLight(PointLight light)
+        {
+            RenderScene.AddPointLight(light);
+        }
+
+        public void RemovePointLight(PointLight light)
+        {
+            RenderScene.RemovePointLight(light);
+        }
+
+        public void ClearPointLight()
+        {
+            RenderScene.ClearPointLight();
+        }
+
         public void AddDirectionalLight(DirectionalLight light)
         {
             RenderScene.AddDirectionalLight(light);

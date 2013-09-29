@@ -145,6 +145,7 @@ namespace ccm.System
                         (int)RenderTargetType.DiffuseLightMap,
                         (int)RenderTargetType.SpecularLightMap,
                     },
+                    SphereModel = ModelFactory.Instance.Create("PointLightSphere"),
                     Billboard = BillboardFactory.Instance.Create(),
                     NormalDepthMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),
                     ClearColor = Color.Gray,

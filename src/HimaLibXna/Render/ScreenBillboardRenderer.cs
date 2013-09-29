@@ -24,7 +24,7 @@ namespace HimaLib.Render
 
         public abstract void Render();
 
-        protected Matrix GetProjMatrix()
+        protected Matrix GetScreenProjectionMatrix()
         {
             return new Matrix(
                 2.0f / ScreenWidth, 0.0f, 0.0f, 0.0f,

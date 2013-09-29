@@ -303,6 +303,11 @@
     <None Include="FontCharacters.txt">
       <Name>FontCharacters</Name>
     </None>
+    <Compile Include="Model\PointLightSphere.fbx">
+      <Name>PointLightSphere</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Effect\Depth.fx">
