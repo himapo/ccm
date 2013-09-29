@@ -50,8 +50,7 @@ struct VSOutput
 {
 	float4	PositionPS	: POSITION;		// Position in projection space
 	float2	TexCoord	: TEXCOORD0;
-	float3	Normal		: TEXCOORD1;
-	float4	PositionWS	: TEXCOORD2;	// Position in world space
+	float4	PositionWS	: TEXCOORD1;	// Position in world space
 };
 
 VSOutput VSMain(VSInput input,
@@ -65,8 +64,6 @@ VSOutput VSMain(VSInput input,
 	output.PositionPS = pos_ps;
 	
 	output.TexCoord = input.TexCoord;
-	
-	output.Normal = normalize(mul(input.Normal, (float3x3)World));
 	
 	return output;
 }
