@@ -102,6 +102,7 @@ namespace ccm.Scene
 
         void InitRenderer()
         {
+            renderParam.Transform = new AffineTransform();
             renderParam.Camera = camera;
             renderParam.Transforms = new List<AffineTransform>();
             renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);

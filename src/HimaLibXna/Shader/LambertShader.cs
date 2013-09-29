@@ -24,15 +24,13 @@ namespace HimaLib.Shader
 
         public Vector3 AmbientLightColor { get; set; }
 
-        public Vector3 DirLight0Direction { get; set; }
-
-        public Vector3 DirLight0DiffuseColor { get; set; }
-
         public bool ShadowEnabled { get; set; }
 
         public Texture2D ShadowMap { get; set; }
 
         public Matrix LightViewProjection { get; set; }
+
+        public Texture2D DiffuseLightMap { get; set; }
 
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
@@ -55,11 +53,11 @@ namespace HimaLib.Shader
         {
             if (ShadowEnabled)
             {
-                SetUpEffect("PixelLightingShadow");
+                SetUpEffect("LightMapShadow");
             }
             else
             {
-                SetUpEffect("PixelLighting");
+                SetUpEffect("LightMap");
             }
 
             foreach (var mesh in Model.Meshes)
@@ -93,12 +91,11 @@ namespace HimaLib.Shader
             effect.Parameters["Projection"].SetValue(Projection);
             effect.Parameters["LightViewProjection"].SetValue(LightViewProjection);
 
-            effect.Parameters["DiffuseMap"].SetValue(Texture);
+            effect.Parameters["ModelTexture"].SetValue(Texture);
             effect.Parameters["ShadowMap"].SetValue(ShadowMap);
+            effect.Parameters["DiffuseLightMap"].SetValue(DiffuseLightMap);
 
             effect.Parameters["AmbientLightColor"].SetValue(AmbientLightColor);
-            effect.Parameters["DirLight0Direction"].SetValue(DirLight0Direction);
-            effect.Parameters["DirLight0DiffuseColor"].SetValue(DirLight0DiffuseColor);
 
             effect.CurrentTechnique = effect.Techniques[techniqueName];
         }

@@ -6,8 +6,6 @@ float	Alpha;
 
 // Lights
 float3	AmbientLightColor;
-float3	DirLight0Direction;
-float3	DirLight0DiffuseColor;
 
 // Matrices
 float4x4	World		: World;
@@ -18,10 +16,10 @@ float4x4	LightViewProjection;
 float DepthBias = 0.005f;
 
 // Textures
-texture DiffuseMap;
-sampler DiffuseMapSampler = sampler_state
+texture ModelTexture;
+sampler ModelTextureSampler = sampler_state
 {
-	Texture = (DiffuseMap);
+	Texture = (ModelTexture);
 	MipFilter = Linear;
 	MinFilter = Linear;
 	MagFilter = Linear;
@@ -35,6 +33,12 @@ sampler ShadowMapSampler = sampler_state
 	Texture = (ShadowMap);
 };
 
+texture DiffuseLightMap;
+sampler DiffuseLightMapSampler = sampler_state
+{
+	Texture = (DiffuseLightMap);
+};
+
 struct VSInput
 {
 	float4	Position	: POSITION;
@@ -45,14 +49,12 @@ struct VSInput
 struct VSOutput
 {
 	float4	PositionPS	: POSITION;		// Position in projection space
-	float4	Diffuse		: COLOR0;
 	float2	TexCoord	: TEXCOORD0;
 	float3	Normal		: TEXCOORD1;
 	float4	PositionWS	: TEXCOORD2;	// Position in world space
 };
 
 VSOutput VSMain(VSInput input,
-	uniform bool pixelLighting,
 	uniform bool useTexture)
 {
 	VSOutput output;
@@ -61,17 +63,6 @@ VSOutput VSMain(VSInput input,
 	float4 pos_vs = mul(output.PositionWS, View);
 	float4 pos_ps = mul(pos_vs, Projection);
 	output.PositionPS = pos_ps;
-
-	if(pixelLighting)
-	{
-		output.Diffuse = float4(1, 1, 1, Alpha);
-	}
-	else
-	{
-		float diffuseIntensity = saturate(dot(input.Normal, -DirLight0Direction));
-		float3 d = saturate(DiffuseColor * DirLight0DiffuseColor * diffuseIntensity + AmbientLightColor);
-		output.Diffuse = float4(d.rgb, Alpha);
-	}
 	
 	output.TexCoord = input.TexCoord;
 	
@@ -81,40 +72,41 @@ VSOutput VSMain(VSInput input,
 }
 
 float4 PSMain(VSOutput input,
-	uniform bool pixelLighting,
 	uniform bool useTexture,
 	uniform bool shadowEnabled) : COLOR
 {
-	float4 diffuseTextureColor = tex2D(DiffuseMapSampler, input.TexCoord);
-	
 	float4 output;
 	
-	if(pixelLighting)
-	{
-		float diffuseIntensity = saturate(dot(input.Normal, -DirLight0Direction));
-		float3 d = saturate(DiffuseColor * DirLight0DiffuseColor * diffuseIntensity + AmbientLightColor);
-		output = float4(d.rgb, Alpha);
-	}
-	else
-	{
-		output = input.Diffuse;
-	}
+	// 射影空間でのこのピクセルの位置を見つける
+	float4 projPosition = mul(mul(input.PositionWS, View), Projection);
+	
+	// ライト マップでのこのピクセルの位置を見つける
+	float2 LightTexCoord = 0.5 * projPosition.xy / projPosition.w + float2( 0.5, 0.5 );
+	LightTexCoord.y = 1.0f - LightTexCoord.y;
+	
+	// ライト マップに格納された放射輝度を取得する
+	float3 radiance = tex2D(DiffuseLightMapSampler, LightTexCoord).rgb;
+	
+	// マテリアルカラー、アンビエントライトと合成する
+	float3 d = saturate(DiffuseColor * radiance + AmbientLightColor);
+	
+	output = float4(d.rgb, Alpha);
+	
 	
 	if(useTexture)
 	{
-		output *= diffuseTextureColor;
+		output *= tex2D(ModelTextureSampler, input.TexCoord);
 	}
-
+	
 	if(shadowEnabled)
 	{
 	    // ライト空間でのこのピクセルの位置を見つける
 		float4 lightingPosition = mul(input.PositionWS, LightViewProjection);
-
+		
 		// シャドウ マップでのこのピクセルの位置を見つける
-		float2 ShadowTexCoord = 0.5 * lightingPosition.xy / 
-								lightingPosition.w + float2( 0.5, 0.5 );
+		float2 ShadowTexCoord = 0.5 * lightingPosition.xy / lightingPosition.w + float2( 0.5, 0.5 );
 		ShadowTexCoord.y = 1.0f - ShadowTexCoord.y;
-
+		
 		// シャドウ マップに格納された現在の深度を取得する
 		float shadowdepth = tex2D(ShadowMapSampler, ShadowTexCoord).r;
         
@@ -122,7 +114,7 @@ float4 PSMain(VSOutput input,
 		// バイアスは、オクルーダーのピクセルが描画されるときに起きる
 		// 浮動小数点誤差を防止するために使用される
 		float ourdepth = (lightingPosition.z / lightingPosition.w) - DepthBias;
-    
+		
 		// このピクセルがシャドウ マップで値の前にあるか後にあるかを調べる
 		if (shadowdepth < ourdepth)
 		{
@@ -134,47 +126,29 @@ float4 PSMain(VSOutput input,
 	return output;
 }
 
-Technique VertexLighting
+Technique LightMap
 {
 	Pass P0
 	{
-		VertexShader	= compile vs_2_0 VSMain(false, false);
-		PixelShader		= compile ps_2_0 PSMain(false, false, false);
+		VertexShader	= compile vs_2_0 VSMain(false);
+		PixelShader		= compile ps_2_0 PSMain(false, false);
 	}
 }
 
-Technique VertexLightingTexture
+Technique LightMapShadow
 {
 	Pass P0
 	{
-		VertexShader	= compile vs_2_0 VSMain(false, true);
-		PixelShader		= compile ps_2_0 PSMain(false, true, false);
+		VertexShader	= compile vs_2_0 VSMain(false);
+		PixelShader		= compile ps_2_0 PSMain(false, true);
 	}
 }
 
-Technique PixelLighting
+Technique LightMapModTexture
 {
 	Pass P0
 	{
-		VertexShader	= compile vs_2_0 VSMain(true, false);
-		PixelShader		= compile ps_2_0 PSMain(true, false, false);
-	}
-}
-
-Technique PixelLightingShadow
-{
-	Pass P0
-	{
-		VertexShader	= compile vs_2_0 VSMain(true, false);
-		PixelShader		= compile ps_2_0 PSMain(true, false, true);
-	}
-}
-
-Technique PixelLightingTexture
-{
-	Pass P0
-	{
-		VertexShader	= compile vs_2_0 VSMain(true, true);
-		PixelShader		= compile ps_2_0 PSMain(true, true, false);
+		VertexShader	= compile vs_2_0 VSMain(true);
+		PixelShader		= compile ps_2_0 PSMain(true, false);
 	}
 }

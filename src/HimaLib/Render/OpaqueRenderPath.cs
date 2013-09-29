@@ -39,6 +39,16 @@ namespace HimaLib.Render
 
         public override void Render()
         {
+            ModelInfoList = ModelInfoList.Select(
+            info =>
+            {
+                info.RenderParam.ShadowMap = ShadowMap;
+                info.RenderParam.DiffuseLightMap = DiffuseLightMap;
+                info.RenderParam.SpecularLightMap = SpecularLightMap;
+
+                return info;
+            });
+
             base.Render();
         }
     }

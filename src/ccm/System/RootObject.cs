@@ -171,6 +171,7 @@ namespace ccm.System
                     //Enabled = false,
                     Name = "Opaque",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0),
                     DiffuseLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap),
                     SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
                 });

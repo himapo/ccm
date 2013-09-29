@@ -31,8 +31,6 @@ namespace HimaLib.Render
             
             lambert.Alpha = param.Alpha;
             lambert.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
-            lambert.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirectionalLights[0].Direction);
-            lambert.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirectionalLights[0].Color.ToVector3());
 
             lambert.ShadowEnabled = param.IsShadowReceiver;
             if (lambert.ShadowEnabled)
@@ -40,6 +38,8 @@ namespace HimaLib.Render
                 lambert.LightViewProjection = MathUtilXna.ToXnaMatrix(param.LightCamera.View * param.LightCamera.Projection);
                 lambert.ShadowMap = (param.ShadowMap as ITextureXna).Texture;
             }
+
+            lambert.DiffuseLightMap = (param.DiffuseLightMap as ITextureXna).Texture;
         }
 
         public void Render(Microsoft.Xna.Framework.Graphics.Model model)
