@@ -249,8 +249,8 @@ namespace ccm.Scene
 
         void InitCamera()
         {
-            Camera.Near = 30.0f;
-            Camera.Far = 300.0f;
+            Camera.Near = 20.0f;
+            Camera.Far = 200.0f;
 
             cameraUpdater.Reset();
             RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
@@ -267,10 +267,10 @@ namespace ccm.Scene
             DirectionalLight0.Color = new Color(0.5f, 0.5f, 0.5f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
 
-            PointLight0.Position = new Vector3(0.0f, 8.0f, 0.0f);
+            PointLight0.Position = new Vector3(0.0f, 20.0f, 0.0f);
             PointLight0.Color = Color.White;
-            PointLight0.AttenuationBegin = 4.0f;
-            PointLight0.AttenuationEnd = 15.0f;
+            PointLight0.AttenuationBegin = 2.0f;
+            PointLight0.AttenuationEnd = 50.0f;
             RenderSceneManager.Instance.AddPointLight(PointLight0);
         }
 

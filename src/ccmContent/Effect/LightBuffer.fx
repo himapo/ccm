@@ -188,12 +188,15 @@ Technique Point
 		
 		// ジオメトリより奥にある裏面だけをステンシルにマーク
 		ZFunc = GREATEREQUAL;
-		StencilEnable = True;
+		StencilEnable = TRUE;
+		//StencilMask = 0xff;
+		//StencilWriteMask = 0xff;
+		//StencilRef = 1;
 		StencilFunc = ALWAYS;
 		StencilPass = REPLACE;
 		StencilFail = KEEP;
 		StencilZFail = KEEP;
-		AlphaBlendEnable = False;
+		AlphaBlendEnable = FALSE;
 		ColorWriteEnable = 0;
 		CullMode = CW;
 		
@@ -208,17 +211,43 @@ Technique Point
 		
 		// P0でマークされ、かつジオメトリより手前にある表面を加算描画
 		ZFunc = LESS;
-		StencilEnable = True;
+		StencilEnable = TRUE;
+		//StencilMask = 0xff;
+		//StencilWriteMask = 0xff;
+		//StencilRef = 1;
 		StencilFunc = EQUAL;
 		StencilPass = KEEP;
 		StencilFail = KEEP;
 		StencilZFail = KEEP;
-		AlphaBlendEnable = True;
+		AlphaBlendEnable = TRUE;
 		BlendOp = ADD;
 		SrcBlend = ONE;
 		DestBlend = ONE;
 		ColorWriteEnable = RED | GREEN | BLUE | ALPHA;
 		CullMode = CCW;
+		
+		VertexShader	= compile vs_2_0 VSPoint();
+		PixelShader		= compile ps_2_0 PSPoint();
+	}
+}
+
+// カメラがライトボリュームの内部にある場合
+Technique PointInLight
+{
+	Pass P0
+	{
+		ZEnable = TRUE;
+		ZWriteEnable = FALSE;
+		
+		// ジオメトリより奥にある裏面を加算描画
+		ZFunc = GREATEREQUAL;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = ONE;
+		DestBlend = ONE;
+		ColorWriteEnable = RED | GREEN | BLUE | ALPHA;
+		CullMode = CW;
 		
 		VertexShader	= compile vs_2_0 VSPoint();
 		PixelShader		= compile ps_2_0 PSPoint();

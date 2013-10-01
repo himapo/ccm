@@ -32,6 +32,8 @@ namespace HimaLib.Shader
 
         public Texture2D NormalDepthMap { get; set; }
 
+        public bool IsCameraInLight { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect Effect;
@@ -56,7 +58,15 @@ namespace HimaLib.Shader
 
         public void RenderPoint()
         {
-            SetUpEffect("Point");
+            if (IsCameraInLight)
+            {
+                PointLightColor = Color.Red.ToVector3();
+                SetUpEffect("PointInLight");
+            }
+            else
+            {
+                SetUpEffect("Point");
+            }
 
             Effect.Parameters["gPointLight"].StructureMembers["Position"].SetValue(PointLightPosition);
             Effect.Parameters["gPointLight"].StructureMembers["AttenuationBegin"].SetValue(PointLightAttenuationBegin);

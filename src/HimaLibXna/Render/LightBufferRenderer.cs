@@ -35,6 +35,10 @@ namespace HimaLib.Render
             Shader.PointLightAttenuationEnd = param.PointLight.AttenuationEnd;
 
             Shader.NormalDepthMap = (param.NormalDepthMap as ITextureXna).Texture;
+
+            Shader.IsCameraInLight = 
+                (param.Camera.Eye - param.PointLight.Position).Length() 
+                < (param.PointLight.AttenuationEnd + param.Camera.Near);
         }
 
         public override void SetParameter(BillboardRenderParameter p)
