@@ -124,13 +124,7 @@ namespace ccm.System
                 {
                     Name = "GBuffer",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
-                    RenderTargetIndices = new int[]
-                    {
-                        (int)RenderTargetType.GBuffer0,
-                        //(int)RenderTargetType.GBuffer1,
-                        //(int)RenderTargetType.GBuffer2,
-                        //(int)RenderTargetType.GBuffer3
-                    },
+                    RenderTargetIndex = (int)RenderTargetType.GBuffer0,
                 });
 
             RenderSceneManager.Instance.AddPath(
@@ -140,15 +134,11 @@ namespace ccm.System
                     //Enabled = false,
                     Name = "LightBuffer",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
-                    RenderTargetIndices = new int[]
-                    {
-                        (int)RenderTargetType.DiffuseLightMap,
-                        (int)RenderTargetType.SpecularLightMap,
-                    },
+                    RenderTargetIndex = (int)RenderTargetType.DiffuseLightMap,
                     SphereModel = ModelFactory.Instance.Create("PointLightSphere"),
                     Billboard = BillboardFactory.Instance.Create(),
                     NormalDepthMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),
-                    ClearColor = Color.Gray,
+                    //ClearColor = Color.Gray,
                 });
 
             RenderSceneManager.Instance.AddPath(

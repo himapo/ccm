@@ -264,12 +264,13 @@ namespace ccm.Scene
             RenderSceneManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
-            DirectionalLight0.Color = new Color(0.8f, 0.8f, 0.8f);
+            DirectionalLight0.Color = new Color(0.5f, 0.5f, 0.5f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
 
             PointLight0.Position = new Vector3(0.0f, 8.0f, 0.0f);
-            PointLight0.Color = Color.LightBlue;
-            PointLight0.AttenuationEnd = 5.0f;
+            PointLight0.Color = Color.White;
+            PointLight0.AttenuationBegin = 4.0f;
+            PointLight0.AttenuationEnd = 15.0f;
             RenderSceneManager.Instance.AddPointLight(PointLight0);
         }
 

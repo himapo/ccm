@@ -37,6 +37,11 @@ texture DiffuseLightMap;
 sampler DiffuseLightMapSampler = sampler_state
 {
 	Texture = (DiffuseLightMap);
+	MipFilter = Linear;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
 };
 
 struct VSInput
@@ -127,6 +132,7 @@ Technique LightMap
 {
 	Pass P0
 	{
+		AlphaBlendEnable = FALSE;
 		VertexShader	= compile vs_2_0 VSMain(false);
 		PixelShader		= compile ps_2_0 PSMain(false, false);
 	}
@@ -136,6 +142,7 @@ Technique LightMapShadow
 {
 	Pass P0
 	{
+		AlphaBlendEnable = FALSE;
 		VertexShader	= compile vs_2_0 VSMain(false);
 		PixelShader		= compile ps_2_0 PSMain(false, true);
 	}
@@ -145,6 +152,7 @@ Technique LightMapModTexture
 {
 	Pass P0
 	{
+		AlphaBlendEnable = FALSE;
 		VertexShader	= compile vs_2_0 VSMain(true);
 		PixelShader		= compile ps_2_0 PSMain(true, false);
 	}

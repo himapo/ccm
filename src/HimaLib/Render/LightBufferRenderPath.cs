@@ -19,7 +19,7 @@ namespace HimaLib.Render
         public LightBufferRenderPath()
         {
             ClearEnabled = true;
-            ClearColor = Color.Gray;
+            ClearColor = Color.Black;
 
             DepthSortEnabled = true;
             DepthTestEnabled = false;
@@ -40,22 +40,11 @@ namespace HimaLib.Render
 
         public override void Render()
         {
-            BillboardInfoList = new List<BillboardInfo>();
-            ModelInfoList = new List<ModelInfo>();
-
-            ClearEnabled = true;
-            DepthTestEnabled = false;
-            RenderModelEnabled = false;
-            RenderBillboardEnabled = true;
-
             RenderDirectionalLights();
 
-            ClearEnabled = false;
-            DepthTestEnabled = true;
-            RenderModelEnabled = true;
-            RenderBillboardEnabled = false;
-
             RenderPointLights();
+
+            base.Render();
         }
 
         void RenderPointLights()
@@ -85,12 +74,12 @@ namespace HimaLib.Render
             }
 
             ModelInfoList = modelInfoList;
-
-            base.Render();
         }
 
         void RenderDirectionalLights()
         {
+            BillboardInfoList = new List<BillboardInfo>();            
+
             foreach (var light in DirectionalLights)
             {
                 var renderParam = new DirectionalLightRenderParameter()
@@ -105,8 +94,6 @@ namespace HimaLib.Render
                     RenderParam = renderParam,
                 });
             }
-
-            base.Render();
         }
     }
 }

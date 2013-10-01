@@ -35,8 +35,9 @@ struct VSOutput
 
 struct VSOutputND
 {
-	float4	PositionPS	: POSITION;
-	float4	NormalDepth	: TEXCOORD0;
+	float4	Position	: POSITION;
+	float4	PositionPS	: TEXCOORD0;
+	float3	Normal		: TEXCOORD1;
 };
 
 struct PSOutput
@@ -76,12 +77,11 @@ VSOutputND VSMainND(VSInput input)
 	
 	float4 pos_ws = mul(input.Position, World);
 	float4 pos_vs = mul(pos_ws, View);
-	float4 pos_ps = mul(pos_vs, Projection);
-	output.PositionPS = pos_ps;
+	output.Position = mul(pos_vs, Projection);
 	
-	output.NormalDepth.rgb = (normalize(mul(input.Normal, (float3x3)World)) + 1.0f) * 0.5f;
+	output.PositionPS = output.Position;
 	
-	output.NormalDepth.a = output.PositionPS.z / output.PositionPS.w;
+	output.Normal = input.Normal;
 	
 	return output;
 }
@@ -111,7 +111,12 @@ PSOutputND PSMainND(VSOutputND input)
 {
 	PSOutputND output;
 	
-	output.NormalDepth = input.NormalDepth;
+	float3 normal = mul(float4(input.Normal, 0), World).xyz;
+	//float3 normal = mul(mul(float4(input.Normal, 0), World), View).xyz;
+	
+	output.NormalDepth.rgb = (normalize(normal) + 1.0f) * 0.5f;
+	
+	output.NormalDepth.a = input.PositionPS.z / input.PositionPS.w;
 	
 	return output;
 }

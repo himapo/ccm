@@ -100,6 +100,8 @@ namespace HimaLib.Shader
             Effect.Parameters["World"].SetValue(World);
             Effect.Parameters["View"].SetValue(View);
             Effect.Parameters["Projection"].SetValue(Projection);
+            Effect.Parameters["InvView"].SetValue(Matrix.Invert(View));
+            Effect.Parameters["InvProj"].SetValue(Matrix.Invert(Projection));
 
             Effect.Parameters["NormalDepthMap"].SetValue(NormalDepthMap);
 
