@@ -38,11 +38,16 @@ struct VSInputPoint
 	float4	Position	: POSITION;
 };
 
-struct VSOutput
+struct VSOutputDirectional
 {
 	float4	PositionPS	: POSITION;
 	float2	TexCoord	: TEXCOORD0;
-	float4	PositionWS	: TEXCOORD1;
+};
+
+struct VSOutputPoint
+{
+	float4	PositionPS	: POSITION;
+	float4	PositionWS	: TEXCOORD0;
 };
 
 struct PSOutput
@@ -51,9 +56,9 @@ struct PSOutput
 	//float4	Specular	: COLOR1;
 };
 
-VSOutput VSDirectional(VSInputDirectional input)
+VSOutputDirectional VSDirectional(VSInputDirectional input)
 {
-	VSOutput output;
+	VSOutputDirectional output;
 	
 	float4 pos_ws = mul(input.Position, World);
 	float4 pos_vs = mul(pos_ws, View);
@@ -62,26 +67,22 @@ VSOutput VSDirectional(VSInputDirectional input)
 	
 	output.TexCoord = input.TexCoord;
 	
-	output.PositionWS = 0;
-	
 	return output;
 }
 
-VSOutput VSPoint(VSInputPoint input)
+VSOutputPoint VSPoint(VSInputPoint input)
 {
-	VSOutput output;
+	VSOutputPoint output;
 	
 	output.PositionWS = mul(input.Position, World);
 	float4 pos_vs = mul(output.PositionWS, View);
 	float4 pos_ps = mul(pos_vs, Projection);
 	output.PositionPS = pos_ps;
 	
-	output.TexCoord = 0;
-	
 	return output;
 }
 
-PSOutput PSDirectional(VSOutput input)
+PSOutput PSDirectional(VSOutputDirectional input)
 {
 	PSOutput output;
 	
@@ -99,7 +100,12 @@ PSOutput PSDirectional(VSOutput input)
 	return output;
 }
 
-PSOutput PSPoint(VSOutput input)
+float4 PSNull(VSOutputPoint input) : COLOR
+{
+	return float4(0, 0, 0, 1);
+}
+
+PSOutput PSPoint(VSOutputPoint input)
 {
 	PSOutput output;
 	
@@ -144,6 +150,7 @@ PSOutput PSPoint(VSOutput input)
 	float attenuation = lerp(1.0f, 0.0f, 
 		(lightDistance - gPointLight.AttenuationBegin) / (gPointLight.AttenuationEnd - gPointLight.AttenuationBegin));
 	attenuation = clamp(attenuation, 0.0f, 1.0f);
+	//attenuation = 1.0f;
 	
 	float diffuseIntensity = dot(normalWS, -lightDirection / lightDistance);
 	
@@ -160,10 +167,13 @@ Technique Directional
 	{
 		ZEnable = FALSE;
 		ZWriteEnable = FALSE;
+		StencilEnable = FALSE;
 		AlphaBlendEnable = TRUE;
 		BlendOp = ADD;
 		SrcBlend = ONE;
 		DestBlend = ONE;
+		CullMode = CCW;
+		
 		VertexShader	= compile vs_2_0 VSDirectional();
 		PixelShader		= compile ps_2_0 PSDirectional();
 	}
@@ -175,11 +185,41 @@ Technique Point
 	{
 		ZEnable = TRUE;
 		ZWriteEnable = FALSE;
-		AlphaBlendEnable = TRUE;
+		
+		// ジオメトリより奥にある裏面だけをステンシルにマーク
+		ZFunc = GREATEREQUAL;
+		StencilEnable = True;
+		StencilFunc = ALWAYS;
+		StencilPass = REPLACE;
+		StencilFail = KEEP;
+		StencilZFail = KEEP;
+		AlphaBlendEnable = False;
+		ColorWriteEnable = 0;
+		CullMode = CW;
+		
+		VertexShader	= compile vs_2_0 VSPoint();
+		PixelShader		= compile ps_2_0 PSNull();
+	}
+	
+	Pass P1
+	{
+		ZEnable = TRUE;
+		ZWriteEnable = FALSE;
+		
+		// P0でマークされ、かつジオメトリより手前にある表面を加算描画
+		ZFunc = LESS;
+		StencilEnable = True;
+		StencilFunc = EQUAL;
+		StencilPass = KEEP;
+		StencilFail = KEEP;
+		StencilZFail = KEEP;
+		AlphaBlendEnable = True;
 		BlendOp = ADD;
 		SrcBlend = ONE;
 		DestBlend = ONE;
-		//CullMode = CCW;
+		ColorWriteEnable = RED | GREEN | BLUE | ALPHA;
+		CullMode = CCW;
+		
 		VertexShader	= compile vs_2_0 VSPoint();
 		PixelShader		= compile ps_2_0 PSPoint();
 	}

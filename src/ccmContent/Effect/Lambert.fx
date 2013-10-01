@@ -132,7 +132,13 @@ Technique LightMap
 {
 	Pass P0
 	{
+		ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESS;
+		StencilEnable = FALSE;
 		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
+		
 		VertexShader	= compile vs_2_0 VSMain(false);
 		PixelShader		= compile ps_2_0 PSMain(false, false);
 	}
@@ -142,7 +148,13 @@ Technique LightMapShadow
 {
 	Pass P0
 	{
+		ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESS;
+		StencilEnable = FALSE;
 		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
+		
 		VertexShader	= compile vs_2_0 VSMain(false);
 		PixelShader		= compile ps_2_0 PSMain(false, true);
 	}
@@ -152,7 +164,13 @@ Technique LightMapModTexture
 {
 	Pass P0
 	{
+		ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESS;
+		StencilEnable = FALSE;
 		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
+		
 		VertexShader	= compile vs_2_0 VSMain(true);
 		PixelShader		= compile ps_2_0 PSMain(true, false);
 	}
