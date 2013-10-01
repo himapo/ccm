@@ -35,7 +35,7 @@ namespace HimaLib.Texture
                 height,
                 false,
                 SurfaceFormat.Color,
-                DepthFormat.Depth24Stencil8);
+                DepthFormat.None);  // 深度バッファはバックバッファのものを使いまわす
         }
 
         public void RemoveRenderTarget(int index)
