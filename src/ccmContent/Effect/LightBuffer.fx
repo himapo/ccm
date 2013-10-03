@@ -187,7 +187,7 @@ Technique Point
 		ZWriteEnable = FALSE;
 		
 		// ジオメトリより奥にある裏面だけをステンシルにマーク
-		ZFunc = GREATEREQUAL;
+		ZFunc = GREATER;
 		StencilEnable = TRUE;
 		StencilFunc = ALWAYS;
 		StencilPass = REPLACE;
@@ -207,7 +207,7 @@ Technique Point
 		ZWriteEnable = FALSE;
 		
 		// P0でマークされ、かつジオメトリより手前にある表面を加算描画
-		ZFunc = LESS;
+		ZFunc = LESSEQUAL;
 		StencilEnable = TRUE;
 		StencilFunc = EQUAL;
 		StencilPass = KEEP;
@@ -234,7 +234,7 @@ Technique PointInLight
 		ZWriteEnable = FALSE;
 		
 		// ジオメトリより奥にある裏面を加算描画
-		ZFunc = GREATEREQUAL;
+		ZFunc = GREATER;
 		StencilEnable = FALSE;
 		AlphaBlendEnable = TRUE;
 		BlendOp = ADD;

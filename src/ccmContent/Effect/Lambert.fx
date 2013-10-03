@@ -134,7 +134,7 @@ Technique LightMap
 	{
 		ZEnable = TRUE;
 		ZWriteEnable = TRUE;
-		ZFunc = LESS;
+		ZFunc = LESSEQUAL;
 		StencilEnable = FALSE;
 		AlphaBlendEnable = FALSE;
 		CullMode = CCW;
@@ -150,7 +150,7 @@ Technique LightMapShadow
 	{
 		ZEnable = TRUE;
 		ZWriteEnable = TRUE;
-		ZFunc = LESS;
+		ZFunc = LESSEQUAL;
 		StencilEnable = FALSE;
 		AlphaBlendEnable = FALSE;
 		CullMode = CCW;
@@ -166,7 +166,7 @@ Technique LightMapModTexture
 	{
 		ZEnable = TRUE;
 		ZWriteEnable = TRUE;
-		ZFunc = LESS;
+		ZFunc = LESSEQUAL;
 		StencilEnable = FALSE;
 		AlphaBlendEnable = FALSE;
 		CullMode = CCW;
