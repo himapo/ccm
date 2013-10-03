@@ -20,7 +20,7 @@ namespace HimaLib.Render
 
         public DeferredRenderPath()
         {
-            ClearEnabled = true;
+            ColorClearEnabled = true;
             ClearColor = Color.Gray;
 
             DepthSortEnabled = true;

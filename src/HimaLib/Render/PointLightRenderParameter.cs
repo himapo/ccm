@@ -19,6 +19,8 @@ namespace HimaLib.Render
 
         public PointLight PointLight { get; set; }
 
+        public int LightID { get; set; }
+
         public PointLightRenderParameter()
         {
         }

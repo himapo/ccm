@@ -11,7 +11,9 @@ namespace HimaLib.Render
     /// </summary>
     public interface IRenderDevice
     {
-        void Clear(Color color);
+        void ClearAll(Color color);
+
+        void ClearColor(Color color);
 
         void ClearDepth();
 

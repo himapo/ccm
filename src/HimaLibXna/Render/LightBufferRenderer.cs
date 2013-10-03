@@ -39,6 +39,8 @@ namespace HimaLib.Render
             Shader.IsCameraInLight = 
                 (param.Camera.Eye - param.PointLight.Position).Length() 
                 < (param.PointLight.AttenuationEnd + param.Camera.Near);
+
+            Shader.LightID = param.LightID;
         }
 
         public override void SetParameter(BillboardRenderParameter p)

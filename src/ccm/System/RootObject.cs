@@ -106,7 +106,9 @@ namespace ccm.System
                 RenderTargetManager.Instance.AddRenderTarget(
                     i,
                     GameProperty.resolutionWidth,
-                    GameProperty.resolutionHeight);
+                    GameProperty.resolutionHeight,
+                    true,
+                    true);
             }
 
             RenderSceneManager.Instance.AddPath(
@@ -124,7 +126,11 @@ namespace ccm.System
                 {
                     Name = "GBuffer",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
-                    RenderTargetIndex = (int)RenderTargetType.GBuffer0,
+                    RenderTargetIndices = new int[]
+                    {
+                        (int)RenderTargetType.DiffuseLightMap,
+                        (int)RenderTargetType.GBuffer0,
+                    }
                 });
 
             RenderSceneManager.Instance.AddPath(

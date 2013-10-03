@@ -14,7 +14,7 @@ namespace HimaLib.Render
 
         public ShadowMapRenderPath()
         {
-            ClearEnabled = true;
+            ColorClearEnabled = true;
             ClearColor = Color.White;
 
             DepthSortEnabled = false;

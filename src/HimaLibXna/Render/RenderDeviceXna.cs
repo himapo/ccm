@@ -15,9 +15,14 @@ namespace HimaLib.Render
 
         int PrevRenderTargetIndex;
 
-        public void Clear(Color color)
+        public void ClearAll(Color color)
         {
             GraphicsDevice.Clear(MathUtilXna.ToXnaColor(color));
+        }
+
+        public void ClearColor(Color color)
+        {
+            GraphicsDevice.Clear(ClearOptions.Target, MathUtilXna.ToXnaColor(color), 0.0f, 0);
         }
 
         public void ClearDepth()

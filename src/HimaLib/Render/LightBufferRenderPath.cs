@@ -18,12 +18,12 @@ namespace HimaLib.Render
 
         public LightBufferRenderPath()
         {
-            ClearEnabled = true;
+            ColorClearEnabled = true;
             ClearColor = Color.Black;
 
             DepthSortEnabled = true;
-            DepthTestEnabled = false;
-            DepthWriteEnabled = false;
+            DepthTestEnabled = true;
+            DepthWriteEnabled = true;
             DepthClearEnabled = false;
 
             RenderModelEnabled = true;
@@ -51,18 +51,21 @@ namespace HimaLib.Render
         {
             var modelInfoList = new List<ModelInfo>();
 
-            foreach (var light in PointLights)
+            var query = PointLights.Select((light, index) => new { light, index });
+
+            foreach (var v in query)
             {
                 var transform = new AffineTransform()
                 {
-                    Scale = Vector3.One * light.AttenuationEnd,
-                    Translation = light.Position,
+                    Scale = Vector3.One * v.light.AttenuationEnd,
+                    Translation = v.light.Position,
                 };
 
                 var renderParam = new PointLightRenderParameter()
                 {
                     Transform = transform,
-                    PointLight = light,
+                    PointLight = v.light,
+                    LightID = v.index + 1,
                     NormalDepthMap = NormalDepthMap,
                 };
 

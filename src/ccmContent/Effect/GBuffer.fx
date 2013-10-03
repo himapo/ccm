@@ -50,7 +50,8 @@ struct PSOutput
 
 struct PSOutputND
 {
-	float4	NormalDepth	: COLOR0;
+	float4	Dummy		: COLOR0;
+	float4	NormalDepth	: COLOR1;
 };
 
 VSOutput VSMain(VSInput input)
@@ -117,6 +118,8 @@ PSOutputND PSMainND(VSOutputND input)
 	output.NormalDepth.rgb = (normalize(normal) + 1.0f) * 0.5f;
 	
 	output.NormalDepth.a = input.PositionPS.z / input.PositionPS.w;
+	
+	output.Dummy = 0;
 	
 	return output;
 }

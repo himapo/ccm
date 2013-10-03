@@ -27,15 +27,27 @@ namespace HimaLib.Texture
         {
         }
 
-        public void AddRenderTarget(int index, int width, int height)
+        public void AddRenderTarget(int index, int width, int height, bool depthEnable, bool stencilEnable)
         {
+            var depthFormat = DepthFormat.None;
+            if (stencilEnable)
+            {
+                depthFormat = DepthFormat.Depth24Stencil8;
+            }
+            else if (depthEnable)
+            {
+                depthFormat = DepthFormat.Depth24;
+            }
+
             RenderTargetDic[index] = new RenderTarget2D(
                 GraphicsDevice,
                 width,
                 height,
                 false,
                 SurfaceFormat.Color,
-                DepthFormat.None);  // 深度バッファはバックバッファのものを使いまわす
+                depthFormat,
+                1,
+                RenderTargetUsage.PreserveContents);    // 深度バッファを保存するため
         }
 
         public void RemoveRenderTarget(int index)

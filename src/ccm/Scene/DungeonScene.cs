@@ -270,7 +270,7 @@ namespace ccm.Scene
             PointLight0.Position = new Vector3(0.0f, 20.0f, 0.0f);
             PointLight0.Color = Color.White;
             PointLight0.AttenuationBegin = 2.0f;
-            PointLight0.AttenuationEnd = 50.0f;
+            PointLight0.AttenuationEnd = 30.0f;
             RenderSceneManager.Instance.AddPointLight(PointLight0);
         }
 

@@ -17,7 +17,7 @@ namespace HimaLib.Render
 
         public OpaqueRenderPath()
         {
-            ClearEnabled = true;
+            ColorClearEnabled = true;
             ClearColor = Color.Gray;
 
             DepthSortEnabled = false;

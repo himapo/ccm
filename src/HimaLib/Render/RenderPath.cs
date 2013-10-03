@@ -30,7 +30,7 @@ namespace HimaLib.Render
 
         public IRenderDevice RenderDevice { get; set; }
 
-        public bool ClearEnabled { get; set; }
+        public bool ColorClearEnabled { get; set; }
 
         public Color ClearColor { get; set; }
 
@@ -66,7 +66,7 @@ namespace HimaLib.Render
         {
             Enabled = true;
 
-            ClearEnabled = false;
+            ColorClearEnabled = false;
             ClearColor = Color.Gray;
 
             DepthSortEnabled = false;
@@ -108,9 +108,13 @@ namespace HimaLib.Render
 
             RenderDevice.SetDepthState(DepthTestEnabled, DepthWriteEnabled);
 
-            if (ClearEnabled)
+            if (ColorClearEnabled && DepthClearEnabled)
             {
-                RenderDevice.Clear(ClearColor);
+                RenderDevice.ClearAll(ClearColor);
+            }
+            else if (ColorClearEnabled)
+            {
+                RenderDevice.ClearColor(ClearColor);
             }
             else if (DepthClearEnabled)
             {

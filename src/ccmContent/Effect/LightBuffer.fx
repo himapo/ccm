@@ -189,15 +189,12 @@ Technique Point
 		// ジオメトリより奥にある裏面だけをステンシルにマーク
 		ZFunc = GREATEREQUAL;
 		StencilEnable = TRUE;
-		//StencilMask = 0xff;
-		//StencilWriteMask = 0xff;
-		//StencilRef = 1;
 		StencilFunc = ALWAYS;
 		StencilPass = REPLACE;
 		StencilFail = KEEP;
 		StencilZFail = KEEP;
 		AlphaBlendEnable = FALSE;
-		ColorWriteEnable = 0;
+		//ColorWriteEnable = 0;		// これを0にすると深度バッファが無効になってしまう
 		CullMode = CW;
 		
 		VertexShader	= compile vs_2_0 VSPoint();
@@ -212,9 +209,6 @@ Technique Point
 		// P0でマークされ、かつジオメトリより手前にある表面を加算描画
 		ZFunc = LESS;
 		StencilEnable = TRUE;
-		//StencilMask = 0xff;
-		//StencilWriteMask = 0xff;
-		//StencilRef = 1;
 		StencilFunc = EQUAL;
 		StencilPass = KEEP;
 		StencilFail = KEEP;

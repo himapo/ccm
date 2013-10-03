@@ -34,6 +34,8 @@ namespace HimaLib.Shader
 
         public bool IsCameraInLight { get; set; }
 
+        public int LightID { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect Effect;
@@ -67,6 +69,10 @@ namespace HimaLib.Shader
             {
                 SetUpEffect("Point");
             }
+
+            var depthStencilState = new DepthStencilState();
+            depthStencilState.ReferenceStencil = LightID;
+            GraphicsDevice.DepthStencilState = depthStencilState;
 
             Effect.Parameters["gPointLight"].StructureMembers["Position"].SetValue(PointLightPosition);
             Effect.Parameters["gPointLight"].StructureMembers["AttenuationBegin"].SetValue(PointLightAttenuationBegin);
