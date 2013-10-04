@@ -20,7 +20,7 @@ namespace HimaLib.Render
             DepthSortEnabled = false;
             DepthTestEnabled = true;
             DepthWriteEnabled = true;
-            DepthClearEnabled = false;
+            DepthClearEnabled = true;
 
             RenderModelEnabled = true;
             RenderShadowModelOnly = false;
