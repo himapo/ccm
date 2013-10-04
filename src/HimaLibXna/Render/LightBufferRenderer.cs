@@ -34,7 +34,8 @@ namespace HimaLib.Render
             Shader.PointLightAttenuationBegin = param.PointLight.AttenuationBegin;
             Shader.PointLightAttenuationEnd = param.PointLight.AttenuationEnd;
 
-            Shader.NormalDepthMap = (param.NormalDepthMap as ITextureXna).Texture;
+            Shader.NormalMap = (param.NormalMap as ITextureXna).Texture;
+            Shader.DepthMap = (param.DepthMap as ITextureXna).Texture;
 
             Shader.IsCameraInLight = 
                 (param.Camera.Eye - param.PointLight.Position).Length() 
@@ -58,7 +59,8 @@ namespace HimaLib.Render
             Shader.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirectionalLight.Direction);
             Shader.DirLight0DiffuseColor = MathUtilXna.ToXnaColor(param.DirectionalLight.Color).ToVector3();
 
-            Shader.NormalDepthMap = (param.NormalDepthMap as ITextureXna).Texture;
+            Shader.NormalMap = (param.NormalMap as ITextureXna).Texture;
+            Shader.DepthMap = (param.DepthMap as ITextureXna).Texture;
         }
 
         public void Render(Microsoft.Xna.Framework.Graphics.Model model)

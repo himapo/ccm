@@ -317,13 +317,13 @@ namespace ccm.Scene
                 ShowRenderTarget = true;
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0);
             });
-            /*
+            
             nodeShowTarget.AddChoice("Gバッファ1", () =>
             {
                 ShowRenderTarget = true;
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer1);
             });
-
+            /*
             nodeShowTarget.AddChoice("Gバッファ2", () =>
             {
                 ShowRenderTarget = true;

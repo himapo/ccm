@@ -15,7 +15,9 @@ namespace HimaLib.Render
             get { return ModelRendererType.PointLight; }
         }
 
-        public ITexture NormalDepthMap { get; set; }
+        public ITexture NormalMap { get; set; }
+
+        public ITexture DepthMap { get; set; }
 
         public PointLight PointLight { get; set; }
 

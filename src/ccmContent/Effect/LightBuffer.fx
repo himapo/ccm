@@ -21,10 +21,21 @@ float4x4	InvView;
 float4x4	InvProj;
 
 // Textures
-texture NormalDepthMap;
-sampler NormalDepthMapSampler = sampler_state
+texture NormalMap;
+sampler NormalMapSampler = sampler_state
 {
-	Texture = (NormalDepthMap);
+	Texture = (NormalMap);
+};
+
+texture DepthMap;
+sampler DepthMapSampler = sampler_state
+{
+	Texture = (DepthMap);
+	MipFilter = Point;
+	MinFilter = Point;
+	MagFilter = Point;
+	AddressU = Clamp;
+	AddressV = Clamp;
 };
 
 struct VSInputDirectional
@@ -86,7 +97,7 @@ PSOutput PSDirectional(VSOutputDirectional input)
 {
 	PSOutput output;
 	
-	float4 normalDepth = tex2D(NormalDepthMapSampler, input.TexCoord);
+	float4 normalDepth = tex2D(NormalMapSampler, input.TexCoord);
 	float3 normal = normalDepth.rgb * 2.0f - 1.0f;
 	//float depth = normalDepth.a;
 	
@@ -119,11 +130,11 @@ PSOutput PSPoint(VSOutputPoint input)
 	texCoord.y = 1.0f - texCoord.y;
 	
 	// ジオメトリの法線と深度を引っ張ってくる
-	float4 normalDepth = tex2D(NormalDepthMapSampler, texCoord);
+	float4 normalDepth = tex2D(NormalMapSampler, texCoord);
 	float3 normalWS = normalDepth.rgb * 2.0f - 1.0f;
 	//float3 normalVS = normalize(mul(float4(normalWS, 0), View).xyz);
 	//float3 normalPS = normalize(mul(float4(normalVS, 0), Projection).xyz);
-	float depth = normalDepth.a;
+	float depth = tex2D(DepthMapSampler, texCoord).r;
 	
 	// テクスチャのスクリーン座標
 	//float2 texCoordSS = texCoord * float2(2, -2) + float2(-1, 1);

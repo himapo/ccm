@@ -14,7 +14,9 @@ namespace HimaLib.Render
 
         public IBillboard Billboard { get; set; }
 
-        public ITexture NormalDepthMap { get; set; }
+        public ITexture NormalMap { get; set; }
+
+        public ITexture DepthMap { get; set; }
 
         public LightBufferRenderPath()
         {
@@ -66,7 +68,8 @@ namespace HimaLib.Render
                     Transform = transform,
                     PointLight = v.light,
                     LightID = v.index + 1,
-                    NormalDepthMap = NormalDepthMap,
+                    NormalMap = NormalMap,
+                    DepthMap = DepthMap,
                 };
 
                 modelInfoList.Add(new ModelInfo()
@@ -88,7 +91,8 @@ namespace HimaLib.Render
                 var renderParam = new DirectionalLightRenderParameter()
                 {
                     DirectionalLight = light,
-                    NormalDepthMap = NormalDepthMap,
+                    NormalMap = NormalMap,
+                    DepthMap = DepthMap,
                 };
 
                 BillboardInfoList.Add(new BillboardInfo()

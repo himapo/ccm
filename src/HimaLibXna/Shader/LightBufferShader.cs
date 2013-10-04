@@ -30,7 +30,9 @@ namespace HimaLib.Shader
 
         public Vector3 PointLightColor { get; set; }
 
-        public Texture2D NormalDepthMap { get; set; }
+        public Texture2D NormalMap { get; set; }
+
+        public Texture2D DepthMap { get; set; }
 
         public bool IsCameraInLight { get; set; }
 
@@ -119,7 +121,8 @@ namespace HimaLib.Shader
             Effect.Parameters["InvView"].SetValue(Matrix.Invert(View));
             Effect.Parameters["InvProj"].SetValue(Matrix.Invert(Projection));
 
-            Effect.Parameters["NormalDepthMap"].SetValue(NormalDepthMap);
+            Effect.Parameters["NormalMap"].SetValue(NormalMap);
+            Effect.Parameters["DepthMap"].SetValue(DepthMap);
 
             Effect.CurrentTechnique = Effect.Techniques[techniqueName];
         }

@@ -18,7 +18,9 @@ namespace HimaLib.Render
             get { return BillboardRendererType.DiectionalLight; }
         }
 
-        public ITexture NormalDepthMap { get; set; }
+        public ITexture NormalMap { get; set; }
+
+        public ITexture DepthMap { get; set; }
 
         public DirectionalLight DirectionalLight { get; set; }
 

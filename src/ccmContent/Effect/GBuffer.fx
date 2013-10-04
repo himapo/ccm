@@ -51,7 +51,8 @@ struct PSOutput
 struct PSOutputND
 {
 	float4	Dummy		: COLOR0;
-	float4	NormalDepth	: COLOR1;
+	float4	Normal		: COLOR1;
+	float4	Depth		: COLOR2;
 };
 
 VSOutput VSMain(VSInput input)
@@ -110,14 +111,14 @@ PSOutput PSMain(VSOutput input,
 
 PSOutputND PSMainND(VSOutputND input)
 {
-	PSOutputND output;
+	PSOutputND output = (PSOutputND)0;
 	
 	float3 normal = mul(float4(input.Normal, 0), World).xyz;
 	//float3 normal = mul(mul(float4(input.Normal, 0), World), View).xyz;
 	
-	output.NormalDepth.rgb = (normalize(normal) + 1.0f) * 0.5f;
+	output.Normal.rgb = (normalize(normal) + 1.0f) * 0.5f;
 	
-	output.NormalDepth.a = input.PositionPS.z / input.PositionPS.w;
+	output.Depth.r = input.PositionPS.z / input.PositionPS.w;
 	
 	output.Dummy = 0;
 	

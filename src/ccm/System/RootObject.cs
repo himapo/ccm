@@ -129,6 +129,13 @@ namespace ccm.System
                 SurfaceType.A8R8G8B8,
                 true, true);
 
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.GBuffer1,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight,
+                SurfaceType.R32F,
+                true, true);
+
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.SHADOW,
                 new ShadowMapRenderPath()
@@ -148,6 +155,7 @@ namespace ccm.System
                     {
                         (int)RenderTargetType.DiffuseLightMap,
                         (int)RenderTargetType.GBuffer0,
+                        (int)RenderTargetType.GBuffer1,
                     }
                 });
 
@@ -161,7 +169,8 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.DiffuseLightMap,
                     SphereModel = ModelFactory.Instance.Create("PointLightSphere"),
                     Billboard = BillboardFactory.Instance.Create(),
-                    NormalDepthMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),
+                    NormalMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),
+                    DepthMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer1),
                     //ClearColor = Color.Gray,
                 });
 
