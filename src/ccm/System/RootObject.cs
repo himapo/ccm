@@ -101,15 +101,33 @@ namespace ccm.System
 
         void InitRender()
         {
-            for (var i = 0; i < (int)RenderTargetType.Length; ++i)
-            {
-                RenderTargetManager.Instance.AddRenderTarget(
-                    i,
-                    GameProperty.resolutionWidth,
-                    GameProperty.resolutionHeight,
-                    true,
-                    true);
-            }
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.ShadowMap0,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight,
+                SurfaceType.A8R8G8B8,
+                true, true);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.DiffuseLightMap,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight,
+                SurfaceType.A8R8G8B8,
+                true, true);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.SpecularLightMap,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight,
+                SurfaceType.A8R8G8B8,
+                true, true);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.GBuffer0,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight,
+                SurfaceType.A8R8G8B8,
+                true, true);
 
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.SHADOW,

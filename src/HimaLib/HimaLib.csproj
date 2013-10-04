@@ -184,6 +184,7 @@
     <Compile Include="System\StateMachine.cs" />
     <Compile Include="System\SystemProperty.cs" />
     <Compile Include="Texture\ITexture.cs" />
+    <Compile Include="Texture\SurfaceType.cs" />
     <Compile Include="Updater\CircleUpdater.cs" />
     <Compile Include="Updater\CylinderUpdater.cs" />
     <Compile Include="Updater\IUpdater.cs" />

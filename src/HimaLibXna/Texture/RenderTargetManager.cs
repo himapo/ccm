@@ -27,7 +27,7 @@ namespace HimaLib.Texture
         {
         }
 
-        public void AddRenderTarget(int index, int width, int height, bool depthEnable, bool stencilEnable)
+        public void AddRenderTarget(int index, int width, int height, SurfaceType colorFormat, bool depthEnable, bool stencilEnable)
         {
             var depthFormat = DepthFormat.None;
             if (stencilEnable)
@@ -44,10 +44,27 @@ namespace HimaLib.Texture
                 width,
                 height,
                 false,
-                SurfaceFormat.Color,
+                ToXnaSurfaceFormat(colorFormat),
                 depthFormat,
                 1,
                 RenderTargetUsage.PreserveContents);    // 深度バッファを保存するため
+        }
+
+        SurfaceFormat ToXnaSurfaceFormat(SurfaceType format)
+        {
+            switch (format)
+            {
+                case SurfaceType.A8R8G8B8:
+                    return SurfaceFormat.Color;
+                case SurfaceType.R32F:
+                    return SurfaceFormat.Single;
+                case SurfaceType.A32B32G32R32F:
+                    return SurfaceFormat.Vector4;
+                default:
+                    break;
+            }
+
+            throw new NotImplementedException();
         }
 
         public void RemoveRenderTarget(int index)

@@ -305,19 +305,19 @@ namespace ccm.Scene
                 ShowRenderTarget = true;
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap);
             });
-
+            
             nodeShowTarget.AddChoice("鏡面反射マップ", () =>
             {
                 ShowRenderTarget = true;
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap);
             });
-
+            
             nodeShowTarget.AddChoice("Gバッファ0", () =>
             {
                 ShowRenderTarget = true;
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0);
             });
-
+            /*
             nodeShowTarget.AddChoice("Gバッファ1", () =>
             {
                 ShowRenderTarget = true;
@@ -335,7 +335,7 @@ namespace ccm.Scene
                 ShowRenderTarget = true;
                 TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer3);
             });
-
+            */
             debugMenu.AddChild(debugMenu.RootNode.Label, nodeShowTarget);
         }
 
