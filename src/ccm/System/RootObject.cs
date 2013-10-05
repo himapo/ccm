@@ -105,7 +105,7 @@ namespace ccm.System
                 (int)RenderTargetType.ShadowMap0,
                 GameProperty.resolutionWidth,
                 GameProperty.resolutionHeight,
-                SurfaceType.A8R8G8B8,
+                SurfaceType.R32F,
                 true, true);
 
             RenderTargetManager.Instance.AddRenderTarget(

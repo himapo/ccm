@@ -31,6 +31,11 @@ texture ShadowMap;
 sampler ShadowMapSampler = sampler_state
 {
 	Texture = (ShadowMap);
+	MipFilter = Point;
+	MinFilter = Point;
+	MagFilter = Point;
+	AddressU = Clamp;
+	AddressV = Clamp;
 };
 
 texture DiffuseLightMap;

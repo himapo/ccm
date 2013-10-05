@@ -38,10 +38,9 @@ struct PS_OUTPUT {
 };
 
 PS_OUTPUT mainPS(VS_OUTPUT input) {
-	PS_OUTPUT Output;
+	PS_OUTPUT Output = (PS_OUTPUT)0;
 
-	Output.RGBColor.rgb = input.Depth;
-	Output.RGBColor.a = 1.0f;
+	Output.RGBColor.r = input.Depth;
 
 	return Output;
 }
@@ -50,6 +49,8 @@ technique RenderDepth {
 	pass p0 {
 		ZEnable = TRUE;
 		ZWriteEnable = TRUE;
+		AlphaBlendEnable = FALSE;
+		
 		VertexShader = compile vs_2_0 mainVS();
 		PixelShader = compile ps_2_0 mainPS();
 	}
