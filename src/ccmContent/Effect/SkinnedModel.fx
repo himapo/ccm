@@ -239,6 +239,8 @@ technique BasicTechnique
 {
     pass SkinnedModelPass
     {
+    	AlphaBlendEnable = FALSE;
+        
         VertexShader = compile vs_3_0 SkinningVS(false);
         PixelShader = compile ps_3_0 SkinningPS(false);
     }
@@ -248,6 +250,8 @@ technique TextureTechnique
 {
     pass SkinnedModelPass
     {
+    	AlphaBlendEnable = FALSE;
+        
         VertexShader = compile vs_3_0 SkinningVS(false);
         PixelShader = compile ps_3_0 SkinningPS(true);
     }
@@ -257,6 +261,8 @@ technique MaterialTechnique
 {
     pass SkinnedModelPass
     {
+    	AlphaBlendEnable = FALSE;
+        
         VertexShader = compile vs_3_0 SkinningVS(true);
         PixelShader = compile ps_3_0 SkinningPS(false);
     }
@@ -266,6 +272,8 @@ technique MaterialTextureTechnique
 {
     pass SkinnedModelPass
     {
+    	AlphaBlendEnable = FALSE;
+        
         VertexShader = compile vs_3_0 SkinningVS(true);
         PixelShader = compile ps_3_0 SkinningPS(true);
     }
