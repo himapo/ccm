@@ -64,7 +64,7 @@ namespace HimaLib.Shader
         {
             if (IsCameraInLight)
             {
-                PointLightColor = Color.Red.ToVector3();
+                //PointLightColor = Color.Red.ToVector3();
                 SetUpEffect("PointInLight");
             }
             else
@@ -73,7 +73,8 @@ namespace HimaLib.Shader
             }
 
             var depthStencilState = new DepthStencilState();
-            depthStencilState.ReferenceStencil = LightID;
+            depthStencilState.StencilEnable = true; // これつけないとReferenceStencilが0になる
+            depthStencilState.ReferenceStencil = (LightID + 1) * 28;
             GraphicsDevice.DepthStencilState = depthStencilState;
 
             Effect.Parameters["gPointLight"].StructureMembers["Position"].SetValue(PointLightPosition);

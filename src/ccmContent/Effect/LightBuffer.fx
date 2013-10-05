@@ -113,7 +113,7 @@ PSOutput PSDirectional(VSOutputDirectional input)
 
 float4 PSNull(VSOutputPoint input) : COLOR
 {
-	return float4(0, 0, 0, 1);
+	return float4(0, 0, 0, 0);
 }
 
 PSOutput PSPoint(VSOutputPoint input)
@@ -197,16 +197,19 @@ Technique Point
 		ZEnable = TRUE;
 		ZWriteEnable = FALSE;
 		
-		// ジオメトリより奥にある裏面だけをステンシルにマーク
-		ZFunc = GREATER;
+		// ジオメトリより手前にある表面だけをステンシルにマーク
+		ZFunc = LESS;
 		StencilEnable = TRUE;
 		StencilFunc = ALWAYS;
 		StencilPass = REPLACE;
-		StencilFail = KEEP;
+		//StencilFail = KEEP;
 		StencilZFail = KEEP;
-		AlphaBlendEnable = FALSE;
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = ONE;
+		DestBlend = ONE;
 		//ColorWriteEnable = 0;		// これを0にすると深度バッファが無効になってしまう
-		CullMode = CW;
+		CullMode = CCW;
 		
 		VertexShader	= compile vs_2_0 VSPoint();
 		PixelShader		= compile ps_2_0 PSNull();
@@ -217,8 +220,8 @@ Technique Point
 		ZEnable = TRUE;
 		ZWriteEnable = FALSE;
 		
-		// P0でマークされ、かつジオメトリより手前にある表面を加算描画
-		ZFunc = LESSEQUAL;
+		// P0でマークされ、かつジオメトリより奥にある裏面を加算描画
+		ZFunc = GREATER;
 		StencilEnable = TRUE;
 		StencilFunc = EQUAL;
 		StencilPass = KEEP;
@@ -229,7 +232,7 @@ Technique Point
 		SrcBlend = ONE;
 		DestBlend = ONE;
 		ColorWriteEnable = RED | GREEN | BLUE | ALPHA;
-		CullMode = CCW;
+		CullMode = CW;
 		
 		VertexShader	= compile vs_2_0 VSPoint();
 		PixelShader		= compile ps_2_0 PSPoint();

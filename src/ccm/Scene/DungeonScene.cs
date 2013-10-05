@@ -61,6 +61,8 @@ namespace ccm.Scene
 
         PointLight PointLight0 = new PointLight();
 
+        List<PointLight> PointLights = new List<PointLight>();
+
         // デコ
         ccm.Deco.DecoManager DecoManager = new Deco.DecoManager();
 
@@ -267,11 +269,29 @@ namespace ccm.Scene
             DirectionalLight0.Color = new Color(0.5f, 0.5f, 0.5f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
 
+            RenderSceneManager.Instance.ClearPointLight();
+
             PointLight0.Position = new Vector3(0.0f, 20.0f, 0.0f);
             PointLight0.Color = Color.White;
             PointLight0.AttenuationBegin = 2.0f;
             PointLight0.AttenuationEnd = 30.0f;
-            RenderSceneManager.Instance.AddPointLight(PointLight0);
+            //RenderSceneManager.Instance.AddPointLight(PointLight0);
+
+            PointLights.Add(PointLight0);
+
+            for (var i = 0; i < 7; ++i)
+            {
+                var light = new PointLight()
+                {
+                    Position = new Vector3(Rand.NextFloat(-50.0f, 50.0f), Rand.NextFloat(5.0f, 30.0f), Rand.NextFloat(-50.0f, 50.0f)),
+                    Color = new Color(Rand.Next(128, 256), Rand.Next(128, 256), Rand.Next(128, 256)),
+                    AttenuationBegin = Rand.NextFloat(0.0f, 10.0f),
+                    AttenuationEnd = Rand.NextFloat(20.0f, 30.0f),
+                };
+                PointLights.Add(light);
+            }
+
+            PointLights.ForEach((light) => { RenderSceneManager.Instance.AddPointLight(light); });
         }
 
         void InitDebugMenu()

@@ -67,7 +67,7 @@ namespace HimaLib.Render
                 {
                     Transform = transform,
                     PointLight = v.light,
-                    LightID = v.index + 1,
+                    LightID = v.index,
                     NormalMap = NormalMap,
                     DepthMap = DepthMap,
                 };
