@@ -74,7 +74,7 @@ namespace HimaLib.Shader
 
             var depthStencilState = new DepthStencilState();
             depthStencilState.StencilEnable = true; // これつけないとReferenceStencilが0になる
-            depthStencilState.ReferenceStencil = (LightID + 1) * 28;
+            depthStencilState.ReferenceStencil = (LightID + 1);
             GraphicsDevice.DepthStencilState = depthStencilState;
 
             Effect.Parameters["gPointLight"].StructureMembers["Position"].SetValue(PointLightPosition);
