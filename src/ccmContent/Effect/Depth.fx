@@ -15,8 +15,8 @@ float4x4 Projection	: Projection;
 
 
 struct VS_OUTPUT {
-	float4 Position	: POSITION;
-	float Depth		: TEXCOORD0;
+	float4 Position		: POSITION;
+	float4 PositionPS	: TEXCOORD0;
 };
 
 VS_OUTPUT mainVS(float4 vPos : POSITION) {
@@ -28,7 +28,7 @@ VS_OUTPUT mainVS(float4 vPos : POSITION) {
 	
 	Output.Position = mul(vPos, mat);
 	
-	Output.Depth = Output.Position.z / Output.Position.w;
+	Output.PositionPS = Output.Position;
 	
 	return Output;
 }
@@ -40,7 +40,7 @@ struct PS_OUTPUT {
 PS_OUTPUT mainPS(VS_OUTPUT input) {
 	PS_OUTPUT Output = (PS_OUTPUT)0;
 
-	Output.RGBColor.r = input.Depth;
+	Output.RGBColor.r = input.PositionPS.z / input.PositionPS.w;
 
 	return Output;
 }
