@@ -18,7 +18,6 @@ float4x4	View		: View;
 float4x4	Projection	: Projection;
 
 float4x4	InvView;
-float4x4	InvProj;
 
 // Textures
 texture NormalMap;
@@ -57,8 +56,9 @@ struct VSOutputDirectional
 
 struct VSOutputPoint
 {
-	float4	PositionPS	: POSITION;
-	float4	PositionWS	: TEXCOORD0;
+	float4	Position	: POSITION;
+	float4	PositionVS	: TEXCOORD0;
+	float4	PositionPS	: TEXCOORD1;
 };
 
 struct PSOutput
@@ -85,9 +85,12 @@ VSOutputPoint VSPoint(VSInputPoint input)
 {
 	VSOutputPoint output;
 	
-	output.PositionWS = mul(input.Position, World);
-	float4 pos_vs = mul(output.PositionWS, View);
+	float4 pos_ws = mul(input.Position, World);
+	float4 pos_vs = mul(pos_ws, View);
 	float4 pos_ps = mul(pos_vs, Projection);
+	output.Position = pos_ps;
+	
+	output.PositionVS = pos_vs;
 	output.PositionPS = pos_ps;
 	
 	return output;
@@ -116,39 +119,47 @@ float4 PSNull(VSOutputPoint input) : COLOR
 	return float4(0, 0, 0, 0);
 }
 
+// 現在レンダリングしている点renderPosVSとスクリーン座標が同じで深度がdepthの点のビュー座標を求める
+// depthは線形深度であること
+void CalcViewPosition(out float4 posVS, float4 renderPosVS, float depth)
+{
+	// 線形なdepthからビュー空間のZ座標は求まる
+	float Q = Projection._m22;	// Q = Far / (Far - Near)
+	float near = -Projection._m32 / Q;
+	float far = Projection._m32 / (1.0f - Q);
+	float zPS = depth * far;
+	float zVS = (zPS / Q) + near;
+	
+	// スクリーン座標が同じ場合、ビュー空間では相似関係にある
+	float2 xyVS = renderPosVS.xy * zVS / renderPosVS.z;
+	
+	posVS = float4(xyVS.xy, zVS, 1.0f);
+}
+
 PSOutput PSPoint(VSOutputPoint input)
 {
-	PSOutput output;
+	PSOutput output = (PSOutput)0;
 	
-	float4x4 viewProj = mul(View, Projection);
-	
-	// 射影空間でのライト球表面のピクセルの位置を見つける
-	float4 spherePositionPS = mul(input.PositionWS, viewProj);
+	// ライト球表面のピクセルの位置
+	float4 spherePositionVS = input.PositionVS;
+	float4 spherePositionPS = input.PositionPS;
 	
 	// テクスチャでのこのピクセルの位置を見つける
 	float2 texCoord = 0.5 * spherePositionPS.xy / spherePositionPS.w + float2( 0.5, 0.5 );
 	texCoord.y = 1.0f - texCoord.y;
 	
 	// ジオメトリの法線と深度を引っ張ってくる
-	float4 normalDepth = tex2D(NormalMapSampler, texCoord);
-	float3 normalWS = normalDepth.rgb * 2.0f - 1.0f;
+	float3 normalWS = tex2D(NormalMapSampler, texCoord).rgb * 2.0f - 1.0f;
 	//float3 normalVS = normalize(mul(float4(normalWS, 0), View).xyz);
 	//float3 normalPS = normalize(mul(float4(normalVS, 0), Projection).xyz);
 	float depth = tex2D(DepthMapSampler, texCoord).r;
 	
-	// テクスチャのスクリーン座標
-	//float2 texCoordSS = texCoord * float2(2, -2) + float2(-1, 1);
-	
-	// ビュー空間でのジオメトリの位置
-	//float3 posVS;
-	//posVS.z = Projection._m32 / (depth - Projection._m22);
-	//posVS.xy = texCoordSS.xy * posVS.z / float2(Projection._m00, Projection._m11);
-	
-	// 射影空間でのジオメトリの位置
-	float4 posPS = float4(spherePositionPS.xy, depth * spherePositionPS.w, spherePositionPS.w);
-	float4 posVS = mul(posPS, InvProj);
+	// ワールド空間でのジオメトリの位置を求める
+	float4 posVS;
+	CalcViewPosition(posVS, spherePositionVS, depth);
 	float4 posWS = mul(posVS, InvView);
 	
+	// 光源とジオメトリの位置関係から反射を計算
 	float3 lightPosWS = gPointLight.Position;
 	//float4 lightPosVS = mul(float4(gPointLight.Position, 1), View);
 	//float4 lightPosPS = mul(float4(gPointLight.Position, 1), viewProj);

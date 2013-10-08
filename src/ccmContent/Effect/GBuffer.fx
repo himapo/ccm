@@ -118,7 +118,10 @@ PSOutputND PSMainND(VSOutputND input)
 	
 	output.Normal.rgb = (normalize(normal) + 1.0f) * 0.5f;
 	
-	output.Depth.r = input.PositionPS.z / input.PositionPS.w;
+	float Q = Projection._m22;		// Q = Far / (Far - Near)
+	float far = Projection._m32 / (1.0f - Q);
+	
+	output.Depth.r = input.PositionPS.z / far;
 	
 	output.Dummy = 0;
 	
