@@ -110,14 +110,6 @@ namespace HimaLib.Model
                 return;
             }
 
-            RotationTexture.Flip();
-            TranslationTexture.Flip();
-
-            RotationTexture.Texture.SetData<Microsoft.Xna.Framework.Quaternion>(AnimationPlayer.GetSkinRotations());
-            TranslationTexture.Texture.SetData<Microsoft.Xna.Framework.Vector4>(AnimationPlayer.GetSkinTraslations());
-
-            var textureSize = new Vector2(RotationTexture.Texture.Width, RotationTexture.Texture.Height);
-
             // TODO : 任意のレンダラでの描画
 
             var renderParam = param as DefaultModelRenderParameter;
@@ -126,6 +118,14 @@ namespace HimaLib.Model
             {
                 return;
             }
+
+            RotationTexture.Flip();
+            TranslationTexture.Flip();
+
+            RotationTexture.Texture.SetData<Microsoft.Xna.Framework.Quaternion>(AnimationPlayer.GetSkinRotations());
+            TranslationTexture.Texture.SetData<Microsoft.Xna.Framework.Vector4>(AnimationPlayer.GetSkinTraslations());
+
+            var textureSize = new Vector2(RotationTexture.Texture.Width, RotationTexture.Texture.Height);
 
             renderParam.ParametersTexture["BoneRotationTexture"] = RotationTexture.Texture;
             renderParam.ParametersTexture["BoneTranslationTexture"] = TranslationTexture.Texture;
