@@ -9,6 +9,8 @@ namespace HimaLib.Render
     {
         void SetParameter(ModelRenderParameter param);
 
-        void Render(Microsoft.Xna.Framework.Graphics.Model model);
+        void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model);
+
+        void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model);
     }
 }

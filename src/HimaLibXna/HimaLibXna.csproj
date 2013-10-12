@@ -168,6 +168,7 @@
     <Compile Include="Render\SimpleBillboardRendererXna.cs" />
     <Compile Include="Render\SimpleInstancingRendererXna.cs" />
     <Compile Include="Render\SimpleModelRendererXna.cs" />
+    <Compile Include="Render\SkinnedModelRendererXna.cs" />
     <Compile Include="Render\ToonModelRendererMMDX.cs" />
     <Compile Include="Render\HudBillboardRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />

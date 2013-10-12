@@ -7,7 +7,7 @@ using HimaLib.Math;
 
 namespace HimaLib.Render
 {
-    public class DepthRendererXna : IModelRendererXna, IBillboardRendererXna
+    public class DepthRendererXna : SkinnedModelRendererXna, IBillboardRendererXna
     {
         DepthShader Shader = new DepthShader();
 
@@ -15,7 +15,7 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(ModelRenderParameter p)
+        public override void SetParameter(ModelRenderParameter p)
         {
             var param = p as DepthModelRenderParameter;
             if (param == null)
@@ -41,11 +41,22 @@ namespace HimaLib.Render
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
         }
 
-        public void Render(Microsoft.Xna.Framework.Graphics.Model model)
+        public override void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
             Shader.Model = model;
 
-            Shader.RenderModel();
+            Shader.RenderStaticModel();
+        }
+
+        public override void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
+        {
+            Shader.Model = model;
+
+            Shader.BoneRotationTexture = BoneRotationTexture;
+            Shader.BoneTranslationTexture = BoneTranslationTexture;
+            Shader.BoneTextureSize = BoneTextureSize;
+
+            Shader.RenderDynamicModel();
         }
 
         public void Render()

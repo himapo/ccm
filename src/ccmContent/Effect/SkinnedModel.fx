@@ -32,8 +32,6 @@ float3 MaterialEmissive = 0.0;
 float3 MaterialSpecular = 1.0;
 float MaterialSpecularPower = 1.0;
 
-string TechniqueName;
-
 texture Texture;
 
 sampler Sampler = sampler_state
@@ -239,7 +237,12 @@ technique BasicTechnique
 {
     pass SkinnedModelPass
     {
-    	AlphaBlendEnable = FALSE;
+    	ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESSEQUAL;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(false);
         PixelShader = compile ps_3_0 SkinningPS(false);
@@ -250,7 +253,12 @@ technique TextureTechnique
 {
     pass SkinnedModelPass
     {
-    	AlphaBlendEnable = FALSE;
+    	ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESSEQUAL;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(false);
         PixelShader = compile ps_3_0 SkinningPS(true);
@@ -261,7 +269,12 @@ technique MaterialTechnique
 {
     pass SkinnedModelPass
     {
-    	AlphaBlendEnable = FALSE;
+    	ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESSEQUAL;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(true);
         PixelShader = compile ps_3_0 SkinningPS(false);
@@ -272,7 +285,12 @@ technique MaterialTextureTechnique
 {
     pass SkinnedModelPass
     {
-    	AlphaBlendEnable = FALSE;
+    	ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESSEQUAL;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(true);
         PixelShader = compile ps_3_0 SkinningPS(true);

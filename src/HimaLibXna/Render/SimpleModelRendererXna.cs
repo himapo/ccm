@@ -42,11 +42,15 @@ namespace HimaLib.Render
             lambert.DiffuseLightMap = (param.DiffuseLightMap as ITextureXna).Texture;
         }
 
-        public void Render(Microsoft.Xna.Framework.Graphics.Model model)
+        public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
             lambert.Model = model;
 
             lambert.RenderModel();
+        }
+
+        public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
+        {
         }
     }
 }

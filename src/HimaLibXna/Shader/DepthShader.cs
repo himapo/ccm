@@ -18,6 +18,12 @@ namespace HimaLib.Shader
 
         public Matrix Projection { get; set; }
 
+        public Texture2D BoneRotationTexture { get; set; }
+
+        public Texture2D BoneTranslationTexture { get; set; }
+
+        public Vector2 BoneTextureSize { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
@@ -32,10 +38,26 @@ namespace HimaLib.Shader
             effect = contentLoader.Load("Effect/Depth");
         }
 
-        public void RenderModel()
+        public void RenderStaticModel()
         {
-            SetUpEffect();
+            SetUpEffect("RenderDepthStatic");
 
+            RenderModelCommon();
+        }
+
+        public void RenderDynamicModel()
+        {
+            effect.Parameters["BoneRotationTexture"].SetValue(BoneRotationTexture);
+            effect.Parameters["BoneTranslationTexture"].SetValue(BoneTranslationTexture);
+            effect.Parameters["BoneTextureSize"].SetValue(BoneTextureSize);
+
+            SetUpEffect("RenderDepthSkinning");
+
+            RenderModelCommon();
+        }
+
+        void RenderModelCommon()
+        {
             foreach (var mesh in Model.Meshes)
             {
                 foreach (var part in mesh.MeshParts)
@@ -58,11 +80,13 @@ namespace HimaLib.Shader
         {
         }
 
-        void SetUpEffect()
+        void SetUpEffect(string techniqueName)
         {
             effect.Parameters["World"].SetValue(World);
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
+
+            effect.CurrentTechnique = effect.Techniques[techniqueName];
         }
     }
 }

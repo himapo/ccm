@@ -71,7 +71,13 @@ namespace ccm.Player
             toonRenderParam.Camera = Camera;
             toonRenderParam.Transform = transform;
 
-            defaultRenderParam.ParametersMatrix["World"] = Matrix.CreateRotationX(MathUtil.ToRadians(-90.0f)) * transform.WorldMatrix;
+            defaultRenderParam.Transform = new AffineTransform()
+            {
+                Scale = transform.Scale,
+                Rotation = new Vector3(transform.Rotation.X + MathUtil.ToRadians(-90.0f), transform.Rotation.Y, transform.Rotation.Z),
+                Translation = transform.Translation,
+            };
+            defaultRenderParam.ParametersMatrix["World"] = defaultRenderParam.Transform.WorldMatrix;
 
             ModelRenderParameter renderParam = defaultRenderParam;
 

@@ -35,6 +35,8 @@ namespace HimaLib.Model
 
         FlipTexture2D TranslationTexture;
 
+        Microsoft.Xna.Framework.Vector2 TextureSize = new Microsoft.Xna.Framework.Vector2();
+
         DefaultModelRendererXna Renderer = new DefaultModelRendererXna();
 
         public DynamicModelXna()
@@ -52,6 +54,15 @@ namespace HimaLib.Model
             AnimationPlayer.Update(TimeSpan.FromSeconds(elapsedTimeSeconds), true);
 
             AnimationPlayer.GetBoneTransforms().CopyTo(BoneTransforms, 0);
+
+            RotationTexture.Flip();
+            TranslationTexture.Flip();
+
+            RotationTexture.Texture.SetData<Microsoft.Xna.Framework.Quaternion>(AnimationPlayer.GetSkinRotations());
+            TranslationTexture.Texture.SetData<Microsoft.Xna.Framework.Vector4>(AnimationPlayer.GetSkinTraslations());
+
+            TextureSize.X = RotationTexture.Texture.Width;
+            TextureSize.Y = RotationTexture.Texture.Height;
         }
 
         public bool Init()
@@ -110,29 +121,20 @@ namespace HimaLib.Model
                 return;
             }
 
-            // TODO : 任意のレンダラでの描画
+            var renderer = ModelRendererFactoryXna.Instance.Create(param);
 
-            var renderParam = param as DefaultModelRenderParameter;
+            var skinnedModelRenderer = renderer as SkinnedModelRendererXna;
 
-            if (renderParam == null)
+            if (skinnedModelRenderer == null)
             {
                 return;
             }
 
-            RotationTexture.Flip();
-            TranslationTexture.Flip();
+            skinnedModelRenderer.BoneRotationTexture = RotationTexture.Texture;
+            skinnedModelRenderer.BoneTranslationTexture = TranslationTexture.Texture;
+            skinnedModelRenderer.BoneTextureSize = TextureSize;
 
-            RotationTexture.Texture.SetData<Microsoft.Xna.Framework.Quaternion>(AnimationPlayer.GetSkinRotations());
-            TranslationTexture.Texture.SetData<Microsoft.Xna.Framework.Vector4>(AnimationPlayer.GetSkinTraslations());
-
-            var textureSize = new Vector2(RotationTexture.Texture.Width, RotationTexture.Texture.Height);
-
-            renderParam.ParametersTexture["BoneRotationTexture"] = RotationTexture.Texture;
-            renderParam.ParametersTexture["BoneTranslationTexture"] = TranslationTexture.Texture;
-            renderParam.ParametersVector2["BoneTextureSize"] = textureSize;
-
-            Renderer.SetParameter(renderParam);
-            Renderer.Render(Model);
+            renderer.RenderDynamic(Model);
         }
 
         public void AddAttachment(string name)

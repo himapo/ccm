@@ -53,12 +53,16 @@ namespace HimaLib.Render
             shader.InstanceTransforms = InstanceTransforms;
         }
 
-        public void Render(Microsoft.Xna.Framework.Graphics.Model model)
+        public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
             shader.Model = model;
             SetModelBones(model);
 
             shader.RenderModel();
+        }
+
+        public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
+        {
         }
 
         void SetModelBones(Microsoft.Xna.Framework.Graphics.Model model)

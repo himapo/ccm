@@ -63,10 +63,14 @@ namespace HimaLib.Render
             Shader.DepthMap = (param.DepthMap as ITextureXna).Texture;
         }
 
-        public void Render(Microsoft.Xna.Framework.Graphics.Model model)
+        public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
             Shader.Model = model;
             Shader.RenderPoint();
+        }
+
+        public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
+        {
         }
 
         public override void Render()

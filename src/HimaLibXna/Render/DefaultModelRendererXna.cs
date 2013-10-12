@@ -12,7 +12,7 @@ namespace HimaLib.Render
     /// <summary>
     /// モデルに設定されたエフェクトでそのまま描画するレンダラ
     /// </summary>
-    public class DefaultModelRendererXna : IModelRendererXna
+    public class DefaultModelRendererXna : SkinnedModelRendererXna
     {
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
@@ -24,7 +24,7 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(ModelRenderParameter p)
+        public override void SetParameter(ModelRenderParameter p)
         {
             var param = p as DefaultModelRenderParameter;
             if (param == null)
@@ -44,7 +44,21 @@ namespace HimaLib.Render
             }
         }
 
-        public void Render(Microsoft.Xna.Framework.Graphics.Model model)
+        public override void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
+        {
+            RenderCommon(model);
+        }
+
+        public override void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
+        {
+            RenderParam.ParametersTexture["BoneRotationTexture"] = BoneRotationTexture;
+            RenderParam.ParametersTexture["BoneTranslationTexture"] = BoneTranslationTexture;
+            RenderParam.ParametersVector2["BoneTextureSize"] = new Vector2(BoneTextureSize.X, BoneTextureSize.Y);
+
+            RenderCommon(model);
+        }
+
+        void RenderCommon(Microsoft.Xna.Framework.Graphics.Model model)
         {
             foreach (ModelMesh mesh in model.Meshes)
             {

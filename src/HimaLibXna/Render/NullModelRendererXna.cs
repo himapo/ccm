@@ -12,7 +12,11 @@ namespace HimaLib.Render
         {
         }
 
-        public void Render(Microsoft.Xna.Framework.Graphics.Model model)
+        public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
+        {
+        }
+
+        public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
         {
         }
     }
