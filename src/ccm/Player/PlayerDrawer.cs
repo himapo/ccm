@@ -53,10 +53,6 @@ namespace ccm.Player
             defaultRenderParam.IsShadowReceiver = true;
             defaultRenderParam.GBufferEnabled = true;
 
-            //defaultRenderParam.ParametersVector3["Light1Direction"] = Vector3.One * -1.0f;
-            //defaultRenderParam.ParametersVector3["Light1Color"] = new Vector3(0.8f, 0.9f, 0.7f);
-            defaultRenderParam.ParametersVector3["Light2Direction"] = Vector3.One * -1.0f;
-            defaultRenderParam.ParametersVector3["Light2Color"] = new Vector3(0.0f, 0.0f, 0.0f);
             defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
