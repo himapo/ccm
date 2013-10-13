@@ -88,7 +88,8 @@ technique PixelLighting
     pass Pass1
     {
         // TODO: ここでレンダーステートを設定します。
-
+		AlphaBlendEnable = FALSE;
+		
         VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader = compile ps_2_0 PixelShaderFunction();
     }

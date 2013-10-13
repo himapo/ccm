@@ -216,6 +216,11 @@ Technique TechniqueNm
 {
 	Pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = SRCALPHA;
+		DestBlend = INVSRCALPHA;
+
 		VertexShader	= compile vs_2_0 VSMainNm();
 		PixelShader		= compile ps_2_0 PSMain(false);
 	}
@@ -225,6 +230,11 @@ Technique TechniqueTx
 {
 	Pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = SRCALPHA;
+		DestBlend = INVSRCALPHA;
+
 		VertexShader	= compile vs_2_0 VSMainTx();
 		PixelShader		= compile ps_2_0 PSMain(true);
 	}
@@ -234,6 +244,11 @@ Technique TechniqueVc
 {
 	Pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = SRCALPHA;
+		DestBlend = INVSRCALPHA;
+
 		VertexShader	= compile vs_2_0 VSMainVc();
 		PixelShader		= compile ps_2_0 PSMain(false);
 	}
@@ -243,6 +258,11 @@ Technique TechniqueNmTx
 {
 	Pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = SRCALPHA;
+		DestBlend = INVSRCALPHA;
+
 		VertexShader	= compile vs_2_0 VSMainNmTx();
 		PixelShader		= compile ps_2_0 PSMain(true);
 	}
@@ -252,6 +272,11 @@ Technique TechniqueNmVc
 {
 	Pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = SRCALPHA;
+		DestBlend = INVSRCALPHA;
+
 		VertexShader	= compile vs_2_0 VSMainNmVc();
 		PixelShader		= compile ps_2_0 PSMain(false);
 	}
@@ -261,6 +286,11 @@ Technique TechniqueTxVc
 {
 	Pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = SRCALPHA;
+		DestBlend = INVSRCALPHA;
+
 		VertexShader	= compile vs_2_0 VSMainTxVc();
 		PixelShader		= compile ps_2_0 PSMain(true);
 	}
@@ -270,6 +300,11 @@ Technique TechniqueNmTxVc
 {
 	Pass P0
 	{
+		AlphaBlendEnable = TRUE;
+		BlendOp = ADD;
+		SrcBlend = SRCALPHA;
+		DestBlend = INVSRCALPHA;
+
 		VertexShader	= compile vs_2_0 VSMainNmTxVc();
 		PixelShader		= compile ps_2_0 PSMain(true);
 	}
