@@ -21,6 +21,9 @@ float4x4 World;			// オブジェクトのワールド座標
 float4x4 View;
 float4x4 Projection;
 
+float4x4 LightViewProjection;
+float DepthBias = 0.005f;
+
 float3 Light1Direction = normalize(float3(1, 1, -2));
 float3 Light1Color = float3(0.9, 0.8, 0.7);
 
@@ -47,6 +50,17 @@ sampler Sampler = sampler_state
     MipFilter = Linear;
 };
 
+texture ShadowMap;
+sampler ShadowMapSampler = sampler_state
+{
+	Texture = (ShadowMap);
+	MipFilter = Point;
+	MinFilter = Point;
+	MagFilter = Point;
+	AddressU = Clamp;
+	AddressV = Clamp;
+};
+
 //-----------------------------------------------------------------------------
 // 構造体宣言
 //=============================================================================
@@ -63,9 +77,10 @@ struct VS_INPUT
 // 頂点シェーダー出力構造体
 struct VS_OUTPUT
 {
-    float4 Position : POSITION0;
-    float3 Lighting : COLOR0;
-    float2 TexCoord : TEXCOORD0;
+    float4 Position		: POSITION0;
+    float3 Lighting		: COLOR0;
+    float2 TexCoord		: TEXCOORD0;
+	float4 PositionWS	: TEXCOORD1;
 };
 
 //-----------------------------------------------------------------------------
@@ -101,8 +116,10 @@ VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
     output.Lighting += AmbientColor;
 
     output.TexCoord = input.TexCoord;
-    
-    return output;
+
+	output.PositionWS = position;
+
+	return output;
 }
 
 //-----------------------------------------------------------------------------
@@ -111,12 +128,15 @@ VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
 // ピクセルシェーダー入力構造体
 struct PS_INPUT
 {
-    float3 Lighting : COLOR0;
-    float2 TexCoord : TEXCOORD0;
+    float3 Lighting		: COLOR0;
+    float2 TexCoord		: TEXCOORD0;
+	float4 PositionWS	: TEXCOORD1;
 };
 
 // ピクセルシェーダー
-float4 SkinningPS(PS_INPUT input, uniform bool useTexture) : COLOR0
+float4 SkinningPS(PS_INPUT input,
+				  uniform bool useTexture,
+				  uniform bool shadowEnabled) : COLOR0
 {
     float4 color = 1.0;
     
@@ -127,6 +147,31 @@ float4 SkinningPS(PS_INPUT input, uniform bool useTexture) : COLOR0
     
     color.rgb *= input.Lighting;
     
+	if(shadowEnabled)
+	{
+	    // ライト空間でのこのピクセルの位置を見つける
+		float4 lightingPosition = mul(input.PositionWS, LightViewProjection);
+		
+		// シャドウ マップでのこのピクセルの位置を見つける
+		float2 ShadowTexCoord = 0.5 * lightingPosition.xy / lightingPosition.w + float2( 0.5, 0.5 );
+		ShadowTexCoord.y = 1.0f - ShadowTexCoord.y;
+		
+		// シャドウ マップに格納された現在の深度を取得する
+		float shadowdepth = tex2D(ShadowMapSampler, ShadowTexCoord).r;
+        
+		// 現在のピクセル深度を計算する
+		// バイアスは、オクルーダーのピクセルが描画されるときに起きる
+		// 浮動小数点誤差を防止するために使用される
+		float ourdepth = (lightingPosition.z / lightingPosition.w) - DepthBias;
+		
+		// このピクセルがシャドウ マップで値の前にあるか後にあるかを調べる
+		if (shadowdepth < ourdepth)
+		{
+			// 輝度を低くすることによってピクセルをシャドウする
+			color *= float4(0.5, 0.5, 0.5, 1);
+		};
+	}
+
     return color;
 }
 
@@ -145,7 +190,7 @@ technique BasicTechnique
 		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(false);
-        PixelShader = compile ps_3_0 SkinningPS(false);
+        PixelShader = compile ps_3_0 SkinningPS(false, true);
     }
 }
 
@@ -161,7 +206,7 @@ technique TextureTechnique
 		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(false);
-        PixelShader = compile ps_3_0 SkinningPS(true);
+        PixelShader = compile ps_3_0 SkinningPS(true, true);
     }
 }
 
@@ -177,7 +222,7 @@ technique MaterialTechnique
 		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(true);
-        PixelShader = compile ps_3_0 SkinningPS(false);
+        PixelShader = compile ps_3_0 SkinningPS(false, true);
     }
 }
 
@@ -193,6 +238,6 @@ technique MaterialTextureTechnique
 		CullMode = CCW;
         
         VertexShader = compile vs_3_0 SkinningVS(true);
-        PixelShader = compile ps_3_0 SkinningPS(true);
+        PixelShader = compile ps_3_0 SkinningPS(true, true);
     }
 }

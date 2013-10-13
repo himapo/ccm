@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using HimaLib.Math;
 using HimaLib.Content;
 using HimaLib.System;
+using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
@@ -41,6 +42,12 @@ namespace HimaLib.Render
             {
                 RenderParam.ParametersVector3["Light" + (i+1) + "Direction"] = RenderParam.DirectionalLights[i].Direction;
                 RenderParam.ParametersVector3["Light" + (i+1) + "Color"] = RenderParam.DirectionalLights[i].Color.ToVector3();
+            }
+
+            if (RenderParam.IsShadowReceiver)
+            {
+                RenderParam.ParametersMatrix["LightViewProjection"] = RenderParam.LightCamera.View * RenderParam.LightCamera.Projection;
+                RenderParam.ParametersTexture["ShadowMap"] = (RenderParam.ShadowMap as ITextureXna).Texture;
             }
         }
 
@@ -168,7 +175,14 @@ namespace HimaLib.Render
             object texture;
             if (RenderParam.ParametersTexture.TryGetValue(dst.Name, out texture))
             {
-                dst.SetValue(texture as Microsoft.Xna.Framework.Graphics.Texture);
+                if (texture is Microsoft.Xna.Framework.Graphics.Texture)
+                {
+                    dst.SetValue(texture as Microsoft.Xna.Framework.Graphics.Texture);
+                }
+                else if (texture is ITextureXna)
+                {
+                    dst.SetValue((texture as ITextureXna).Texture);
+                }
             }
         }
 
