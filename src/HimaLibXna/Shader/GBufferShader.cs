@@ -20,6 +20,12 @@ namespace HimaLib.Shader
         
         public Matrix Projection { get; set; }
 
+        public Texture2D BoneRotationTexture { get; set; }
+
+        public Texture2D BoneTranslationTexture { get; set; }
+
+        public Vector2 BoneTextureSize { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
@@ -34,7 +40,7 @@ namespace HimaLib.Shader
             effect = contentLoader.Load("Effect/GBuffer");
         }
 
-        public void RenderModel()
+        public void RenderStaticModel()
         {
             if (Texture == null)
             {
@@ -45,6 +51,22 @@ namespace HimaLib.Shader
                 SetUpEffect("GBufferTexture");
             }
 
+            RenderModelCommon();
+        }
+
+        public void RenderDynamicModel()
+        {
+            effect.Parameters["BoneRotationTexture"].SetValue(BoneRotationTexture);
+            effect.Parameters["BoneTranslationTexture"].SetValue(BoneTranslationTexture);
+            effect.Parameters["BoneTextureSize"].SetValue(BoneTextureSize);
+
+            SetUpEffect("GBufferNDSkinning");
+
+            RenderModelCommon();
+        }
+
+        void RenderModelCommon()
+        {
             foreach (var mesh in Model.Meshes)
             {
                 foreach (var part in mesh.MeshParts)

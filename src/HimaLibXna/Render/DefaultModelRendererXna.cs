@@ -49,6 +49,8 @@ namespace HimaLib.Render
                 RenderParam.ParametersMatrix["LightViewProjection"] = RenderParam.LightCamera.View * RenderParam.LightCamera.Projection;
                 RenderParam.ParametersTexture["ShadowMap"] = (RenderParam.ShadowMap as ITextureXna).Texture;
             }
+
+            RenderParam.ParametersTexture["DiffuseLightMap"] = (RenderParam.DiffuseLightMap as ITextureXna).Texture;
         }
 
         public override void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)

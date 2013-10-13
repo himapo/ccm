@@ -8,7 +8,7 @@ using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
-    public class GBufferRendererXna : IModelRendererXna, IBillboardRendererXna
+    public class GBufferRendererXna : SkinnedModelRendererXna, IBillboardRendererXna
     {
         GBufferShader Shader = new GBufferShader();
 
@@ -16,7 +16,7 @@ namespace HimaLib.Render
         {
         }
 
-        public void SetParameter(ModelRenderParameter p)
+        public override void SetParameter(ModelRenderParameter p)
         {
             var param = p as GBufferModelRenderParameter;
             if (param == null)
@@ -37,15 +37,22 @@ namespace HimaLib.Render
         {
         }
 
-        public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
+        public override void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
             Shader.Model = model;
 
-            Shader.RenderModel();
+            Shader.RenderStaticModel();
         }
 
-        public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
+        public override void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
         {
+            Shader.Model = model;
+
+            Shader.BoneRotationTexture = BoneRotationTexture;
+            Shader.BoneTranslationTexture = BoneTranslationTexture;
+            Shader.BoneTextureSize = BoneTextureSize;
+
+            Shader.RenderDynamicModel();
         }
 
         public void Render()

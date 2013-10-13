@@ -1,3 +1,5 @@
+#include "BoneTexture.fxh"
+
 // Materials
 float3	DiffuseColor;
 
@@ -23,6 +25,15 @@ struct VSInput
 	float4	Position	: POSITION;
 	float3	Normal		: NORMAL;
 	float2	TexCoord	: TEXCOORD0;
+};
+
+struct VSInputSkinning
+{
+	float4	Position	: POSITION;
+	float3	Normal		: NORMAL;
+	float2	TexCoord	: TEXCOORD0;
+	float4	BoneIndices : BLENDINDICES0;
+    float4	BoneWeights : BLENDWEIGHT0;
 };
 
 struct VSOutput
@@ -78,6 +89,27 @@ VSOutputND VSMainND(VSInput input)
 	VSOutputND output;
 	
 	float4 pos_ws = mul(input.Position, World);
+	float4 pos_vs = mul(pos_ws, View);
+	output.Position = mul(pos_vs, Projection);
+	
+	output.PositionPS = output.Position;
+	
+	output.Normal = input.Normal;
+	
+	return output;
+}
+
+VSOutputND VSNDSkinning(VSInputSkinning input)
+{
+	VSOutputND output = (VSOutputND)0;
+	
+	// ÉXÉLÉìïœä∑çsóÒÇÃéÊìæ
+	float4x4 skinTransform =
+				CreateTransformFromBoneTexture( input.BoneIndices, input.BoneWeights );
+	
+	skinTransform = mul( skinTransform, World );
+	
+	float4 pos_ws = mul(input.Position, skinTransform);
 	float4 pos_vs = mul(pos_ws, View);
 	output.Position = mul(pos_vs, Projection);
 	
@@ -155,5 +187,15 @@ Technique GBufferND
 		AlphaBlendEnable = FALSE;
 		VertexShader	= compile vs_2_0 VSMainND();
 		PixelShader		= compile ps_2_0 PSMainND();
+	}
+}
+
+Technique GBufferNDSkinning
+{
+	Pass P0
+	{
+		AlphaBlendEnable = FALSE;
+		VertexShader	= compile vs_3_0 VSNDSkinning();
+		PixelShader		= compile ps_3_0 PSMainND();
 	}
 }

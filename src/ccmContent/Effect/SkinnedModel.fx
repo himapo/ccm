@@ -13,6 +13,7 @@
 //-----------------------------------------------------------------------------
 
 #include "BoneTexture.fxh"
+#include "LightMapping.fxh"
 #include "Shadow.fxh"
 
 //-----------------------------------------------------------------------------
@@ -21,12 +22,6 @@
 float4x4 World;			// オブジェクトのワールド座標
 float4x4 View;
 float4x4 Projection;
-
-float3 Light1Direction = normalize(float3(1, 1, -2));
-float3 Light1Color = float3(0.9, 0.8, 0.7);
-
-float3 Light2Direction = normalize(float3(-1, -1, 1));
-float3 Light2Color = float3(0.1, 0.3, 0.8);
 
 float3 AmbientColor = 0.2;
 
@@ -65,7 +60,6 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 Position		: POSITION0;
-    float3 Lighting		: COLOR0;
     float2 TexCoord		: TEXCOORD0;
 	float4 PositionWS	: TEXCOORD1;
 };
@@ -87,21 +81,6 @@ VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
     float4 position = mul(input.Position, skinTransform);
     output.Position = mul(mul(position, View), Projection);
 
-    // 法線変換
-    float3 normal = normalize( mul( input.Normal, skinTransform));
-    
-    float3 light1 = max(dot(normal, -Light1Direction), 0) * Light1Color;
-    float3 light2 = max(dot(normal, -Light2Direction), 0) * Light2Color;
-
-    output.Lighting = light1 + light2;
-    
-    if(useMaterial)
-    {
-    	output.Lighting *= MaterialDiffuse;
-    }
-
-    output.Lighting += AmbientColor;
-
     output.TexCoord = input.TexCoord;
 
 	output.PositionWS = position;
@@ -115,7 +94,6 @@ VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
 // ピクセルシェーダー入力構造体
 struct PS_INPUT
 {
-    float3 Lighting		: COLOR0;
     float2 TexCoord		: TEXCOORD0;
 	float4 PositionWS	: TEXCOORD1;
 };
@@ -125,21 +103,29 @@ float4 SkinningPS(PS_INPUT input,
 				  uniform bool useTexture,
 				  uniform bool shadowEnabled) : COLOR0
 {
-    float4 color = 1.0;
+    float4 output = 1.0;
     
+	// 射影空間でのこのピクセルの位置を見つける
+	float4 projPosition = mul(mul(input.PositionWS, View), Projection);
+
+	float3 radiance = GetDiffuseRadiance(projPosition);
+	
+	// マテリアルカラー、アンビエントライトと合成する
+	float3 d = saturate(MaterialDiffuse * radiance + AmbientColor);
+	
+	output = float4(d.rgb, 1.0);
+
     if(useTexture)
     {
-    	color = tex2D(Sampler, input.TexCoord);
+    	output *= tex2D(Sampler, input.TexCoord);
 	}
-    
-    color.rgb *= input.Lighting;
     
 	if(shadowEnabled)
 	{
-	    color *= CalcShadow(input.PositionWS);
+	    output *= CalcShadow(input.PositionWS);
 	}
 
-    return color;
+    return output;
 }
 
 //-----------------------------------------------------------------------------

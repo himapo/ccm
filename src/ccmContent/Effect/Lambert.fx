@@ -1,3 +1,4 @@
+#include "LightMapping.fxh"
 #include "Shadow.fxh"
 
 // Materials
@@ -19,17 +20,6 @@ texture ModelTexture;
 sampler ModelTextureSampler = sampler_state
 {
 	Texture = (ModelTexture);
-	MipFilter = Linear;
-	MinFilter = Linear;
-	MagFilter = Linear;
-	AddressU = Clamp;
-	AddressV = Clamp;
-};
-
-texture DiffuseLightMap;
-sampler DiffuseLightMapSampler = sampler_state
-{
-	Texture = (DiffuseLightMap);
 	MipFilter = Linear;
 	MinFilter = Linear;
 	MagFilter = Linear;
@@ -75,18 +65,13 @@ float4 PSMain(VSOutput input,
 	// 射影空間でのこのピクセルの位置を見つける
 	float4 projPosition = mul(mul(input.PositionWS, View), Projection);
 	
-	// ライト マップでのこのピクセルの位置を見つける
-	float2 LightTexCoord = 0.5 * projPosition.xy / projPosition.w + float2( 0.5, 0.5 );
-	LightTexCoord.y = 1.0f - LightTexCoord.y;
-	
 	// ライト マップに格納された放射輝度を取得する
-	float3 radiance = tex2D(DiffuseLightMapSampler, LightTexCoord).rgb;
+	float3 radiance = GetDiffuseRadiance(projPosition);
 	
 	// マテリアルカラー、アンビエントライトと合成する
 	float3 d = saturate(DiffuseColor * radiance + AmbientLightColor);
 	
 	output = float4(d.rgb, Alpha);
-	
 	
 	if(useTexture)
 	{
