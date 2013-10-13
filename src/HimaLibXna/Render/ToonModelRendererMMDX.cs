@@ -12,7 +12,7 @@ namespace HimaLib.Render
 {
     public class ToonModelRendererMMDX : IModelRendererMMDX
     {
-        AffineTransform Transform;
+        Matrix Transform;
 
         public void SetParameter(ToonModelRenderParameter param)
         {
@@ -28,7 +28,7 @@ namespace HimaLib.Render
 
         public void Render(MMDXModel model)
         {
-            model.Transform = MathUtilXna.ToXnaMatrix(Transform.WorldMatrix);
+            model.Transform = MathUtilXna.ToXnaMatrix(Transform);
             model.Draw();
         }
 

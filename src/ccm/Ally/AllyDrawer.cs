@@ -32,7 +32,7 @@ namespace ccm.Ally
         public void Draw(IModel model, AffineTransform transform)
         {
             RenderParam.Camera = Camera;
-            RenderParam.Transform = transform;
+            RenderParam.Transform = transform.WorldMatrix;
             //RenderParam.Alpha = 0.5f;
             RenderSceneManager.Instance.RenderModel(model, RenderParam);
         }

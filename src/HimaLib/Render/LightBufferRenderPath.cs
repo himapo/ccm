@@ -57,15 +57,11 @@ namespace HimaLib.Render
 
             foreach (var v in query)
             {
-                var transform = new AffineTransform()
-                {
-                    Scale = Vector3.One * v.light.AttenuationEnd,
-                    Translation = v.light.Position,
-                };
+                var transform = new AffineTransform(Vector3.One * v.light.AttenuationEnd, Vector3.Zero, v.light.Position);
 
                 var renderParam = new PointLightRenderParameter()
                 {
-                    Transform = transform,
+                    Transform = transform.WorldMatrix,
                     PointLight = v.light,
                     LightID = v.index,
                     NormalMap = NormalMap,

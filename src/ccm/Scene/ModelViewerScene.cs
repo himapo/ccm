@@ -119,7 +119,7 @@ namespace ccm.Scene
         void InitSimpleRenderer()
         {
             simpleRenderParam.Camera = camera;
-            simpleRenderParam.Transform = new AffineTransform();
+            simpleRenderParam.Transform = Matrix.Identity;
             simpleRenderParam.IsShadowReceiver = false;
             simpleRenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);            
         }
@@ -131,7 +131,7 @@ namespace ccm.Scene
             toonRenderParam.GBufferEnabled = false;
 
             toonRenderParam.Camera = camera;
-            toonRenderParam.Transform = new AffineTransform();
+            toonRenderParam.Transform = Matrix.Identity;
         }
 
         void InitDefaultRenderer()

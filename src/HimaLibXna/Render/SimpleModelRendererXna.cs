@@ -25,7 +25,7 @@ namespace HimaLib.Render
                 return;
             }
 
-            lambert.World = MathUtilXna.ToXnaMatrix(param.Transform.WorldMatrix);
+            lambert.World = MathUtilXna.ToXnaMatrix(param.Transform);
             lambert.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             lambert.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             

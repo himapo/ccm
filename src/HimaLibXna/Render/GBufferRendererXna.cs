@@ -24,7 +24,7 @@ namespace HimaLib.Render
                 return;
             }
 
-            Shader.World = MathUtilXna.ToXnaMatrix(param.Transform.WorldMatrix);
+            Shader.World = MathUtilXna.ToXnaMatrix(param.Transform);
             Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             if (param.Texture != null)

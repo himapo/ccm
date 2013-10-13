@@ -69,15 +69,10 @@ namespace ccm.Player
         void Draw(IModel model, AffineTransform transform)
         {
             toonRenderParam.Camera = Camera;
-            toonRenderParam.Transform = transform;
+            toonRenderParam.Transform = transform.WorldMatrix;
 
-            defaultRenderParam.Transform = new AffineTransform()
-            {
-                Scale = transform.Scale,
-                Rotation = new Vector3(transform.Rotation.X + MathUtil.ToRadians(-90.0f), transform.Rotation.Y, transform.Rotation.Z),
-                Translation = transform.Translation,
-            };
-            defaultRenderParam.ParametersMatrix["World"] = defaultRenderParam.Transform.WorldMatrix;
+            defaultRenderParam.Transform = Matrix.CreateRotationX(MathUtil.ToRadians(-90.0f)) * transform.WorldMatrix;
+            defaultRenderParam.ParametersMatrix["World"] = defaultRenderParam.Transform;
 
             ModelRenderParameter renderParam = defaultRenderParam;
 
@@ -85,13 +80,16 @@ namespace ccm.Player
 
             BillboardRenderParam.Camera = Camera;
             BillboardRenderParam.Alpha = Alpha;
-            BillboardRenderParam.Transform = new AffineTransform();
-            BillboardRenderParam.Transform.Scale = Vector3.One * 0.004f;
-            BillboardRenderParam.Transform.Rotation = Vector3.Zero;
-            BillboardRenderParam.Transform.Translation = new Vector3(
-                transform.Translation.X + 4.0f,
-                transform.Translation.Y + 8.5f,
-                transform.Translation.Z + 1.0f);
+
+            var playerTranslation = transform.Translation;
+
+            BillboardRenderParam.Transform = new AffineTransform(
+                Vector3.One * 0.004f,
+                Vector3.Zero,
+                new Vector3(
+                    playerTranslation.X + 4.0f,
+                    playerTranslation.Y + 8.5f,
+                    playerTranslation.Z + 1.0f));
             BillboardRenderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/miki");
 
             Billboard.Render(BillboardRenderParam);

@@ -385,7 +385,7 @@ namespace ccm.Scene
             StageRenderParam.Transform = new AffineTransform(
                 Vector3.One * 30.0f,
                 Vector3.Zero,
-                Vector3.UnitY * (-45.0f));
+                Vector3.UnitY * (-45.0f)).WorldMatrix;
             StageRenderParam.Camera = Camera;
             StageRenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
         }

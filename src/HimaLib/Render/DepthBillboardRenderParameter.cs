@@ -12,7 +12,7 @@ namespace HimaLib.Render
     {
         public override BillboardRendererType Type { get { return BillboardRendererType.Depth; } }
 
-        public AffineTransform Transform { get; set; }
+        public Matrix Transform { get; set; }
 
         public DepthBillboardRenderParameter()
         {

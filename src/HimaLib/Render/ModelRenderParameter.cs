@@ -30,7 +30,7 @@ namespace HimaLib.Render
 
         public List<DirectionalLight> DirectionalLights { get; set; }
 
-        public AffineTransform Transform { get; set; }
+        public Matrix Transform { get; set; }
 
         public bool IsShadowCaster { get; set; }
 

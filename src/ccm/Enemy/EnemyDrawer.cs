@@ -38,7 +38,7 @@ namespace ccm.Enemy
         public void Draw(Enemy enemy)
         {
             RenderParam.Camera = Camera;
-            RenderParam.Transform = enemy.Transform;
+            RenderParam.Transform = enemy.Transform.WorldMatrix;
             //RenderParam.Alpha = 0.5f;
             RenderSceneManager.Instance.RenderModel(enemy.Model, RenderParam);
         }
