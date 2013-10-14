@@ -149,6 +149,7 @@
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
+    <Compile Include="Model\Sphere.cs" />
     <Compile Include="Render\DefaultModelRenderParameter.cs" />
     <Compile Include="Render\DeferredBillboardRenderParameter.cs" />
     <Compile Include="Render\DeferredRenderPath.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Render\DirectionalLightRenderParameter.cs" />
     <Compile Include="Render\LightBufferRenderPath.cs" />
     <Compile Include="Render\PointLightRenderParameter.cs" />
+    <Compile Include="Render\RenderParameter.cs" />
     <Compile Include="Render\ShadowMapRenderPath.cs" />
     <Compile Include="Render\HudBillboardRenderParameter.cs" />
     <Compile Include="Render\HudRenderPath.cs" />

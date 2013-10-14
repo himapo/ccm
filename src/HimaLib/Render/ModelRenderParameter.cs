@@ -20,31 +20,9 @@ namespace HimaLib.Render
         PointLight,
     }
 
-    public abstract class ModelRenderParameter
+    public abstract class ModelRenderParameter : RenderParameter
     {
         public abstract ModelRendererType Type { get; }
-
-        public CameraBase Camera { get; set; }
-
-        public CameraBase LightCamera { get; set; }
-
-        public List<DirectionalLight> DirectionalLights { get; set; }
-
-        public Matrix Transform { get; set; }
-
-        public bool IsShadowCaster { get; set; }
-
-        public bool IsShadowReceiver { get; set; }
-
-        public bool IsTranslucent { get; set; }
-
-        public bool GBufferEnabled { get; set; }
-
-        public ITexture ShadowMap { get; set; }
-
-        public ITexture DiffuseLightMap { get; set; }
-
-        public ITexture SpecularLightMap { get; set; }
 
         public ModelRenderParameter()
         {
