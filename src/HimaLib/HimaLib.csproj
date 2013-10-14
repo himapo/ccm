@@ -175,8 +175,10 @@
     <Compile Include="Render\SimpleBillboardRenderParameter.cs" />
     <Compile Include="Render\SimpleInstancingRenderParameter.cs" />
     <Compile Include="Render\SimpleModelRenderParameter.cs" />
+    <Compile Include="Render\SphereRenderParameter.cs" />
     <Compile Include="Render\ToonModelRenderParameter.cs" />
     <Compile Include="Render\TranslucentRenderPath.cs" />
+    <Compile Include="Render\WireSphereRenderParameter.cs" />
     <Compile Include="Script\Script.cs" />
     <Compile Include="Script\ScriptManager.cs" />
     <Compile Include="Sound\ISound.cs" />

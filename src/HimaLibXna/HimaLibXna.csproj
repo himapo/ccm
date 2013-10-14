@@ -156,12 +156,14 @@
     <Compile Include="Render\IBillboardRendererXna.cs" />
     <Compile Include="Render\IModelRendererMMDX.cs" />
     <Compile Include="Render\IModelRendererXna.cs" />
+    <Compile Include="Render\ISphereRendererXna.cs" />
     <Compile Include="Render\LightBufferRenderer.cs" />
     <Compile Include="Render\ModelRendererFactoryMMDX.cs" />
     <Compile Include="Render\ModelRendererFactoryXna.cs" />
     <Compile Include="Render\NullBillboardRendererXna.cs" />
     <Compile Include="Render\NullModelRendererMMDX.cs" />
     <Compile Include="Render\NullModelRendererXna.cs" />
+    <Compile Include="Render\NullSphereRendererXna.cs" />
     <Compile Include="Render\RenderDeviceFactory.cs" />
     <Compile Include="Render\RenderDeviceXna.cs" />
     <Compile Include="Render\ScreenBillboardRenderer.cs" />
@@ -169,8 +171,10 @@
     <Compile Include="Render\SimpleInstancingRendererXna.cs" />
     <Compile Include="Render\SimpleModelRendererXna.cs" />
     <Compile Include="Render\SkinnedModelRendererXna.cs" />
+    <Compile Include="Render\SphereRendererFactoryXna.cs" />
     <Compile Include="Render\ToonModelRendererMMDX.cs" />
     <Compile Include="Render\HudBillboardRenderer.cs" />
+    <Compile Include="Render\WireSphereRenderer.cs" />
     <Compile Include="Shader\ConstantShader.cs" />
     <Compile Include="Shader\DeferredShader.cs" />
     <Compile Include="Shader\DepthShader.cs" />
