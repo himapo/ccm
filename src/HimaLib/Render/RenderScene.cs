@@ -19,6 +19,12 @@ namespace HimaLib.Render
         public BillboardRenderParameter RenderParam { get; set; }
     }
 
+    public class SphereInfo
+    {
+        public Sphere Sphere { get; set; }
+        public SphereRenderParameter RenderParam { get; set; }
+    }
+
     public class RenderScene
     {
         Dictionary<int, IRenderPath> PathDic = new Dictionary<int, IRenderPath>();
@@ -30,6 +36,8 @@ namespace HimaLib.Render
         List<ModelInfo> ModelInfoList = new List<ModelInfo>();
 
         List<BillboardInfo> BillboardInfoList = new List<BillboardInfo>();
+
+        List<SphereInfo> SphereInfoList = new List<SphereInfo>();
 
         public RenderScene()
         {
@@ -96,6 +104,11 @@ namespace HimaLib.Render
             BillboardInfoList.Add(new BillboardInfo() { Billboard = billboard, RenderParam = renderParam });
         }
 
+        public void RenderSphere(Sphere sphere, SphereRenderParameter renderParam)
+        {
+            SphereInfoList.Add(new SphereInfo() { Sphere = sphere, RenderParam = renderParam });
+        }
+
         public void Render()
         {
             // TODO : 別スレッド化
@@ -110,11 +123,13 @@ namespace HimaLib.Render
                 path.DirectionalLights = DirectionalLights;
                 path.ModelInfoList = ModelInfoList;
                 path.BillboardInfoList = BillboardInfoList;
+                path.SphereInfoList = SphereInfoList;
                 path.Render();
             }
 
             ModelInfoList.Clear();
             BillboardInfoList.Clear();
+            SphereInfoList.Clear();
         }
     }
 }

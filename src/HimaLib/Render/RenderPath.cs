@@ -28,6 +28,8 @@ namespace HimaLib.Render
 
         public IEnumerable<BillboardInfo> BillboardInfoList { get; set; }
 
+        public IEnumerable<SphereInfo> SphereInfoList { get; set; }
+
         public IRenderDevice RenderDevice { get; set; }
 
         public bool ColorClearEnabled { get; set; }
@@ -62,6 +64,8 @@ namespace HimaLib.Render
 
         public bool RenderHudBillboardOnly { get; set; }
 
+        public bool RenderSphereEnabled { get; set; }
+
         public RenderPath()
         {
             Enabled = true;
@@ -84,6 +88,7 @@ namespace HimaLib.Render
             RenderTranslucentBillboardOnly = false;
             RenderNoHudBillboardOnly = false;
             RenderHudBillboardOnly = false;
+            RenderSphereEnabled = false;
         }
 
         public virtual void Render()
@@ -123,62 +128,87 @@ namespace HimaLib.Render
 
             if (RenderModelEnabled)
             {
-                foreach (var info in ModelInfoList)
-                {
-                    if (RenderShadowModelOnly && !info.RenderParam.IsShadowCaster)
-                    {
-                        continue;
-                    }
-
-                    if (RenderOpaqueModelOnly && info.RenderParam.IsTranslucent)
-                    {
-                        continue;
-                    }
-
-                    if (RenderTranslucentModelOnly && !info.RenderParam.IsTranslucent)
-                    {
-                        continue;
-                    }
-
-                    info.RenderParam.Camera = Camera;
-                    info.RenderParam.DirectionalLights = DirectionalLights;
-                    info.Model.Render(info.RenderParam);
-                }
+                RenderModel();
             }
 
             if (RenderBillboardEnabled)
             {
-                foreach (var info in BillboardInfoList)
+                RenderBillboard();
+            }
+
+            if (RenderSphereEnabled)
+            {
+                RenderSphere();
+            }
+        }
+
+        void RenderModel()
+        {
+            foreach (var info in ModelInfoList)
+            {
+                if (RenderShadowModelOnly && !info.RenderParam.IsShadowCaster)
                 {
-                    if (RenderShadowBillboardOnly && !info.RenderParam.IsShadowCaster)
-                    {
-                        continue;
-                    }
-
-                    if (RenderOpaqueBillboardOnly && info.RenderParam.IsTranslucent)
-                    {
-                        continue;
-                    }
-
-                    if (RenderTranslucentBillboardOnly && !info.RenderParam.IsTranslucent)
-                    {
-                        continue;
-                    }
-
-                    if (RenderNoHudBillboardOnly && info.RenderParam.IsHud)
-                    {
-                        continue;
-                    }
-
-                    if (RenderHudBillboardOnly && !info.RenderParam.IsHud)
-                    {
-                        continue;
-                    }
-
-                    info.RenderParam.Camera = Camera;
-                    info.RenderParam.DirectionalLights = DirectionalLights;
-                    info.Billboard.Render(info.RenderParam);
+                    continue;
                 }
+
+                if (RenderOpaqueModelOnly && info.RenderParam.IsTranslucent)
+                {
+                    continue;
+                }
+
+                if (RenderTranslucentModelOnly && !info.RenderParam.IsTranslucent)
+                {
+                    continue;
+                }
+
+                info.RenderParam.Camera = Camera;
+                info.RenderParam.DirectionalLights = DirectionalLights;
+                info.Model.Render(info.RenderParam);
+            }
+        }
+
+        void RenderBillboard()
+        {
+            foreach (var info in BillboardInfoList)
+            {
+                if (RenderShadowBillboardOnly && !info.RenderParam.IsShadowCaster)
+                {
+                    continue;
+                }
+
+                if (RenderOpaqueBillboardOnly && info.RenderParam.IsTranslucent)
+                {
+                    continue;
+                }
+
+                if (RenderTranslucentBillboardOnly && !info.RenderParam.IsTranslucent)
+                {
+                    continue;
+                }
+
+                if (RenderNoHudBillboardOnly && info.RenderParam.IsHud)
+                {
+                    continue;
+                }
+
+                if (RenderHudBillboardOnly && !info.RenderParam.IsHud)
+                {
+                    continue;
+                }
+
+                info.RenderParam.Camera = Camera;
+                info.RenderParam.DirectionalLights = DirectionalLights;
+                info.Billboard.Render(info.RenderParam);
+            }
+        }
+
+        void RenderSphere()
+        {
+            foreach (var info in SphereInfoList)
+            {
+                info.RenderParam.Camera = Camera;
+                info.RenderParam.DirectionalLights = DirectionalLights;
+                info.Sphere.Render(info.RenderParam);
             }
         }
     }

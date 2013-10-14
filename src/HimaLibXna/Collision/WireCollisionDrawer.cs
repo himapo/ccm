@@ -6,11 +6,15 @@ using Microsoft.Xna.Framework.Graphics;
 using HimaLib.Math;
 using HimaLib.System;
 using HimaLib.Camera;
+using HimaLib.Model;
+using HimaLib.Render;
 
 namespace HimaLib.Collision
 {
     public class WireCollisionDrawer : ICollisionDrawer
     {
+        public RenderScene RenderScene { get; set; }
+
         public CameraBase Camera { get; set; }
 
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
@@ -26,6 +30,10 @@ namespace HimaLib.Collision
         VertexPositionColor[] cylinderVertices;
 
         short[] cylinderIndices;
+
+        SphereXna Sphere = new SphereXna();
+
+        WireSphereRenderParameter RenderParam = new WireSphereRenderParameter();
 
         public WireCollisionDrawer(CameraBase camera)
         {
@@ -117,21 +125,29 @@ namespace HimaLib.Collision
 
         public void DrawSphere(SphereCollisionPrimitive primitive, bool active)
         {
-            UpdateCamera();
+            //UpdateCamera();
 
-            var scaleMat = Matrix.CreateScale(primitive.Radius());
-            var transMat = Matrix.CreateTranslation(primitive.Center());
-            basicEffect.World = MathUtilXna.ToXnaMatrix(scaleMat * transMat);
+            //var scaleMat = Matrix.CreateScale(primitive.Radius());
+            //var transMat = Matrix.CreateTranslation(primitive.Center());
+            //basicEffect.World = MathUtilXna.ToXnaMatrix(scaleMat * transMat);
 
-            foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            //foreach (EffectPass pass in basicEffect.CurrentTechnique.Passes)
+            //{
+            //    pass.Apply();
+
+            //    for (var i = 0; i < 11; ++i)
+            //    {
+            //        GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionColor>(PrimitiveType.LineStrip, sphereVertices, 0, sphereVertices.Length, sphereIndices, i * 13, 12);
+            //    }
+            //}
+
+            var sphere = new SphereXna()
             {
-                pass.Apply();
+                Position = primitive.Center(),
+                Radius = primitive.Radius(),
+            };
 
-                for (var i = 0; i < 11; ++i)
-                {
-                    GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionColor>(PrimitiveType.LineStrip, sphereVertices, 0, sphereVertices.Length, sphereIndices, i * 13, 12);
-                }
-            }
+            RenderScene.RenderSphere(sphere, RenderParam);
         }
 
         public void DrawCylinder(CylinderCollisionPrimitive primitive, bool active)

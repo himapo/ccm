@@ -181,6 +181,7 @@ namespace ccm.System
                     Enabled = false,
                     Name = "Deferred",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     Billboard = BillboardFactory.Instance.Create(),
                     AlbedoMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),
                     PositionMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer1),
@@ -195,9 +196,20 @@ namespace ccm.System
                     //Enabled = false,
                     Name = "Opaque",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0),
                     DiffuseLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap),
                     SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
+                });
+
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.DEBUG,
+                new DebugRenderPath()
+                {
+                    //Enabled = false,
+                    Name = "Debug",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
 
             RenderSceneManager.Instance.AddPath(
@@ -207,6 +219,7 @@ namespace ccm.System
                     Enabled = false,
                     Name = "Translucent",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
 
             RenderSceneManager.Instance.AddPath(
@@ -215,6 +228,7 @@ namespace ccm.System
                 {
                     Name = "HUD",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
         }
 

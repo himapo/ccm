@@ -150,6 +150,7 @@
     <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Sphere.cs" />
+    <Compile Include="Render\DebugRenderPath.cs" />
     <Compile Include="Render\DefaultModelRenderParameter.cs" />
     <Compile Include="Render\DeferredBillboardRenderParameter.cs" />
     <Compile Include="Render\DeferredRenderPath.cs" />

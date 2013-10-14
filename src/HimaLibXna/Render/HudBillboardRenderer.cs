@@ -30,7 +30,7 @@ namespace HimaLib.Render
             Shader.Texture = (param.Texture as ITextureXna).Texture;
             Shader.RectOffset = MathUtilXna.ToXnaVector(param.RectOffset);
             Shader.RectSize = MathUtilXna.ToXnaVector(param.RectSize);
-            Shader.World = MathUtilXna.ToXnaMatrix(GetWorldMatrix(param.Transform));
+            Shader.World = MathUtilXna.ToXnaMatrix(param.Transform);
             Shader.View = MathUtilXna.ToXnaMatrix(GetViewMatrix());
             Shader.Projection = MathUtilXna.ToXnaMatrix(GetProjMatrix());
             Shader.Alpha = param.Alpha;

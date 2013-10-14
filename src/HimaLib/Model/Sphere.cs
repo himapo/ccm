@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Math;
+using HimaLib.Render;
 
 namespace HimaLib.Model
 {
-    public class Sphere
+    public abstract class Sphere
     {
         public Vector3 Position { get; set; }
 
@@ -17,5 +18,7 @@ namespace HimaLib.Model
             Position = Vector3.Zero;
             Radius = 1.0f;
         }
+
+        public abstract void Render(SphereRenderParameter param);
     }
 }

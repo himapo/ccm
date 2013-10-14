@@ -242,7 +242,7 @@ namespace ccm.Item
             BillboardRenderParam.Transform = new AffineTransform(
                 Vector3.One,
                 Vector3.Zero,
-                Position);
+                Position).WorldMatrix;
             BillboardRenderParam.Alpha = 1.0f;
 
             RenderSceneManager.Instance.RenderBillboard(Billboard, BillboardRenderParam);
@@ -282,7 +282,7 @@ namespace ccm.Item
                 renderParam.Transform = new AffineTransform(
                     Vector3.One,
                     Vector3.Zero,
-                    pos);
+                    pos).WorldMatrix;
 
                 renderParam.RectOffset = new Vector2(
                     1.0f + 51.0f * (iconInfo.Type % 5),

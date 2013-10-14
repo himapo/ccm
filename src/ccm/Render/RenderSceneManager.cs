@@ -19,7 +19,7 @@ namespace ccm.Render
             }
         }
 
-        RenderScene RenderScene { get; set; }
+        public RenderScene RenderScene { get; set; }
 
         RenderSceneManager()
         {

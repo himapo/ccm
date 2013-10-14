@@ -26,6 +26,8 @@ namespace HimaLib.Render
 
         IEnumerable<BillboardInfo> BillboardInfoList { get; set; }
 
+        IEnumerable<SphereInfo> SphereInfoList { get; set; }
+
         void Render();
     }
 }

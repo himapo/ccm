@@ -246,7 +246,10 @@ namespace ccm.Scene
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyDamage);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.EnemyAttack, (int)Collision.CollisionGroup.PlayerDamage);
-            CollisionManager.Drawer = new WireCollisionDrawer(Camera);
+            CollisionManager.Drawer = new WireCollisionDrawer(Camera)
+            {
+                RenderScene = RenderSceneManager.Instance.RenderScene,
+            };
         }
 
         void InitCamera()
@@ -259,6 +262,8 @@ namespace ccm.Scene
             RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
             RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
         }
 
         void InitLight()
@@ -370,7 +375,7 @@ namespace ccm.Scene
             TargetRenderParam.Transform = new AffineTransform(
                 Vector3.One * 0.4f,
                 Vector3.Zero,
-                new Vector3(640.0f - 256.0f - 10.0f, 360.0f - 144.0f - 10.0f, 0.0f));
+                new Vector3(640.0f - 256.0f - 10.0f, 360.0f - 144.0f - 10.0f, 0.0f)).WorldMatrix;
             TargetRenderParam.IsTranslucent = false;
         }
 

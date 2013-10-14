@@ -57,7 +57,7 @@ namespace ccm.Scene
             renderParam.Transform = new AffineTransform(
                 Vector3.One,
                 Vector3.Zero,
-                Vector3.Zero);
+                Vector3.Zero).WorldMatrix;
             renderParam.IsTranslucent = false;
         }
 

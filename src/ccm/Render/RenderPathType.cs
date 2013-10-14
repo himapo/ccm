@@ -12,8 +12,8 @@ namespace ccm.Render
         LIGHTBUFFER,
         DEFERRED,
         OPAQUE,
-        TRANSLUCENT,
         DEBUG,
+        TRANSLUCENT,
         HUD,
         DEBUGHUD,
     }
