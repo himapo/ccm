@@ -34,6 +34,14 @@ namespace HimaLib.Render
 
         public override void Render()
         {
+            CreateModelList();
+            CreateBillboardList();
+
+            base.Render();
+        }
+
+        void CreateModelList()
+        {
             ModelInfoList = ModelInfoList.Where(
             info =>
             {
@@ -53,8 +61,29 @@ namespace HimaLib.Render
                     RenderParam = gbufferParam,
                 };
             });
+        }
 
-            base.Render();
+        void CreateBillboardList()
+        {
+            BillboardInfoList = BillboardInfoList.Where(
+            info =>
+            {
+                return info.RenderParam.GBufferEnabled;
+            }).Select(
+            info =>
+            {
+                // Gバッファ用のBillboardInfoを新たに生成する
+                var gbufferParam = new GBufferBillboardRenderParameter()
+                {
+                    Transform = info.RenderParam.Transform,
+                };
+
+                return new BillboardInfo()
+                {
+                    Billboard = info.Billboard,
+                    RenderParam = gbufferParam,
+                };
+            });
         }
     }
 }

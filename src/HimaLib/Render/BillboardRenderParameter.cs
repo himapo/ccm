@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using HimaLib.Camera;
 using HimaLib.Light;
+using HimaLib.Texture;
+using HimaLib.Math;
 
 namespace HimaLib.Render
 {
@@ -14,6 +16,7 @@ namespace HimaLib.Render
         Depth,
         Deferred,       // Deferred Shading のライティングパス
         DiectionalLight,// Deferred Lighting の平行光源マップ生成
+        GBuffer,
     }
 
     public abstract class BillboardRenderParameter
@@ -22,17 +25,28 @@ namespace HimaLib.Render
 
         public CameraBase Camera { get; set; }
 
+        public CameraBase LightCamera { get; set; }
+
         public List<DirectionalLight> DirectionalLights { get; set; }
 
-        public bool ShadowEnabled { get; set; }
+        public Matrix Transform { get; set; }
+
+        public bool IsShadowCaster { get; set; }
+
+        public bool IsShadowReceiver { get; set; }
 
         public bool IsTranslucent { get; set; }
 
         public bool IsHud { get; set; }
 
+        public bool GBufferEnabled { get; set; }
+
+        public ITexture ShadowMap { get; set; }
+
         public BillboardRenderParameter()
         {
-            ShadowEnabled = true;
+            IsShadowCaster = true;
+            IsShadowReceiver = true;
             IsTranslucent = false;
             IsHud = false;
         }

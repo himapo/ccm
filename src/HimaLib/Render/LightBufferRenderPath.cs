@@ -80,7 +80,7 @@ namespace HimaLib.Render
 
         void RenderDirectionalLights()
         {
-            BillboardInfoList = new List<BillboardInfo>();            
+            var billboardInfoList = new List<BillboardInfo>();            
 
             foreach (var light in DirectionalLights)
             {
@@ -91,12 +91,14 @@ namespace HimaLib.Render
                     DepthMap = DepthMap,
                 };
 
-                BillboardInfoList.Add(new BillboardInfo()
+                billboardInfoList.Add(new BillboardInfo()
                 {
                     Billboard = this.Billboard,
                     RenderParam = renderParam,
                 });
             }
+
+            BillboardInfoList = billboardInfoList;
         }
     }
 }

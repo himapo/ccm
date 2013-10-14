@@ -32,6 +32,7 @@ namespace ccm.Player
         {
             CreateUpdater();
             InitDefaultRenderer();
+            InitBillboardRenderer();
         }
 
         void CreateUpdater()
@@ -56,6 +57,15 @@ namespace ccm.Player
             defaultRenderParam.ParametersVector3["AmbientColor"] = new Vector3(0.1f, 0.1f, 0.1f);
         }
 
+        void InitBillboardRenderer()
+        {
+            BillboardRenderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/miki");
+
+            BillboardRenderParam.IsShadowCaster = false;
+            BillboardRenderParam.IsShadowReceiver = false;
+            BillboardRenderParam.GBufferEnabled = false;
+        }
+
         public void Draw(Player player)
         {
             Draw(player.Model, player.Transform);
@@ -76,19 +86,15 @@ namespace ccm.Player
 
             BillboardRenderParam.Camera = Camera;
             BillboardRenderParam.Alpha = Alpha;
-
-            var playerTranslation = transform.Translation;
-
-            BillboardRenderParam.Transform = new AffineTransform(
+            BillboardRenderParam.AffineTransform = new AffineTransform(
                 Vector3.One * 0.004f,
                 Vector3.Zero,
                 new Vector3(
-                    playerTranslation.X + 4.0f,
-                    playerTranslation.Y + 8.5f,
-                    playerTranslation.Z + 1.0f));
-            BillboardRenderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/miki");
-
-            Billboard.Render(BillboardRenderParam);
+                    transform.Translation.X + 4.0f,
+                    transform.Translation.Y + 8.5f,
+                    transform.Translation.Z + 1.0f));
+            
+            RenderSceneManager.Instance.RenderBillboard(Billboard, BillboardRenderParam);
         }
 
         void DrawCombo(int count, AffineTransform transform)

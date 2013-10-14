@@ -26,7 +26,7 @@ namespace HimaLib.Render
 
         public IEnumerable<ModelInfo> ModelInfoList { get; set; }
 
-        public List<BillboardInfo> BillboardInfoList { get; set; }
+        public IEnumerable<BillboardInfo> BillboardInfoList { get; set; }
 
         public IRenderDevice RenderDevice { get; set; }
 
@@ -150,7 +150,7 @@ namespace HimaLib.Render
             {
                 foreach (var info in BillboardInfoList)
                 {
-                    if (RenderShadowBillboardOnly && !info.RenderParam.ShadowEnabled)
+                    if (RenderShadowBillboardOnly && !info.RenderParam.IsShadowCaster)
                     {
                         continue;
                     }

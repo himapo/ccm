@@ -26,7 +26,7 @@ namespace HimaLib.Render
                 return;
             }
 
-            ConstantShader.World = MathUtilXna.ToXnaMatrix(CalcWorldMatrix(param.Transform, param.Camera));
+            ConstantShader.World = MathUtilXna.ToXnaMatrix(CalcWorldMatrix(param.AffineTransform, param.Camera));
             
             ConstantShader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             ConstantShader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);

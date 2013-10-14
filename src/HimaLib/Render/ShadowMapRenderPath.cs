@@ -49,6 +49,19 @@ namespace HimaLib.Render
             // TODO : ライトをカメラに変換
             Camera = LightToCamera(DirectionalLights[0]);
 
+            CreateModelList();
+            CreateBillboardList();
+
+            base.Render();
+        }
+
+        CameraBase LightToCamera(DirectionalLight light)
+        {
+            return light.ToCamera(EyeCamera);
+        }
+
+        void CreateModelList()
+        {
             var casters = ModelInfoList.Where(info =>
             {
                 if (info.RenderParam.IsShadowReceiver)
@@ -81,13 +94,42 @@ namespace HimaLib.Render
             });
 
             ModelInfoList = casters;
-
-            base.Render();
         }
 
-        CameraBase LightToCamera(DirectionalLight light)
+        void CreateBillboardList()
         {
-            return light.ToCamera(EyeCamera);
+            var casters = BillboardInfoList.Where(info =>
+            {
+                if (info.RenderParam.IsShadowReceiver)
+                {
+                    // 光源カメラをレンダーパラメータに渡す
+                    info.RenderParam.LightCamera = Camera;
+                }
+
+                // 影描画が有効なものを抽出
+                if (!info.RenderParam.IsShadowCaster)
+                {
+                    return false;
+                }
+
+                return true;
+            }).Select(
+            info =>
+            {
+                var depthParam = new DepthBillboardRenderParameter()
+                {
+                    Transform = info.RenderParam.Transform
+                };
+
+                // 深度レンダリング用のModelInfoを新たに生成する
+                return new BillboardInfo()
+                {
+                    Billboard = info.Billboard,
+                    RenderParam = depthParam,
+                };
+            });
+
+            BillboardInfoList = casters;
         }
     }
 }

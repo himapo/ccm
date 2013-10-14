@@ -13,7 +13,8 @@ namespace ccm.Render
         DEFERRED,
         OPAQUE,
         TRANSLUCENT,
-        HUD,
         DEBUG,
+        HUD,
+        DEBUGHUD,
     }
 }

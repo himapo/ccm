@@ -24,7 +24,7 @@ namespace HimaLib.Render
 
         IEnumerable<ModelInfo> ModelInfoList { get; set; }
 
-        List<BillboardInfo> BillboardInfoList { get; set; }
+        IEnumerable<BillboardInfo> BillboardInfoList { get; set; }
 
         void Render();
     }

@@ -13,11 +13,11 @@ namespace HimaLib.Render
     {
         public override BillboardRendererType Type { get { return BillboardRendererType.Simple; } }
 
-        public AffineTransform Transform { get; set; }
-
         public float Alpha { get; set; }
 
         public ITexture Texture { get; set; }
+
+        public AffineTransform AffineTransform { get; set; }
 
         public SimpleBillboardRenderParameter()
         {

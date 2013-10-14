@@ -25,7 +25,8 @@ namespace HimaLib.Render
 
         public HudBillboardRenderParameter()
         {
-            ShadowEnabled = false;
+            IsShadowCaster = false;
+            IsShadowReceiver = false;
             IsHud = true;
         }
     }
