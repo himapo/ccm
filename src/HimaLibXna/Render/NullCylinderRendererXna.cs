@@ -6,14 +6,14 @@ using HimaLib.Model;
 
 namespace HimaLib.Render
 {
-    public class NullSphereRendererXna : ISphereRendererXna
+    public class NullCylinderRendererXna : ICylinderRendererXna
     {
-        public void SetParameter(SphereRenderParameter param)
+        public void SetParameter(CylinderRenderParameter param)
         {
 
         }
 
-        public void Render(SphereXna sphere)
+        public void Render(CylinderXna cylinder)
         {
 
         }

@@ -30,6 +30,8 @@ namespace HimaLib.Render
 
         public IEnumerable<SphereInfo> SphereInfoList { get; set; }
 
+        public IEnumerable<CylinderInfo> CylinderInfoList { get; set; }
+
         public IRenderDevice RenderDevice { get; set; }
 
         public bool ColorClearEnabled { get; set; }
@@ -66,6 +68,8 @@ namespace HimaLib.Render
 
         public bool RenderSphereEnabled { get; set; }
 
+        public bool RenderCylinderEnabled { get; set; }
+
         public RenderPath()
         {
             Enabled = true;
@@ -88,7 +92,9 @@ namespace HimaLib.Render
             RenderTranslucentBillboardOnly = false;
             RenderNoHudBillboardOnly = false;
             RenderHudBillboardOnly = false;
+
             RenderSphereEnabled = false;
+            RenderCylinderEnabled = false;
         }
 
         public virtual void Render()
@@ -139,6 +145,11 @@ namespace HimaLib.Render
             if (RenderSphereEnabled)
             {
                 RenderSphere();
+            }
+
+            if (RenderCylinderEnabled)
+            {
+                RenderCylinder();
             }
         }
 
@@ -209,6 +220,16 @@ namespace HimaLib.Render
                 info.RenderParam.Camera = Camera;
                 info.RenderParam.DirectionalLights = DirectionalLights;
                 info.Sphere.Render(info.RenderParam);
+            }
+        }
+
+        void RenderCylinder()
+        {
+            foreach (var info in CylinderInfoList)
+            {
+                info.RenderParam.Camera = Camera;
+                info.RenderParam.DirectionalLights = DirectionalLights;
+                info.Cylinder.Render(info.RenderParam);
             }
         }
     }

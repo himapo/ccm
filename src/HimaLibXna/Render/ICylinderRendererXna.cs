@@ -6,10 +6,10 @@ using HimaLib.Model;
 
 namespace HimaLib.Render
 {
-    public interface ISphereRendererXna
+    public interface ICylinderRendererXna
     {
-        void SetParameter(SphereRenderParameter param);
+        void SetParameter(CylinderRenderParameter param);
 
-        void Render(SphereXna sphere);
+        void Render(CylinderXna cylinder);
     }
 }

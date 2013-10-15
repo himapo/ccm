@@ -246,7 +246,7 @@ namespace ccm.Scene
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyDamage);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.EnemyAttack, (int)Collision.CollisionGroup.PlayerDamage);
-            CollisionManager.Drawer = new WireCollisionDrawer(Camera)
+            CollisionManager.Drawer = new WireCollisionDrawer()
             {
                 RenderScene = RenderSceneManager.Instance.RenderScene,
             };

@@ -11,10 +11,5 @@ namespace HimaLib.Render
         {
             get { return SphereRendererType.Wire; }
         }
-
-        public WireSphereRenderParameter()
-        {
-
-        }
     }
 }

@@ -28,6 +28,8 @@ namespace HimaLib.Render
 
         IEnumerable<SphereInfo> SphereInfoList { get; set; }
 
+        IEnumerable<CylinderInfo> CylinderInfoList { get; set; }
+
         void Render();
     }
 }

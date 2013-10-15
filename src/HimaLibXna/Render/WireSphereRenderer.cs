@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HimaLib.Model;
 using Microsoft.Xna.Framework.Graphics;
 using HimaLib.Math;
 using HimaLib.System;
-using HimaLib.Camera;
+using HimaLib.Model;
 
 namespace HimaLib.Render
 {
@@ -94,7 +93,7 @@ namespace HimaLib.Render
             BasicEffect.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
         }
 
-        public void Render(Sphere sphere)
+        public void Render(SphereXna sphere)
         {
             var scaleMat = Matrix.CreateScale(sphere.Radius);
             var transMat = Matrix.CreateTranslation(sphere.Position);

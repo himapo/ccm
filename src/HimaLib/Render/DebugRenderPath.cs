@@ -20,7 +20,9 @@ namespace HimaLib.Render
 
             RenderModelEnabled = false;
             RenderBillboardEnabled = false;
+
             RenderSphereEnabled = true;
+            RenderCylinderEnabled = true;
         }
     }
 }

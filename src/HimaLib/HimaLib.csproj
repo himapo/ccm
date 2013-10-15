@@ -147,9 +147,11 @@
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Model\Cylinder.cs" />
     <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Sphere.cs" />
+    <Compile Include="Render\CylinderRenderParameter.cs" />
     <Compile Include="Render\DebugRenderPath.cs" />
     <Compile Include="Render\DefaultModelRenderParameter.cs" />
     <Compile Include="Render\DeferredBillboardRenderParameter.cs" />
@@ -179,6 +181,7 @@
     <Compile Include="Render\SphereRenderParameter.cs" />
     <Compile Include="Render\ToonModelRenderParameter.cs" />
     <Compile Include="Render\TranslucentRenderPath.cs" />
+    <Compile Include="Render\WireCylinderRenderParameter.cs" />
     <Compile Include="Render\WireSphereRenderParameter.cs" />
     <Compile Include="Script\Script.cs" />
     <Compile Include="Script\ScriptManager.cs" />
