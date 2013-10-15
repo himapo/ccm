@@ -96,7 +96,7 @@ VSOutput VSMainNm(VSInputNm vin)
 	float4 pos_ps = mul(pos_vs, Projection);
 	vout.PositionPS	= pos_ps;
 	
-	vout.Diffuse = float4(1, 1, 1, Alpha);
+	vout.Diffuse = 1;
 
 	return vout;
 }
@@ -112,7 +112,7 @@ VSOutput VSMainTx(VSInputTx vin)
 
 	vout.TexCoord = vin.TexCoord;
 	
-	vout.Diffuse = float4(1, 1, 1, Alpha);
+	vout.Diffuse = 1;
 
 	return vout;
 }
@@ -142,7 +142,7 @@ VSOutput VSMainNmTx(VSInputNmTx vin)
 	
 	vout.TexCoord = vin.TexCoord;
 	
-	vout.Diffuse = float4(1, 1, 1, Alpha);
+	vout.Diffuse = 1;
 
 	return vout;
 }
@@ -208,6 +208,8 @@ float4 PSMain(PSInput pin,
 	{
 		output *= diffuseTextureColor;
 	}
+
+	output.a = Alpha;
 	
 	return output;
 }
