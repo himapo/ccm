@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Shader;
 using HimaLib.Camera;
 using HimaLib.Math;
+using HimaLib.Texture;
 
 namespace HimaLib.Render
 {
@@ -40,6 +41,8 @@ namespace HimaLib.Render
             shader.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirectionalLights[0].Color.ToVector3());
             shader.DirLight0SpecularColor = MathUtilXna.ToXnaVector(param.DirLight0SpecularColor);
             shader.EyePosition = MathUtilXna.ToXnaVector(param.Camera.Eye);
+            shader.LightViewProjection = MathUtilXna.ToXnaMatrix(param.LightCamera.View * param.LightCamera.Projection);
+            shader.ShadowMap = (param.ShadowMap as ITextureXna).Texture;
         }
 
         void SetInstanceTransforms(List<AffineTransform> transforms)

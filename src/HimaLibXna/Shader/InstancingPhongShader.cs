@@ -30,6 +30,10 @@ namespace HimaLib.Shader
 
         public Vector3 EyePosition { get; set; }
 
+        public Matrix LightViewProjection { get; set; }
+
+        public Texture2D ShadowMap { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect effect;
@@ -59,7 +63,7 @@ namespace HimaLib.Shader
 
             SetupVertexBuffer();
 
-            SetupEffect("PixelLighting");
+            SetupEffect("PixelLightingShadow");
 
             foreach (var mesh in Model.Meshes)
             {
@@ -127,6 +131,9 @@ namespace HimaLib.Shader
             effect.Parameters["DirLight0SpecularColor"].SetValue(DirLight0SpecularColor);
 
             effect.Parameters["EyePosition"].SetValue(EyePosition);
+
+            effect.Parameters["LightViewProjection"].SetValue(LightViewProjection);
+            effect.Parameters["ShadowMap"].SetValue(ShadowMap);
         }
 
         void CopyMaterial(BasicEffect src)

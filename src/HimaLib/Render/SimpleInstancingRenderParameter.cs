@@ -22,7 +22,8 @@ namespace HimaLib.Render
 
         public SimpleInstancingRenderParameter()
         {
-            IsShadowCaster = true;
+            IsShadowCaster = false;
+            IsShadowReceiver = true;
             IsTranslucent = false;
             TransformsUpdated = false;
         }

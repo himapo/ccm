@@ -1,3 +1,5 @@
+#include "Shadow.fxh"
+
 // Materials
 const float3	DiffuseColor	: register(c0) = 1;
 const float		Alpha			: register(c1) = 1;
@@ -60,7 +62,8 @@ VertexShaderOutput VertexShaderFunction(
     return output;
 }
 
-float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
+float4 PixelShaderFunction(VertexShaderOutput input,
+						   uniform bool shadowEnabled) : COLOR0
 {
 	float4 output;
 
@@ -80,17 +83,42 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 		
 	output = float4(d + s, Alpha);
 
+	if(shadowEnabled)
+	{
+	    output *= CalcShadow(input.PositionWS);
+	}
+
     return output;
 }
 
 technique PixelLighting
 {
-    pass Pass1
+    pass Pass0
     {
-        // TODO: ここでレンダーステートを設定します。
+        ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESSEQUAL;
+		StencilEnable = FALSE;
 		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
 		
         VertexShader = compile vs_2_0 VertexShaderFunction();
-        PixelShader = compile ps_2_0 PixelShaderFunction();
+        PixelShader = compile ps_2_0 PixelShaderFunction(false);
+    }
+}
+
+technique PixelLightingShadow
+{
+    pass Pass0
+    {
+        ZEnable = TRUE;
+		ZWriteEnable = TRUE;
+		ZFunc = LESSEQUAL;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = FALSE;
+		CullMode = CCW;
+		
+        VertexShader = compile vs_2_0 VertexShaderFunction();
+        PixelShader = compile ps_2_0 PixelShaderFunction(true);
     }
 }
