@@ -15,8 +15,6 @@ namespace HimaLib.Render
 
         Microsoft.Xna.Framework.Matrix[] ModelBones;
 
-        Microsoft.Xna.Framework.Matrix[] InstanceTransforms;
-
         public SimpleInstancingRendererXna()
         {
         }
@@ -31,9 +29,10 @@ namespace HimaLib.Render
 
             if (param.TransformsUpdated)
             {
-                SetInstanceTransforms(param.Transforms);
+                SetInstanceTransforms(param.Transforms, param.Camera);
             }
 
+            shader.TransformsUpdated = param.TransformsUpdated;
             shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             shader.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
@@ -45,15 +44,20 @@ namespace HimaLib.Render
             shader.ShadowMap = (param.ShadowMap as ITextureXna).Texture;
         }
 
-        void SetInstanceTransforms(List<AffineTransform> transforms)
+        void SetInstanceTransforms(List<AffineTransform> transforms, CameraBase camera)
         {
-            Array.Resize(ref InstanceTransforms, transforms.Count);
-            for (var i = 0; i < transforms.Count; ++i)
+            shader.InstanceTransforms = transforms.Where(t =>
             {
-                InstanceTransforms[i] = MathUtilXna.ToXnaMatrix(transforms[i].WorldMatrix);
-            }
+                return FrustumCulling(camera, t, 3.0f);
+            }).Select(t =>
+            {
+                return MathUtilXna.ToXnaMatrix(t.WorldMatrix);
+            }).ToArray();
+        }
 
-            shader.InstanceTransforms = InstanceTransforms;
+        bool FrustumCulling(CameraBase camera, AffineTransform transform, float margin)
+        {
+            return true;
         }
 
         public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)

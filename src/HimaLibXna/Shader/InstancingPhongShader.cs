@@ -13,8 +13,10 @@ namespace HimaLib.Shader
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
         
         public Matrix[] ModelBones { get; set; }
-        
+
         public Matrix[] InstanceTransforms { get; set; }
+
+        public bool TransformsUpdated { get; set; }
 
         public Matrix View { get; set; }
         
@@ -114,8 +116,11 @@ namespace HimaLib.Shader
                                                                InstanceTransforms.Length, BufferUsage.WriteOnly);
             }
 
-            // 最新のトランスフォーム行列を instanceVertexBuffer へコピーする。
-            instanceVertexBuffer.SetData(InstanceTransforms, 0, InstanceTransforms.Length, SetDataOptions.Discard);
+            if (TransformsUpdated)
+            {
+                // 最新のトランスフォーム行列を instanceVertexBuffer へコピーする。
+                instanceVertexBuffer.SetData(InstanceTransforms, 0, InstanceTransforms.Length, SetDataOptions.Discard);
+            }
         }
 
         void SetupEffect(string techniqueName)
