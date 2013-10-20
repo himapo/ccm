@@ -24,14 +24,13 @@ namespace ccm.Map
         void InitRenderParam()
         {
             RenderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
-            RenderParam.DirLight0SpecularColor = Vector3.One;
         }
 
         public void DrawMapCube(IModel model, bool updated, List<AffineTransform> transforms)
         {
             RenderParam.Camera = Camera;
             RenderParam.TransformsUpdated = updated;
-            RenderParam.Transforms = transforms;
+            RenderParam.InstanceTransforms = transforms;
 
             RenderSceneManager.Instance.RenderModel(model, RenderParam);
         }

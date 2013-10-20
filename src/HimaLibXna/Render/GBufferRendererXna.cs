@@ -12,6 +12,12 @@ namespace HimaLib.Render
     {
         GBufferShader Shader = new GBufferShader();
 
+        Microsoft.Xna.Framework.Matrix[] ModelBones;
+
+        FrustumCulling FrustumCulling = new FrustumCulling();
+
+        ModelType ModelType;
+
         public GBufferRendererXna()
         {
         }
@@ -27,9 +33,20 @@ namespace HimaLib.Render
             Shader.World = MathUtilXna.ToXnaMatrix(param.Transform);
             Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
-            if (param.Texture != null)
+
+            ModelType = param.ModelType;
+
+            if (param.ModelType == ModelType.InstancedStatic)
             {
-                Shader.Texture = (param.Texture as ITextureXna).Texture;
+                FrustumCulling.UpdateFrustum(param.Camera);
+
+                Shader.InstanceTransforms = param.InstanceTransforms.Where(t =>
+                {
+                    return FrustumCulling.IsCulled(t, 3.0f);
+                }).Select(t =>
+                {
+                    return MathUtilXna.ToXnaMatrix(t.WorldMatrix);
+                }).ToArray();
             }
         }
 
@@ -41,7 +58,24 @@ namespace HimaLib.Render
         {
             Shader.Model = model;
 
-            Shader.RenderStaticModel();
+            switch (ModelType)
+            {
+                case ModelType.Static:
+                    Shader.RenderStaticModel();
+                    break;
+                case ModelType.InstancedStatic:
+                    SetModelBones(model);
+                    Shader.RenderInstancedModel();
+                    break;
+            }
+        }
+
+        void SetModelBones(Microsoft.Xna.Framework.Graphics.Model model)
+        {
+            Array.Resize(ref ModelBones, model.Bones.Count);
+            model.CopyAbsoluteBoneTransformsTo(ModelBones);
+
+            Shader.ModelBones = ModelBones;
         }
 
         public override void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)

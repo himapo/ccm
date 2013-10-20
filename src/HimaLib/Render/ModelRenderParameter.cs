@@ -20,9 +20,23 @@ namespace HimaLib.Render
         PointLight,
     }
 
+    public enum ModelType
+    {
+        Static,
+        InstancedStatic,
+        Dynamic,
+        InstancedDynamic,
+    }
+
     public abstract class ModelRenderParameter : RenderParameter
     {
         public abstract ModelRendererType Type { get; }
+
+        public ModelType ModelType { get; set; }
+
+        public bool TransformsUpdated { get; set; }
+
+        public List<AffineTransform> InstanceTransforms { get; set; }
 
         public ModelRenderParameter()
         {
@@ -30,6 +44,8 @@ namespace HimaLib.Render
             IsShadowReceiver = true;
             IsTranslucent = false;
             GBufferEnabled = true;
+
+            ModelType = ModelType.Static;
         }
     }
 }

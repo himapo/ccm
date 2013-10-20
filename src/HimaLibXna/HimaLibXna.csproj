@@ -186,6 +186,7 @@
     <Compile Include="Shader\DepthShader.cs" />
     <Compile Include="Shader\GBufferShader.cs" />
     <Compile Include="Shader\HudBillboard.cs" />
+    <Compile Include="Shader\InstancedVertexBuffer.cs" />
     <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\OpaqueFinalShader.cs" />
     <Compile Include="Shader\LightBufferShader.cs" />

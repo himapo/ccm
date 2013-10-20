@@ -19,6 +19,12 @@ namespace HimaLib.Shader
         public Texture2D ModelTexture { get; set; }
 
         public Matrix World { get; set; }
+
+        public Matrix[] ModelBones { get; set; }
+
+        public Matrix[] InstanceTransforms { get; set; }
+
+        public bool TransformsUpdated { get; set; }
         
         public Matrix View { get; set; }
         
@@ -40,6 +46,8 @@ namespace HimaLib.Shader
 
         Effect Effect;
 
+        InstancedVertexBuffer InstancedVertexBuffer = new InstancedVertexBuffer();
+
         public OpaqueFinalShader()
         {
             ModelTexture = new Texture2D(GraphicsDevice, 32, 32);
@@ -57,11 +65,11 @@ namespace HimaLib.Shader
         {
             if (ShadowEnabled)
             {
-                SetUpEffect("LightMapShadow");
+                SetUpEffect("StaticShadow");
             }
             else
             {
-                SetUpEffect("LightMap");
+                SetUpEffect("Static");
             }
 
             foreach (var mesh in Model.Meshes)
@@ -79,6 +87,54 @@ namespace HimaLib.Shader
 
                         GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList,
                             0, 0, part.NumVertices, part.StartIndex, part.PrimitiveCount);
+                    }
+                }
+            }
+        }
+
+        public void RenderInstatncedModel()
+        {
+            if (InstanceTransforms.Length == 0)
+                return;
+
+            InstancedVertexBuffer.Setup(InstanceTransforms);
+
+            if (ShadowEnabled)
+            {
+                SetUpEffect("InstancingShadow");
+            }
+            else
+            {
+                SetUpEffect("Instancing");
+            }
+
+            foreach (var mesh in Model.Meshes)
+            {
+                foreach (var part in mesh.MeshParts)
+                {
+                    GraphicsDevice.SetVertexBuffers(
+                        new VertexBufferBinding(part.VertexBuffer, part.VertexOffset, 0),
+                        new VertexBufferBinding(InstancedVertexBuffer.VertexBuffer, 0, 1)
+                        );
+
+                    GraphicsDevice.Indices = part.IndexBuffer;
+
+                    CopyMaterial(part.Effect as BasicEffect);
+
+                    Effect.Parameters["World"].SetValue(ModelBones[mesh.ParentBone.Index]);
+
+                    foreach (var pass in Effect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+
+                        GraphicsDevice.DrawInstancedPrimitives(
+                            PrimitiveType.TriangleList,
+                            0,
+                            0,
+                            part.NumVertices,
+                            part.StartIndex,
+                            part.PrimitiveCount,
+                            InstanceTransforms.Length);
                     }
                 }
             }

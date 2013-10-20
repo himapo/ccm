@@ -317,8 +317,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Effect\GBuffer.fx">
-      <Name>GBuffer</Name>
+    <Compile Include="Effect\GBufferAPND.fx">
+      <Name>GBufferAPND</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>
@@ -333,6 +333,13 @@
   <ItemGroup>
     <Compile Include="Effect\LightBuffer.fx">
       <Name>LightBuffer</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Effect\GBufferND.fx">
+      <Name>GBufferND</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>

@@ -12,9 +12,13 @@ namespace HimaLib.Shader
     {
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
-        public Texture2D Texture { get; set; }
-
         public Matrix World { get; set; }
+
+        public Matrix[] ModelBones { get; set; }
+
+        public Matrix[] InstanceTransforms { get; set; }
+
+        public bool TransformsUpdated { get; set; }
         
         public Matrix View { get; set; }
         
@@ -28,7 +32,9 @@ namespace HimaLib.Shader
 
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
-        Effect effect;
+        Effect Effect;
+
+        InstancedVertexBuffer InstancedVertexBuffer = new InstancedVertexBuffer();
 
         public GBufferShader()
         {
@@ -37,31 +43,61 @@ namespace HimaLib.Shader
             Projection = Matrix.Identity;
 
             var contentLoader = new Content.EffectLoader();
-            effect = contentLoader.Load("Effect/GBuffer");
+            Effect = contentLoader.Load("Effect/GBufferND");
         }
 
         public void RenderStaticModel()
         {
-            if (Texture == null)
-            {
-                SetUpEffect("GBufferND");
-            }
-            else
-            {
-                SetUpEffect("GBufferTexture");
-            }
-
+            SetUpEffect("Static");
             RenderModelCommon();
+        }
+
+        public void RenderInstancedModel()
+        {
+            if (InstanceTransforms.Length == 0)
+                return;
+
+            InstancedVertexBuffer.Setup(InstanceTransforms);
+
+            SetUpEffect("Instancing");
+
+            foreach (var mesh in Model.Meshes)
+            {
+                foreach (var part in mesh.MeshParts)
+                {
+                    GraphicsDevice.SetVertexBuffers(
+                        new VertexBufferBinding(part.VertexBuffer, part.VertexOffset, 0),
+                        new VertexBufferBinding(InstancedVertexBuffer.VertexBuffer, 0, 1)
+                        );
+
+                    GraphicsDevice.Indices = part.IndexBuffer;
+
+                    Effect.Parameters["World"].SetValue(ModelBones[mesh.ParentBone.Index]);
+
+                    foreach (var pass in Effect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+
+                        GraphicsDevice.DrawInstancedPrimitives(
+                            PrimitiveType.TriangleList,
+                            0,
+                            0,
+                            part.NumVertices,
+                            part.StartIndex,
+                            part.PrimitiveCount,
+                            InstanceTransforms.Length);
+                    }
+                }
+            }
         }
 
         public void RenderDynamicModel()
         {
-            effect.Parameters["BoneRotationTexture"].SetValue(BoneRotationTexture);
-            effect.Parameters["BoneTranslationTexture"].SetValue(BoneTranslationTexture);
-            effect.Parameters["BoneTextureSize"].SetValue(BoneTextureSize);
+            Effect.Parameters["BoneRotationTexture"].SetValue(BoneRotationTexture);
+            Effect.Parameters["BoneTranslationTexture"].SetValue(BoneTranslationTexture);
+            Effect.Parameters["BoneTextureSize"].SetValue(BoneTextureSize);
 
-            SetUpEffect("GBufferNDSkinning");
-
+            SetUpEffect("Skinning");
             RenderModelCommon();
         }
 
@@ -74,9 +110,7 @@ namespace HimaLib.Shader
                     GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
                     GraphicsDevice.Indices = part.IndexBuffer;
 
-                    CopyMaterial(part.Effect as BasicEffect);
-
-                    foreach (var pass in effect.CurrentTechnique.Passes)
+                    foreach (var pass in Effect.CurrentTechnique.Passes)
                     {
                         pass.Apply();
 
@@ -93,21 +127,11 @@ namespace HimaLib.Shader
 
         void SetUpEffect(string techniqueName)
         {
-            effect.Parameters["World"].SetValue(World);
-            effect.Parameters["View"].SetValue(View);
-            effect.Parameters["Projection"].SetValue(Projection);
+            Effect.Parameters["World"].SetValue(World);
+            Effect.Parameters["View"].SetValue(View);
+            Effect.Parameters["Projection"].SetValue(Projection);
 
-            effect.Parameters["DiffuseMap"].SetValue(Texture);
-
-            effect.CurrentTechnique = effect.Techniques[techniqueName];
-        }
-
-        void CopyMaterial(BasicEffect src)
-        {
-            if (src == null)
-                return;
-
-            effect.Parameters["DiffuseColor"].SetValue(src.DiffuseColor);
+            Effect.CurrentTechnique = Effect.Techniques[techniqueName];
         }
     }
 }

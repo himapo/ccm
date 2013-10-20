@@ -104,9 +104,8 @@ namespace ccm.Scene
         {
             renderParam.Transform = Matrix.Identity;
             renderParam.Camera = camera;
-            renderParam.Transforms = new List<AffineTransform>();
+            renderParam.InstanceTransforms = new List<AffineTransform>();
             renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
-            renderParam.DirLight0SpecularColor = Vector3.One;
         }
 
         void InitModel()
@@ -124,12 +123,12 @@ namespace ccm.Scene
         void ResetMap()
         {
             dungeonMap.Generate();
-            renderParam.Transforms.Clear();
+            renderParam.InstanceTransforms.Clear();
 
             var cubePosList = dungeonMap.GetCubePosList();
             foreach (var pos in cubePosList)
             {
-                renderParam.Transforms.Add(
+                renderParam.InstanceTransforms.Add(
                     new HimaLib.Math.AffineTransform(
                         HimaLib.Math.Vector3.One,
                         HimaLib.Math.Vector3.Zero,

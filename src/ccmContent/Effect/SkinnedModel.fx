@@ -47,7 +47,7 @@ sampler Sampler = sampler_state
 // 構造体宣言
 //=============================================================================
 // 頂点シェーダー入力構造体
-struct VS_INPUT
+struct VSInputSkinning
 {
     float4 Position : POSITION0;
     float3 Normal	: NORMAL0;
@@ -57,7 +57,7 @@ struct VS_INPUT
 };
 
 // 頂点シェーダー出力構造体
-struct VS_OUTPUT
+struct VSOutput
 {
     float4 Position		: POSITION0;
     float2 TexCoord		: TEXCOORD0;
@@ -67,9 +67,9 @@ struct VS_OUTPUT
 //-----------------------------------------------------------------------------
 // 頂点シェーダー
 //=============================================================================
-VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
+VSOutput SkinningVS(VSInputSkinning input, uniform bool useMaterial)
 {
-    VS_OUTPUT output;
+    VSOutput output;
     
     // スキン変換行列の取得
     float4x4 skinTransform =
@@ -91,15 +91,7 @@ VS_OUTPUT SkinningVS(VS_INPUT input, uniform bool useMaterial)
 //-----------------------------------------------------------------------------
 // ピクセルシェーダー
 //=============================================================================
-// ピクセルシェーダー入力構造体
-struct PS_INPUT
-{
-    float2 TexCoord		: TEXCOORD0;
-	float4 PositionWS	: TEXCOORD1;
-};
-
-// ピクセルシェーダー
-float4 SkinningPS(PS_INPUT input,
+float4 SkinningPS(VSOutput input,
 				  uniform bool useTexture,
 				  uniform bool shadowEnabled) : COLOR0
 {

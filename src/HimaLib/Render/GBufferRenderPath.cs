@@ -53,6 +53,9 @@ namespace HimaLib.Render
                 var gbufferParam = new GBufferModelRenderParameter()
                 {
                     Transform = info.RenderParam.Transform,
+                    ModelType = info.RenderParam.ModelType,
+                    TransformsUpdated = info.RenderParam.TransformsUpdated,
+                    InstanceTransforms = info.RenderParam.InstanceTransforms,
                 };
 
                 return new ModelInfo()
