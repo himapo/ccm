@@ -8,11 +8,15 @@ using HimaLib.System;
 
 namespace HimaLib.Shader
 {
-    public class LambertShader
+    /// <summary>
+    /// 不透明物の最終パスシェーダ
+    /// ライトバッファを参照してジオメトリを再度描画する
+    /// </summary>
+    public class OpaqueFinalShader
     {
         public Microsoft.Xna.Framework.Graphics.Model Model { get; set; }
 
-        public Texture2D Texture { get; set; }
+        public Texture2D ModelTexture { get; set; }
 
         public Matrix World { get; set; }
         
@@ -34,11 +38,11 @@ namespace HimaLib.Shader
 
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
-        Effect effect;
+        Effect Effect;
 
-        public LambertShader()
+        public OpaqueFinalShader()
         {
-            Texture = new Texture2D(GraphicsDevice, 32, 32);
+            ModelTexture = new Texture2D(GraphicsDevice, 32, 32);
 
             World = Matrix.Identity;
             View = Matrix.Identity;
@@ -46,7 +50,7 @@ namespace HimaLib.Shader
             Alpha = 1.0f;
 
             var contentLoader = new Content.EffectLoader();
-            effect = contentLoader.Load("Effect/Lambert");
+            Effect = contentLoader.Load("Effect/OpaqueFinal");
         }
 
         public void RenderModel()
@@ -69,7 +73,7 @@ namespace HimaLib.Shader
 
                     CopyMaterial(part.Effect as BasicEffect);
 
-                    foreach (var pass in effect.CurrentTechnique.Passes)
+                    foreach (var pass in Effect.CurrentTechnique.Passes)
                     {
                         pass.Apply();
 
@@ -86,18 +90,18 @@ namespace HimaLib.Shader
 
         void SetUpEffect(string techniqueName)
         {
-            effect.Parameters["World"].SetValue(World);
-            effect.Parameters["View"].SetValue(View);
-            effect.Parameters["Projection"].SetValue(Projection);
-            effect.Parameters["LightViewProjection"].SetValue(LightViewProjection);
+            Effect.Parameters["World"].SetValue(World);
+            Effect.Parameters["View"].SetValue(View);
+            Effect.Parameters["Projection"].SetValue(Projection);
+            Effect.Parameters["LightViewProjection"].SetValue(LightViewProjection);
 
-            effect.Parameters["ModelTexture"].SetValue(Texture);
-            effect.Parameters["ShadowMap"].SetValue(ShadowMap);
-            effect.Parameters["DiffuseLightMap"].SetValue(DiffuseLightMap);
+            Effect.Parameters["ModelTexture"].SetValue(ModelTexture);
+            Effect.Parameters["ShadowMap"].SetValue(ShadowMap);
+            Effect.Parameters["DiffuseLightMap"].SetValue(DiffuseLightMap);
 
-            effect.Parameters["AmbientLightColor"].SetValue(AmbientLightColor);
+            Effect.Parameters["AmbientLightColor"].SetValue(AmbientLightColor);
 
-            effect.CurrentTechnique = effect.Techniques[techniqueName];
+            Effect.CurrentTechnique = Effect.Techniques[techniqueName];
         }
 
         void CopyMaterial(BasicEffect src)
@@ -105,8 +109,8 @@ namespace HimaLib.Shader
             if (src == null)
                 return;
 
-            effect.Parameters["DiffuseColor"].SetValue(src.DiffuseColor);
-            effect.Parameters["Alpha"].SetValue(src.Alpha * Alpha);
+            Effect.Parameters["DiffuseColor"].SetValue(src.DiffuseColor);
+            Effect.Parameters["Alpha"].SetValue(src.Alpha * Alpha);
         }
     }
 }

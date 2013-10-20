@@ -187,7 +187,7 @@
     <Compile Include="Shader\GBufferShader.cs" />
     <Compile Include="Shader\HudBillboard.cs" />
     <Compile Include="Shader\InstancingPhongShader.cs" />
-    <Compile Include="Shader\LambertShader.cs" />
+    <Compile Include="Shader\OpaqueFinalShader.cs" />
     <Compile Include="Shader\LightBufferShader.cs" />
     <Compile Include="Sound\SoundXACT.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />

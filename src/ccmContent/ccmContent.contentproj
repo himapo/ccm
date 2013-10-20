@@ -129,8 +129,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Effect\Lambert.fx">
-      <Name>Lambert</Name>
+    <Compile Include="Effect\OpaqueFinal.fx">
+      <Name>OpaqueFinal</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
     </Compile>

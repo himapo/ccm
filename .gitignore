@@ -9,3 +9,6 @@ obj
 
 /src/UpgradeLog.htm
 /src/_UpgradeReport_Files
+/src/*.vsp
+/src/ccm/*.nvuser
+/src/*.psess

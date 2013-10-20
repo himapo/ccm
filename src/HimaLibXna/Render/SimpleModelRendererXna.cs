@@ -11,7 +11,7 @@ namespace HimaLib.Render
 {
     public class SimpleModelRendererXna : IModelRendererXna
     {
-        LambertShader lambert = new LambertShader();
+        OpaqueFinalShader lambert = new OpaqueFinalShader();
 
         public SimpleModelRendererXna()
         {
