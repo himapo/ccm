@@ -120,21 +120,21 @@ namespace ccm.System
                 GameProperty.resolutionWidth,
                 GameProperty.resolutionHeight,
                 SurfaceType.A8R8G8B8,
-                true, true);
+                false, false);
 
             RenderTargetManager.Instance.AddRenderTarget(
                 (int)RenderTargetType.GBuffer0,
                 GameProperty.resolutionWidth,
                 GameProperty.resolutionHeight,
                 SurfaceType.A8R8G8B8,
-                true, true);
+                false, false);
 
             RenderTargetManager.Instance.AddRenderTarget(
                 (int)RenderTargetType.GBuffer1,
                 GameProperty.resolutionWidth,
                 GameProperty.resolutionHeight,
                 SurfaceType.R32F,
-                true, true);
+                false, false);
 
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.SHADOW,
@@ -166,7 +166,11 @@ namespace ccm.System
                     //Enabled = false,
                     Name = "LightBuffer",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
-                    RenderTargetIndex = (int)RenderTargetType.DiffuseLightMap,
+                    RenderTargetIndices = new int[]
+                    {
+                        (int)RenderTargetType.DiffuseLightMap,
+                        (int)RenderTargetType.SpecularLightMap,
+                    },
                     SphereModel = ModelFactory.Instance.Create("PointLightSphere"),
                     Billboard = BillboardFactory.Instance.Create(),
                     NormalMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0),

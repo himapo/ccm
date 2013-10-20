@@ -3,6 +3,7 @@
 
 // Materials
 float3	DiffuseColor;
+float3	SpecularColor;
 float	Alpha;
 
 // Other parameters
@@ -79,12 +80,14 @@ float4 PSMain(VSOutput input,
 	float4 projPosition = mul(mul(input.PositionWS, View), Projection);
 	
 	// ライト マップに格納された放射輝度を取得する
-	float3 radiance = GetDiffuseRadiance(projPosition);
+	float3 diffuse;
+	float3 specular;
+	GetRadiance(diffuse, specular, projPosition);
 	
 	// マテリアルカラー、アンビエントライトと合成する
-	float3 d = saturate(DiffuseColor * radiance + AmbientLightColor);
+	float3 light = saturate(DiffuseColor * diffuse + SpecularColor * specular + AmbientLightColor);
 	
-	output = float4(d.rgb, Alpha);
+	output = float4(light.rgb, Alpha);
 	
 	if(useTexture)
 	{

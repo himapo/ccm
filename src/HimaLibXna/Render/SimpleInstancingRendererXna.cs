@@ -51,6 +51,7 @@ namespace HimaLib.Render
             }
 
             Shader.DiffuseLightMap = (param.DiffuseLightMap as ITextureXna).Texture;
+            Shader.SpecularLightMap = (param.SpecularLightMap as ITextureXna).Texture;
         }
 
         public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)

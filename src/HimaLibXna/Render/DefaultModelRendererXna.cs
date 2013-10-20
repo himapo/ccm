@@ -38,12 +38,6 @@ namespace HimaLib.Render
             RenderParam.ParametersMatrix["View"] = RenderParam.Camera.View;
             RenderParam.ParametersMatrix["Projection"] = RenderParam.Camera.Projection;
 
-            for (var i = 0; i < RenderParam.DirectionalLights.Count; ++i)
-            {
-                RenderParam.ParametersVector3["Light" + (i+1) + "Direction"] = RenderParam.DirectionalLights[i].Direction;
-                RenderParam.ParametersVector3["Light" + (i+1) + "Color"] = RenderParam.DirectionalLights[i].Color.ToVector3();
-            }
-
             if (RenderParam.IsShadowReceiver)
             {
                 RenderParam.ParametersMatrix["LightViewProjection"] = RenderParam.LightCamera.View * RenderParam.LightCamera.Projection;
@@ -51,6 +45,7 @@ namespace HimaLib.Render
             }
 
             RenderParam.ParametersTexture["DiffuseLightMap"] = (RenderParam.DiffuseLightMap as ITextureXna).Texture;
+            RenderParam.ParametersTexture["SpecularLightMap"] = (RenderParam.SpecularLightMap as ITextureXna).Texture;
         }
 
         public override void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)

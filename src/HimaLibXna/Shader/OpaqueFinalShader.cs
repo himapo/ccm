@@ -42,6 +42,8 @@ namespace HimaLib.Shader
 
         public Texture2D DiffuseLightMap { get; set; }
 
+        public Texture2D SpecularLightMap { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect Effect;
@@ -154,6 +156,7 @@ namespace HimaLib.Shader
             Effect.Parameters["ModelTexture"].SetValue(ModelTexture);
             Effect.Parameters["ShadowMap"].SetValue(ShadowMap);
             Effect.Parameters["DiffuseLightMap"].SetValue(DiffuseLightMap);
+            Effect.Parameters["SpecularLightMap"].SetValue(SpecularLightMap);
 
             Effect.Parameters["AmbientLightColor"].SetValue(AmbientLightColor);
 
@@ -166,6 +169,7 @@ namespace HimaLib.Shader
                 return;
 
             Effect.Parameters["DiffuseColor"].SetValue(src.DiffuseColor);
+            Effect.Parameters["SpecularColor"].SetValue(src.SpecularColor);
             Effect.Parameters["Alpha"].SetValue(src.Alpha * Alpha);
         }
     }

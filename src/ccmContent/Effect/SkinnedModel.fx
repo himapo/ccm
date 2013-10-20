@@ -95,18 +95,21 @@ float4 SkinningPS(VSOutput input,
 				  uniform bool useTexture,
 				  uniform bool shadowEnabled) : COLOR0
 {
-    float4 output = 1.0;
-    
+	float4 output = 1.0;
+	
 	// 射影空間でのこのピクセルの位置を見つける
 	float4 projPosition = mul(mul(input.PositionWS, View), Projection);
-
-	float3 radiance = GetDiffuseRadiance(projPosition);
+	
+	// ライト マップに格納された放射輝度を取得する
+	float3 diffuse;
+	float3 specular;
+	GetRadiance(diffuse, specular, projPosition);
 	
 	// マテリアルカラー、アンビエントライトと合成する
-	float3 d = saturate(MaterialDiffuse * radiance + AmbientColor);
+	float3 light = saturate(MaterialDiffuse * diffuse + MaterialSpecular * specular + AmbientColor);
 	
-	output = float4(d.rgb, 1.0);
-
+	output = float4(light.rgb, 1.0);
+	
     if(useTexture)
     {
     	output *= tex2D(Sampler, input.TexCoord);

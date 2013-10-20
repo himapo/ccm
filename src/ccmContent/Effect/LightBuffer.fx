@@ -1,6 +1,11 @@
 // Lights
-float3	DirLight0Direction;
-float3	DirLight0DiffuseColor;
+struct DirectionalLight
+{
+	float3 Direction;
+	float3 Color;
+};
+
+DirectionalLight gDirectionalLight;
 
 struct PointLight
 {
@@ -11,6 +16,12 @@ struct PointLight
 };
 
 PointLight gPointLight;
+
+// Materials
+float Shininess = 4.0f;
+
+// Other
+float3	EyePosition;
 
 // Matrices
 float4x4	World		: World;
@@ -52,6 +63,7 @@ struct VSOutputDirectional
 {
 	float4	PositionPS	: POSITION;
 	float2	TexCoord	: TEXCOORD0;
+	float4	PositionWS	: TEXCOORD1;
 };
 
 struct VSOutputPoint
@@ -64,15 +76,15 @@ struct VSOutputPoint
 struct PSOutput
 {
 	float4	Diffuse		: COLOR0;
-	//float4	Specular	: COLOR1;
+	float4	Specular	: COLOR1;
 };
 
 VSOutputDirectional VSDirectional(VSInputDirectional input)
 {
 	VSOutputDirectional output;
 	
-	float4 pos_ws = mul(input.Position, World);
-	float4 pos_vs = mul(pos_ws, View);
+	output.PositionWS = mul(input.Position, World);
+	float4 pos_vs = mul(output.PositionWS, View);
 	float4 pos_ps = mul(pos_vs, Projection);
 	output.PositionPS = pos_ps;
 	
@@ -96,6 +108,18 @@ VSOutputPoint VSPoint(VSInputPoint input)
 	return output;
 }
 
+float Lambert(float3 N, float3 L)
+{
+	return dot(N, L);
+}
+
+float BlinnPhong(float3 N, float3 L, float3 E, float m)
+{
+	float3 H = normalize(E + L);
+	
+	return pow(saturate(dot(N, H)), m);
+}
+
 PSOutput PSDirectional(VSOutputDirectional input)
 {
 	PSOutput output;
@@ -104,12 +128,16 @@ PSOutput PSDirectional(VSOutputDirectional input)
 	float3 normal = normalDepth.rgb * 2.0f - 1.0f;
 	//float depth = normalDepth.a;
 	
-	float diffuseIntensity = dot(normal, normalize(-DirLight0Direction));
-	float3 diffuse = DirLight0DiffuseColor * diffuseIntensity;
+	float3 L = normalize(-gDirectionalLight.Direction);
+
+	float diffuseIntensity = Lambert(normal, L);
+	float3 diffuse = gDirectionalLight.Color * diffuseIntensity;
 	
+	float specularIntensity = BlinnPhong(normal, L, normalize(EyePosition - input.PositionWS.xyz), Shininess);
+	float3 specular = gDirectionalLight.Color * specularIntensity;
+
 	output.Diffuse = float4(diffuse, 1.0f);
-	
-	//output.Specular = 0.0f;
+	output.Specular = float4(specular, 1.0f);
 	
 	return output;
 }
@@ -174,11 +202,10 @@ PSOutput PSPoint(VSOutputPoint input)
 	attenuation = clamp(attenuation, 0.0f, 1.0f);
 	//attenuation = 1.0f;
 	
-	float diffuseIntensity = dot(normalWS, -lightDirection / lightDistance);
+	float diffuseIntensity = Lambert(normalWS, -lightDirection / lightDistance);
 	
 	output.Diffuse = float4(gPointLight.Color * diffuseIntensity * attenuation, 1.0f);
-	
-	//output.Specular = 1.0f;
+	output.Specular = 0;
 	
 	return output;
 }

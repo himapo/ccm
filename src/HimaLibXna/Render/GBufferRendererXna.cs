@@ -16,7 +16,7 @@ namespace HimaLib.Render
 
         FrustumCulling FrustumCulling = new FrustumCulling();
 
-        ModelType ModelType;
+        InstancingType InstancingType;
 
         public GBufferRendererXna()
         {
@@ -34,9 +34,9 @@ namespace HimaLib.Render
             Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
 
-            ModelType = param.ModelType;
+            InstancingType = param.InstancingType;
 
-            if (param.ModelType == ModelType.InstancedStatic)
+            if (param.InstancingType == InstancingType.Instanced)
             {
                 FrustumCulling.UpdateFrustum(param.Camera);
 
@@ -58,12 +58,12 @@ namespace HimaLib.Render
         {
             Shader.Model = model;
 
-            switch (ModelType)
+            switch (InstancingType)
             {
-                case ModelType.Static:
+                case InstancingType.Single:
                     Shader.RenderStaticModel();
                     break;
-                case ModelType.InstancedStatic:
+                case InstancingType.Instanced:
                     SetModelBones(model);
                     Shader.RenderInstancedModel();
                     break;

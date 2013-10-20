@@ -20,7 +20,7 @@ namespace HimaLib.Render
             IsShadowReceiver = true;
             IsTranslucent = false;
 
-            ModelType = ModelType.InstancedStatic;
+            InstancingType = InstancingType.Instanced;
         }
     }
 }

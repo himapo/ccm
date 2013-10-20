@@ -18,17 +18,19 @@ namespace HimaLib.Shader
         
         public Matrix Projection { get; set; }
 
-        public Vector3 DirLight0Direction { get; set; }
+        public Vector3 DirectionalLightDirection { get; set; }
 
-        public Vector3 DirLight0DiffuseColor { get; set; }
+        public Vector3 DirectionalLightColor { get; set; }
 
         public Vector3 PointLightPosition { get; set; }
 
         public float PointLightAttenuationBegin { get; set; }
 
-        public float PointLightAttenuationEnd { get; set; }      
+        public float PointLightAttenuationEnd { get; set; }
 
         public Vector3 PointLightColor { get; set; }
+
+        public Vector3 EyePosition { get; set; }
 
         public Texture2D NormalMap { get; set; }
 
@@ -108,8 +110,10 @@ namespace HimaLib.Shader
         {
             SetUpEffect("Directional");
 
-            Effect.Parameters["DirLight0Direction"].SetValue(DirLight0Direction);
-            Effect.Parameters["DirLight0DiffuseColor"].SetValue(DirLight0DiffuseColor);
+            Effect.Parameters["gDirectionalLight"].StructureMembers["Direction"].SetValue(DirectionalLightDirection);
+            Effect.Parameters["gDirectionalLight"].StructureMembers["Color"].SetValue(DirectionalLightColor);
+
+            Effect.Parameters["EyePosition"].SetValue(EyePosition);
 
             HudBillboard.Render(Effect);
         }

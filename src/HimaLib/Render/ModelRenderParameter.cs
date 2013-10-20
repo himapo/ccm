@@ -20,19 +20,17 @@ namespace HimaLib.Render
         PointLight,
     }
 
-    public enum ModelType
+    public enum InstancingType
     {
-        Static,
-        InstancedStatic,
-        Dynamic,
-        InstancedDynamic,
+        Single,
+        Instanced,
     }
 
     public abstract class ModelRenderParameter : RenderParameter
     {
         public abstract ModelRendererType Type { get; }
 
-        public ModelType ModelType { get; set; }
+        public InstancingType InstancingType { get; set; }
 
         public bool TransformsUpdated { get; set; }
 
@@ -45,7 +43,7 @@ namespace HimaLib.Render
             IsTranslucent = false;
             GBufferEnabled = true;
 
-            ModelType = ModelType.Static;
+            InstancingType = InstancingType.Single;
         }
     }
 }

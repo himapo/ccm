@@ -11,7 +11,7 @@ namespace HimaLib.Render
 {
     public class SimpleModelRendererXna : IModelRendererXna
     {
-        OpaqueFinalShader lambert = new OpaqueFinalShader();
+        OpaqueFinalShader Shader = new OpaqueFinalShader();
 
         public SimpleModelRendererXna()
         {
@@ -25,28 +25,29 @@ namespace HimaLib.Render
                 return;
             }
 
-            lambert.World = MathUtilXna.ToXnaMatrix(param.Transform);
-            lambert.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
-            lambert.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
+            Shader.World = MathUtilXna.ToXnaMatrix(param.Transform);
+            Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
+            Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             
-            lambert.Alpha = param.Alpha;
-            lambert.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
+            Shader.Alpha = param.Alpha;
+            Shader.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
 
-            lambert.ShadowEnabled = param.IsShadowReceiver;
-            if (lambert.ShadowEnabled)
+            Shader.ShadowEnabled = param.IsShadowReceiver;
+            if (Shader.ShadowEnabled)
             {
-                lambert.LightViewProjection = MathUtilXna.ToXnaMatrix(param.LightCamera.View * param.LightCamera.Projection);
-                lambert.ShadowMap = (param.ShadowMap as ITextureXna).Texture;
+                Shader.LightViewProjection = MathUtilXna.ToXnaMatrix(param.LightCamera.View * param.LightCamera.Projection);
+                Shader.ShadowMap = (param.ShadowMap as ITextureXna).Texture;
             }
 
-            lambert.DiffuseLightMap = (param.DiffuseLightMap as ITextureXna).Texture;
+            Shader.DiffuseLightMap = (param.DiffuseLightMap as ITextureXna).Texture;
+            Shader.SpecularLightMap = (param.SpecularLightMap as ITextureXna).Texture;
         }
 
         public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
-            lambert.Model = model;
+            Shader.Model = model;
 
-            lambert.RenderModel();
+            Shader.RenderModel();
         }
 
         public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)
