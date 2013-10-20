@@ -63,7 +63,7 @@ struct VSOutputDirectional
 {
 	float4	PositionPS	: POSITION;
 	float2	TexCoord	: TEXCOORD0;
-	float4	PositionWS	: TEXCOORD1;
+	float4	PositionVS	: TEXCOORD1;
 };
 
 struct VSOutputPoint
@@ -83,10 +83,9 @@ VSOutputDirectional VSDirectional(VSInputDirectional input)
 {
 	VSOutputDirectional output;
 	
-	output.PositionWS = mul(input.Position, World);
-	float4 pos_vs = mul(output.PositionWS, View);
-	float4 pos_ps = mul(pos_vs, Projection);
-	output.PositionPS = pos_ps;
+	float4 pos_ws = mul(input.Position, World);
+	output.PositionVS = mul(pos_ws, View);
+	output.PositionPS = mul(output.PositionVS, Projection);
 	
 	output.TexCoord = input.TexCoord;
 	
@@ -120,36 +119,9 @@ float BlinnPhong(float3 N, float3 L, float3 E, float m)
 	return pow(saturate(dot(N, H)), m);
 }
 
-PSOutput PSDirectional(VSOutputDirectional input)
-{
-	PSOutput output;
-	
-	float4 normalDepth = tex2D(NormalMapSampler, input.TexCoord);
-	float3 normal = normalDepth.rgb * 2.0f - 1.0f;
-	//float depth = normalDepth.a;
-	
-	float3 L = normalize(-gDirectionalLight.Direction);
-
-	float diffuseIntensity = Lambert(normal, L);
-	float3 diffuse = gDirectionalLight.Color * diffuseIntensity;
-	
-	float specularIntensity = BlinnPhong(normal, L, normalize(EyePosition - input.PositionWS.xyz), Shininess);
-	float3 specular = gDirectionalLight.Color * specularIntensity;
-
-	output.Diffuse = float4(diffuse, 1.0f);
-	output.Specular = float4(specular, 1.0f);
-	
-	return output;
-}
-
-float4 PSNull(VSOutputPoint input) : COLOR
-{
-	return float4(0, 0, 0, 0);
-}
-
 // 現在レンダリングしている点renderPosVSとスクリーン座標が同じで深度がdepthの点のビュー座標を求める
 // depthは線形深度であること
-void CalcViewPosition(out float4 posVS, float4 renderPosVS, float depth)
+float4 CalcViewPosition(float4 renderPosVS, float depth)
 {
 	// 線形なdepthからビュー空間のZ座標は求まる
 	float Q = Projection._m22;	// Q = Far / (Far - Near)
@@ -161,7 +133,37 @@ void CalcViewPosition(out float4 posVS, float4 renderPosVS, float depth)
 	// スクリーン座標が同じ場合、ビュー空間では相似関係にある
 	float2 xyVS = renderPosVS.xy * zVS / renderPosVS.z;
 	
-	posVS = float4(xyVS.xy, zVS, 1.0f);
+	return float4(xyVS.xy, zVS, 1.0f);
+}
+
+PSOutput PSDirectional(VSOutputDirectional input)
+{
+	PSOutput output;
+	
+	float3 normalWS = tex2D(NormalMapSampler, input.TexCoord) * 2.0f - 1.0f;
+	float depth = tex2D(DepthMapSampler, input.TexCoord).r;
+	
+	float3 L = normalize(-gDirectionalLight.Direction);
+
+	float diffuseIntensity = Lambert(normalWS, L);
+	float3 diffuse = gDirectionalLight.Color * diffuseIntensity;
+	
+	// ワールド空間でのジオメトリの位置を求める
+	float4 posVS = CalcViewPosition(input.PositionVS, depth);
+	float4 posWS = mul(posVS, InvView);
+
+	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), Shininess);
+	float3 specular = gDirectionalLight.Color * specularIntensity;
+
+	output.Diffuse = float4(diffuse, 1.0f);
+	output.Specular = float4(specular, 1.0f);
+	
+	return output;
+}
+
+float4 PSNull(VSOutputPoint input) : COLOR
+{
+	return float4(0, 0, 0, 0);
 }
 
 PSOutput PSPoint(VSOutputPoint input)
@@ -183,8 +185,7 @@ PSOutput PSPoint(VSOutputPoint input)
 	float depth = tex2D(DepthMapSampler, texCoord).r;
 	
 	// ワールド空間でのジオメトリの位置を求める
-	float4 posVS;
-	CalcViewPosition(posVS, spherePositionVS, depth);
+	float4 posVS = CalcViewPosition(spherePositionVS, depth);
 	float4 posWS = mul(posVS, InvView);
 	
 	// 光源とジオメトリの位置関係から反射を計算
@@ -201,11 +202,14 @@ PSOutput PSPoint(VSOutputPoint input)
 		(lightDistance - gPointLight.AttenuationBegin) / (gPointLight.AttenuationEnd - gPointLight.AttenuationBegin));
 	attenuation = clamp(attenuation, 0.0f, 1.0f);
 	//attenuation = 1.0f;
+
+	float L = -lightDirection / lightDistance;
 	
-	float diffuseIntensity = Lambert(normalWS, -lightDirection / lightDistance);
+	float diffuseIntensity = Lambert(normalWS, L);
+	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), Shininess);
 	
 	output.Diffuse = float4(gPointLight.Color * diffuseIntensity * attenuation, 1.0f);
-	output.Specular = 0;
+	output.Specular = float4(gPointLight.Color * specularIntensity * attenuation, 1.0f);
 	
 	return output;
 }
