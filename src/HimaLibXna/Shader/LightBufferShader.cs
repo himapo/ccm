@@ -32,6 +32,10 @@ namespace HimaLib.Shader
 
         public Vector3 EyePosition { get; set; }
 
+        public float Near { get; set; }
+
+        public float Far { get; set; }
+
         public Texture2D NormalMap { get; set; }
 
         public Texture2D DepthMap { get; set; }
@@ -114,6 +118,9 @@ namespace HimaLib.Shader
             Effect.Parameters["gDirectionalLight"].StructureMembers["Color"].SetValue(DirectionalLightColor);
 
             Effect.Parameters["EyePosition"].SetValue(EyePosition);
+            Effect.Parameters["ScreenSize"].SetValue(new Vector2(SystemProperty.ScreenWidth, SystemProperty.ScreenHeight));
+            Effect.Parameters["Near"].SetValue(Near);
+            Effect.Parameters["Far"].SetValue(Far);
 
             HudBillboard.Render(Effect);
         }

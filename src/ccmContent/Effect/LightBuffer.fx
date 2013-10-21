@@ -22,6 +22,9 @@ float Shininess = 4.0f;
 
 // Other
 float3	EyePosition;
+float2	ScreenSize;
+float	Near;
+float	Far;
 
 // Matrices
 float4x4	World		: World;
@@ -136,11 +139,23 @@ float4 CalcViewPosition(float4 renderPosVS, float depth)
 	return float4(xyVS.xy, zVS, 1.0f);
 }
 
+float4 CalcViewPositionDirectional(float2 texCoord, float depth)
+{
+	float3 renderPosVS;	// ビュー空間のニアプレーンにおける現在の描画位置
+	renderPosVS.xy = (texCoord * float2(1.0f, -1.0f) + float2(-0.5f, 0.5f)) * ScreenSize;
+	renderPosVS.z = Near;
+
+	float zVS = depth * (Far - Near) + Near;
+	float2 xyVS = renderPosVS.xy * zVS / renderPosVS.z;
+
+	return float4(xyVS.xy, zVS, 1.0f);
+}
+
 PSOutput PSDirectional(VSOutputDirectional input)
 {
 	PSOutput output;
 	
-	float3 normalWS = tex2D(NormalMapSampler, input.TexCoord) * 2.0f - 1.0f;
+	float3 normalWS = tex2D(NormalMapSampler, input.TexCoord).rgb * 2.0f - 1.0f;
 	float depth = tex2D(DepthMapSampler, input.TexCoord).r;
 	
 	float3 L = normalize(-gDirectionalLight.Direction);
@@ -149,14 +164,14 @@ PSOutput PSDirectional(VSOutputDirectional input)
 	float3 diffuse = gDirectionalLight.Color * diffuseIntensity;
 	
 	// ワールド空間でのジオメトリの位置を求める
-	float4 posVS = CalcViewPosition(input.PositionVS, depth);
+	float4 posVS = CalcViewPositionDirectional(input.TexCoord, depth);
 	float4 posWS = mul(posVS, InvView);
 
 	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), Shininess);
 	float3 specular = gDirectionalLight.Color * specularIntensity;
 
 	output.Diffuse = float4(diffuse, 1.0f);
-	output.Specular = float4(specular, 1.0f);
+	output.Specular = 0;//float4(specular, 1.0f);
 	
 	return output;
 }
@@ -203,7 +218,7 @@ PSOutput PSPoint(VSOutputPoint input)
 	attenuation = clamp(attenuation, 0.0f, 1.0f);
 	//attenuation = 1.0f;
 
-	float L = -lightDirection / lightDistance;
+	float3 L = -lightDirection / lightDistance;
 	
 	float diffuseIntensity = Lambert(normalWS, L);
 	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), Shininess);

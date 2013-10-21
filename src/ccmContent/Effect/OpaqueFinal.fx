@@ -85,6 +85,7 @@ float4 PSMain(VSOutput input,
 	GetRadiance(diffuse, specular, projPosition);
 	
 	// マテリアルカラー、アンビエントライトと合成する
+	//float3 light = saturate(DiffuseColor * diffuse + AmbientLightColor);
 	float3 light = saturate(DiffuseColor * diffuse + SpecularColor * specular + AmbientLightColor);
 	
 	output = float4(light.rgb, Alpha);

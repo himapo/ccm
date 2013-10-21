@@ -60,6 +60,8 @@ namespace HimaLib.Render
             Shader.DirectionalLightColor = MathUtilXna.ToXnaColor(param.DirectionalLight.Color).ToVector3();
 
             Shader.EyePosition = MathUtilXna.ToXnaVector(param.Camera.Eye);
+            Shader.Near = param.Camera.Near;
+            Shader.Far = param.Camera.Far;
 
             Shader.NormalMap = (param.NormalMap as ITextureXna).Texture;
             Shader.DepthMap = (param.DepthMap as ITextureXna).Texture;
