@@ -50,6 +50,16 @@ namespace HimaLib.Math
             return (float)global::System.Math.Cos(radians);
         }
 
+        public static float Tan(float radians)
+        {
+            return (float)global::System.Math.Tan(radians);
+        }
+
+        public static float Cot(float radians)
+        {
+            return 1.0f / Tan(radians);
+        }
+
         /// <summary>
         /// ワールド座標をスクリーン座標に変換
         /// </summary>

@@ -22,7 +22,7 @@ float Shininess = 4.0f;
 
 // Other
 float3	EyePosition;
-float2	ScreenSize;
+float2	NearPlaneSize;
 float	Near;
 float	Far;
 
@@ -142,7 +142,7 @@ float4 CalcViewPosition(float4 renderPosVS, float depth)
 float4 CalcViewPositionDirectional(float2 texCoord, float depth)
 {
 	float3 renderPosVS;	// ビュー空間のニアプレーンにおける現在の描画位置
-	renderPosVS.xy = (texCoord * float2(1.0f, -1.0f) + float2(-0.5f, 0.5f)) * ScreenSize;
+	renderPosVS.xy = (texCoord * float2(1.0f, -1.0f) + float2(-0.5f, 0.5f)) * NearPlaneSize;
 	renderPosVS.z = Near;
 
 	float zVS = depth * (Far - Near) + Near;
@@ -171,7 +171,7 @@ PSOutput PSDirectional(VSOutputDirectional input)
 	float3 specular = gDirectionalLight.Color * specularIntensity;
 
 	output.Diffuse = float4(diffuse, 1.0f);
-	output.Specular = 0;//float4(specular, 1.0f);
+	output.Specular = float4(specular, 1.0f);
 	
 	return output;
 }
