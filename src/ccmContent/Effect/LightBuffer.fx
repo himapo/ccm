@@ -18,7 +18,6 @@ struct PointLight
 PointLight gPointLight;
 
 // Materials
-float Shininess = 4.0f;
 
 // Other
 float3	EyePosition;
@@ -155,7 +154,9 @@ PSOutput PSDirectional(VSOutputDirectional input)
 {
 	PSOutput output;
 	
-	float3 normalWS = tex2D(NormalMapSampler, input.TexCoord).rgb * 2.0f - 1.0f;
+	float4 normalShininess = tex2D(NormalMapSampler, input.TexCoord);
+	float3 normalWS = normalShininess.rgb * 2.0f - 1.0f;
+	float shininess = normalShininess.a * 255.0f;
 	float depth = tex2D(DepthMapSampler, input.TexCoord).r;
 	
 	float3 L = normalize(-gDirectionalLight.Direction);
@@ -167,7 +168,7 @@ PSOutput PSDirectional(VSOutputDirectional input)
 	float4 posVS = CalcViewPositionDirectional(input.TexCoord, depth);
 	float4 posWS = mul(posVS, InvView);
 
-	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), Shininess);
+	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), shininess);
 	float3 specular = gDirectionalLight.Color * specularIntensity;
 
 	output.Diffuse = float4(diffuse, 1.0f);
@@ -194,9 +195,11 @@ PSOutput PSPoint(VSOutputPoint input)
 	texCoord.y = 1.0f - texCoord.y;
 	
 	// ジオメトリの法線と深度を引っ張ってくる
-	float3 normalWS = tex2D(NormalMapSampler, texCoord).rgb * 2.0f - 1.0f;
+	float4 normalShininess = tex2D(NormalMapSampler, texCoord);
+	float3 normalWS = normalShininess.rgb * 2.0f - 1.0f;
 	//float3 normalVS = normalize(mul(float4(normalWS, 0), View).xyz);
 	//float3 normalPS = normalize(mul(float4(normalVS, 0), Projection).xyz);
+	float shininess = normalShininess.a * 255.0f;
 	float depth = tex2D(DepthMapSampler, texCoord).r;
 	
 	// ワールド空間でのジオメトリの位置を求める
@@ -221,7 +224,7 @@ PSOutput PSPoint(VSOutputPoint input)
 	float3 L = -lightDirection / lightDistance;
 	
 	float diffuseIntensity = Lambert(normalWS, L);
-	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), Shininess);
+	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), shininess);
 	
 	output.Diffuse = float4(gPointLight.Color * diffuseIntensity * attenuation, 1.0f);
 	output.Specular = float4(gPointLight.Color * specularIntensity * attenuation, 1.0f);

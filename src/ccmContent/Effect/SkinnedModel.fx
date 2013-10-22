@@ -25,10 +25,10 @@ float4x4 Projection;
 
 float3 AmbientColor = 0.2;
 
-float3 MaterialDiffuse = 1.0;
-float3 MaterialEmissive = 0.0;
-float3 MaterialSpecular = 1.0;
-float MaterialSpecularPower = 1.0;
+float3 DiffuseColor = 1.0;
+float3 EmissiveColor = 0.0;
+float3 SpecularColor = 1.0;
+float SpecularPower = 1.0;
 
 string TechniqueName;	// モデルプロセッサから指定するためにこれは必要
 
@@ -106,7 +106,7 @@ float4 SkinningPS(VSOutput input,
 	GetRadiance(diffuse, specular, projPosition);
 	
 	// マテリアルカラー、アンビエントライトと合成する
-	float3 light = saturate(MaterialDiffuse * diffuse + MaterialSpecular * specular + AmbientColor);
+	float3 light = saturate(DiffuseColor * diffuse + SpecularColor * specular + AmbientColor);
 	
 	output = float4(light.rgb, 1.0);
 	

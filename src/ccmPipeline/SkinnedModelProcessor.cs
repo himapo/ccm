@@ -377,16 +377,16 @@ namespace SkinnedModelPipeline
 
             // マテリアルパラメータをエフェクトに設定
             if (basicMaterial.DiffuseColor != null)
-                effectMaterial.OpaqueData.Add("MaterialDiffuse", basicMaterial.DiffuseColor);
+                effectMaterial.OpaqueData.Add("DiffuseColor", basicMaterial.DiffuseColor);
 
             if (basicMaterial.EmissiveColor != null)
-                effectMaterial.OpaqueData.Add("MaterialEmissive", basicMaterial.EmissiveColor);
+                effectMaterial.OpaqueData.Add("EmissiveColor", basicMaterial.EmissiveColor);
 
             if (basicMaterial.SpecularColor != null)
-                effectMaterial.OpaqueData.Add("MaterialSpecular", basicMaterial.SpecularColor);
+                effectMaterial.OpaqueData.Add("SpecularColor", basicMaterial.SpecularColor);
 
             if (basicMaterial.SpecularPower != null)
-                effectMaterial.OpaqueData.Add("MaterialSpecularPower", basicMaterial.SpecularPower);
+                effectMaterial.OpaqueData.Add("SpecularPower", basicMaterial.SpecularPower);
 
             if (UseMaterial && useTexture)
             {

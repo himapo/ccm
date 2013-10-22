@@ -1,6 +1,7 @@
 #include "BoneTexture.fxh"
 
 // Materials
+float4	Shininess;
 
 // Matrices
 float4x4	World		: World;
@@ -94,6 +95,7 @@ PSOutput PSMain(VSOutput input)
 	//float3 normal = mul(mul(float4(input.Normal, 0), World), View).xyz;
 	
 	output.Normal.rgb = (normalize(normal) + 1.0f) * 0.5f;
+	output.Normal.a = clamp(Shininess, 1.0f, 255.0f) / 255.0f;
 	
 	float Q = Projection._m22;		// Q = Far / (Far - Near)
 	float far = Projection._m32 / (1.0f - Q);

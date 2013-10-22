@@ -110,6 +110,8 @@ namespace HimaLib.Shader
                     GraphicsDevice.SetVertexBuffer(part.VertexBuffer, part.VertexOffset);
                     GraphicsDevice.Indices = part.IndexBuffer;
 
+                    CopyMaterial(part.Effect);
+
                     foreach (var pass in Effect.CurrentTechnique.Passes)
                     {
                         pass.Apply();
@@ -132,6 +134,21 @@ namespace HimaLib.Shader
             Effect.Parameters["Projection"].SetValue(Projection);
 
             Effect.CurrentTechnique = Effect.Techniques[techniqueName];
+        }
+
+        void CopyMaterial(Effect src)
+        {
+            var specularPower = src.Parameters.FirstOrDefault((param) =>
+            {
+                return param.Name == "SpecularPower";
+            });
+
+            if (specularPower == null)
+            {
+                return;
+            }
+            
+            Effect.Parameters["Shininess"].SetValue(specularPower.GetValueSingle());
         }
     }
 }
