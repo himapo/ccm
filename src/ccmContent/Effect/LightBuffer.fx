@@ -1,3 +1,5 @@
+#include "Const.fxh"
+
 // Lights
 struct DirectionalLight
 {
@@ -111,14 +113,15 @@ VSOutputPoint VSPoint(VSInputPoint input)
 
 float Lambert(float3 N, float3 L)
 {
-	return dot(N, L);
+	return dot(N, L) / Pi;
 }
 
 float BlinnPhong(float3 N, float3 L, float3 E, float m)
 {
 	float3 H = normalize(E + L);
+	float normFactor = (m + 2.0f) / (Pi * 8.0f);	// m == SHININESS_MAX のとき約1.0になる
 	
-	return pow(saturate(dot(N, H)), m);
+	return pow(saturate(dot(N, H)), m) * normFactor;
 }
 
 // 現在レンダリングしている点renderPosVSとスクリーン座標が同じで深度がdepthの点のビュー座標を求める
@@ -156,7 +159,7 @@ PSOutput PSDirectional(VSOutputDirectional input)
 	
 	float4 normalShininess = tex2D(NormalMapSampler, input.TexCoord);
 	float3 normalWS = normalShininess.rgb * 2.0f - 1.0f;
-	float shininess = normalShininess.a * 255.0f;
+	float shininess = normalShininess.a * SHININESS_MAX;
 	float depth = tex2D(DepthMapSampler, input.TexCoord).r;
 	
 	float3 L = normalize(-gDirectionalLight.Direction);
@@ -199,7 +202,7 @@ PSOutput PSPoint(VSOutputPoint input)
 	float3 normalWS = normalShininess.rgb * 2.0f - 1.0f;
 	//float3 normalVS = normalize(mul(float4(normalWS, 0), View).xyz);
 	//float3 normalPS = normalize(mul(float4(normalVS, 0), Projection).xyz);
-	float shininess = normalShininess.a * 255.0f;
+	float shininess = normalShininess.a * SHININESS_MAX;
 	float depth = tex2D(DepthMapSampler, texCoord).r;
 	
 	// ワールド空間でのジオメトリの位置を求める
