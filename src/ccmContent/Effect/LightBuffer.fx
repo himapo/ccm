@@ -116,6 +116,11 @@ float Lambert(float3 N, float3 L)
 	return dot(N, L) / Pi;
 }
 
+float HalfLambert(float3 N, float3 L)
+{
+	return (dot(N, L) * 0.5f + 0.5f) * 3.0f / (Pi * 4.0f);
+}
+
 float BlinnPhong(float3 N, float3 L, float3 E, float m)
 {
 	float3 H = normalize(E + L);
