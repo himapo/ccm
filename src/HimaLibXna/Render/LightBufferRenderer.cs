@@ -31,7 +31,7 @@ namespace HimaLib.Render
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
 
             Shader.PointLightPosition = MathUtilXna.ToXnaVector(param.PointLight.Position);
-            Shader.PointLightColor = MathUtilXna.ToXnaColor(param.PointLight.Color).ToVector3();
+            Shader.PointLightColor = MathUtilXna.ToXnaVector(param.PointLight.Color.ToVector3());
             Shader.PointLightAttenuationBegin = param.PointLight.AttenuationBegin;
             Shader.PointLightAttenuationEnd = param.PointLight.AttenuationEnd;
 
@@ -58,7 +58,7 @@ namespace HimaLib.Render
             Shader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
 
             Shader.DirectionalLightDirection = MathUtilXna.ToXnaVector(param.DirectionalLight.Direction);
-            Shader.DirectionalLightColor = MathUtilXna.ToXnaColor(param.DirectionalLight.Color).ToVector3();
+            Shader.DirectionalLightColor = MathUtilXna.ToXnaVector(param.DirectionalLight.Color.ToVector3());
 
             Shader.EyePosition = MathUtilXna.ToXnaVector(param.Camera.Eye);
 

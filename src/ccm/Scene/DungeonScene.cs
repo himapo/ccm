@@ -271,13 +271,13 @@ namespace ccm.Scene
             RenderSceneManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
-            DirectionalLight0.Color = new Color(0.5f, 0.5f, 0.5f);
+            DirectionalLight0.Color = new Color(2.0f, 2.0f, 2.0f, 1.0f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
 
             RenderSceneManager.Instance.ClearPointLight();
 
             PointLight0.Position = new Vector3(0.0f, 20.0f, 0.0f);
-            PointLight0.Color = Color.White;
+            PointLight0.Color = new Color(2.0f, 2.0f, 2.0f, 1.0f);
             PointLight0.AttenuationBegin = 2.0f;
             PointLight0.AttenuationEnd = 30.0f;
             //RenderSceneManager.Instance.AddPointLight(PointLight0);
@@ -289,7 +289,7 @@ namespace ccm.Scene
                 var light = new PointLight()
                 {
                     Position = new Vector3(Rand.NextFloat(-50.0f, 50.0f), Rand.NextFloat(5.0f, 30.0f), Rand.NextFloat(-50.0f, 50.0f)),
-                    Color = new Color(Rand.Next(128, 256), Rand.Next(128, 256), Rand.Next(128, 256)),
+                    Color = new Color(Rand.NextFloat(0.5f, 2.0f), Rand.NextFloat(0.5f, 2.0f), Rand.NextFloat(0.5f, 2.0f)),
                     AttenuationBegin = Rand.NextFloat(0.0f, 10.0f),
                     AttenuationEnd = Rand.NextFloat(20.0f, 30.0f),
                 };

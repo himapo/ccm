@@ -30,7 +30,7 @@ namespace HimaLib.Render
             Shader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
 
             Shader.DirLight0Direction = MathUtilXna.ToXnaVector(param.DirectionalLight.Direction);
-            Shader.DirLight0DiffuseColor = MathUtilXna.ToXnaColor(param.DirectionalLight.Color).ToVector3();
+            Shader.DirLight0DiffuseColor = MathUtilXna.ToXnaVector(param.DirectionalLight.Color.ToVector3());
 
             Shader.AlbedoMap = (param.AlbedoMap as ITextureXna).Texture;
             Shader.PositionMap = (param.PositionMap as ITextureXna).Texture;

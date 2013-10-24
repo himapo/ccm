@@ -7,15 +7,30 @@ namespace HimaLib.Math
 {
     public struct Color : IEquatable<Color>
     {
-        byte r;
-        byte g;
-        byte b;
-        byte a;
+        float r;
+        float g;
+        float b;
+        float a;
 
-        public byte R { get { return r; } set { r = value; } }
-        public byte G { get { return g; } set { g = value; } }
-        public byte B { get { return b; } set { b = value; } }
-        public byte A { get { return a; } set { a = value; } }
+        public float R { get { return r; } set { r = value; } }
+        public float G { get { return g; } set { g = value; } }
+        public float B { get { return b; } set { b = value; } }
+        public float A { get { return a; } set { a = value; } }
+
+        public byte LDR_R { get { return ToLDR(r); } set { r = ToHDR(value); } }
+        public byte LDR_G { get { return ToLDR(g); } set { g = ToHDR(value); } }
+        public byte LDR_B { get { return ToLDR(b); } set { b = ToHDR(value); } }
+        public byte LDR_A { get { return ToLDR(a); } set { a = ToHDR(value); } }
+
+        static byte ToLDR(float hdr)
+        {
+            return (byte)MathUtil.Clamp(hdr * 255.0f, 0.0f, 255.0f);
+        }
+
+        static float ToHDR(int ldr)
+        {
+            return (float)ldr / 255.0f;
+        }
 
         public Color(int r, int g, int b)
             : this(r, g, b, 255)
@@ -24,10 +39,10 @@ namespace HimaLib.Math
 
         public Color(int r, int g, int b, int a)
         {
-            this.r = (byte)r;
-            this.g = (byte)g;
-            this.b = (byte)b;
-            this.a = (byte)a;
+            this.r = ToHDR(r);
+            this.g = ToHDR(g);
+            this.b = ToHDR(b);
+            this.a = ToHDR(a);
         }
 
         public Color(float r, float g, float b)
@@ -37,10 +52,10 @@ namespace HimaLib.Math
 
         public Color(float r, float g, float b, float a)
         {
-            this.r = (byte)(MathUtil.Clamp(r, 0.0f, 1.0f) * 255);
-            this.g = (byte)(MathUtil.Clamp(g, 0.0f, 1.0f) * 255);
-            this.b = (byte)(MathUtil.Clamp(b, 0.0f, 1.0f) * 255);
-            this.a = (byte)(MathUtil.Clamp(a, 0.0f, 1.0f) * 255);
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.a = a;
         }
 
         public Color(Vector3 v)
@@ -99,27 +114,27 @@ namespace HimaLib.Math
 
         public override int GetHashCode()
         {
-            var red = (int)R;
-            var green = (int)G;
-            var blue = (int)B;
-            var alpha = (int)A;
+            var red = (int)LDR_R;
+            var green = (int)LDR_G;
+            var blue = (int)LDR_B;
+            var alpha = (int)LDR_A;
 
             return (red << 24) | (green << 16) | (blue << 8) | alpha;
         }
 
         public override string ToString()
         {
-            return "{" + String.Format("R:{0:d} G:{1:d} B:{2:d} A:{3:d}", R, G, B, A) + "}";
+            return "{" + String.Format("R:{0:f} G:{1:f} B:{2:f} A:{3:f}", R, G, B, A) + "}";
         }
 
         public Vector3 ToVector3()
         {
-            return new Vector3((float)R / 255, (float)G / 255, (float)B / 255);
+            return new Vector3(R, G, B);
         }
 
         public Vector4 ToVector4()
         {
-            return new Vector4((float)R / 255, (float)G / 255, (float)B / 255, (float)A / 255);
+            return new Vector4(R, G, B, A);
         }
 
         public static Color Black { get { return new Color(0, 0, 0); } }
