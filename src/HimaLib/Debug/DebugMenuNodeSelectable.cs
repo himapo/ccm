@@ -44,14 +44,24 @@ namespace HimaLib.Debug
 
         public override void OnPushLeft()
         {
+            if (Labels.Count == 0)
+            {
+                return;
+            }
+
             if (--Val < 0)
             {
-                Val = Labels.Count;
+                Val = Labels.Count - 1;
             }
         }
 
         public override void OnPushRight()
         {
+            if (Labels.Count == 0)
+            {
+                return;
+            }
+
             if (++Val >= Labels.Count)
             {
                 Val = 0;
