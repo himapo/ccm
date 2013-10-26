@@ -12,14 +12,17 @@ namespace ccm.Debug
     {
         public IDebugMenu DebugMenu { get; set; }
 
-        public DebugMenuUpdater(IDebugMenu debugMenu)
+        public BooleanDeviceLabel ToggleKey { get; set; }
+
+        public DebugMenuUpdater(IDebugMenu debugMenu, BooleanDeviceLabel toggleKey)
         {
             DebugMenu = debugMenu;
+            ToggleKey = toggleKey;
         }
 
         public void Update()
         {
-            if (IsPush(BooleanDeviceLabel.ToggleDebugMenu))
+            if (IsPush(ToggleKey))
             {
                 if (DebugMenu.IsOpen)
                 {

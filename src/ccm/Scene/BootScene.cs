@@ -34,7 +34,7 @@ namespace ccm.Scene
             Name = "BootScene";
 
             debugMenu = new DebugMenu("起動メニュー");
-            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
             debugMenuDrawer = new DefaultDebugMenuDrawer();
         }
 

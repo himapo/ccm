@@ -60,7 +60,7 @@ namespace ccm.Scene
                 EnablePan = true,
             };
 
-            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
         }
 
         void UpdateStateInit()

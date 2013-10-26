@@ -69,7 +69,7 @@ namespace ccm.Scene
             };
 
             debugMenu = new DebugMenu("ModelViewerMenu");
-            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
             debugMenuDrawer = new DefaultDebugMenuDrawer();
         }
 

@@ -72,7 +72,7 @@ namespace ccm.Scene
         // HUD
 
         // デバッグメニュー
-        DebugMenu debugMenu = new DebugMenu("DungeonMenu");
+        DebugMenu debugMenu = new DebugMenu("DungeonScene デバッグメニュー");
 
         DebugMenuUpdater debugMenuUpdater;
 
@@ -182,7 +182,7 @@ namespace ccm.Scene
                 EnablePan = false,
             };
 
-            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
         }
 
         void UpdateStateInit()
@@ -307,6 +307,14 @@ namespace ccm.Scene
                 Selectable = true,
                 Getter = () => { return Dungeon.Drawable; },
                 Setter = (b) => { Dungeon.Drawable = b; },
+            });
+
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeTunableBool()
+            {
+                Label = "コリジョン描画",
+                Selectable = true,
+                Getter = () => { return CollisionManager.Drawable; },
+                Setter = (b) => { CollisionManager.Drawable = b; },
             });
 
             var nodeShowTarget = new DebugMenuNodeSelectable()

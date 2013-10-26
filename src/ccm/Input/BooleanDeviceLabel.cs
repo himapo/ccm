@@ -28,6 +28,7 @@ namespace ccm.Input
         OK,
         Cancel,
 
-        ToggleDebugMenu,
+        GlobalDebugMenu,
+        SceneDebugMenu,
     }
 }

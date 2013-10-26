@@ -25,7 +25,7 @@ namespace ccm.Scene
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
 
-            debugMenuUpdater = new DebugMenuUpdater(debugMenu);
+            debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
         }
 
         void UpdateStateInit()

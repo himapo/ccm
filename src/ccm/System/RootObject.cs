@@ -15,6 +15,7 @@ using ccm.Render;
 using ccm.Input;
 using ccm.Sound;
 using ccm.Game;
+using ccm.Debug;
 
 namespace ccm.System
 {
@@ -34,6 +35,12 @@ namespace ccm.System
 
         SoundManager SoundManager { get { return SoundManager.Instance; } }
 
+        DebugMenu DebugMenu = new DebugMenu("グローバルデバッグメニュー");
+
+        DebugMenuUpdater DebugMenuUpdater;
+
+        DefaultDebugMenuDrawer DebugMenuDrawer = new DefaultDebugMenuDrawer();
+
         public RootObject()
         {
             gameController = new MainController(keyboard, mouse);
@@ -41,6 +48,8 @@ namespace ccm.System
 
             UpdateState = UpdateStateInit;
             DrawState = DrawStateInit;
+
+            DebugMenuUpdater = new DebugMenuUpdater(DebugMenu, BooleanDeviceLabel.GlobalDebugMenu);
         }
 
         void UpdateStateInit()
@@ -58,6 +67,8 @@ namespace ccm.System
             SoundManager.Initialize();
 
             InitRender();
+
+            InitDebugMenu();
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
@@ -94,7 +105,8 @@ namespace ccm.System
             debugController.AddKeyboardKey(BooleanDeviceLabel.Right, KeyboardKeyLabel.D);
             debugController.AddKeyboardKey(BooleanDeviceLabel.OK, KeyboardKeyLabel.Z);
             debugController.AddKeyboardKey(BooleanDeviceLabel.Cancel, KeyboardKeyLabel.X);
-            debugController.AddKeyboardKey(BooleanDeviceLabel.ToggleDebugMenu, KeyboardKeyLabel.F1);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.GlobalDebugMenu, KeyboardKeyLabel.F1);
+            debugController.AddKeyboardKey(BooleanDeviceLabel.SceneDebugMenu, KeyboardKeyLabel.F2);
 
             InputAccessor.AddController(ControllerLabel.Debug, debugController, true);
         }
@@ -236,12 +248,19 @@ namespace ccm.System
                 });
         }
 
+        void InitDebugMenu()
+        {
+
+        }
+
         void DrawStateInit()
         {
         }
 
         void UpdateStateMain()
         {
+            DebugMenuUpdater.Update();
+
             LoadProfiler.StartFrame();
 
             LoadProfiler.BeginMark("Update");
@@ -272,9 +291,11 @@ namespace ccm.System
 
             CurrentScene.Draw();
 
+            RenderSceneManager.Instance.Render();
+
             DrawDebugFPS();
 
-            RenderSceneManager.Instance.Render();
+            DebugMenu.Draw(DebugMenuDrawer);
 
             DebugFont.Draw();
 

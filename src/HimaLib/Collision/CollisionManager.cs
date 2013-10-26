@@ -12,6 +12,8 @@ namespace HimaLib.Collision
 
         public ICollisionDrawer Drawer { get; set; }
 
+        public bool Drawable { get; set; }
+
         List<CollisionInfo> infoList = new List<CollisionInfo>();
 
         // 衝突判定をもつものに対して1個発行
@@ -95,6 +97,11 @@ namespace HimaLib.Collision
 
         public void Draw()
         {
+            if (!Drawable)
+            {
+                return;
+            }
+
             var activeQuery = GetActiveQuery();
 
             foreach (var info in activeQuery)

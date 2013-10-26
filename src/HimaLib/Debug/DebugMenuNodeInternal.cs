@@ -19,7 +19,17 @@ namespace HimaLib.Debug
         {
             get
             {
-                return children[selectedChildIndex];
+                if (HasChildren)
+                {
+                    return children[selectedChildIndex];
+                }
+                else
+                {
+                    return new DebugMenuNode()
+                    {
+                        Label = "ノードがありません",
+                    };
+                }
             }
         }
 
