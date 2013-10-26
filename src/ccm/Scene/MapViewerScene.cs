@@ -99,7 +99,7 @@ namespace ccm.Scene
 
             DirectionalLight0.Direction = -Vector3.One;
             DirectionalLight0.Direction.Normalize();
-            DirectionalLight0.Color = new Color(0.5f, 0.6f, 0.8f);
+            DirectionalLight0.Color = new Color(1.5f, 1.6f, 1.8f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
         }
 
@@ -109,6 +109,7 @@ namespace ccm.Scene
             renderParam.Camera = Camera;
             renderParam.InstanceTransforms = new List<AffineTransform>();
             renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
+            renderParam.IsShadowReceiver = false;
         }
 
         void InitModel()
