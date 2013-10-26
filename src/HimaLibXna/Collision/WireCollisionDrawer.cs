@@ -41,5 +41,10 @@ namespace HimaLib.Collision
 
             RenderScene.RenderCylinder(cylinder, CylinderRenderParam);
         }
+
+        public void DrawAABB(AABBCollisionPrimitive primitive, bool active)
+        {
+
+        }
     }
 }

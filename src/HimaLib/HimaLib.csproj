@@ -82,6 +82,7 @@
     <Compile Include="Camera\CameraBase.cs" />
     <Compile Include="Camera\OrthoCamera.cs" />
     <Compile Include="Camera\PerspectiveCamera.cs" />
+    <Compile Include="Collision\AABBCollisionPrimitive.cs" />
     <Compile Include="Collision\CollisionInfo.cs" />
     <Compile Include="Collision\CollisionManager.cs" />
     <Compile Include="Collision\CollisionDetectorFactory.cs" />
@@ -147,10 +148,12 @@
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Model\AABB.cs" />
     <Compile Include="Model\Cylinder.cs" />
     <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Sphere.cs" />
+    <Compile Include="Render\AABBRenderParameter.cs" />
     <Compile Include="Render\CylinderRenderParameter.cs" />
     <Compile Include="Render\DebugRenderPath.cs" />
     <Compile Include="Render\DefaultModelRenderParameter.cs" />

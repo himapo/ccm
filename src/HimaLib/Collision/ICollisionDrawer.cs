@@ -13,5 +13,7 @@ namespace HimaLib.Collision
         void DrawSphere(SphereCollisionPrimitive primitive, bool active);
 
         void DrawCylinder(CylinderCollisionPrimitive primitive, bool active);
+
+        void DrawAABB(AABBCollisionPrimitive primitive, bool active);
     }
 }

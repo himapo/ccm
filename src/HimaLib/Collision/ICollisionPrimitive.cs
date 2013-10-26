@@ -9,6 +9,7 @@ namespace HimaLib.Collision
     {
         Sphere,
         Cylinder,
+        AABB,
     }
 
     public interface ICollisionPrimitive
