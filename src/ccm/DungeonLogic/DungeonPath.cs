@@ -279,5 +279,79 @@ namespace ccm.DungeonLogic
 
             return result;
         }
+
+        /// <summary>
+        /// ポータル部分を除いた通路部分の矩形（きゅーぶ単位）リストを返す
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Rectangle> GetRectangles()
+        {
+            var result = new List<Rectangle>();
+
+            // 現在地点
+            var position = new int[2] { Portals[0].Position.X, Portals[0].Position.Y };
+
+            // 進む方向（水平か垂直か）
+            var direction = IsHorizontal ? 0 : 1;
+
+            // 1回に進む歩数（正か負か）
+            var stepValue = new int[2]
+            { 
+                Math.Sign(Portals[1].Position.X - Portals[0].Position.X),
+                Math.Sign(Portals[1].Position.Y - Portals[0].Position.Y)
+            };
+
+            for (var i = 0; i < steps.Count; ++i)
+            {
+                var start = new Point(position[0], position[1]);
+
+                position[direction] += stepValue[direction] * steps[i];
+
+                var end = new Point(position[0], position[1]);
+
+                // ポータルと曲がり角を除いた長方形
+                result.Add(CalcStepRect2(start, end));
+
+                // 曲がり角部分の正方形
+                if (i < steps.Count - 1)
+                {
+                    result.Add(new Rectangle(
+                        end.X - Width / 2,
+                        end.Y - Width / 2,
+                        Width,
+                        Width));
+                }
+
+                direction = 1 - direction;
+            }
+
+            return result;
+        }
+
+        Rectangle CalcStepRect2(Point start, Point end)
+        {
+            // 通路幅の半分だけ幅を広げる
+            // 幅3の通路なら1マス広げる
+            var additional = Width / 2;
+
+            // 曲がり角部分は削る
+            // 幅3の通路なら2マス削る
+            var cut = additional + 1;
+
+            // 水平通路ならx方向を削る
+            // 垂直通路ならy方向を削る
+
+            var x = Math.Min(start.X, end.X) + (IsHorizontal ? cut : -additional);
+            var y = Math.Min(start.Y, end.Y) + (IsHorizontal ? -additional : cut);
+            
+            var w = Math.Abs(end.X - start.X) + 1;
+            w += IsHorizontal ? (-cut * 2) : (additional * 2);
+            var h = Math.Abs(end.Y - start.Y) + 1;
+            h += IsHorizontal ? (additional * 2) : (-cut * 2);
+
+            var result = new Rectangle(x, y, w, h);
+
+            return result;
+        }
     }
 }

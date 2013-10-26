@@ -41,5 +41,12 @@ namespace ccm.DungeonLogic
                 path.CheckAccessibility();
             }
         }
+
+        public Rectangle GetRectangle()
+        {
+            var maxWidth = ConnectedPaths.Max((path) => { return path.Width; });
+
+            return new Rectangle(Position.X, Position.Y, maxWidth, maxWidth);
+        }
     }
 }

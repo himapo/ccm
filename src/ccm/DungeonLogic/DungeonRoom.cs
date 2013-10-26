@@ -78,6 +78,11 @@ namespace ccm.DungeonLogic
             return result;
         }
 
+        public Rectangle GetRectangle()
+        {
+            return new Rectangle(LeftTopCoord.X, LeftTopCoord.Y, Width.X, Width.Y);
+        }
+
         /// <summary>
         /// 部屋の出入口をランダムに決めて返す
         /// </summary>

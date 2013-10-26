@@ -74,6 +74,42 @@ namespace ccm.DungeonLogic
             return result;
         }
 
+        public IEnumerable<Rectangle> GetRoomRectangles()
+        {
+            var result = new List<Rectangle>();
+
+            Rooms.ForEach((room) =>
+            {
+                result.Add(room.GetRectangle());
+            });
+
+            return result;
+        }
+
+        public IEnumerable<Rectangle> GetPathRectangles()
+        {
+            var result = new List<Rectangle>();
+
+            Paths.ForEach((path) =>
+            {
+                result.AddRange(path.GetRectangles());
+            });
+
+            return result;
+        }
+
+        public IEnumerable<Rectangle> GetPortalRectangles()
+        {
+            var result = new List<Rectangle>();
+
+            Portals.ForEach((portal) =>
+            {
+                result.Add(portal.GetRectangle());
+            });
+
+            return result;
+        }
+
         void GenerateRooms()
         {
             var blocks = ChooseBlocks();
