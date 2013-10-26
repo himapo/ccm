@@ -83,12 +83,6 @@ namespace ccm.Scene
 
         int Frame = 0;
 
-        IBillboard Billboard = BillboardFactory.Instance.Create();
-
-        HudBillboardRenderParameter TargetRenderParam = new HudBillboardRenderParameter();
-
-        bool ShowRenderTarget{ get; set; }
-
         IModel StageModel;
 
         SimpleModelRenderParameter StageRenderParam = new SimpleModelRenderParameter();
@@ -196,7 +190,6 @@ namespace ccm.Scene
             InitLight();
             InitDebugMenu();
             InitRender();
-            InitShadowMapHud();
             InitStage();
 
             //SoundManager.PlaySoundStream("-Blue Time-");
@@ -316,75 +309,10 @@ namespace ccm.Scene
                 Getter = () => { return CollisionManager.Drawable; },
                 Setter = (b) => { CollisionManager.Drawable = b; },
             });
-
-            var nodeShowTarget = new DebugMenuNodeSelectable()
-            {
-                Label = "レンダーターゲット表示",
-            };
-
-            nodeShowTarget.AddChoice("なし", () =>
-            {
-                ShowRenderTarget = false;
-            });
-
-            nodeShowTarget.AddChoice("シャドウマップ", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
-            });
-
-            nodeShowTarget.AddChoice("拡散反射マップ", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap);
-            });
-            
-            nodeShowTarget.AddChoice("鏡面反射マップ", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap);
-            });
-            
-            nodeShowTarget.AddChoice("Gバッファ0", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer0);
-            });
-            
-            nodeShowTarget.AddChoice("Gバッファ1", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer1);
-            });
-            /*
-            nodeShowTarget.AddChoice("Gバッファ2", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer2);
-            });
-
-            nodeShowTarget.AddChoice("Gバッファ3", () =>
-            {
-                ShowRenderTarget = true;
-                TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.GBuffer3);
-            });
-            */
-            debugMenu.AddChild(debugMenu.RootNode.Label, nodeShowTarget);
         }
 
         void InitRender()
         {
-        }
-
-        void InitShadowMapHud()
-        {
-            TargetRenderParam.Texture = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
-            TargetRenderParam.Alpha = 1.0f;
-            TargetRenderParam.Transform = new AffineTransform(
-                Vector3.One * 0.4f,
-                Vector3.Zero,
-                new Vector3(640.0f - 256.0f - 10.0f, 360.0f - 144.0f - 10.0f, 0.0f)).WorldMatrix;
-            TargetRenderParam.IsTranslucent = false;
         }
 
         void InitStage()
@@ -500,11 +428,6 @@ namespace ccm.Scene
             DrawCollision();
 
             RenderSceneManager.Instance.RenderModel(StageModel, StageRenderParam);
-
-            if(ShowRenderTarget)
-            {
-                RenderSceneManager.Instance.RenderBillboard(Billboard, TargetRenderParam);
-            }
 
             debugMenu.Draw(debugMenuDrawer);
         }
