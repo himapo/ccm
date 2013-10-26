@@ -2,22 +2,12 @@ texture DiffuseLightMap;
 sampler DiffuseLightMapSampler = sampler_state
 {
 	Texture = (DiffuseLightMap);
-	MipFilter = Linear;
-	MinFilter = Linear;
-	MagFilter = Linear;
-	AddressU = Clamp;
-	AddressV = Clamp;
 };
 
 texture SpecularLightMap;
 sampler SpecularLightMapSampler = sampler_state
 {
 	Texture = (SpecularLightMap);
-	MipFilter = Linear;
-	MinFilter = Linear;
-	MagFilter = Linear;
-	AddressU = Clamp;
-	AddressV = Clamp;
 };
 
 void GetRadiance(out float3 diffuse, out float3 specular, float4 projPosition)

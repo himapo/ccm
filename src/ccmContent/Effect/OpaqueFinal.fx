@@ -21,11 +21,6 @@ texture ModelTexture;
 sampler ModelTextureSampler = sampler_state
 {
 	Texture = (ModelTexture);
-	MipFilter = Linear;
-	MinFilter = Linear;
-	MagFilter = Linear;
-	AddressU = Clamp;
-	AddressV = Clamp;
 };
 
 struct VSInput

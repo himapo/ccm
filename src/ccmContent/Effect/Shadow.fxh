@@ -11,8 +11,6 @@ sampler ShadowMapSampler = sampler_state
 	MipFilter = Point;
 	MinFilter = Point;
 	MagFilter = Point;
-	AddressU = Clamp;
-	AddressV = Clamp;
 };
 
 float4 CalcShadow(float4 positionWS)
