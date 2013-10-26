@@ -112,6 +112,11 @@ namespace ccm.DungeonLogic
             return Portals[0].ConnectedRoom != null || Portals[1].ConnectedRoom != null;
         }
 
+        /// <summary>
+        /// 曲がり角の数を決定する
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
         int GetDevideNum(Point length)
         {
             var devideMax = 

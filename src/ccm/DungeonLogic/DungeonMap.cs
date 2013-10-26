@@ -84,6 +84,10 @@ namespace ccm.DungeonLogic
             }
         }
 
+        /// <summary>
+        /// マップ全域を4x4のブロックに分け、部屋を作るブロックを選択する
+        /// </summary>
+        /// <returns></returns>
         List<int> ChooseBlocks()
         {
             var result = new List<int>();
@@ -99,6 +103,11 @@ namespace ccm.DungeonLogic
             return result;
         }
 
+        /// <summary>
+        /// ブロックに部屋を1つ生成する
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
         DungeonRoom GenerateRoom(int block)
         {
             var blockCorner = CalcCornerPoint(block);
@@ -115,6 +124,11 @@ namespace ccm.DungeonLogic
             return new DungeonRoom(leftTop, width, 0) { Rand = this.Rand };
         }
 
+        /// <summary>
+        /// ブロックの左上の角を計算する
+        /// </summary>
+        /// <param name="block"></param>
+        /// <returns></returns>
         Point CalcCornerPoint(int block)
         {
             var result = new Point();
@@ -172,7 +186,7 @@ namespace ccm.DungeonLogic
         }
 
         /// <summary>
-        /// 隣同士の部屋をつなぐためのポータルペアを生成
+        /// 隣同士の部屋をつなぐためのポータル（出入口）のペアを生成
         /// </summary>
         void GenerateRoomPortals(
             DungeonRoom startRoom, DungeonRoom endRoom, 
@@ -190,6 +204,13 @@ namespace ccm.DungeonLogic
             endRoom.Portals.Add(endPortal);
         }
 
+        /// <summary>
+        /// 2つのポータルの間をつなぐ通路を生成
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <param name="isHorizontal"></param>
+        /// <returns></returns>
         DungeonPath GeneratePath(DungeonPortal start, DungeonPortal end, bool isHorizontal)
         {
             var result = new DungeonPath() { Rand = this.Rand };
@@ -237,6 +258,10 @@ namespace ccm.DungeonLogic
             ProcessDeadEnd(removedRoom);
         }
 
+        /// <summary>
+        /// 消えた部屋につながっていた袋小路の処理
+        /// </summary>
+        /// <param name="room"></param>
         void ProcessDeadEnd(DungeonRoom room)
         {
             var deadends = new List<DungeonPath>();
@@ -252,7 +277,7 @@ namespace ccm.DungeonLogic
 
                 if (path.Accessible)
                 {
-                    // 孤立していない通路をリストアップ
+                    // 袋小路をリストアップ
                     deadends.Add(path);
                 }
                 else
@@ -283,7 +308,7 @@ namespace ccm.DungeonLogic
                     AddPath(GeneratePath(
                         portals[0],
                         portals[1],
-                        IsHorizonalPortals(portals[0], portals[1])
+                        IsHorizontalPortals(portals[0], portals[1])
                         ));
 
                     deadends.RemoveAt(another);
@@ -407,25 +432,20 @@ namespace ccm.DungeonLogic
 
         void UpdateAccessibility()
         {
-            foreach (var room in Rooms)
-            {
-                room.Accessible = false;
-            }
-
-            foreach (var path in Paths)
-            {
-                path.Accessible = false;
-            }
-
-            foreach (var portal in Portals)
-            {
-                portal.Accessible = false;
-            }
+            Rooms.ForEach((room) => { room.Accessible = false; });
+            Paths.ForEach((path) => { path.Accessible = false; });
+            Portals.ForEach((portal) => { portal.Accessible = false; });
 
             Rooms[0].CheckAccessibility();
         }
 
-        bool IsHorizonalPortals(DungeonPortal start, DungeonPortal end)
+        /// <summary>
+        /// 2つのポータルの水平距離が垂直距離より長いか
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        bool IsHorizontalPortals(DungeonPortal start, DungeonPortal end)
         {
             var length = new Point();
             length.X = Math.Abs(start.Position.X - end.Position.X);
