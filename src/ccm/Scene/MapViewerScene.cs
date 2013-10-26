@@ -18,7 +18,7 @@ namespace ccm.Scene
 {
     public class MapViewerScene : SceneBase
     {
-        PerspectiveCamera camera = new PerspectiveCamera() { Near = 10.0f, Far = 10000.0f };
+        PerspectiveCamera Camera = new PerspectiveCamera() { Near = 10.0f, Far = 10000.0f };
 
         ViewerCameraUpdater cameraUpdater;
 
@@ -47,7 +47,7 @@ namespace ccm.Scene
 
             Name = "MapViewer";
 
-            cameraUpdater = new ViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main))
+            cameraUpdater = new ViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
                 InitRotX = -MathUtil.PiOver4,
                 InitRotY = MathUtil.PiOver4,
@@ -85,9 +85,12 @@ namespace ccm.Scene
         {
             cameraUpdater.Reset();
             cameraUpdater.Update(Vector3.Zero);
-            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
         }
 
         void InitLight()
@@ -103,7 +106,7 @@ namespace ccm.Scene
         void InitRenderer()
         {
             renderParam.Transform = Matrix.Identity;
-            renderParam.Camera = camera;
+            renderParam.Camera = Camera;
             renderParam.InstanceTransforms = new List<AffineTransform>();
             renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
         }

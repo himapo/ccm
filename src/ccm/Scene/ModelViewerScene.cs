@@ -19,7 +19,7 @@ namespace ccm.Scene
 {
     public class ModelViewerScene : SceneBase
     {
-        PerspectiveCamera camera = new PerspectiveCamera() { Far = 300.0f };
+        PerspectiveCamera Camera = new PerspectiveCamera() { Far = 300.0f };
 
         ViewerCameraUpdater cameraUpdater;
 
@@ -54,7 +54,7 @@ namespace ccm.Scene
 
             Name = "ModelViewer";
 
-            cameraUpdater = new ViewerCameraUpdater(camera, InputAccessor.GetController(ControllerLabel.Main))
+            cameraUpdater = new ViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
                 InitRotX = -MathUtil.PiOver4,
                 InitRotY = MathUtil.PiOver4,
@@ -92,9 +92,12 @@ namespace ccm.Scene
         void InitCamera()
         {
             cameraUpdater.Reset();
-            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
+            RenderSceneManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
         }
 
         void InitLight()
@@ -118,7 +121,7 @@ namespace ccm.Scene
 
         void InitSimpleRenderer()
         {
-            simpleRenderParam.Camera = camera;
+            simpleRenderParam.Camera = Camera;
             simpleRenderParam.Transform = Matrix.Identity;
             simpleRenderParam.IsShadowReceiver = false;
             simpleRenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);            
@@ -130,7 +133,7 @@ namespace ccm.Scene
             toonRenderParam.IsShadowReceiver = false;
             toonRenderParam.GBufferEnabled = false;
 
-            toonRenderParam.Camera = camera;
+            toonRenderParam.Camera = Camera;
             toonRenderParam.Transform = Matrix.Identity;
         }
 
