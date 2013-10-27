@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using HimaLib.Math;
 using HimaLib.Model;
+using HimaLib.Collision;
 using ccm.DungeonLogic;
 using ccm.System;
+using ccm.Game;
 
 namespace ccm.Map
 {
@@ -17,6 +19,8 @@ namespace ccm.Map
     {
         public bool Drawable { get; set; }
 
+        public CollisionManager CollisionManager { get; set; }
+
         IModel CubeModel;
 
         DungeonMap DungeonMap = new DungeonMap() { Rand = GameRand.Instance };
@@ -24,6 +28,8 @@ namespace ccm.Map
         List<AffineTransform> CubeTransforms = new List<AffineTransform>();
 
         bool MapUpdated = false;
+
+        MapCollisionInfo MapCollisionInfo = new MapCollisionInfo();
 
         public void InitModel()
         {
@@ -55,6 +61,28 @@ namespace ccm.Map
             }
             drawer.DrawMapCube(CubeModel, MapUpdated, CubeTransforms);
             MapUpdated = false;
+        }
+
+        public void InitCollision()
+        {
+            var rectangles = DungeonMap.GetRoomRectangles().Concat(DungeonMap.GetPathRectangles()).Concat(DungeonMap.GetPortalRectangles());
+
+            foreach (var rect in rectangles)
+            {
+                var corner = new Vector3(
+                    -0.5f + rect.X,
+                    -1.0f,
+                    -0.5f + rect.Y) * GameProperty.CUBE_WIDTH;
+
+                var width = new Vector3(
+                    rect.Width,
+                    1.0f,
+                    rect.Height) * GameProperty.CUBE_WIDTH;
+
+                MapCollisionInfo.AddAABB(corner, width);
+            }
+
+            CollisionManager.Add(MapCollisionInfo);
         }
     }
 }

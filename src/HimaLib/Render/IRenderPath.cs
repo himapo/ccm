@@ -30,6 +30,8 @@ namespace HimaLib.Render
 
         IEnumerable<CylinderInfo> CylinderInfoList { get; set; }
 
+        IEnumerable<AABBInfo> AABBInfoList { get; set; }
+
         void Render();
     }
 }

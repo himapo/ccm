@@ -16,5 +16,6 @@ namespace ccm.Collision
         EnemyBody,
         EnemyAttack,
         EnemyDamage,
+        Map,
     }
 }

@@ -32,6 +32,8 @@ namespace HimaLib.Render
 
         public IEnumerable<CylinderInfo> CylinderInfoList { get; set; }
 
+        public IEnumerable<AABBInfo> AABBInfoList { get; set; }
+
         public IRenderDevice RenderDevice { get; set; }
 
         public bool ColorClearEnabled { get; set; }
@@ -70,6 +72,8 @@ namespace HimaLib.Render
 
         public bool RenderCylinderEnabled { get; set; }
 
+        public bool RenderAABBEnabled { get; set; }
+
         public RenderPath()
         {
             Enabled = true;
@@ -95,6 +99,7 @@ namespace HimaLib.Render
 
             RenderSphereEnabled = false;
             RenderCylinderEnabled = false;
+            RenderAABBEnabled = false;
         }
 
         public virtual void Render()
@@ -150,6 +155,11 @@ namespace HimaLib.Render
             if (RenderCylinderEnabled)
             {
                 RenderCylinder();
+            }
+
+            if (RenderAABBEnabled)
+            {
+                RenderAABB();
             }
         }
 
@@ -230,6 +240,16 @@ namespace HimaLib.Render
                 info.RenderParam.Camera = Camera;
                 info.RenderParam.DirectionalLights = DirectionalLights;
                 info.Cylinder.Render(info.RenderParam);
+            }
+        }
+
+        void RenderAABB()
+        {
+            foreach (var info in AABBInfoList)
+            {
+                info.RenderParam.Camera = Camera;
+                info.RenderParam.DirectionalLights = DirectionalLights;
+                info.AABB.Render(info.RenderParam);
             }
         }
     }

@@ -15,8 +15,11 @@ namespace HimaLib.Collision
 
         WireCylinderRenderParameter CylinderRenderParam = new WireCylinderRenderParameter();
 
+        AABBRenderParameter AABBRenderParam = new AABBRenderParameter();
+
         public WireCollisionDrawer()
         {
+            AABBRenderParam.Type = AABBRendererType.Wire;
         }
 
         public void DrawSphere(SphereCollisionPrimitive primitive, bool active)
@@ -44,7 +47,13 @@ namespace HimaLib.Collision
 
         public void DrawAABB(AABBCollisionPrimitive primitive, bool active)
         {
+            var aabb = new AABBXna()
+            {
+                Corner = primitive.Corner,
+                Width = primitive.Width,
+            };
 
+            RenderScene.RenderAABB(aabb, AABBRenderParam);
         }
     }
 }

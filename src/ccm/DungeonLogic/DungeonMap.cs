@@ -49,6 +49,7 @@ namespace ccm.DungeonLogic
             GenerateRooms();
             GeneratePaths();
             ThinOutRooms();
+            CleanUp();
         }
 
         public void Clear()
@@ -489,6 +490,17 @@ namespace ccm.DungeonLogic
 
             return length.X >= length.Y;
         }
-        
+
+        /// <summary>
+        /// 不要な要素が残ってたら掃除
+        /// </summary>
+        void CleanUp()
+        {
+            // 通路に繋がっていないポータルを削除
+            Portals.RemoveAll((portal) =>
+            {
+                return portal.ConnectedPaths.Count == 0;
+            });
+        }
     }
 }

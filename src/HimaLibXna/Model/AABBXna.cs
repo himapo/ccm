@@ -10,7 +10,7 @@ namespace HimaLib.Model
     {
         public override void Render(AABBRenderParameter param)
         {
-            
+            AABBRendererFactoryXna.Instance.Create(param).Render(this);
         }
     }
 }

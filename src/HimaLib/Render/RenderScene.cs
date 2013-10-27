@@ -31,6 +31,12 @@ namespace HimaLib.Render
         public CylinderRenderParameter RenderParam { get; set; }
     }
 
+    public class AABBInfo
+    {
+        public AABB AABB { get; set; }
+        public AABBRenderParameter RenderParam { get; set; }
+    }
+
     public class RenderScene
     {
         Dictionary<int, IRenderPath> PathDic = new Dictionary<int, IRenderPath>();
@@ -46,6 +52,8 @@ namespace HimaLib.Render
         List<SphereInfo> SphereInfoList = new List<SphereInfo>();
 
         List<CylinderInfo> CylinderInfoList = new List<CylinderInfo>();
+
+        List<AABBInfo> AABBInfoList = new List<AABBInfo>();
 
         public RenderScene()
         {
@@ -122,6 +130,11 @@ namespace HimaLib.Render
             CylinderInfoList.Add(new CylinderInfo() { Cylinder = cylinder, RenderParam = renderParam });
         }
 
+        public void RenderAABB(AABB aabb, AABBRenderParameter renderParam)
+        {
+            AABBInfoList.Add(new AABBInfo() { AABB = aabb, RenderParam = renderParam });
+        }
+
         public void Render()
         {
             // TODO : 別スレッド化
@@ -138,6 +151,7 @@ namespace HimaLib.Render
                 path.BillboardInfoList = BillboardInfoList;
                 path.SphereInfoList = SphereInfoList;
                 path.CylinderInfoList = CylinderInfoList;
+                path.AABBInfoList = AABBInfoList;
                 path.Render();
             }
 
@@ -145,6 +159,7 @@ namespace HimaLib.Render
             BillboardInfoList.Clear();
             SphereInfoList.Clear();
             CylinderInfoList.Clear();
+            AABBInfoList.Clear();
         }
     }
 }

@@ -159,6 +159,7 @@ namespace ccm.Scene
                 Creator = AllyCreator
             };
 
+            Dungeon.CollisionManager = CollisionManager;
             DungeonDrawer.Camera = Camera;
 
             cameraUpdater = new ViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
@@ -232,6 +233,7 @@ namespace ccm.Scene
         {
             Dungeon.InitModel();
             Dungeon.Generate();
+            Dungeon.InitCollision();
         }
 
         void InitCollision()

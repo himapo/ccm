@@ -140,6 +140,7 @@
     <Compile Include="Input\PointingDeviceLabel.cs" />
     <Compile Include="Game\ComponentOrder.cs" />
     <Compile Include="DungeonLogic\DungeonMap.cs" />
+    <Compile Include="Map\MapCollisionInfo.cs" />
     <Compile Include="Particle\Particle.cs" />
     <Compile Include="Particle\Particle_Twister.cs" />
     <Compile Include="Player\DungeonPlayerUpdater.cs" />

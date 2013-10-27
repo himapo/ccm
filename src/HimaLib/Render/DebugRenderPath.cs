@@ -23,6 +23,7 @@ namespace HimaLib.Render
 
             RenderSphereEnabled = true;
             RenderCylinderEnabled = true;
+            RenderAABBEnabled = true;
         }
     }
 }

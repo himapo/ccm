@@ -44,9 +44,20 @@ namespace ccm.DungeonLogic
 
         public Rectangle GetRectangle()
         {
+            if (ConnectedPaths.Count == 0)
+            {
+                return new Rectangle(0, 0, 0, 0);
+            }
+
+            // つながっている通路で一番広い幅
             var maxWidth = ConnectedPaths.Max((path) => { return path.Width; });
 
-            return new Rectangle(Position.X, Position.Y, maxWidth, maxWidth);
+            // ポータルはその幅を一辺とする正方形
+            return new Rectangle(
+                Position.X - maxWidth / 2,
+                Position.Y - maxWidth / 2,
+                maxWidth,
+                maxWidth);
         }
     }
 }
