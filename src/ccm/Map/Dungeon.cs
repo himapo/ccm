@@ -31,6 +31,11 @@ namespace ccm.Map
 
         MapCollisionInfo MapCollisionInfo = new MapCollisionInfo();
 
+        public Dungeon()
+        {
+            //Drawable = true;
+        }
+
         public void InitModel()
         {
             CubeModel = ModelFactory.Instance.Create("cube000");
@@ -83,6 +88,21 @@ namespace ccm.Map
             }
 
             CollisionManager.Add(MapCollisionInfo);
+        }
+
+        public Vector3 GetRandomRespawnPoint()
+        {
+            var rectangles = DungeonMap.GetRoomRectangles().ToList();
+
+            var roomNo = GameRand.Instance.Next(rectangles.Count);
+
+            var rect = rectangles[roomNo];
+
+            // 端の1マスは選ばない
+            var x = GameRand.Instance.Next(rect.X + 1, rect.X + rect.Width - 1);
+            var z = GameRand.Instance.Next(rect.Y + 1, rect.Y + rect.Height - 1);
+
+            return new Vector3(-0.5f + x, 5, -0.5f + z) * GameProperty.CUBE_WIDTH;
         }
     }
 }

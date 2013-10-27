@@ -8,6 +8,7 @@ namespace ccm.Collision
     public enum CollisionGroup
     {
         PlayerBody,
+        PlayerGround,   // 接地判定
         PlayerAttack,
         PlayerDamage,
         AllyBody,

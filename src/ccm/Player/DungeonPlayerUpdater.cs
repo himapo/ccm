@@ -14,6 +14,7 @@ using ccm.Collision;
 using ccm.Sound;
 using ccm.Battle;
 using ccm.Deco;
+using ccm.Map;
 
 namespace ccm.Player
 {
@@ -22,6 +23,8 @@ namespace ccm.Player
         public CameraBase Camera { get; set; }
 
         public HimaLib.Collision.CollisionManager CollisionManager { get; set; }
+
+        public Dungeon Dungeon { get; set; }
 
         Vector3 CameraEyeVector
         {
@@ -59,6 +62,8 @@ namespace ccm.Player
         float VelocityRotate { get { return 20.0f; } }
         float VelocityStep { get { return 1.2f; } }
 
+        float AccelFall { get { return -0.01f; } }
+
         float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
 
         IModel Model;
@@ -86,7 +91,11 @@ namespace ccm.Player
 
         Vector3 StepDirection;
 
+        float FallVelocity;
+
         PlayerBodyCollisionInfo BodyCollision;
+
+        PlayerBodyCollisionInfo GroundCollision;
 
         PlayerDamageCollisionInfo DamageCollision;
 
@@ -99,6 +108,8 @@ namespace ccm.Player
         TimeKeeper TimeKeeper { get { return TimeKeeper.Instance; } }
 
         ComboCounter ComboCounter { get; set; }
+
+        bool IsGround;
 
         // デコ
         public DecoManager DecoManager { get; set; }
@@ -113,6 +124,19 @@ namespace ccm.Player
                 Reaction = (id, count) =>
                 {
                     Transform.Translation = PrevTransform.Translation;
+                },
+            };
+
+            GroundCollision = new PlayerBodyCollisionInfo()
+            {
+                Base = () => Transform.Translation,
+                Group = () => (int)CollisionGroup.PlayerGround,
+                Reaction = (id, count) =>
+                {
+                    IsGround = true;
+                    //Transform.Translation.Y = 0;
+                    //FallVelocity = 0.0f;
+                    //GoToStand();
                 },
             };
 
@@ -194,6 +218,8 @@ namespace ccm.Player
             Model.Update(TimeKeeper.LastFrameSeconds);
 
             ComboCounter.Update(TimeKeeper.LastTimeScale);
+
+            IsGround = false;
         }
 
         public void Update(Player player)
@@ -206,15 +232,24 @@ namespace ccm.Player
         {
             InitCollision();
             HitPoint = 3000;
-            GoToStand();
+            //GoToStand();
+            Respawn();
         }
 
         void InitCollision()
         {
             CollisionManager.Add(BodyCollision);
+            CollisionManager.Add(GroundCollision);
             CollisionManager.Add(DamageCollision);
             CollisionManager.Add(GuardCollision);
             CollisionManager.Add(AttackCollision);
+        }
+
+        void Respawn()
+        {
+            Transform.Translation = Dungeon.GetRandomRespawnPoint();
+            FallVelocity = 0.0f;
+            GoToFall();
         }
 
         void UpdateStateStand()
@@ -228,7 +263,11 @@ namespace ccm.Player
                 }
             }
 
-            if (DoublePushJump)
+            if (!IsGround)
+            {
+                GoToFall();
+            }
+            else if (DoublePushJump)
             {
                 GoToDash();
                 return;
@@ -282,7 +321,11 @@ namespace ccm.Player
                 }
             }
 
-            if (DoublePushJump)
+            if (!IsGround)
+            {
+                GoToFall();
+            }
+            else if (DoublePushJump)
             {
                 GoToDash();
                 return;
@@ -330,7 +373,11 @@ namespace ccm.Player
 
         void UpdateStateDash()
         {
-            if (PushAttack)
+            if (!IsGround)
+            {
+                GoToFall();
+            }
+            else if (PushAttack)
             {
                 GoToAttack();
                 return;
@@ -364,7 +411,11 @@ namespace ccm.Player
 
         void UpdateStateWalk()
         {
-            if (PushAttack)
+            if (!IsGround)
+            {
+                GoToFall();
+            }
+            else if (PushAttack)
             {
                 GoToAttack();
                 return;
@@ -573,6 +624,33 @@ namespace ccm.Player
             }
         }
 
+        void UpdateStateJump()
+        {
+
+        }
+
+        void UpdateStateFall()
+        {
+            if (IsGround)
+            {
+                Transform.Translation.Y = -0.1f;
+                FallVelocity = 0.0f;
+                GoToStand();
+            }
+
+            Transform.Translation.Y += FallVelocity;
+
+            if (FallVelocity > -2.0f)
+            {
+                FallVelocity += AccelFall;
+            }
+
+            if (Transform.Translation.Y < -200.0f)
+            {
+                Respawn();
+            }
+        }
+
         void GoToStand()
         {
             UpdateState = UpdateStateStand;
@@ -650,6 +728,18 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateDash;
             Model.ChangeMotion("dash", 0.2f);
+            JumpCount = 0.0f;
+        }
+
+        void GoToJump()
+        {
+
+        }
+
+        void GoToFall()
+        {
+            UpdateState = UpdateStateFall;
+            Model.ChangeMotion("stand", 0.2f);
             JumpCount = 0.0f;
         }
 

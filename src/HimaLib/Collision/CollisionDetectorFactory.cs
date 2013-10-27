@@ -9,6 +9,18 @@ namespace HimaLib.Collision
     {
         public ICollisionDetector Create(ICollisionPrimitive paramA, ICollisionPrimitive paramB)
         {
+            var result = InnerCreate(paramA, paramB);
+
+            if(result is NullCollisionDetector)
+            {
+                result = InnerCreate(paramB, paramA);
+            }
+
+            return result;
+        }
+
+        ICollisionDetector InnerCreate(ICollisionPrimitive paramA, ICollisionPrimitive paramB)
+        {
             switch (paramA.Shape)
             {
                 case CollisionShape.Sphere:
@@ -27,10 +39,19 @@ namespace HimaLib.Collision
                     switch (paramB.Shape)
                     {
                         case CollisionShape.Cylinder:
-                            var result = new CylinderCylinderCpollisionDetector();
-                            result.ParamA = paramA as CylinderCollisionPrimitive;
-                            result.ParamB = paramB as CylinderCollisionPrimitive;
-                            return result;
+                            {
+                                var result = new CylinderCylinderCpollisionDetector();
+                                result.ParamA = paramA as CylinderCollisionPrimitive;
+                                result.ParamB = paramB as CylinderCollisionPrimitive;
+                                return result;
+                            }
+                        case CollisionShape.AABB:
+                            {
+                                var result = new CylinderAABBCollisionDetector();
+                                result.Cylinder = paramA as CylinderCollisionPrimitive;
+                                result.AABB = paramB as AABBCollisionPrimitive;
+                                return result;
+                            }
                     }
                     break;
                 default:

@@ -86,6 +86,7 @@
     <Compile Include="Collision\CollisionInfo.cs" />
     <Compile Include="Collision\CollisionManager.cs" />
     <Compile Include="Collision\CollisionDetectorFactory.cs" />
+    <Compile Include="Collision\CylinderAABBCollisionDetector.cs" />
     <Compile Include="Collision\CylinderCollisionPrimitive.cs" />
     <Compile Include="Collision\CylinderCylinderCpollisionDetector.cs" />
     <Compile Include="Collision\ICollisionDetector.cs" />

@@ -101,6 +101,7 @@ namespace ccm.Scene
             Name = "DungeonScene";
 
             DungeonPlayerUpdater.CollisionManager = CollisionManager;
+            DungeonPlayerUpdater.Dungeon = Dungeon;
             DungeonPlayerUpdater.Camera = Camera;
             DungeonPlayerUpdater.DecoManager = DecoManager;
             PlayerDrawer.Camera = Camera;
@@ -209,7 +210,7 @@ namespace ccm.Scene
         {
             for (var i = 0; i < 20; ++i)
             {
-                EnemyManager.CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
+                //EnemyManager.CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
             }
         }
 
@@ -217,7 +218,7 @@ namespace ccm.Scene
         {
             for (var i = 0; i < 6; ++i)
             {
-                AllyManager.CreateAlly(AllyType.Cube, CreateAllyTransform());
+                //AllyManager.CreateAlly(AllyType.Cube, CreateAllyTransform());
             }
         }
 
@@ -239,6 +240,7 @@ namespace ccm.Scene
         void InitCollision()
         {
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.EnemyBody);
+            CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerGround, (int)Collision.CollisionGroup.Map);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyDamage);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.EnemyAttack, (int)Collision.CollisionGroup.PlayerDamage);
             CollisionManager.Drawer = new WireCollisionDrawer()

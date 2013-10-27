@@ -16,7 +16,8 @@ namespace ccm.Map
         {
             Active = () => true;
             Group = () => (int)CollisionGroup.Map;
-            Reactor = CollisionReactor;   
+            CollisionReactor.Reaction = (id, count) => { };
+            Reactor = CollisionReactor;
         }
 
         public void AddAABB(Vector3 corner, Vector3 width)
