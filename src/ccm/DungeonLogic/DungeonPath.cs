@@ -309,8 +309,12 @@ namespace ccm.DungeonLogic
 
                 var end = new Point(position[0], position[1]);
 
-                // ポータルと曲がり角を除いた長方形
-                result.Add(CalcStepRect2(start, end));
+                // 曲がり角2つの間に隙間があるときは間の通路を作る
+                if (steps[i] > Width)
+                {
+                    // ポータルと曲がり角を除いた長方形
+                    result.Add(CalcStepRect2(start, end, direction == 0));   
+                }
 
                 // 曲がり角部分の正方形
                 if (i < steps.Count - 1)
@@ -328,7 +332,7 @@ namespace ccm.DungeonLogic
             return result;
         }
 
-        Rectangle CalcStepRect2(Point start, Point end)
+        Rectangle CalcStepRect2(Point start, Point end, bool horizontal)
         {
             // 通路幅の半分だけ幅を広げる
             // 幅3の通路なら1マス広げる
@@ -341,13 +345,13 @@ namespace ccm.DungeonLogic
             // 水平通路ならx方向を削る
             // 垂直通路ならy方向を削る
 
-            var x = Math.Min(start.X, end.X) + (IsHorizontal ? cut : -additional);
-            var y = Math.Min(start.Y, end.Y) + (IsHorizontal ? -additional : cut);
+            var x = Math.Min(start.X, end.X) + (horizontal ? cut : -additional);
+            var y = Math.Min(start.Y, end.Y) + (horizontal ? -additional : cut);
             
             var w = Math.Abs(end.X - start.X) + 1;
-            w += IsHorizontal ? (-cut * 2) : (additional * 2);
+            w = horizontal ? (w - cut * 2) : Width;
             var h = Math.Abs(end.Y - start.Y) + 1;
-            h += IsHorizontal ? (additional * 2) : (-cut * 2);
+            h = horizontal ? Width : (h - cut * 2);
 
             var result = new Rectangle(x, y, w, h);
 
