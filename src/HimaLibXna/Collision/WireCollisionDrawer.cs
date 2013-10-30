@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HimaLib.Model;
 using HimaLib.Render;
+using HimaLib.Math;
 
 namespace HimaLib.Collision
 {
@@ -22,7 +23,7 @@ namespace HimaLib.Collision
             AABBRenderParam.Type = AABBRendererType.Wire;
         }
 
-        public void DrawSphere(SphereCollisionPrimitive primitive, bool active)
+        public void DrawSphere(SphereCollisionPrimitive primitive, Color color)
         {
             var sphere = new SphereXna()
             {
@@ -30,10 +31,12 @@ namespace HimaLib.Collision
                 Radius = primitive.Radius(),
             };
 
+            SphereRenderParam.Color = color;
+
             RenderScene.RenderSphere(sphere, SphereRenderParam);
         }
 
-        public void DrawCylinder(CylinderCollisionPrimitive primitive, bool active)
+        public void DrawCylinder(CylinderCollisionPrimitive primitive, Color color)
         {
             var cylinder = new CylinderXna()
             {
@@ -42,16 +45,20 @@ namespace HimaLib.Collision
                 Height = primitive.Height(),
             };
 
+            CylinderRenderParam.Color = color;
+
             RenderScene.RenderCylinder(cylinder, CylinderRenderParam);
         }
 
-        public void DrawAABB(AABBCollisionPrimitive primitive, bool active)
+        public void DrawAABB(AABBCollisionPrimitive primitive, Color color)
         {
             var aabb = new AABBXna()
             {
                 Corner = primitive.Corner,
                 Width = primitive.Width,
             };
+
+            AABBRenderParam.Color = color;
 
             RenderScene.RenderAABB(aabb, AABBRenderParam);
         }

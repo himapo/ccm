@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.Math;
 
 namespace HimaLib.Collision
 {
@@ -24,6 +25,9 @@ namespace HimaLib.Collision
 
         // 相手の応答に渡す自分のパラメータ
         public ICollisionActor Actor { get; set; }
+
+        // 色（デバッグ用）
+        public Color Color { get; set; }
 
         public CollisionInfo()
         {

@@ -87,6 +87,8 @@ namespace ccm.Map
                 MapCollisionInfo.AddAABB(corner, width);
             }
 
+            MapCollisionInfo.Color = Color.LightBlue;
+
             CollisionManager.Add(MapCollisionInfo);
         }
 

@@ -16,9 +16,9 @@ namespace HimaLib.Collision
 
         public Func<float> Height { get; set; }
 
-        public void Draw(ICollisionDrawer drawer, bool active)
+        public void Draw(ICollisionDrawer drawer, Color color)
         {
-            drawer.DrawCylinder(this, active);
+            drawer.DrawCylinder(this, color);
         }
     }
 }

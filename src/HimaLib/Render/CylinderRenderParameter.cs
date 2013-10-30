@@ -13,10 +13,5 @@ namespace HimaLib.Render
     public abstract class CylinderRenderParameter : RenderParameter
     {
         public abstract CylinderRendererType Type { get; }
-
-        public CylinderRenderParameter()
-        {
-
-        }
     }
 }

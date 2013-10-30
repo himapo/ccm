@@ -138,6 +138,7 @@ namespace ccm.Player
                     //FallVelocity = 0.0f;
                     //GoToStand();
                 },
+                Color = Color.Yellow,
             };
 
             DamageCollision = new PlayerDamageCollisionInfo()

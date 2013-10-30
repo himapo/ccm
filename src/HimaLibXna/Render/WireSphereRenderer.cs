@@ -19,6 +19,8 @@ namespace HimaLib.Render
 
         short[] Indices;
 
+        static readonly int VertexCount = 12 * 5 + 2;
+
         public WireSphereRenderer()
         {
             BasicEffect = new BasicEffect(GraphicsDevice);
@@ -34,7 +36,7 @@ namespace HimaLib.Render
         void InitSphere()
         {
             // 球の頂点初期化
-            Vertices = new VertexPositionColor[12 * 5 + 2];
+            Vertices = new VertexPositionColor[VertexCount];
 
             for (var i = 0; i < 5; ++i)
             {
@@ -81,6 +83,14 @@ namespace HimaLib.Render
             }
         }
 
+        void SetColor(Microsoft.Xna.Framework.Color color)
+        {
+            for (var i = 0; i < VertexCount; ++i)
+            {
+                Vertices[i].Color = color;
+            }
+        }
+
         public void SetParameter(SphereRenderParameter p)
         {
             var param = p as WireSphereRenderParameter;
@@ -91,6 +101,8 @@ namespace HimaLib.Render
 
             BasicEffect.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             BasicEffect.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
+
+            SetColor(MathUtilXna.ToXnaColor(param.Color));
         }
 
         public void Render(SphereXna sphere)

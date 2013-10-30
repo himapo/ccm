@@ -57,6 +57,14 @@ namespace HimaLib.Render
             }
         }
 
+        void SetColor(Microsoft.Xna.Framework.Color color)
+        {
+            for (var i = 0; i < CylinderDivision * 2; ++i)
+            {
+                Vertices[i].Color = color;
+            }
+        }
+
         public void SetParameter(CylinderRenderParameter p)
         {
             var param = p as WireCylinderRenderParameter;
@@ -67,6 +75,8 @@ namespace HimaLib.Render
 
             BasicEffect.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             BasicEffect.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
+
+            SetColor(MathUtilXna.ToXnaColor(param.Color));
         }
 
         public void Render(CylinderXna cylinder)

@@ -14,9 +14,9 @@ namespace HimaLib.Collision
 
         public Vector3 Width { get; set; }
 
-        public void Draw(ICollisionDrawer drawer, bool active)
+        public void Draw(ICollisionDrawer drawer, Color color)
         {
-            drawer.DrawAABB(this, active);
+            drawer.DrawAABB(this, color);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Render;
+using HimaLib.Math;
 
 namespace HimaLib.Collision
 {
@@ -10,10 +11,10 @@ namespace HimaLib.Collision
     {
         RenderScene RenderScene { get;  set; }
 
-        void DrawSphere(SphereCollisionPrimitive primitive, bool active);
+        void DrawSphere(SphereCollisionPrimitive primitive, Color color);
 
-        void DrawCylinder(CylinderCollisionPrimitive primitive, bool active);
+        void DrawCylinder(CylinderCollisionPrimitive primitive, Color color);
 
-        void DrawAABB(AABBCollisionPrimitive primitive, bool active);
+        void DrawAABB(AABBCollisionPrimitive primitive, Color color);
     }
 }

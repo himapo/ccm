@@ -108,7 +108,7 @@ namespace HimaLib.Collision
             {
                 foreach (var primitive in info.Primitives)
                 {
-                    primitive.Draw(Drawer, true);
+                    primitive.Draw(Drawer, info.Color);
                 }
             }
         }

@@ -35,10 +35,7 @@ namespace HimaLib.Render
         {
             Vertices = new VertexPositionColor[8];
 
-            for (var i = 0; i < 8; ++i)
-            {
-                Vertices[i].Color = Microsoft.Xna.Framework.Color.Green;
-            }
+            SetColor(Microsoft.Xna.Framework.Color.Green);
 
             Vertices[0].Position = new Microsoft.Xna.Framework.Vector3(0.0f, 0.0f, 0.0f);
             Vertices[1].Position = new Microsoft.Xna.Framework.Vector3(1.0f, 0.0f, 0.0f);
@@ -66,10 +63,20 @@ namespace HimaLib.Render
             };
         }
 
+        void SetColor(Microsoft.Xna.Framework.Color color)
+        {
+            for (var i = 0; i < 8; ++i)
+            {
+                Vertices[i].Color = color;
+            }
+        }
+
         public void SetParameter(AABBRenderParameter param)
         {
             BasicEffect.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             BasicEffect.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
+
+            SetColor(MathUtilXna.ToXnaColor(param.Color));
         }
 
         public void Render(AABBXna aabb)

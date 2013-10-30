@@ -14,9 +14,9 @@ namespace HimaLib.Collision
 
         public Func<float> Radius { get; set; }
 
-        public void Draw(ICollisionDrawer drawer, bool active)
+        public void Draw(ICollisionDrawer drawer, Color color)
         {
-            drawer.DrawSphere(this, active);
+            drawer.DrawSphere(this, color);
         }
     }
 }
