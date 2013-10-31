@@ -17,6 +17,7 @@ namespace ccm.Collision
         EnemyBody,
         EnemyAttack,
         EnemyDamage,
-        Map,
+        Floor,
+        Wall,
     }
 }

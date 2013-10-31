@@ -15,7 +15,7 @@ namespace ccm.Map
         public MapCollisionInfo()
         {
             Active = () => true;
-            Group = () => (int)CollisionGroup.Map;
+            Group = () => (int)CollisionGroup.Floor;
             CollisionReactor.Reaction = (id, count) => { };
             Reactor = CollisionReactor;
         }
