@@ -33,6 +33,7 @@ namespace HimaLib.Collision
         {
             Primitives = new List<ICollisionPrimitive>();
             Reactor = new NullCollisionReactor();
+            Color = Color.Red;
         }
     }
 }
