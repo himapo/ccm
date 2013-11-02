@@ -41,7 +41,7 @@ namespace ccm.Map
             FloorCollisionInfo.Color = Color.LightBlue;
             FloorCollisionInfo.Group = () => (int)CollisionGroup.Floor;
 
-            WallCollisionInfo.Color = Color.Red;
+            WallCollisionInfo.Color = Color.LightGreen;
             WallCollisionInfo.Group = () => (int)CollisionGroup.Wall;
         }
 

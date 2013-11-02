@@ -12,15 +12,9 @@ namespace HimaLib.Collision
     {
         public RenderScene RenderScene { get; set; }
 
-        WireSphereRenderParameter SphereRenderParam = new WireSphereRenderParameter();
-
-        WireCylinderRenderParameter CylinderRenderParam = new WireCylinderRenderParameter();
-
-        AABBRenderParameter AABBRenderParam = new AABBRenderParameter();
-
         public WireCollisionDrawer()
         {
-            AABBRenderParam.Type = AABBRendererType.Wire;
+            
         }
 
         public void DrawSphere(SphereCollisionPrimitive primitive, Color color)
@@ -31,9 +25,12 @@ namespace HimaLib.Collision
                 Radius = primitive.Radius(),
             };
 
-            SphereRenderParam.Color = color;
+            var renderParam = new WireSphereRenderParameter()
+            {
+                Color = color,
+            };
 
-            RenderScene.RenderSphere(sphere, SphereRenderParam);
+            RenderScene.RenderSphere(sphere, renderParam);
         }
 
         public void DrawCylinder(CylinderCollisionPrimitive primitive, Color color)
@@ -45,9 +42,12 @@ namespace HimaLib.Collision
                 Height = primitive.Height(),
             };
 
-            CylinderRenderParam.Color = color;
+            var renderParam = new WireCylinderRenderParameter()
+            {
+                Color = color,
+            };
 
-            RenderScene.RenderCylinder(cylinder, CylinderRenderParam);
+            RenderScene.RenderCylinder(cylinder, renderParam);
         }
 
         public void DrawAABB(AABBCollisionPrimitive primitive, Color color)
@@ -58,9 +58,12 @@ namespace HimaLib.Collision
                 Width = primitive.Width,
             };
 
-            AABBRenderParam.Color = color;
+            var renderParam = new AABBRenderParameter()
+            {
+                Color = color,
+            };
 
-            RenderScene.RenderAABB(aabb, AABBRenderParam);
+            RenderScene.RenderAABB(aabb, renderParam);
         }
     }
 }
