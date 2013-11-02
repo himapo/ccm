@@ -8,6 +8,7 @@ using HimaLib.Collision;
 using ccm.DungeonLogic;
 using ccm.System;
 using ccm.Game;
+using ccm.Collision;
 
 namespace ccm.Map
 {
@@ -29,11 +30,19 @@ namespace ccm.Map
 
         bool MapUpdated = false;
 
-        MapCollisionInfo MapCollisionInfo = new MapCollisionInfo();
+        MapCollisionInfo FloorCollisionInfo = new MapCollisionInfo();
+
+        MapCollisionInfo WallCollisionInfo = new MapCollisionInfo();
 
         public Dungeon()
         {
             //Drawable = true;
+
+            FloorCollisionInfo.Color = Color.LightBlue;
+            FloorCollisionInfo.Group = () => (int)CollisionGroup.Floor;
+
+            WallCollisionInfo.Color = Color.Red;
+            WallCollisionInfo.Group = () => (int)CollisionGroup.Wall;
         }
 
         public void InitModel()
@@ -68,7 +77,7 @@ namespace ccm.Map
             MapUpdated = false;
         }
 
-        public void InitCollision()
+        public void GenerateFloorCollision()
         {
             var rectangles = DungeonMap.GetRoomRectangles().Concat(DungeonMap.GetPathRectangles()).Concat(DungeonMap.GetPortalRectangles());
 
@@ -84,12 +93,32 @@ namespace ccm.Map
                     1.0f,
                     rect.Height) * GameProperty.CUBE_WIDTH;
 
-                MapCollisionInfo.AddAABB(corner, width);
+                FloorCollisionInfo.AddAABB(corner, width);
             }
 
-            MapCollisionInfo.Color = Color.LightBlue;
+            CollisionManager.Add(FloorCollisionInfo);
+        }
 
-            CollisionManager.Add(MapCollisionInfo);
+        public void GenerateWallCollision()
+        {
+            var outlines = DungeonMap.GetRoomOutlines();
+
+            foreach (var rect in outlines)
+            {
+                var corner = new Vector3(
+                    -0.5f + rect.X,
+                    -1.0f,
+                    -0.5f + rect.Y) * GameProperty.CUBE_WIDTH;
+
+                var width = new Vector3(
+                    rect.Width,
+                    2.0f,
+                    rect.Height) * GameProperty.CUBE_WIDTH;
+
+                WallCollisionInfo.AddAABB(corner, width);
+            }
+
+            CollisionManager.Add(WallCollisionInfo);
         }
 
         public Vector3 GetRandomRespawnPoint()

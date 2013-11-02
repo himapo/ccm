@@ -234,7 +234,8 @@ namespace ccm.Scene
         {
             Dungeon.InitModel();
             Dungeon.Generate();
-            Dungeon.InitCollision();
+            Dungeon.GenerateFloorCollision();
+            Dungeon.GenerateWallCollision();
         }
 
         void InitCollision()

@@ -111,6 +111,18 @@ namespace ccm.DungeonLogic
             return result;
         }
 
+        public IEnumerable<Rectangle> GetRoomOutlines()
+        {
+            var result = new List<Rectangle>();
+
+            Rooms.ForEach((room) =>
+            {
+                result.AddRange(room.GetOutlines());
+            });
+
+            return result;
+        }
+
         void GenerateRooms()
         {
             var blocks = ChooseBlocks();
