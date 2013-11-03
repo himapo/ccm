@@ -10,6 +10,7 @@ namespace ccm.DungeonLogic
     class DungeonPath
     {
         public int Width { get; set; }
+
         public bool IsHorizontal { get; set; }
 
         public DungeonPortal[] Portals { get; set; }
@@ -23,6 +24,7 @@ namespace ccm.DungeonLogic
         public DungeonPath()
         {
             Width = 1;
+
             IsHorizontal = true;
 
             Portals = new DungeonPortal[2];
@@ -354,6 +356,278 @@ namespace ccm.DungeonLogic
             h = horizontal ? Width : (h - cut * 2);
 
             var result = new Rectangle(x, y, w, h);
+
+            return result;
+        }
+
+        /// <summary>
+        /// 壁コリジョン生成のための通路の縁を計算する
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Rectangle> GetOutlines()
+        {
+            var result = new List<Rectangle>();
+
+            // 現在地点
+            var position = new int[2] { Portals[0].Position.X, Portals[0].Position.Y };
+
+            // 進む方向（水平か垂直か）
+            var direction = IsHorizontal ? 0 : 1;
+
+            // 1回に進む歩数（正か負か）
+            var stepValue = new int[2]
+            { 
+                Math.Sign(Portals[1].Position.X - Portals[0].Position.X),
+                Math.Sign(Portals[1].Position.Y - Portals[0].Position.Y)
+            };
+
+            for (var i = 0; i < steps.Count; ++i)
+            {
+                var start = new Point(position[0], position[1]);
+
+                position[direction] += stepValue[direction] * steps[i];
+
+                var end = new Point(position[0], position[1]);
+
+                var outlines = new Rectangle[2];
+
+                // まずstepの長さの壁を作る
+
+                if (direction == 0)
+                {
+                    // 上側の壁
+                    outlines[0].X = MathUtil.Min(start.X, end.X);
+                    outlines[0].Y = start.Y - (Width / 2) - 1;
+                    outlines[0].Width = steps[i];
+                    outlines[0].Height = 1;
+
+                    // 下側の壁
+                    outlines[1].X = MathUtil.Min(start.X, end.X);
+                    outlines[1].Y = start.Y + (Width / 2) + 1;
+                    outlines[1].Width = steps[i];
+                    outlines[1].Height = 1;
+                }
+                else if (direction == 1)
+                {
+                    // 左側の壁
+                    outlines[0].X = start.X - (Width / 2) - 1;
+                    outlines[0].Y = MathUtil.Min(start.Y, end.Y);
+                    outlines[0].Width = 1;
+                    outlines[0].Height = steps[i];
+
+                    // 右側の壁
+                    outlines[1].X = start.X + (Width / 2) + 1;
+                    outlines[1].Y = MathUtil.Min(start.Y, end.Y);
+                    outlines[1].Width = 1;
+                    outlines[1].Height = steps[i];
+                }
+
+                // 曲がり角の内側の壁を削って外側の壁を伸ばす
+                // 曲がり角の向きと進行方向によって8パターンある
+
+                // 削る量
+                var cut = (Width / 2) + 1;
+                // 伸ばす量
+                var add = (Width / 2) + 1;
+
+                // 最初の通路でなければ始点をいじる
+                if (i > 0)
+                {
+                    // 水平通路で
+                    if (direction == 0)
+                    {
+                        // 前の通路が下から上で
+                        if (stepValue[1 - direction] < 0)
+                        {
+                            // この通路が右から左なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 下側の壁の右を削る
+                                // 上側の壁の右を伸ばす
+                            }
+                            // この通路が左から右なら
+                            else
+                            {
+                                // 下側の壁の左を削る
+                                outlines[1].X += cut;
+                                // 上側の壁の左を伸ばす
+                                outlines[0].X -= add;
+                            }
+
+                            outlines[0].Width += add;
+                            outlines[1].Width -= cut;
+                        }
+                        // 前の通路が上から下で
+                        else
+                        {
+                            // この通路が右から左なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 上側の壁の右を削る
+                                // 下側の壁の右を伸ばす
+                            }
+                            // この通路が左から右なら
+                            else
+                            {
+                                // 上側の壁の左を削る
+                                outlines[0].X += cut;
+                                // 下側の壁の左を伸ばす
+                                outlines[1].X -= add;
+                            }
+
+                            outlines[0].Width -= cut;
+                            outlines[1].Width += add;
+                        }
+                    }
+                    // 垂直通路で
+                    else if (direction == 1)
+                    {
+                        // 前の通路が右から左で
+                        if (stepValue[1 - direction] < 0)
+                        {
+                            // この通路が下から上なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 右側の壁の下を削る
+                                // 左側の壁の下を伸ばす
+                            }
+                            // この通路が上から下なら
+                            else
+                            {
+                                // 右側の壁の上を削る
+                                outlines[1].Y += cut;
+                                // 左側の壁の上を伸ばす
+                                outlines[0].Y -= add;
+                            }
+
+                            outlines[0].Height += add;
+                            outlines[1].Height -= cut;
+                        }
+                        // 前の通路が左から右で
+                        else
+                        {
+                            // この通路が下から上なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 左側の壁の下を削る
+                                // 右側の壁の下を伸ばす
+                            }
+                            // この通路が上から下なら
+                            else
+                            {
+                                // 左側の壁の上を削る
+                                outlines[0].Y += cut;
+                                // 右側の壁の上を伸ばす
+                                outlines[1].Y -= add;
+                            }
+
+                            outlines[0].Height -= cut;
+                            outlines[1].Height += add;
+                        }
+                    }
+                }
+
+                // 最後の通路でなければ終点をいじる
+                if (i < steps.Count - 1)
+                {
+                    // 水平通路で
+                    if (direction == 0)
+                    {
+                        // 次の通路が下から上で
+                        if (stepValue[1 - direction] < 0)
+                        {
+                            // この通路が右から左なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 上側の壁の左を削る
+                                outlines[0].X += cut;
+                                // 下側の壁の左を伸ばす
+                                outlines[1].X -= add;
+                            }
+                            // この通路が左から右なら
+                            else
+                            {
+                                // 上側の壁の右を削る
+                                // 下側の壁の右を伸ばす
+                            }
+
+                            outlines[0].Width -= cut;
+                            outlines[1].Width += add;
+                        }
+                        // 次の通路が上から下で
+                        else
+                        {
+                            // この通路が右から左なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 下側の壁の左を削る
+                                outlines[1].X += cut;
+                                // 上側の壁の左を伸ばす
+                                outlines[0].X -= add;
+                            }
+                            // この通路が左から右なら
+                            else
+                            {
+                                // 下側の壁の右を削る
+                                // 上側の壁の右を伸ばす
+                            }
+
+                            outlines[0].Width += add;
+                            outlines[1].Width -= cut;
+                        }
+                    }
+                    // 垂直通路で
+                    else if (direction == 1)
+                    {
+                        // 次の通路が右から左で
+                        if (stepValue[1 - direction] < 0)
+                        {
+                            // この通路が下から上なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 左側の壁の上を削る
+                                outlines[0].Y += cut;
+                                // 右側の壁の上を伸ばす
+                                outlines[1].Y -= add;
+                            }
+                            // この通路が上から下なら
+                            else
+                            {
+                                // 左側の壁の下を削る
+                                // 右側の壁の下を伸ばす
+                            }
+
+                            outlines[0].Height -= cut;
+                            outlines[1].Height += add;
+                        }
+                        // 次の通路が左から右で
+                        else
+                        {
+                            // この通路が下から上なら
+                            if (stepValue[direction] < 0)
+                            {
+                                // 右側の壁の上を削る
+                                outlines[1].Y += cut;
+                                // 左側の壁の上の伸ばす
+                                outlines[0].Y -= add;
+                            }
+                            // この通路が上から下なら
+                            else
+                            {
+                                // 右側の壁の下を削る
+                                // 左側の壁の下を伸ばす
+                            }
+
+                            outlines[0].Height += add;
+                            outlines[1].Height -= cut;
+                        }
+                    }
+                }
+
+                result.AddRange(outlines);
+
+                direction = 1 - direction;
+            }
 
             return result;
         }

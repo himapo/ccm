@@ -20,12 +20,27 @@ namespace HimaLib.Math
             return Min(Max(value, min), max);
         }
 
+        public static int Clamp(int value, int min, int max)
+        {
+            return Min(Max(value, min), max);
+        }
+
         public static float Max(float value1, float value2)
         {
             return value1 < value2 ? value2 : value1;
         }
 
+        public static int Max(int value1, int value2)
+        {
+            return value1 < value2 ? value2 : value1;
+        }
+
         public static float Min(float value1, float value2)
+        {
+            return value1 > value2 ? value2 : value1;
+        }
+
+        public static int Min(int value1, int value2)
         {
             return value1 > value2 ? value2 : value1;
         }

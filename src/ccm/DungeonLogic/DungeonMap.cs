@@ -123,6 +123,18 @@ namespace ccm.DungeonLogic
             return result;
         }
 
+        public IEnumerable<Rectangle> GetPathOutlines()
+        {
+            var result = new List<Rectangle>();
+
+            Paths.ForEach((path) =>
+            {
+                result.AddRange(path.GetOutlines());
+            });
+
+            return result;
+        }
+
         void GenerateRooms()
         {
             var blocks = ChooseBlocks();

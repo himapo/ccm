@@ -101,7 +101,7 @@ namespace ccm.Map
 
         public void GenerateWallCollision()
         {
-            var outlines = DungeonMap.GetRoomOutlines();
+            var outlines = DungeonMap.GetRoomOutlines().Concat(DungeonMap.GetPathOutlines());
 
             foreach (var rect in outlines)
             {
