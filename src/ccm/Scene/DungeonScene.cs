@@ -210,7 +210,7 @@ namespace ccm.Scene
         {
             for (var i = 0; i < 6; ++i)
             {
-                EnemyManager.CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
+                //EnemyManager.CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
             }
         }
 
@@ -218,7 +218,7 @@ namespace ccm.Scene
         {
             for (var i = 0; i < 3; ++i)
             {
-                AllyManager.CreateAlly(AllyType.Cube, CreateAllyTransform());
+                //AllyManager.CreateAlly(AllyType.Cube, CreateAllyTransform());
             }
         }
 

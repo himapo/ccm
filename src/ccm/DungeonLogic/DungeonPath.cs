@@ -435,7 +435,7 @@ namespace ccm.DungeonLogic
                 {
                     // 水平通路で
                     if (direction == 0)
-                    {
+                    {                        
                         // 前の通路が下から上で
                         if (stepValue[1 - direction] < 0)
                         {
@@ -525,6 +525,11 @@ namespace ccm.DungeonLogic
                             outlines[1].Height += add;
                         }
                     }
+                }
+                // 最初のstepならポータル部分を削る
+                else
+                {
+                    CutPortalOutlines(ref outlines, cut, direction);                    
                 }
 
                 // 最後の通路でなければ終点をいじる
@@ -623,6 +628,11 @@ namespace ccm.DungeonLogic
                         }
                     }
                 }
+                // 最後のstepならポータル部分を削る
+                else
+                {
+                    CutPortalOutlines(ref outlines, cut, direction);
+                }
 
                 result.AddRange(outlines);
 
@@ -630,6 +640,52 @@ namespace ccm.DungeonLogic
             }
 
             return result;
+        }
+
+        void CutPortalOutlines(ref Rectangle[] outlines, int cut, int direction)
+        {
+            // 水平通路で
+            if (direction == 0)
+            {
+                // 左がポータルなら
+                if (outlines[0].X == Portals[0].Position.X
+                    || outlines[0].X == Portals[1].Position.X)
+                {
+                    outlines[0].X += cut;
+                    outlines[1].X += cut;
+                    outlines[0].Width -= cut;
+                    outlines[1].Width -= cut;
+                }
+
+                // 右がポータルなら
+                if (outlines[0].X + outlines[0].Width == Portals[0].Position.X
+                    || outlines[0].X + outlines[0].Width == Portals[1].Position.X)
+                {
+                    outlines[0].Width -= cut - 1;
+                    outlines[1].Width -= cut - 1;
+                }
+            }
+            // 垂直通路で
+            else if (direction == 1)
+            {
+                // 上がポータルなら
+                if (outlines[0].Y == Portals[0].Position.Y
+                    || outlines[0].Y == Portals[1].Position.Y)
+                {
+                    outlines[0].Y += cut;
+                    outlines[1].Y += cut;
+                    outlines[0].Height -= cut;
+                    outlines[1].Height -= cut;
+                }
+
+                // 下がポータルなら
+                if (outlines[0].Y + outlines[0].Height == Portals[0].Position.Y
+                    || outlines[0].Y + outlines[0].Height == Portals[1].Position.Y)
+                {
+                    outlines[0].Height -= cut - 1;
+                    outlines[1].Height -= cut - 1;
+                }
+            }
         }
     }
 }

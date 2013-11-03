@@ -59,5 +59,18 @@ namespace ccm.DungeonLogic
                 maxWidth,
                 maxWidth);
         }
+
+        /// <summary>
+        /// 袋小路部分の縁を計算する
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<Rectangle> GetOutlines()
+        {
+            var result = new List<Rectangle>();
+
+
+
+            return result;
+        }
     }
 }
