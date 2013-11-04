@@ -43,11 +43,24 @@ namespace ccm.DungeonLogic
             length.X = Math.Abs(Portals[0].Position.X - Portals[1].Position.X);
             length.Y = Math.Abs(Portals[0].Position.Y - Portals[1].Position.Y);
 
-            Width = Rand.Next(4) * 2 + 3;  // 3, 5, 7, 9
+            var randMax = 0;
+
+            // ポータル間の距離が短いときは通路の太さを制限する
+            // 少なくとも通路の太さ*3+2の距離が必要にする
+            if (IsHorizontal)
+            {
+                randMax = (length.X - 5) / 6;
+            }
+            else
+            {
+                randMax = (length.Y - 5) / 6;
+            }
+
+            Width = Rand.Next(MathUtil.Min(randMax, 4)) * 2 + 3;
             
             var minLengthFromRoom = Width;  // 部屋から最初の曲がり角までの最低歩数
 
-            if (IsRoomPath())
+            //if (IsRoomPath())
             {
                 // 最初の曲がり角までの最低歩数*2を引いておく
                 if (IsHorizontal)
@@ -86,7 +99,7 @@ namespace ccm.DungeonLogic
                 stepsByDirection[1] = DevideLine(length.X, stepsByDirection[0].Count - 1);
             }
 
-            if (IsRoomPath())
+            //if (IsRoomPath())
             {
                 // 最初と最後の直線に最低歩数を足して距離を確保
                 stepsByDirection[0][0] += minLengthFromRoom;
