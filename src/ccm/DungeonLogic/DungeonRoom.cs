@@ -17,13 +17,13 @@ namespace ccm.DungeonLogic
             Bottom,
         }
 
-        public const int WIDTH_MIN = 32;
-        public const int WIDTH_MAX = 112;
-
         /// <summary>
         /// ブロックの外周から部屋の外郭までの最低間隔
         /// </summary>
-        public const int MARGIN_MIN = 8;
+        public const int MARGIN_MIN = 10;
+
+        public const int WIDTH_MIN = 32;
+        public const int WIDTH_MAX = DungeonMap.BLOCK_WIDTH - MARGIN_MIN * 2;
 
         /// <summary>
         /// 出入口の角からの最低距離

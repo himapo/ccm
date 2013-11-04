@@ -9,7 +9,7 @@ namespace ccm.DungeonLogic
 {
     public class DungeonMap
     {
-        const int BLOCK_WIDTH = 128;
+        public const int BLOCK_WIDTH = 128;
         const int BLOCK_NUM_X = 4;
         const int BLOCK_NUM_Z = 4;
 

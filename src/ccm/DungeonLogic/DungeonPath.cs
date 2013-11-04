@@ -45,7 +45,7 @@ namespace ccm.DungeonLogic
 
             Width = Rand.Next(4) * 2 + 3;  // 3, 5, 7, 9
             
-            var minLengthFromRoom = Width / 2;  // 部屋から最初の曲がり角までの最低歩数
+            var minLengthFromRoom = Width;  // 部屋から最初の曲がり角までの最低歩数
 
             if (IsRoomPath())
             {

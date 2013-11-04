@@ -712,7 +712,7 @@ namespace ccm.Player
             StepCount = 20.0f;
             StepDirection = GetMoveVector();
             JumpCount = 0.0f;
-            SoundManager.PlaySoundEffect("jump00");
+            //SoundManager.PlaySoundEffect("jump00");
         }
 
         void GoToShocked()
