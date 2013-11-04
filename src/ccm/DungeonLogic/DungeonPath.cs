@@ -529,7 +529,7 @@ namespace ccm.DungeonLogic
                 // 最初のstepならポータル部分を削る
                 else
                 {
-                    CutPortalOutlines(ref outlines, cut, direction);                    
+                    CutPortalOutlines(ref outlines, cut, direction);                  
                 }
 
                 // 最後の通路でなければ終点をいじる
@@ -644,46 +644,63 @@ namespace ccm.DungeonLogic
 
         void CutPortalOutlines(ref Rectangle[] outlines, int cut, int direction)
         {
-            // 水平通路で
-            if (direction == 0)
+            for (var i = 0; i < 2; ++i)
             {
-                // 左がポータルなら
-                if (outlines[0].X == Portals[0].Position.X
-                    || outlines[0].X == Portals[1].Position.X)
+                var connectedPortal = Portals[i];
+
+                var realcut = cut;
+
+                // 通路同士のポータルの場合、幅は広い方になるので余分に削る
+                if (connectedPortal.ConnectedPaths.Count == 2)
                 {
-                    outlines[0].X += cut;
-                    outlines[1].X += cut;
-                    outlines[0].Width -= cut;
-                    outlines[1].Width -= cut;
+                    var maxWidth = MathUtil.Max(
+                        connectedPortal.ConnectedPaths[0].Width,
+                        connectedPortal.ConnectedPaths[1].Width);
+
+                    // 向こうの通路がこちらより広ければ
+                    if (maxWidth > Width)
+                    {
+                        realcut += (maxWidth - Width) / 2;
+                    }
                 }
 
-                // 右がポータルなら
-                if (outlines[0].X + outlines[0].Width == Portals[0].Position.X
-                    || outlines[0].X + outlines[0].Width == Portals[1].Position.X)
+                // 水平通路で
+                if (direction == 0)
                 {
-                    outlines[0].Width -= cut - 1;
-                    outlines[1].Width -= cut - 1;
-                }
-            }
-            // 垂直通路で
-            else if (direction == 1)
-            {
-                // 上がポータルなら
-                if (outlines[0].Y == Portals[0].Position.Y
-                    || outlines[0].Y == Portals[1].Position.Y)
-                {
-                    outlines[0].Y += cut;
-                    outlines[1].Y += cut;
-                    outlines[0].Height -= cut;
-                    outlines[1].Height -= cut;
-                }
+                    // 左がポータルなら
+                    if (outlines[0].X == connectedPortal.Position.X)
+                    {
+                        outlines[0].X += realcut;
+                        outlines[1].X += realcut;
+                        outlines[0].Width -= realcut;
+                        outlines[1].Width -= realcut;
+                    }
 
-                // 下がポータルなら
-                if (outlines[0].Y + outlines[0].Height == Portals[0].Position.Y
-                    || outlines[0].Y + outlines[0].Height == Portals[1].Position.Y)
+                    // 右がポータルなら
+                    if (outlines[0].X + outlines[0].Width == connectedPortal.Position.X)
+                    {
+                        outlines[0].Width -= realcut - 1;
+                        outlines[1].Width -= realcut - 1;
+                    }
+                }
+                // 垂直通路で
+                else if (direction == 1)
                 {
-                    outlines[0].Height -= cut - 1;
-                    outlines[1].Height -= cut - 1;
+                    // 上がポータルなら
+                    if (outlines[0].Y == connectedPortal.Position.Y)
+                    {
+                        outlines[0].Y += realcut;
+                        outlines[1].Y += realcut;
+                        outlines[0].Height -= realcut;
+                        outlines[1].Height -= realcut;
+                    }
+
+                    // 下がポータルなら
+                    if (outlines[0].Y + outlines[0].Height == connectedPortal.Position.Y)
+                    {
+                        outlines[0].Height -= realcut - 1;
+                        outlines[1].Height -= realcut - 1;
+                    }
                 }
             }
         }
