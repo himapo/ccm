@@ -32,6 +32,7 @@ namespace HimaLib.Collision
 
         public CollisionManager()
         {
+            Drawable = true;
         }
 
         // 衝突が起きるグループのペアを追加

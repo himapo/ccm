@@ -254,7 +254,7 @@ namespace ccm.Scene
         void InitCamera()
         {
             Camera.Near = 20.0f;
-            Camera.Far = 200.0f;
+            Camera.Far = 2000.0f;
 
             cameraUpdater.Reset();
             RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;

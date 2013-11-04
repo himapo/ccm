@@ -135,6 +135,18 @@ namespace ccm.DungeonLogic
             return result;
         }
 
+        public IEnumerable<Rectangle> GetPortalOutlines()
+        {
+            var result = new List<Rectangle>();
+
+            Portals.ForEach((portal) =>
+            {
+                result.AddRange(portal.GetOutlines());
+            });
+
+            return result;
+        }
+
         void GenerateRooms()
         {
             var blocks = ChooseBlocks();
