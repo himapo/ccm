@@ -296,7 +296,12 @@ namespace ccm.DungeonLogic
 
             result.IsHorizontal = isHorizontal;
 
-            result.GenerateSteps();
+            if (!result.GenerateSteps())
+            {
+                start.ConnectedPaths.Remove(result);
+                end.ConnectedPaths.Remove(result);
+                result = null;
+            }
 
             return result;
         }
@@ -378,14 +383,19 @@ namespace ccm.DungeonLogic
                         deadends[another].GetTerminalPortal()
                     };
 
-                    AddPath(GeneratePath(
+                    var path = GeneratePath(
                         portals[0],
                         portals[1],
                         IsHorizontalPortals(portals[0], portals[1])
-                        ));
+                        );
 
-                    deadends.RemoveAt(another);
+                    if (path != null)
+                    {
+                        AddPath(path);
+                        deadends.RemoveAt(another);
+                    }
                     deadends.RemoveAt(0);
+
                 }
                 else if (disposal == DeadEndDisposal.REMOVE)
                 {

@@ -38,7 +38,7 @@ namespace ccm.Scene
 
         DefaultDebugMenuDrawer debugMenuDrawer = new DefaultDebugMenuDrawer();
 
-        bool Drawable = true;
+        bool Drawable = false;
 
         public MapViewerScene()
         {
@@ -173,7 +173,7 @@ namespace ccm.Scene
 
             renderParam.TransformsUpdated = false;
 
-            if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Jump))
+            //if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Jump))
             {
                 ResetMap();
             }

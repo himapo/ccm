@@ -37,7 +37,7 @@ namespace ccm.DungeonLogic
         /// <summary>
         /// 通路の中間部を生成
         /// </summary>
-        public void GenerateSteps()
+        public bool GenerateSteps()
         {
             var length = new Point();
             length.X = Math.Abs(Portals[0].Position.X - Portals[1].Position.X);
@@ -54,6 +54,12 @@ namespace ccm.DungeonLogic
             else
             {
                 randMax = (length.Y - 5) / 6;
+            }
+
+            // ポータル間が近すぎる
+            if (randMax < 1)
+            {
+                return false;
             }
 
             Width = Rand.Next(MathUtil.Min(randMax, 4)) * 2 + 3;
@@ -116,6 +122,8 @@ namespace ccm.DungeonLogic
                 steps.Add(stepsByDirection[1][i]);
             }
             steps.Add(stepsByDirection[0][stepsByDirection[0].Count - 1]);
+
+            return true;
         }
 
         /// <summary>
