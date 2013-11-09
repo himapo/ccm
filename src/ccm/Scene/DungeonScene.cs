@@ -59,9 +59,9 @@ namespace ccm.Scene
         // ライト
         DirectionalLight DirectionalLight0 = new DirectionalLight();
 
-        PointLight PointLight0 = new PointLight();
-
         List<PointLight> PointLights = new List<PointLight>();
+
+        List<Vector3> PointLightPositions = new List<Vector3>();
 
         // デコ
         ccm.Deco.DecoManager DecoManager = new Deco.DecoManager();
@@ -82,10 +82,6 @@ namespace ccm.Scene
         //int Floor = 1;
 
         int Frame = 0;
-
-        IModel StageModel;
-
-        SimpleModelRenderParameter StageRenderParam = new SimpleModelRenderParameter();
 
         HimaLib.Math.IRand Rand
         {
@@ -179,6 +175,9 @@ namespace ccm.Scene
             };
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
+
+            Dungeon.Drawable = true;
+            CollisionManager.Drawable = false;
         }
 
         void UpdateStateInit()
@@ -210,7 +209,7 @@ namespace ccm.Scene
         {
             for (var i = 0; i < 6; ++i)
             {
-                //EnemyManager.CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
+                EnemyManager.CreateEnemy(EnemyType.Cube, CalcEnemyAppearPosition());
             }
         }
 
@@ -218,7 +217,7 @@ namespace ccm.Scene
         {
             for (var i = 0; i < 3; ++i)
             {
-                //AllyManager.CreateAlly(AllyType.Cube, CreateAllyTransform());
+                AllyManager.CreateAlly(AllyType.Cube, CreateAllyTransform());
             }
         }
 
@@ -254,7 +253,7 @@ namespace ccm.Scene
         void InitCamera()
         {
             Camera.Near = 20.0f;
-            Camera.Far = 2000.0f;
+            Camera.Far = 200.0f;
 
             cameraUpdater.Reset();
             RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
@@ -275,19 +274,13 @@ namespace ccm.Scene
 
             RenderSceneManager.Instance.ClearPointLight();
 
-            PointLight0.Position = new Vector3(0.0f, 20.0f, 0.0f);
-            PointLight0.Color = new Color(2.0f, 2.0f, 2.0f, 1.0f);
-            PointLight0.AttenuationBegin = 2.0f;
-            PointLight0.AttenuationEnd = 30.0f;
-            //RenderSceneManager.Instance.AddPointLight(PointLight0);
-
-            PointLights.Add(PointLight0);
-
-            for (var i = 0; i < 7; ++i)
+            for (var i = 0; i < 16; ++i)
             {
+                PointLightPositions.Add(new Vector3(Rand.NextFloat(-50.0f, 50.0f), Rand.NextFloat(0.0f, 30.0f), Rand.NextFloat(-50.0f, 50.0f)));
+
                 var light = new PointLight()
                 {
-                    Position = new Vector3(Rand.NextFloat(-50.0f, 50.0f), Rand.NextFloat(5.0f, 30.0f), Rand.NextFloat(-50.0f, 50.0f)),
+                    Position = Player.Transform.Translation + PointLightPositions[i],
                     Color = new Color(Rand.NextFloat(0.5f, 2.0f), Rand.NextFloat(0.5f, 2.0f), Rand.NextFloat(0.5f, 2.0f)),
                     AttenuationBegin = Rand.NextFloat(0.0f, 10.0f),
                     AttenuationEnd = Rand.NextFloat(20.0f, 30.0f),
@@ -323,18 +316,6 @@ namespace ccm.Scene
 
         void InitStage()
         {
-            StageModel = ModelFactory.Instance.Create("cube000");
-
-            StageRenderParam.Alpha = 1.0f;
-            StageRenderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
-            StageRenderParam.IsShadowCaster = false;
-            StageRenderParam.IsShadowReceiver = true;
-            StageRenderParam.Transform = new AffineTransform(
-                Vector3.One * 30.0f,
-                Vector3.Zero,
-                Vector3.UnitY * (-45.0f)).WorldMatrix;
-            StageRenderParam.Camera = Camera;
-            StageRenderParam.ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0);
         }
 
         void DrawStateInit()
@@ -365,6 +346,8 @@ namespace ccm.Scene
             UpdateCollision();
 
             UpdateCamera();
+
+            UpdateLight();
 
             if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Exit))
             {
@@ -417,6 +400,14 @@ namespace ccm.Scene
             cameraUpdater.Update(playerPos);
         }
 
+        void UpdateLight()
+        {
+            foreach (var item in PointLights.Select((light, index) => new { light, index }))
+            {
+                item.light.Position = Player.Transform.Translation + PointLightPositions[item.index];
+            }
+        }
+
         void DrawStateMain()
         {
             Player.Draw(PlayerDrawer);
@@ -432,8 +423,6 @@ namespace ccm.Scene
             DrawMap();
 
             DrawCollision();
-
-            RenderSceneManager.Instance.RenderModel(StageModel, StageRenderParam);
 
             debugMenu.Draw(debugMenuDrawer);
         }

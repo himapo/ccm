@@ -36,8 +36,6 @@ namespace ccm.Map
 
         public Dungeon()
         {
-            //Drawable = true;
-
             FloorCollisionInfo.Color = Color.LightBlue;
             FloorCollisionInfo.Group = () => (int)CollisionGroup.Floor;
 
