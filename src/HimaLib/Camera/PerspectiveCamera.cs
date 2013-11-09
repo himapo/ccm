@@ -22,7 +22,7 @@ namespace HimaLib.Camera
 
         public PerspectiveCamera()
         {
-            FovY = 30.0f;
+            FovY = 37.8f;   // 焦点距離35mm
             Aspect = 16.0f / 9.0f;
         }
     }
