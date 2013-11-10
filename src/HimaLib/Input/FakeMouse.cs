@@ -9,6 +9,10 @@ namespace HimaLib.Input
     {
         public bool EnableOnBackGround { get; set; }
 
+        public bool FixedAtCenter { get; set; }
+
+        public bool Visible { get; set; }
+
         public int X { get; set; }
 
         public int Y { get; set; }

@@ -11,6 +11,20 @@ namespace HimaLib.Input
     {
         public bool EnableOnBackGround { get; set; }
 
+        public bool FixedAtCenter { get; set; }
+
+        public bool Visible
+        {
+            get
+            {
+                return System.XnaGame.Instance.IsMouseVisible;
+            }
+            set
+            {
+                System.XnaGame.Instance.IsMouseVisible = value;
+            }
+        }
+
         public Game Game { get; set; }
 
         public int X
@@ -21,6 +35,10 @@ namespace HimaLib.Input
             }
             set
             {
+                if (Game.IsActive)
+                {
+                    Mouse.SetPosition(value + SystemProperty.ScreenWidth / 2, SystemProperty.ScreenHeight / 2 - Y);
+                }
             }
         }
 
@@ -32,6 +50,10 @@ namespace HimaLib.Input
             }
             set
             {
+                if (Game.IsActive)
+                {
+                    Mouse.SetPosition(X + SystemProperty.ScreenWidth / 2, SystemProperty.ScreenHeight / 2 - value);
+                }
             }
         }
 

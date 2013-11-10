@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.System;
+using HimaLib.Math;
 
 namespace HimaLib.Input
 {
@@ -15,7 +17,7 @@ namespace HimaLib.Input
         {
             get
             {
-                return X - prevX;
+                return moveX;
             }
         }
 
@@ -23,7 +25,7 @@ namespace HimaLib.Input
         {
             get
             {
-                return Y - prevY;
+                return moveY;
             }
         }
 
@@ -33,20 +35,42 @@ namespace HimaLib.Input
 
         int prevY;
 
+        int moveX;
+
+        int moveY;
+
         public MouseAxis(IMouse mouse)
         {
             this.mouse = mouse;
-            prevX = 0;
-            prevY = 0;
         }
 
         public void Update()
         {
-            prevX = X;
-            prevY = Y;
+            if (mouse.FixedAtCenter)
+            {
+                prevX = 0;
+                prevY = 0;
+            }
+            else
+            {
+                prevX = X;
+                prevY = Y;
+            }
 
-            X = mouse.X;
-            Y = mouse.Y;
+            var realX = mouse.X;
+            var realY = mouse.Y;
+
+            moveX = realX - prevX;
+            moveY = realY - prevY;
+
+            X = realX;
+            Y = realY;
+
+            if (mouse.FixedAtCenter)
+            {
+                mouse.X = 0;
+                mouse.Y = 0;
+            }
         }
     }
 }

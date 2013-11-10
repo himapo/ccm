@@ -86,6 +86,9 @@ namespace ccm.System
 
         void InitController()
         {
+            mouse.FixedAtCenter = true;
+            mouse.Visible = false;
+
             // TODO : コンフィグファイルから設定
             gameController.AddKeyboardKey(BooleanDeviceLabel.Up, KeyboardKeyLabel.W);
             gameController.AddKeyboardKey(BooleanDeviceLabel.Down, KeyboardKeyLabel.S);

@@ -10,6 +10,13 @@ namespace HimaLib.Input
         bool EnableOnBackGround { get; set; }
 
         /// <summary>
+        /// スクリーンの中心に固定する
+        /// </summary>
+        bool FixedAtCenter { get; set; }
+
+        bool Visible { get; set; }
+
+        /// <summary>
         /// ゲーム画面中心を原点とするピクセル座標を返す
         /// </summary>
         int X { get; set; }
