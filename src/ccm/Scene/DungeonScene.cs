@@ -174,8 +174,8 @@ namespace ccm.Scene
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
 
-            Dungeon.Drawable = false;
-            CollisionManager.Drawable = true;
+            Dungeon.Drawable = true;
+            CollisionManager.Drawable = false;
         }
 
         void UpdateStateInit()
@@ -274,7 +274,7 @@ namespace ccm.Scene
 
             for (var i = 0; i < 16; ++i)
             {
-                PointLightPositions.Add(new Vector3(Rand.NextFloat(-50.0f, 50.0f), Rand.NextFloat(0.0f, 30.0f), Rand.NextFloat(-50.0f, 50.0f)));
+                PointLightPositions.Add(new Vector3(Rand.NextFloat(-40.0f, 40.0f), Rand.NextFloat(0.0f, 20.0f), Rand.NextFloat(-40.0f, 40.0f)));
 
                 var light = new PointLight()
                 {

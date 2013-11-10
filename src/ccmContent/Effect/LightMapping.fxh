@@ -10,6 +10,11 @@ sampler SpecularLightMapSampler = sampler_state
 	Texture = (SpecularLightMap);
 };
 
+float3 ToHDR(float4 ldr)
+{
+	return float3(ldr.rgb) / ldr.a;
+}
+
 void GetRadiance(out float3 diffuse, out float3 specular, float4 projPosition)
 {
 	diffuse = 0;
@@ -20,6 +25,6 @@ void GetRadiance(out float3 diffuse, out float3 specular, float4 projPosition)
 	LightTexCoord.y = 1.0f - LightTexCoord.y;
 	
 	// ライト マップに格納された放射輝度を取得する
-	diffuse = tex2D(DiffuseLightMapSampler, LightTexCoord).rgb;
-	specular = tex2D(SpecularLightMapSampler, LightTexCoord).rgb;
+	diffuse = ToHDR(tex2D(DiffuseLightMapSampler, LightTexCoord));
+	specular = ToHDR(tex2D(SpecularLightMapSampler, LightTexCoord));
 }

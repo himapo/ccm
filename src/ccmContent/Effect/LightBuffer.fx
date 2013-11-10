@@ -156,6 +156,13 @@ float4 CalcViewPositionDirectional(float2 texCoord, float depth)
 	return float4(xyVS.xy, zVS, 1.0f);
 }
 
+float4 ToLDR(float3 hdr)
+{
+	float L = max(1.0f, max(hdr.r, max(hdr.g, hdr.b)));
+
+	return float4(hdr / L, 1.0f / L);
+}
+
 PSOutput PSDirectional(VSOutputDirectional input)
 {
 	PSOutput output;
@@ -177,8 +184,8 @@ PSOutput PSDirectional(VSOutputDirectional input)
 	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), shininess);
 	float3 specular = gDirectionalLight.Color * specularIntensity;
 
-	output.Diffuse = float4(diffuse, 1.0f);
-	output.Specular = float4(specular, 1.0f);
+	output.Diffuse = ToLDR(diffuse);//float4(diffuse, 1.0f);
+	output.Specular = ToLDR(specular);//float4(specular, 1.0f);
 	
 	return output;
 }
@@ -231,10 +238,13 @@ PSOutput PSPoint(VSOutputPoint input)
 	
 	float diffuseIntensity = Lambert(normalWS, L);
 	float specularIntensity = BlinnPhong(normalWS, L, normalize(EyePosition - posWS.xyz), shininess);
+
+	//output.Diffuse = float4(gPointLight.Color * diffuseIntensity * attenuation, 1.0f);
+	//output.Specular = float4(gPointLight.Color * specularIntensity * attenuation, 1.0f);
 	
-	output.Diffuse = float4(gPointLight.Color * diffuseIntensity * attenuation, 1.0f);
-	output.Specular = float4(gPointLight.Color * specularIntensity * attenuation, 1.0f);
-	
+	output.Diffuse = ToLDR(gPointLight.Color * diffuseIntensity * attenuation);
+	output.Specular = ToLDR(gPointLight.Color * specularIntensity * attenuation);
+
 	return output;
 }
 
