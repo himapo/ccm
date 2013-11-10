@@ -54,7 +54,7 @@ namespace ccm.Scene
         // カメラ
         PerspectiveCamera Camera = new PerspectiveCamera();
 
-        ViewerCameraUpdater cameraUpdater;
+        TPSCameraUpdater cameraUpdater;
 
         // ライト
         DirectionalLight DirectionalLight0 = new DirectionalLight();
@@ -159,25 +159,23 @@ namespace ccm.Scene
             Dungeon.CollisionManager = CollisionManager;
             DungeonDrawer.Camera = Camera;
 
-            cameraUpdater = new ViewerCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
+            cameraUpdater = new TPSCameraUpdater(Camera, InputAccessor.GetController(ControllerLabel.Main))
             {
                 InitRotX = -MathUtil.PiOver4,
                 InitRotY = MathUtil.PiOver4,
-                InitEyeZ = 60.0f,
+                InitEyeZ = 40.0f,
                 MaxEyeZ = 110.0f,
                 MinEyeZ = 40.0f,
                 EyeZInterval = 0.2f,
-                RotInterval = 0.04f,
+                RotInterval = 0.02f,
                 PanInterval = 0.2f,
-                MaxRotX = 0.0f,
-                EnableCameraKey = true,
-                EnablePan = false,
+                MaxRotX = MathUtil.ToRadians(30.0f),
             };
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
 
-            Dungeon.Drawable = true;
-            CollisionManager.Drawable = false;
+            Dungeon.Drawable = false;
+            CollisionManager.Drawable = true;
         }
 
         void UpdateStateInit()
@@ -396,7 +394,7 @@ namespace ccm.Scene
         void UpdateCamera()
         {
             var playerPos = Player.Transform.Translation;
-            playerPos.Y += 6.0f;
+            playerPos.Y += 11.0f;   // プレイヤーの頭上を見る
             cameraUpdater.Update(playerPos);
         }
 

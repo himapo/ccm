@@ -49,6 +49,8 @@ namespace ccm.Camera
 
         public bool EnablePan { get; set; }
 
+        public bool RotWithoutKey { get; set; }
+
         public ViewerCameraUpdater(CameraBase camera, IController controller)
         {
             this.camera = camera;
@@ -67,6 +69,7 @@ namespace ccm.Camera
 
             EnableCameraKey = false;
             EnablePan = false;
+            RotWithoutKey = false;
 
             Reset();
         }
@@ -89,7 +92,7 @@ namespace ccm.Camera
             var vertical = Vector3.Cross(lookat, horizontal);
 
             // rotate
-            if (controller.IsPress((int)BooleanDeviceLabel.MouseSub))
+            if (RotWithoutKey || controller.IsPress((int)BooleanDeviceLabel.MouseSub))
             {
                 rotX += RotInterval * controller.GetMoveY((int)PointingDeviceLabel.Mouse0);
                 rotX = MathUtil.Clamp(rotX, MinRotX, MaxRotX);
