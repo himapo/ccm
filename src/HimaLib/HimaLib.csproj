@@ -184,6 +184,7 @@
     <Compile Include="Render\SimpleInstancingRenderParameter.cs" />
     <Compile Include="Render\SimpleModelRenderParameter.cs" />
     <Compile Include="Render\SphereRenderParameter.cs" />
+    <Compile Include="Render\ToneMappingRenderParameter.cs" />
     <Compile Include="Render\ToonModelRenderParameter.cs" />
     <Compile Include="Render\TranslucentRenderPath.cs" />
     <Compile Include="Render\WireCylinderRenderParameter.cs" />

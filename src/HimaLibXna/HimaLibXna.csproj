@@ -181,6 +181,7 @@
     <Compile Include="Render\SimpleModelRendererXna.cs" />
     <Compile Include="Render\SkinnedModelRendererXna.cs" />
     <Compile Include="Render\SphereRendererFactoryXna.cs" />
+    <Compile Include="Render\ToneMappingRenderer.cs" />
     <Compile Include="Render\ToonModelRendererMMDX.cs" />
     <Compile Include="Render\HudBillboardRenderer.cs" />
     <Compile Include="Render\WireAABBRenderer.cs" />
@@ -195,6 +196,7 @@
     <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\OpaqueFinalShader.cs" />
     <Compile Include="Shader\LightBufferShader.cs" />
+    <Compile Include="Shader\ToneMappingShader.cs" />
     <Compile Include="Sound\SoundXACT.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
     <Compile Include="System\Game.cs" />

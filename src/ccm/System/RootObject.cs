@@ -161,6 +161,62 @@ namespace ccm.System
                 SurfaceType.R32F,
                 false, false);
 
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.HDRBuffer,
+                GameProperty.resolutionWidth,
+                GameProperty.resolutionHeight,
+                SurfaceType.A8R8G8B8,
+                false, false);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.ScaledBuffer,
+                GameProperty.resolutionWidth / 4,
+                GameProperty.resolutionHeight / 4,
+                SurfaceType.A8R8G8B8,
+                false, false);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.LuminanceBuffer64,
+                64,
+                64,
+                SurfaceType.R16F,
+                false, false);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.LuminanceBuffer16,
+                16,
+                16,
+                SurfaceType.R16F,
+                false, false);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.LuminanceBuffer4,
+                4,
+                4,
+                SurfaceType.R16F,
+                false, false);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.LuminanceBuffer1,
+                1,
+                1,
+                SurfaceType.R16F,
+                false, false);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.AdaptedLuminanceBuffer0,
+                1,
+                1,
+                SurfaceType.R16F,
+                false, false);
+
+            RenderTargetManager.Instance.AddRenderTarget(
+                (int)RenderTargetType.AdaptedLuminanceBuffer1,
+                1,
+                1,
+                SurfaceType.R16F,
+                false, false);
+
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.SHADOW,
                 new ShadowMapRenderPath()

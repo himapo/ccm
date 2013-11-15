@@ -1,4 +1,5 @@
 #include "Const.fxh"
+#include "PseudoHDR.fxh"
 
 // Lights
 struct DirectionalLight
@@ -154,13 +155,6 @@ float4 CalcViewPositionDirectional(float2 texCoord, float depth)
 	float2 xyVS = renderPosVS.xy * zVS / renderPosVS.z;
 
 	return float4(xyVS.xy, zVS, 1.0f);
-}
-
-float4 ToLDR(float3 hdr)
-{
-	float L = max(1.0f, max(hdr.r, max(hdr.g, hdr.b)));
-
-	return float4(hdr / L, 1.0f / L);
 }
 
 PSOutput PSDirectional(VSOutputDirectional input)

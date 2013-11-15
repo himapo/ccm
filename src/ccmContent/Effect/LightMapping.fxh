@@ -1,3 +1,5 @@
+#include "PseudoHDR.fxh"
+
 texture DiffuseLightMap;
 sampler DiffuseLightMapSampler = sampler_state
 {
@@ -9,11 +11,6 @@ sampler SpecularLightMapSampler = sampler_state
 {
 	Texture = (SpecularLightMap);
 };
-
-float3 ToHDR(float4 ldr)
-{
-	return float3(ldr.rgb) / ldr.a;
-}
 
 void GetRadiance(out float3 diffuse, out float3 specular, float4 projPosition)
 {

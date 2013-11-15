@@ -33,6 +33,8 @@ namespace HimaLib.Render
                     return Create<DeferredRenderer>(param);
                 case BillboardRendererType.DiectionalLight:
                     return Create<LightBufferRenderer>(param);
+                case BillboardRendererType.ToneMapping:
+                    return Create<ToneMappingRenderer>(param);
                 default:
                     break;
             }
