@@ -65,6 +65,11 @@ VSOutput VSInstancing(VSInput input, float4x4 instanceTransform : BLENDWEIGHT)
 	return output;
 }
 
+float3 ToneMapping(float3 hdr)
+{
+	return float3(1,1,1) - exp(-hdr * 0.5f);
+}
+
 float4 PSMain(VSOutput input,
 	uniform bool useTexture,
 	uniform bool shadowEnabled) : COLOR
@@ -81,7 +86,8 @@ float4 PSMain(VSOutput input,
 	
 	// マテリアルカラー、アンビエントライトと合成する
 	//float3 light = saturate(DiffuseColor * diffuse + AmbientLightColor);
-	float3 light = saturate(DiffuseColor * diffuse + SpecularColor * specular + AmbientLightColor);
+	//float3 light = saturate(DiffuseColor * diffuse + SpecularColor * specular + AmbientLightColor);
+	float3 light = DiffuseColor * diffuse + SpecularColor * specular + AmbientLightColor;
 	
 	output = float4(light.rgb, Alpha);
 	
@@ -95,7 +101,8 @@ float4 PSMain(VSOutput input,
 	    output *= CalcShadow(input.PositionWS);
 	}
 	
-	return output;
+	return float4(ToneMapping(output.rgb), output.a);
+	//return output;
 }
 
 Technique Static
