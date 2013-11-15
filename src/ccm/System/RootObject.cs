@@ -166,7 +166,7 @@ namespace ccm.System
                 GameProperty.resolutionWidth,
                 GameProperty.resolutionHeight,
                 SurfaceType.A8R8G8B8,
-                false, false);
+                true, true);
 
             RenderTargetManager.Instance.AddRenderTarget(
                 (int)RenderTargetType.ScaledBuffer,
@@ -281,10 +281,23 @@ namespace ccm.System
                     //Enabled = false,
                     Name = "Opaque",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
-                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
+                    RenderTargetIndex = (int)RenderTargetType.HDRBuffer,
                     ShadowMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ShadowMap0),
                     DiffuseLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.DiffuseLightMap),
                     SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
+                });
+
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.TONEMAPPING,
+                new ToneMappingRenderPath()
+                {
+                    //Enabled = false,
+                    Name = "ToneMapping",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
+                    Billboard = BillboardFactory.Instance.Create(),
+                    HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
+                    ClearColor = Color.Gray,
                 });
 
             RenderSceneManager.Instance.AddPath(

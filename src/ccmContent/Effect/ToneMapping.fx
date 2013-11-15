@@ -59,8 +59,7 @@ VSOutput VSMain(VSInput input)
 // Pixel shaders
 //-----------------------------------------------------------------------------
 
-float4 PSMain(VSOutput input,
-	uniform bool useTexture) : COLOR
+float4 PSMain(VSOutput input) : COLOR
 {
 	float4 HDRColor = float4(ToHDR(tex2D(HDRSceneSampler, input.TexCoord)), 1.0f);
 
@@ -71,7 +70,12 @@ Technique FinalPass
 {
 	Pass P0
 	{
+		ZEnable = FALSE;
+		ZWriteEnable = FALSE;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = FALSE;
+
 		VertexShader	= compile vs_2_0 VSMain();
-		PixelShader		= compile ps_2_0 PSMain(true);
+		PixelShader		= compile ps_2_0 PSMain();
 	}
 }

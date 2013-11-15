@@ -27,7 +27,7 @@ namespace HimaLib.Render
             }
 
             Shader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);   // Viewの逆行列が必要になる
+            Shader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
             Shader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
 
             Shader.HDRScene = (param.HDRScene as ITextureXna).Texture;

@@ -101,8 +101,8 @@ float4 PSMain(VSOutput input,
 	    output *= CalcShadow(input.PositionWS);
 	}
 	
-	return float4(ToneMapping(output.rgb), output.a);
-	//return output;
+	//return float4(ToneMapping(output.rgb), output.a);
+	return ToLDR(output.rgb);
 }
 
 Technique Static
