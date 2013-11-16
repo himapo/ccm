@@ -133,6 +133,11 @@ float4 PSFinalPass(VSOutput input) : COLOR
 {
 	float4 HDRColor = float4(ToHDR(tex2D(Texture0Sampler, input.TexCoord)), 1.0f);
 
+	float luminance = tex2D(Texture1Sampler, float2(0.5f, 0.5f));
+
+	HDRColor.rgb *= 1.0f / (luminance + 0.001f);
+	HDRColor.rgb /= (1.0f + HDRColor);
+
 	return HDRColor;
 }
 

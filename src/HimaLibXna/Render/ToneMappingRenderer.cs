@@ -113,6 +113,7 @@ namespace HimaLib.Render
             RenderDevice.ClearAll(Color.Purple);
 
             ToneMappingShader.Texture0 = (RenderParam.HDRScene as ITextureXna).Texture;
+            ToneMappingShader.Texture1 = (RenderParam.LuminanceBuffers.Last() as ITextureXna).Texture;
 
             ToneMappingShader.RenderFinalPass();
         }

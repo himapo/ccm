@@ -20,6 +20,8 @@ namespace HimaLib.Shader
 
         public Texture2D Texture1 { get; set; }
 
+        //public Vector2[] ScaledBufferSampleOffsets { get; set; }
+
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
 
         Effect Effect;
@@ -53,8 +55,8 @@ namespace HimaLib.Shader
             // 横5倍、縦3倍の320x192の領域をサンプリングする
             Effect.Parameters["SampleOffsets"].SetValue(
                 CalcSampleOffsets5x3(
-                    HudBillboard.RectSize.X * 5.0f,
-                    HudBillboard.RectSize.Y * 3.0f));
+                    64.0f * 5.0f,
+                    64.0f * 3.0f));
 
             HudBillboard.Render(Effect);
         }
@@ -85,6 +87,7 @@ namespace HimaLib.Shader
         {
             SetUpEffect("FinalPass");
             Effect.Parameters["Texture0"].SetValue(Texture0);
+            Effect.Parameters["Texture1"].SetValue(Texture1);
             HudBillboard.Render(Effect);
         }
 
