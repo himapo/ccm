@@ -58,6 +58,8 @@ namespace HimaLib.Texture
                     return SurfaceFormat.Color;
                 case SurfaceType.R16F:
                     return SurfaceFormat.HalfSingle;
+                case SurfaceType.A16B16G16R16F:
+                    return SurfaceFormat.HalfVector4;
                 case SurfaceType.R32F:
                     return SurfaceFormat.Single;
                 case SurfaceType.A32B32G32R32F:

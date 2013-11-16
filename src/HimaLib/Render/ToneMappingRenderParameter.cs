@@ -24,8 +24,6 @@ namespace HimaLib.Render
 
         public int ScaledBufferIndex { get; set; }
 
-        public Vector2 ScaledBufferSize { get; set; }
-
         public IEnumerable<int> LuminanceBufferIndices { get; set; }
 
         public int[] AdaptedLuminanceBufferIndices { get; set; }

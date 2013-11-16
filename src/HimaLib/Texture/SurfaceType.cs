@@ -12,6 +12,7 @@ namespace HimaLib.Texture
 
         // Float format
         R16F,
+        A16B16G16R16F,
         R32F,
         A32B32G32R32F,
 

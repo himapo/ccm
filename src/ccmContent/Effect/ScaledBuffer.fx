@@ -1,3 +1,5 @@
+#include "PseudoHDR.fxh"
+
 // Other parameters
 static const int MAX_SAMPLES = 16;
 float2 SampleOffsets[MAX_SAMPLES];
@@ -70,6 +72,18 @@ float4 PSDownScale4x4(VSOutput input) : COLOR
 	return sample / 16;
 }
 
+float4 PSDownScale4x4PseudoHDR(VSOutput input) : COLOR
+{
+    float3 sample = 0.0f;
+
+	for( int i=0; i < 16; i++ )
+	{
+		sample += ToHDR(tex2D( SrcBufferSampler, input.TexCoord + SampleOffsets[i] ));
+	}
+
+	return ToLDR(sample / 16);
+}
+
 
 Technique DownScale4x4
 {
@@ -82,5 +96,19 @@ Technique DownScale4x4
 
 		VertexShader	= compile vs_2_0 VSMain();
 		PixelShader		= compile ps_2_0 PSDownScale4x4();
+	}
+}
+
+Technique DownScale4x4PseudoHDR
+{
+	Pass P0
+	{
+		ZEnable = FALSE;
+		ZWriteEnable = FALSE;
+		StencilEnable = FALSE;
+		AlphaBlendEnable = FALSE;
+
+		VertexShader	= compile vs_2_0 VSMain();
+		PixelShader		= compile ps_2_0 PSDownScale4x4PseudoHDR();
 	}
 }

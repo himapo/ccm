@@ -300,7 +300,6 @@ namespace ccm.System
                     {
                         HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
                         ScaledBufferIndex = (int)RenderTargetType.ScaledBuffer,
-                        ScaledBufferSize = new Vector2(GameProperty.resolutionWidth / 4, GameProperty.resolutionHeight / 4),
                         RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     },
                 });

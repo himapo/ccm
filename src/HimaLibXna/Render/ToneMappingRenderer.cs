@@ -56,7 +56,6 @@ namespace HimaLib.Render
 
             ScaledBufferShader.SrcBuffer = (RenderParam.HDRScene as ITextureXna).Texture;
 
-            //ScaledBufferShader.SetRenderTargetSize(RenderParam.ScaledBufferSize.X, RenderParam.ScaledBufferSize.Y);
             ScaledBufferShader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
             ScaledBufferShader.Render();
         }

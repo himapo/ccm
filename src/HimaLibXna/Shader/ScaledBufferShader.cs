@@ -42,7 +42,7 @@ namespace HimaLib.Shader
 
         public void Render()
         {
-            SetUpEffect("DownScale4x4");
+            SetUpEffect("DownScale4x4PseudoHDR");
             HudBillboard.Render(Effect);
         }
 
