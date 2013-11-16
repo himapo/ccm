@@ -24,6 +24,8 @@ namespace HimaLib.Shader
 
         HudBillboard HudBillboard = new HudBillboard();
 
+        Vector2[] SampleOffsets;
+
         public ScaledBufferShader()
         {
             World = Matrix.Identity;
@@ -53,29 +55,24 @@ namespace HimaLib.Shader
             Effect.Parameters["Projection"].SetValue(Projection);
 
             Effect.Parameters["SrcBuffer"].SetValue(SrcBuffer);
-            Effect.Parameters["SampleOffsets"].SetValue(CalcSampleOffsets4x4());
+
+            if (SampleOffsets == null)
+            {
+                CalcSampleOffsets();
+            }
+
+            Effect.Parameters["SampleOffsets"].SetValue(SampleOffsets);
 
             Effect.CurrentTechnique = Effect.Techniques[techniqueName];
         }
 
-        Vector2[] CalcSampleOffsets4x4()
+        void CalcSampleOffsets()
         {
-            var result = new List<Vector2>();
-
-            float tU = 1.0f / SrcBuffer.Width;
-            float tV = 1.0f / SrcBuffer.Height;
-
-            int index = 0;
-            for (int y = 0; y < 4; y++)
+            var sampleOffsets = HimaLib.Math.MathUtil.CalcSampleOffsets4x4(SrcBuffer.Width, SrcBuffer.Height);
+            SampleOffsets = sampleOffsets.Select((v) =>
             {
-                for (int x = 0; x < 4; x++)
-                {
-                    result.Add(new Vector2((x - 1.5f) * tU, (y - 1.5f) * tV));
-                    index++;
-                }
-            }
-
-            return result.ToArray();
+                return HimaLib.Math.MathUtilXna.ToXnaVector(v);
+            }).ToArray();
         }
     }
 }

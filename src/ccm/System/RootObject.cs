@@ -300,6 +300,21 @@ namespace ccm.System
                     {
                         HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
                         ScaledBufferIndex = (int)RenderTargetType.ScaledBuffer,
+                        ScaledBuffer = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ScaledBuffer),
+                        LuminanceBufferIndices = new int[]
+                        {
+                            (int)RenderTargetType.LuminanceBuffer64,
+                            (int)RenderTargetType.LuminanceBuffer16,
+                            (int)RenderTargetType.LuminanceBuffer4,
+                            (int)RenderTargetType.LuminanceBuffer1,
+                        },
+                        LuminanceBuffers = new ITexture[]
+                        {
+                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer64),
+                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer16),
+                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer4),
+                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer1),
+                        },
                         RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     },
                 });

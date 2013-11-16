@@ -62,7 +62,38 @@ namespace HimaLib.Render
 
         void RenderLuminanceBuffer()
         {
+            ToneMappingShader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ToneMappingShader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ToneMappingShader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
+            ToneMappingShader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
 
+            foreach (var item in RenderParam.LuminanceBufferIndices.Select((val, index) => new { val, index }))
+            {
+                RenderDevice.SetRenderTarget(item.val);
+
+                RenderDevice.ClearAll(Color.Purple);
+
+                if (item.index == 0)
+                {
+                    // 1パス目は縮小バッファを入力
+                    ToneMappingShader.Texture0 = (RenderParam.ScaledBuffer as ITextureXna).Texture;
+                    ToneMappingShader.RenderLuminanceBufferInitial();
+                }
+                else
+                {
+                    // 2パス目移行は前の出力を入力
+                    ToneMappingShader.Texture0 = (RenderParam.LuminanceBuffers.ElementAt(item.index - 1) as ITextureXna).Texture;
+
+                    if (item.index == RenderParam.LuminanceBufferIndices.Count() - 1)
+                    {
+                        ToneMappingShader.RenderLuminanceBufferFinal();
+                    }
+                    else
+                    {
+                        ToneMappingShader.RenderLuminanceBufferIterative();
+                    }
+                }
+            }
         }
 
         void RenderAdaptedLuminanceBuffer()
@@ -72,17 +103,17 @@ namespace HimaLib.Render
 
         void RenderFinalPass()
         {
+            ToneMappingShader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ToneMappingShader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ToneMappingShader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
+            ToneMappingShader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
+
             RenderDevice.SetRenderTarget(RenderParam.RenderTargetIndex);
 
             RenderDevice.ClearAll(Color.Purple);
 
-            ToneMappingShader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            ToneMappingShader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            ToneMappingShader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
+            ToneMappingShader.Texture0 = (RenderParam.HDRScene as ITextureXna).Texture;
 
-            ToneMappingShader.HDRScene = (RenderParam.HDRScene as ITextureXna).Texture;
-
-            ToneMappingShader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
             ToneMappingShader.RenderFinalPass();
         }
     }

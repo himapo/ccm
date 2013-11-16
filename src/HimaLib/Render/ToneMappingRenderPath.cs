@@ -43,10 +43,6 @@ namespace HimaLib.Render
                 return;
             }
 
-            //RenderDevice.SetRenderTarget(RenderTargetIndex);
-
-            //ClearTarget();
-
             RenderParam.RenderDevice = RenderDevice;
 
             var billboardInfoList = new List<BillboardInfo>();

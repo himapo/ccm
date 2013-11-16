@@ -47,5 +47,15 @@ namespace HimaLib.Math
                 m.M31, m.M32, m.M33, m.M34,
                 m.M41, m.M42, m.M43, m.M44);
         }
+
+        public static Microsoft.Xna.Framework.Vector2[] CalcSampleOffsets4x4(float srcWidth, float srcHeight)
+        {
+            var sampleOffsets = MathUtil.CalcSampleOffsets4x4(srcWidth, srcHeight);
+
+            return sampleOffsets.Select((v) =>
+            {
+                return ToXnaVector(v);
+            }).ToArray();
+        }
     }
 }

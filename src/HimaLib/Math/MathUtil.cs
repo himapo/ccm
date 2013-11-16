@@ -93,5 +93,31 @@ namespace HimaLib.Math
 
             return new Vector2(x, y);
         }
+
+        /// <summary>
+        /// 4x4のダウンサンプリングをするときのサンプリング座標を求める
+        /// </summary>
+        /// <param name="srcWidth"></param>
+        /// <param name="srcHeight"></param>
+        /// <returns></returns>
+        public static Vector2[] CalcSampleOffsets4x4(float srcWidth, float srcHeight)
+        {
+            var result = new List<Vector2>();
+
+            float tU = 1.0f / srcWidth;
+            float tV = 1.0f / srcHeight;
+
+            int index = 0;
+            for (int y = 0; y < 4; y++)
+            {
+                for (int x = 0; x < 4; x++)
+                {
+                    result.Add(new Vector2((x - 1.5f) * tU, (y - 1.5f) * tV));
+                    index++;
+                }
+            }
+
+            return result.ToArray();
+        }
     }
 }

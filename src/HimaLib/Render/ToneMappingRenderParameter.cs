@@ -24,7 +24,11 @@ namespace HimaLib.Render
 
         public int ScaledBufferIndex { get; set; }
 
+        public ITexture ScaledBuffer { get; set; }
+
         public IEnumerable<int> LuminanceBufferIndices { get; set; }
+
+        public IEnumerable<ITexture> LuminanceBuffers { get; set; }
 
         public int[] AdaptedLuminanceBufferIndices { get; set; }
 
