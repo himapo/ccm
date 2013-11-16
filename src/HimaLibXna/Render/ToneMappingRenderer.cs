@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Shader;
-using HimaLib.System;
 using HimaLib.Math;
 using HimaLib.Texture;
-using HimaLib.Camera;
 
 namespace HimaLib.Render
 {
     public class ToneMappingRenderer : ScreenBillboardRenderer
     {
-        ToneMappingShader Shader = new ToneMappingShader();
+        ToneMappingRenderParameter RenderParam;
+
+        ScaledBufferShader ScaledBufferShader = new ScaledBufferShader();
+
+        ToneMappingShader ToneMappingShader = new ToneMappingShader();
+
+        IRenderDevice RenderDevice { get { return RenderParam.RenderDevice; } }
 
         public ToneMappingRenderer()
         {
@@ -26,17 +30,61 @@ namespace HimaLib.Render
                 return;
             }
 
-            Shader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            Shader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            Shader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
-
-            Shader.HDRScene = (param.HDRScene as ITextureXna).Texture;
+            RenderParam = param;
         }
 
         public override void Render()
         {
-            Shader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
-            Shader.RenderFinalPass();
+            RenderScaledBuffer();
+
+            RenderLuminanceBuffer();
+
+            RenderAdaptedLuminanceBuffer();
+
+            RenderFinalPass();
+        }
+
+        void RenderScaledBuffer()
+        {
+            RenderDevice.SetRenderTarget(RenderParam.ScaledBufferIndex);
+
+            RenderDevice.ClearAll(Color.Purple);
+
+            ScaledBufferShader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ScaledBufferShader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ScaledBufferShader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
+
+            ScaledBufferShader.SrcBuffer = (RenderParam.HDRScene as ITextureXna).Texture;
+
+            //ScaledBufferShader.SetRenderTargetSize(RenderParam.ScaledBufferSize.X, RenderParam.ScaledBufferSize.Y);
+            ScaledBufferShader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
+            ScaledBufferShader.Render();
+        }
+
+        void RenderLuminanceBuffer()
+        {
+
+        }
+
+        void RenderAdaptedLuminanceBuffer()
+        {
+
+        }
+
+        void RenderFinalPass()
+        {
+            RenderDevice.SetRenderTarget(RenderParam.RenderTargetIndex);
+
+            RenderDevice.ClearAll(Color.Purple);
+
+            ToneMappingShader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ToneMappingShader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
+            ToneMappingShader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
+
+            ToneMappingShader.HDRScene = (RenderParam.HDRScene as ITextureXna).Texture;
+
+            ToneMappingShader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
+            ToneMappingShader.RenderFinalPass();
         }
     }
 }

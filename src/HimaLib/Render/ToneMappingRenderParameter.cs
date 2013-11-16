@@ -18,7 +18,19 @@ namespace HimaLib.Render
             get { return BillboardRendererType.ToneMapping; }
         }
 
+        public IRenderDevice RenderDevice { get; set; }
+
         public ITexture HDRScene { get; set; }
+
+        public int ScaledBufferIndex { get; set; }
+
+        public Vector2 ScaledBufferSize { get; set; }
+
+        public IEnumerable<int> LuminanceBufferIndices { get; set; }
+
+        public int[] AdaptedLuminanceBufferIndices { get; set; }
+
+        public int RenderTargetIndex { get; set; }
 
         public ToneMappingRenderParameter()
         {

@@ -12,7 +12,7 @@ namespace HimaLib.Render
     {
         public IBillboard Billboard { get; set; }
 
-        public ITexture HDRScene { get; set; }
+        public ToneMappingRenderParameter RenderParam { get; set; }
 
         public ToneMappingRenderPath()
         {
@@ -38,23 +38,44 @@ namespace HimaLib.Render
 
         public override void Render()
         {
-            ModelInfoList = new List<ModelInfo>();
+            if (!Enabled)
+            {
+                return;
+            }
+
+            //RenderDevice.SetRenderTarget(RenderTargetIndex);
+
+            //ClearTarget();
+
+            RenderParam.RenderDevice = RenderDevice;
 
             var billboardInfoList = new List<BillboardInfo>();
-
-            var renderParam = new ToneMappingRenderParameter();
-
-            renderParam.HDRScene = HDRScene;
 
             billboardInfoList.Add(new BillboardInfo()
             {
                 Billboard = this.Billboard,
-                RenderParam = renderParam,
+                RenderParam = this.RenderParam,
             });
 
             BillboardInfoList = billboardInfoList;
 
-            base.Render();
+            RenderBillboard();
+        }
+
+        void ClearTarget()
+        {
+            if (ColorClearEnabled && DepthClearEnabled)
+            {
+                RenderDevice.ClearAll(ClearColor);
+            }
+            else if (ColorClearEnabled)
+            {
+                RenderDevice.ClearColor(ClearColor);
+            }
+            else if (DepthClearEnabled)
+            {
+                RenderDevice.ClearDepth();
+            }
         }
     }
 }

@@ -188,7 +188,7 @@ namespace HimaLib.Render
             }
         }
 
-        void RenderBillboard()
+        protected void RenderBillboard()
         {
             foreach (var info in BillboardInfoList)
             {

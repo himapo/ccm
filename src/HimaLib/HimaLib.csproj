@@ -170,6 +170,7 @@
     <Compile Include="Render\LightBufferRenderPath.cs" />
     <Compile Include="Render\PointLightRenderParameter.cs" />
     <Compile Include="Render\RenderParameter.cs" />
+    <Compile Include="Render\ScaledBufferRenderParameter.cs" />
     <Compile Include="Render\ShadowMapRenderPath.cs" />
     <Compile Include="Render\HudBillboardRenderParameter.cs" />
     <Compile Include="Render\HudRenderPath.cs" />

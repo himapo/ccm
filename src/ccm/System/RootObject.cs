@@ -296,8 +296,13 @@ namespace ccm.System
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     Billboard = BillboardFactory.Instance.Create(),
-                    HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
-                    ClearColor = Color.Gray,
+                    RenderParam = new ToneMappingRenderParameter()
+                    {
+                        HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
+                        ScaledBufferIndex = (int)RenderTargetType.ScaledBuffer,
+                        ScaledBufferSize = new Vector2(GameProperty.resolutionWidth / 4, GameProperty.resolutionHeight / 4),
+                        RenderTargetIndex = (int)RenderTargetType.BackBuffer,
+                    },
                 });
 
             RenderSceneManager.Instance.AddPath(

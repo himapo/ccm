@@ -196,6 +196,7 @@
     <Compile Include="Shader\InstancingPhongShader.cs" />
     <Compile Include="Shader\OpaqueFinalShader.cs" />
     <Compile Include="Shader\LightBufferShader.cs" />
+    <Compile Include="Shader\ScaledBufferShader.cs" />
     <Compile Include="Shader\ToneMappingShader.cs" />
     <Compile Include="Sound\SoundXACT.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />

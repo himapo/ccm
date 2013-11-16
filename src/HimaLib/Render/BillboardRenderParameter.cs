@@ -18,6 +18,7 @@ namespace HimaLib.Render
         DiectionalLight,// Deferred Lighting の平行光源マップ生成
         GBuffer,
         ToneMapping,
+        ScaledBuffer,
     }
 
     public abstract class BillboardRenderParameter : RenderParameter
