@@ -49,6 +49,9 @@ namespace ccm.System
 
         bool ShowRenderTarget { get; set; }
 
+        // トーンマッピング関連
+        ToneMappingRenderParameter ToneMappingRenderParameter;
+
         public RootObject()
         {
             gameController = new MainController(keyboard, mouse);
@@ -287,6 +290,39 @@ namespace ccm.System
                     SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
                 });
 
+            ToneMappingRenderParameter = new ToneMappingRenderParameter()
+            {
+                HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
+                ScaledBufferIndex = (int)RenderTargetType.ScaledBuffer,
+                ScaledBuffer = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ScaledBuffer),
+                LuminanceBufferIndices = new int[]
+                {
+                    (int)RenderTargetType.LuminanceBuffer64,
+                    (int)RenderTargetType.LuminanceBuffer16,
+                    (int)RenderTargetType.LuminanceBuffer4,
+                    (int)RenderTargetType.LuminanceBuffer1,
+                },
+                LuminanceBuffers = new ITexture[]
+                {
+                    TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer64),
+                    TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer16),
+                    TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer4),
+                    TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer1),
+                },
+                AdaptedLuminanceBufferIndices = new int[]
+                {
+                    (int)RenderTargetType.AdaptedLuminanceBuffer0,
+                    (int)RenderTargetType.AdaptedLuminanceBuffer1,
+                },
+                AdaptedLuminanceBuffers = new ITexture[]
+                {
+                    TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.AdaptedLuminanceBuffer0),
+                    TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.AdaptedLuminanceBuffer1),
+                },
+                RenderTargetIndex = (int)RenderTargetType.BackBuffer,
+                Exposure = 0.8f,
+            };
+
             RenderSceneManager.Instance.AddPath(
                 RenderPathType.TONEMAPPING,
                 new ToneMappingRenderPath()
@@ -296,37 +332,7 @@ namespace ccm.System
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     Billboard = BillboardFactory.Instance.Create(),
-                    RenderParam = new ToneMappingRenderParameter()
-                    {
-                        HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
-                        ScaledBufferIndex = (int)RenderTargetType.ScaledBuffer,
-                        ScaledBuffer = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.ScaledBuffer),
-                        LuminanceBufferIndices = new int[]
-                        {
-                            (int)RenderTargetType.LuminanceBuffer64,
-                            (int)RenderTargetType.LuminanceBuffer16,
-                            (int)RenderTargetType.LuminanceBuffer4,
-                            (int)RenderTargetType.LuminanceBuffer1,
-                        },
-                        LuminanceBuffers = new ITexture[]
-                        {
-                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer64),
-                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer16),
-                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer4),
-                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer1),
-                        },
-                        AdaptedLuminanceBufferIndices = new int[]
-                        {
-                            (int)RenderTargetType.AdaptedLuminanceBuffer0,
-                            (int)RenderTargetType.AdaptedLuminanceBuffer1,
-                        },
-                        AdaptedLuminanceBuffers = new ITexture[]
-                        {
-                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.AdaptedLuminanceBuffer0),
-                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.AdaptedLuminanceBuffer1),
-                        },
-                        RenderTargetIndex = (int)RenderTargetType.BackBuffer,
-                    },
+                    RenderParam = ToneMappingRenderParameter,
                 });
 
             RenderSceneManager.Instance.AddPath(
@@ -414,6 +420,16 @@ namespace ccm.System
             });
             */
             DebugMenu.AddChild(DebugMenu.RootNode.Label, nodeShowTarget);
+
+            var nodeExposure = new DebugMenuNodeTunableFloat()
+            {
+                Label = "HDR露出",
+                Getter = () => { return ToneMappingRenderParameter.Exposure; },
+                Setter = (value) => { ToneMappingRenderParameter.Exposure = value; },
+                Interval = 0.1f,
+            };
+
+            DebugMenu.AddChild(DebugMenu.RootNode.Label, nodeExposure);
         }
 
         void InitRenderTargetHud()

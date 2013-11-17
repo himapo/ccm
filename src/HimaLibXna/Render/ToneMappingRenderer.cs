@@ -121,6 +121,7 @@ namespace HimaLib.Render
 
             ToneMappingShader.Texture0 = (RenderParam.HDRScene as ITextureXna).Texture;
             ToneMappingShader.Texture1 = (RenderParam.AdaptedLuminanceBuffers[1 - AdaptedLuminanceBufferFlip] as ITextureXna).Texture;
+            ToneMappingShader.Exposure = RenderParam.Exposure;
 
             ToneMappingShader.RenderFinalPass();
         }

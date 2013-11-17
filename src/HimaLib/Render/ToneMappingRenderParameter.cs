@@ -39,6 +39,8 @@ namespace HimaLib.Render
 
         public int RenderTargetIndex { get; set; }
 
+        public float Exposure { get; set; }
+
         public ToneMappingRenderParameter()
         {
             IsHud = true;

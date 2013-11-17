@@ -106,6 +106,7 @@
     <Compile Include="Debug\DebugMenuNodeSelectable.cs" />
     <Compile Include="Debug\DebugMenuNodeTunable.cs" />
     <Compile Include="Debug\DebugMenuNodeTunableBool.cs" />
+    <Compile Include="Debug\DebugMenuNodeTunableFloat.cs" />
     <Compile Include="Debug\DebugMenuNodeTunableInt.cs" />
     <Compile Include="Debug\DebugPrint.cs" />
     <Compile Include="Debug\IDebugFont.cs" />

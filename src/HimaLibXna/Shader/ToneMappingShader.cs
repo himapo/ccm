@@ -20,6 +20,8 @@ namespace HimaLib.Shader
 
         public Texture2D Texture1 { get; set; }
 
+        public float Exposure { get; set; }
+
         //public Vector2[] ScaledBufferSampleOffsets { get; set; }
 
         GraphicsDevice GraphicsDevice { get { return XnaGame.Instance.GraphicsDevice; } }
@@ -97,6 +99,7 @@ namespace HimaLib.Shader
             SetUpEffect("FinalPass");
             Effect.Parameters["Texture0"].SetValue(Texture0);
             Effect.Parameters["Texture1"].SetValue(Texture1);
+            Effect.Parameters["Exposure"].SetValue(Exposure);
             HudBillboard.Render(Effect);
         }
 

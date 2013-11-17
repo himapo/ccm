@@ -9,6 +9,7 @@ float2 SampleOffsets[MAX_SAMPLES];
 static const float3 LUMINANCE_VECTOR  = float3(0.2126f, 0.7152f, 0.0722f);
 
 float ElapsedTime;
+float Exposure;
 
 // Matrices
 const float4x4	World		: WORLD;
@@ -149,7 +150,7 @@ float4 PSFinalPass(VSOutput input) : COLOR
 
 	float luminance = tex2D(Texture1Sampler, float2(0.5f, 0.5f));
 
-	HDRColor.rgb *= 0.4f / (luminance + 0.001f);
+	HDRColor.rgb *= Exposure / (luminance + 0.001f);
 	HDRColor.rgb /= (1.0f + HDRColor);
 
 	return HDRColor;
