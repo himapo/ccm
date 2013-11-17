@@ -32,5 +32,10 @@ namespace ccm.Map
             primitive.Width = width;
             Primitives.Add(primitive);
         }
+
+        public void Clear()
+        {
+            Primitives.Clear();
+        }
     }
 }

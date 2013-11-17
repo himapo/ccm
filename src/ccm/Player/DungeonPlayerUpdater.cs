@@ -246,10 +246,11 @@ namespace ccm.Player
             CollisionManager.Add(AttackCollision);
         }
 
-        void Respawn()
+        public void Respawn()
         {
             Transform.Translation = Dungeon.GetRandomRespawnPoint();
             FallVelocity = 0.0f;
+            IsGround = false;
             GoToFall();
         }
 

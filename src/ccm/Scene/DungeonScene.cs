@@ -79,7 +79,7 @@ namespace ccm.Scene
         DefaultDebugMenuDrawer debugMenuDrawer = new DefaultDebugMenuDrawer();
 
         // その他
-        //int Floor = 1;
+        int Floor = 1;
 
         int Frame = 0;
 
@@ -176,8 +176,8 @@ namespace ccm.Scene
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
 
-            Dungeon.Drawable = true;
-            CollisionManager.Drawable = false;
+            Dungeon.Drawable = false;
+            CollisionManager.Drawable = true;
         }
 
         void UpdateStateInit()
@@ -269,20 +269,20 @@ namespace ccm.Scene
             RenderSceneManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
-            DirectionalLight0.Color = new Color(2.0f, 2.0f, 2.0f, 1.0f);
+            DirectionalLight0.Color = new Color(3.0f, 3.0f, 3.0f, 1.0f);
             RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
 
             RenderSceneManager.Instance.ClearPointLight();
 
-            for (var i = 0; i < 16; ++i)
+            for (var i = 0; i < 128; ++i)
             {
-                PointLightPositions.Add(new Vector3(Rand.NextFloat(-40.0f, 40.0f), Rand.NextFloat(0.0f, 20.0f), Rand.NextFloat(-40.0f, 40.0f)));
+                PointLightPositions.Add(new Vector3(Rand.NextFloat(-400.0f, 400.0f), Rand.NextFloat(0.0f, 20.0f), Rand.NextFloat(-400.0f, 400.0f)));
 
                 var light = new PointLight()
                 {
-                    Position = Player.Transform.Translation + PointLightPositions[i],
-                    Color = new Color(Rand.NextFloat(100.5f, 120.0f), Rand.NextFloat(100.5f, 120.0f), Rand.NextFloat(100.5f, 120.0f)),
-                    AttenuationBegin = Rand.NextFloat(10.0f, 18.0f),
+                    Position = PointLightPositions[i],// + Player.Transform.Translation,
+                    Color = new Color(Rand.NextFloat(1.0f, 50.0f), Rand.NextFloat(1.0f, 50.0f), Rand.NextFloat(1.0f, 50.0f)),
+                    AttenuationBegin = Rand.NextFloat(0.0f, 10.0f),
                     AttenuationEnd = Rand.NextFloat(20.0f, 30.0f),
                 };
                 PointLights.Add(light);
@@ -308,6 +308,23 @@ namespace ccm.Scene
                 Getter = () => { return CollisionManager.Drawable; },
                 Setter = (b) => { CollisionManager.Drawable = b; },
             });
+
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()
+            {
+                Label = "次のフロアへ",
+                ExecFunc = GoToNextFloor,
+            });
+        }
+
+        void GoToNextFloor()
+        {
+            Floor++;
+            
+            Dungeon.Generate();
+            Dungeon.GenerateFloorCollision();
+            Dungeon.GenerateWallCollision();
+
+            DungeonPlayerUpdater.Respawn();
         }
 
         void InitRender()
@@ -327,6 +344,7 @@ namespace ccm.Scene
             debugMenuUpdater.Update();
 
             DebugFont.Add(Name, 50.0f, 60.0f);
+            DebugFont.Add(string.Format("{0}階", Floor), 600.0f, 60.0f);
 
             Player.Update(DungeonPlayerUpdater);
 

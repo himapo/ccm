@@ -56,6 +56,7 @@ namespace ccm.DungeonLogic
         {
             Rooms.Clear();
             Paths.Clear();
+            Portals.Clear();
         }
 
         public List<Vector3> GetCubePosList()
