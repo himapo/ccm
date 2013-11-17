@@ -131,7 +131,7 @@ namespace ccm.Map
             var x = GameRand.Instance.Next(rect.X + 1, rect.X + rect.Width - 1);
             var z = GameRand.Instance.Next(rect.Y + 1, rect.Y + rect.Height - 1);
 
-            return new Vector3(-0.5f + x, 5, -0.5f + z) * GameProperty.CUBE_WIDTH;
+            return new Vector3(-0.5f + x, 0, -0.5f + z) * GameProperty.CUBE_WIDTH;
         }
     }
 }

@@ -83,6 +83,8 @@ namespace ccm.Scene
 
         int Frame = 0;
 
+        bool lightUpdate = false;
+
         HimaLib.Math.IRand Rand
         {
             get { return GameRand.Instance; }
@@ -279,8 +281,8 @@ namespace ccm.Scene
                 var light = new PointLight()
                 {
                     Position = Player.Transform.Translation + PointLightPositions[i],
-                    Color = new Color(Rand.NextFloat(0.5f, 2.0f), Rand.NextFloat(0.5f, 2.0f), Rand.NextFloat(0.5f, 2.0f)),
-                    AttenuationBegin = Rand.NextFloat(0.0f, 10.0f),
+                    Color = new Color(Rand.NextFloat(100.5f, 120.0f), Rand.NextFloat(100.5f, 120.0f), Rand.NextFloat(100.5f, 120.0f)),
+                    AttenuationBegin = Rand.NextFloat(10.0f, 18.0f),
                     AttenuationEnd = Rand.NextFloat(20.0f, 30.0f),
                 };
                 PointLights.Add(light);
@@ -400,6 +402,11 @@ namespace ccm.Scene
 
         void UpdateLight()
         {
+            if (lightUpdate)
+                return;
+
+            lightUpdate = true;
+
             foreach (var item in PointLights.Select((light, index) => new { light, index }))
             {
                 item.light.Position = Player.Transform.Translation + PointLightPositions[item.index];

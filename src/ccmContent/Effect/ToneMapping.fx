@@ -4,8 +4,11 @@
 static const int MAX_SAMPLES = 16;
 float2 SampleOffsets[MAX_SAMPLES];
 
+// BT.709(HDTVóp)Ç…äÓÇ√Ç≠ RGB -> YCbCr ïœä∑éÆ
 // Y = 0.2126 Å~ R + 0.7152 Å~ G + 0.0722 Å~ B
 static const float3 LUMINANCE_VECTOR  = float3(0.2126f, 0.7152f, 0.0722f);
+
+float ElapsedTime;
 
 // Matrices
 const float4x4	World		: WORLD;
@@ -84,8 +87,8 @@ float4 SampleLumInitial(VSOutput input) : COLOR
     for(int iSample = 0; iSample < 15; iSample++)
     {
         // Compute the sum of log(luminance) throughout the sample points
-        vSample = ToHDR(tex2D(Texture0Sampler, input.TexCoord+SampleOffsets[iSample]));
-        fLogLumSum += log(dot(vSample, LUMINANCE_VECTOR)+0.0001f);
+        vSample = ToHDR(tex2D(Texture0Sampler, input.TexCoord + SampleOffsets[iSample]));
+        fLogLumSum += log(dot(vSample, LUMINANCE_VECTOR) + 0.0001f);
     }
     
     // Divide the sum to complete the average
@@ -102,7 +105,7 @@ float4 SampleLumIterative(VSOutput input) : COLOR
     for(int iSample = 0; iSample < 16; iSample++)
     {
         // Compute the sum of luminance throughout the sample points
-        fResampleSum += tex2D(Texture0Sampler, input.TexCoord+SampleOffsets[iSample]);
+        fResampleSum += tex2D(Texture0Sampler, input.TexCoord + SampleOffsets[iSample]);
     }
     
     // Divide the sum to complete the average
@@ -119,7 +122,7 @@ float4 SampleLumFinal(VSOutput input) : COLOR
     for(int iSample = 0; iSample < 16; iSample++)
     {
         // Compute the sum of luminance throughout the sample points
-        fResampleSum += tex2D(Texture0Sampler, input.TexCoord+SampleOffsets[iSample]);
+        fResampleSum += tex2D(Texture0Sampler, input.TexCoord + SampleOffsets[iSample]);
     }
     
     // Divide the sum to complete the average, and perform an exp() to complete
@@ -129,13 +132,24 @@ float4 SampleLumFinal(VSOutput input) : COLOR
     return float4(fResampleSum, fResampleSum, fResampleSum, 1.0f);
 }
 
+// ñ⁄ïWÇÃïΩãœãPìxÇ∆åªç›ÇÃìKópílÇéûä‘ï‚ä‘Ç∑ÇÈÇ±Ç∆Ç≈ñæèáâû
+float4 PSCalculateAdaptedLum(VSOutput input) : COLOR
+{
+    float fAdaptedLum = tex2D(Texture0Sampler, float2(0.5f, 0.5f));
+    float fCurrentLum = tex2D(Texture1Sampler, float2(0.5f, 0.5f));
+    
+    // 1/30ïbÇ≈2%Ç∏Ç¬èáâûÇ∑ÇÈ
+    float fNewAdaptation = fAdaptedLum + (fCurrentLum - fAdaptedLum) * ( 1 - pow( 0.98f, 30 * ElapsedTime ) );
+    return float4(fNewAdaptation, fNewAdaptation, fNewAdaptation, 1.0f);
+}
+
 float4 PSFinalPass(VSOutput input) : COLOR
 {
 	float4 HDRColor = float4(ToHDR(tex2D(Texture0Sampler, input.TexCoord)), 1.0f);
 
 	float luminance = tex2D(Texture1Sampler, float2(0.5f, 0.5f));
 
-	HDRColor.rgb *= 1.0f / (luminance + 0.001f);
+	HDRColor.rgb *= 0.4f / (luminance + 0.001f);
 	HDRColor.rgb /= (1.0f + HDRColor);
 
 	return HDRColor;
@@ -168,7 +182,16 @@ technique ResampleAvgLumExp
     }
 }
 
-Technique FinalPass
+technique CalculateAdaptedLum
+{
+    pass P0
+    {
+		VertexShader	= compile vs_2_0 VSMain();
+        PixelShader		= compile ps_2_0 PSCalculateAdaptedLum();
+    }
+}
+
+technique FinalPass
 {
 	Pass P0
 	{

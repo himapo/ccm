@@ -18,6 +18,8 @@ namespace HimaLib.Render
 
         IRenderDevice RenderDevice { get { return RenderParam.RenderDevice; } }
 
+        int AdaptedLuminanceBufferFlip;
+
         public ToneMappingRenderer()
         {
         }
@@ -98,22 +100,27 @@ namespace HimaLib.Render
 
         void RenderAdaptedLuminanceBuffer()
         {
+            RenderDevice.SetRenderTarget(RenderParam.AdaptedLuminanceBufferIndices[AdaptedLuminanceBufferFlip]);
 
+            RenderDevice.ClearAll(Color.Purple);
+
+            ToneMappingShader.Texture0 = (RenderParam.AdaptedLuminanceBuffers[1 - AdaptedLuminanceBufferFlip] as ITextureXna).Texture;
+            ToneMappingShader.Texture1 = (RenderParam.LuminanceBuffers.Last() as ITextureXna).Texture;
+
+            ToneMappingShader.RenderAdapterLuminance();
+
+            // ダブルバッファの添字をフリップ
+            AdaptedLuminanceBufferFlip = 1 - AdaptedLuminanceBufferFlip;
         }
 
         void RenderFinalPass()
         {
-            ToneMappingShader.World = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            ToneMappingShader.View = MathUtilXna.ToXnaMatrix(Matrix.Identity);
-            ToneMappingShader.Projection = MathUtilXna.ToXnaMatrix(GetScreenProjectionMatrix());
-            ToneMappingShader.SetRenderTargetSize(ScreenWidth, ScreenHeight);
-
             RenderDevice.SetRenderTarget(RenderParam.RenderTargetIndex);
 
             RenderDevice.ClearAll(Color.Purple);
 
             ToneMappingShader.Texture0 = (RenderParam.HDRScene as ITextureXna).Texture;
-            ToneMappingShader.Texture1 = (RenderParam.LuminanceBuffers.Last() as ITextureXna).Texture;
+            ToneMappingShader.Texture1 = (RenderParam.AdaptedLuminanceBuffers[1 - AdaptedLuminanceBufferFlip] as ITextureXna).Texture;
 
             ToneMappingShader.RenderFinalPass();
         }

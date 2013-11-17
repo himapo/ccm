@@ -30,7 +30,12 @@ namespace HimaLib.Render
 
         public IEnumerable<ITexture> LuminanceBuffers { get; set; }
 
+        /// <summary>
+        /// 明順応用の補間輝度を格納するダブルバッファ
+        /// </summary>
         public int[] AdaptedLuminanceBufferIndices { get; set; }
+
+        public ITexture[] AdaptedLuminanceBuffers { get; set; }
 
         public int RenderTargetIndex { get; set; }
 

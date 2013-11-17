@@ -315,6 +315,16 @@ namespace ccm.System
                             TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer4),
                             TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.LuminanceBuffer1),
                         },
+                        AdaptedLuminanceBufferIndices = new int[]
+                        {
+                            (int)RenderTargetType.AdaptedLuminanceBuffer0,
+                            (int)RenderTargetType.AdaptedLuminanceBuffer1,
+                        },
+                        AdaptedLuminanceBuffers = new ITexture[]
+                        {
+                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.AdaptedLuminanceBuffer0),
+                            TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.AdaptedLuminanceBuffer1),
+                        },
                         RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     },
                 });

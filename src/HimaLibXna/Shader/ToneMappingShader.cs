@@ -83,6 +83,15 @@ namespace HimaLib.Shader
             HudBillboard.Render(Effect);
         }
 
+        public void RenderAdapterLuminance()
+        {
+            SetUpEffect("CalculateAdaptedLum");
+            Effect.Parameters["Texture0"].SetValue(Texture0);
+            Effect.Parameters["Texture1"].SetValue(Texture1);
+            Effect.Parameters["ElapsedTime"].SetValue(1.0f / 60.0f);
+            HudBillboard.Render(Effect);
+        }
+
         public void RenderFinalPass()
         {
             SetUpEffect("FinalPass");
