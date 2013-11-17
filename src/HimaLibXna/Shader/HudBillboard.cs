@@ -42,10 +42,10 @@ namespace HimaLib.Shader
         public void UpdateVertices()
         {
             var half = 0.5f;
-            Vertices[0].Position = new Vector3(-RectSize.X * 0.5f - half, -RectSize.Y * 0.5f - half, 0.5f);
-            Vertices[1].Position = new Vector3(-RectSize.X * 0.5f - half, RectSize.Y * 0.5f - half, 0.5f);
-            Vertices[2].Position = new Vector3(RectSize.X * 0.5f - half, -RectSize.Y * 0.5f - half, 0.5f);
-            Vertices[3].Position = new Vector3(RectSize.X * 0.5f - half, RectSize.Y * 0.5f - half, 0.5f);
+            Vertices[0].Position = new Vector3(-RectSize.X * 0.5f - half, -RectSize.Y * 0.5f + half, 0.5f);
+            Vertices[1].Position = new Vector3(-RectSize.X * 0.5f - half, RectSize.Y * 0.5f + half, 0.5f);
+            Vertices[2].Position = new Vector3(RectSize.X * 0.5f - half, -RectSize.Y * 0.5f + half, 0.5f);
+            Vertices[3].Position = new Vector3(RectSize.X * 0.5f - half, RectSize.Y * 0.5f + half, 0.5f);
 
             var uvLeft = 0.0f;
             var uvRight = 1.0f;
