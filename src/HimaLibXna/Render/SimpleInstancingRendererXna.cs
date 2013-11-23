@@ -6,6 +6,7 @@ using HimaLib.Shader;
 using HimaLib.Camera;
 using HimaLib.Math;
 using HimaLib.Texture;
+using HimaLib.Debug;
 
 namespace HimaLib.Render
 {
@@ -14,8 +15,6 @@ namespace HimaLib.Render
         OpaqueFinalShader Shader = new OpaqueFinalShader();
 
         Microsoft.Xna.Framework.Matrix[] ModelBones;
-
-        FrustumCulling FrustumCulling = new FrustumCulling();
 
         public SimpleInstancingRendererXna()
         {
@@ -29,17 +28,16 @@ namespace HimaLib.Render
                 return;
             }
 
-            FrustumCulling.UpdateFrustum(param.Camera);
+            LoadProfiler.Instance.BeginMark("OpaqueToArray");
 
-            Shader.InstanceTransforms = param.InstanceTransforms.Where(t =>
+            Shader.InstanceTransforms = param.InstanceTransforms.Select(matrix =>
             {
-                return FrustumCulling.IsCulled(t, 3.0f);
-            }).Select(t =>
-            {
-                return MathUtilXna.ToXnaMatrix(t.WorldMatrix);
+                return MathUtilXna.ToXnaMatrix(matrix);
             }).ToArray();
 
-            Shader.TransformsUpdated = true;
+            LoadProfiler.Instance.EndMark();
+
+            Shader.TransformsUpdated = param.TransformsUpdated;
             Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);
             Shader.Projection = MathUtilXna.ToXnaMatrix(param.Camera.Projection);
             Shader.AmbientLightColor = MathUtilXna.ToXnaVector(param.AmbientLightColor);
@@ -56,10 +54,14 @@ namespace HimaLib.Render
 
         public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
+            LoadProfiler.Instance.BeginMark("RenderInstancing");
+
             Shader.Model = model;
             SetModelBones(model);
 
             Shader.RenderInstatncedModel();
+
+            LoadProfiler.Instance.EndMark();
         }
 
         public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)

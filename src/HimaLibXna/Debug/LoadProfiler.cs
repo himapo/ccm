@@ -9,24 +9,24 @@ namespace HimaLib.Debug
     {
         static DebugSampleLoadProfiler instance = new DebugSampleLoadProfiler();
 
-        public static ILoadProfiler GetInstance()
+        public static ILoadProfiler Instance
         {
-            return instance;
+            get { return instance; }
         }
 
         public static void StartFrame()
         {
-            GetInstance().StartFrame();
+            Instance.StartFrame();
         }
 
         public static void BeginMark(string markerName)
         {
-            GetInstance().BeginMark(markerName);
+            Instance.BeginMark(markerName);
         }
 
         public static void EndMark()
         {
-            GetInstance().EndMark();
+            Instance.EndMark();
         }
     }
 }

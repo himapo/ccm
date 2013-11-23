@@ -112,6 +112,8 @@ namespace HimaLib.Shader
 
             foreach (var mesh in Model.Meshes)
             {
+                Effect.Parameters["World"].SetValue(ModelBones[mesh.ParentBone.Index]);
+
                 foreach (var part in mesh.MeshParts)
                 {
                     GraphicsDevice.SetVertexBuffers(
@@ -122,8 +124,6 @@ namespace HimaLib.Shader
                     GraphicsDevice.Indices = part.IndexBuffer;
 
                     CopyMaterial(part.Effect as BasicEffect);
-
-                    Effect.Parameters["World"].SetValue(ModelBones[mesh.ParentBone.Index]);
 
                     foreach (var pass in Effect.CurrentTechnique.Passes)
                     {

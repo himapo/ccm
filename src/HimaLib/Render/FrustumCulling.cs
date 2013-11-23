@@ -64,22 +64,40 @@ namespace HimaLib.Render
         /// <returns>視錐台内にあればtrue。残って描画される方がtrue</returns>
         public bool IsCulled(AffineTransform transform, float margin)
         {
-            if (transform.Translation.X > MaxFrustumAABB.X + margin)
+            return IsCulled(
+                transform.Translation.X,
+                transform.Translation.Y,
+                transform.Translation.Z,
+                margin);
+        }
+
+        public bool IsCulled(Matrix transform, float margin)
+        {
+            return IsCulled(
+                transform.M41,
+                transform.M42,
+                transform.M43,
+                margin);
+        }
+
+        bool IsCulled(float x, float y, float z, float margin)
+        {
+            if (x > MaxFrustumAABB.X + margin)
                 return false;
 
-            if (transform.Translation.Y > MaxFrustumAABB.Y + margin)
+            if (y > MaxFrustumAABB.Y + margin)
                 return false;
 
-            if (transform.Translation.Z > MaxFrustumAABB.Z + margin)
+            if (z > MaxFrustumAABB.Z + margin)
                 return false;
 
-            if (transform.Translation.X < MinFrustumAABB.X - margin)
+            if (x < MinFrustumAABB.X - margin)
                 return false;
 
-            if (transform.Translation.Y < MinFrustumAABB.Y - margin)
+            if (y < MinFrustumAABB.Y - margin)
                 return false;
 
-            if (transform.Translation.Z < MinFrustumAABB.Z - margin)
+            if (z < MinFrustumAABB.Z - margin)
                 return false;
 
             return true;

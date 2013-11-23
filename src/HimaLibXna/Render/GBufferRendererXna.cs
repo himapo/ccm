@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Shader;
 using HimaLib.Math;
 using HimaLib.Texture;
+using HimaLib.Debug;
 
 namespace HimaLib.Render
 {
@@ -13,8 +14,6 @@ namespace HimaLib.Render
         GBufferShader Shader = new GBufferShader();
 
         Microsoft.Xna.Framework.Matrix[] ModelBones;
-
-        FrustumCulling FrustumCulling = new FrustumCulling();
 
         InstancingType InstancingType;
 
@@ -38,15 +37,14 @@ namespace HimaLib.Render
 
             if (param.InstancingType == InstancingType.Instanced)
             {
-                FrustumCulling.UpdateFrustum(param.Camera);
+                LoadProfiler.Instance.BeginMark("GBufferToArray");
 
-                Shader.InstanceTransforms = param.InstanceTransforms.Where(t =>
+                Shader.InstanceTransforms = param.InstanceTransforms.Select(matrix =>
                 {
-                    return FrustumCulling.IsCulled(t, 3.0f);
-                }).Select(t =>
-                {
-                    return MathUtilXna.ToXnaMatrix(t.WorldMatrix);
+                    return MathUtilXna.ToXnaMatrix(matrix);
                 }).ToArray();
+
+                LoadProfiler.Instance.EndMark();
             }
         }
 

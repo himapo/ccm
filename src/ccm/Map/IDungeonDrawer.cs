@@ -9,6 +9,6 @@ namespace ccm.Map
 {
     public interface IDungeonDrawer
     {
-        void DrawMapCube(IModel model, bool updated, List<AffineTransform> transforms);
+        void DrawMapCube(IModel model, bool updated, List<Matrix> transforms);
     }
 }

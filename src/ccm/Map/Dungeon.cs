@@ -26,7 +26,7 @@ namespace ccm.Map
 
         DungeonMap DungeonMap = new DungeonMap() { Rand = GameRand.Instance };
 
-        List<AffineTransform> CubeTransforms = new List<AffineTransform>();
+        List<Matrix> CubeTransforms = new List<Matrix>();
 
         bool MapUpdated = false;
 
@@ -57,11 +57,7 @@ namespace ccm.Map
             var cubePosList = DungeonMap.GetCubePosList();
             foreach (var pos in cubePosList)
             {
-                CubeTransforms.Add(
-                    new HimaLib.Math.AffineTransform(
-                        HimaLib.Math.Vector3.One,
-                        HimaLib.Math.Vector3.Zero,
-                        new Vector3(pos.X, pos.Y - 1.5f, pos.Z)));
+                CubeTransforms.Add(Matrix.CreateTranslation(new Vector3(pos.X, pos.Y - 1.5f, pos.Z)));
             }
 
             MapUpdated = true;

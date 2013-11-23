@@ -34,7 +34,7 @@ namespace HimaLib.Render
 
         public bool TransformsUpdated { get; set; }
 
-        public List<AffineTransform> InstanceTransforms { get; set; }
+        public IEnumerable<Matrix> InstanceTransforms { get; set; }
 
         public ModelRenderParameter()
         {

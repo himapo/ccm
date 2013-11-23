@@ -16,6 +16,8 @@ namespace ccm.Map
 
         SimpleInstancingRenderParameter RenderParam = new SimpleInstancingRenderParameter();
 
+        FrustumCulling FrustumCulling = new FrustumCulling();
+
         public DungeonDrawer()
         {
             InitRenderParam();
@@ -26,11 +28,16 @@ namespace ccm.Map
             RenderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
         }
 
-        public void DrawMapCube(IModel model, bool updated, List<AffineTransform> transforms)
+        public void DrawMapCube(IModel model, bool updated, List<Matrix> transforms)
         {
+            FrustumCulling.UpdateFrustum(Camera);
+
             RenderParam.Camera = Camera;
             RenderParam.TransformsUpdated = updated;
-            RenderParam.InstanceTransforms = transforms;
+            RenderParam.InstanceTransforms = transforms.Where(matrix =>
+            {
+                return FrustumCulling.IsCulled(matrix, 3.0f);
+            });
 
             RenderSceneManager.Instance.RenderModel(model, RenderParam);
         }

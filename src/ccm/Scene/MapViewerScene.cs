@@ -38,7 +38,7 @@ namespace ccm.Scene
 
         DefaultDebugMenuDrawer debugMenuDrawer = new DefaultDebugMenuDrawer();
 
-        bool Drawable = false;
+        bool Drawable = true;
 
         public MapViewerScene()
         {
@@ -107,7 +107,7 @@ namespace ccm.Scene
         {
             renderParam.Transform = Matrix.Identity;
             renderParam.Camera = Camera;
-            renderParam.InstanceTransforms = new List<AffineTransform>();
+            renderParam.InstanceTransforms = new List<Matrix>();
             renderParam.AmbientLightColor = new Vector3(0.3f, 0.3f, 0.3f);
             renderParam.IsShadowReceiver = false;
         }
@@ -127,17 +127,16 @@ namespace ccm.Scene
         void ResetMap()
         {
             dungeonMap.Generate();
-            renderParam.InstanceTransforms.Clear();
+
+            var instanceTransforms = new List<Matrix>();
 
             var cubePosList = dungeonMap.GetCubePosList();
             foreach (var pos in cubePosList)
             {
-                renderParam.InstanceTransforms.Add(
-                    new HimaLib.Math.AffineTransform(
-                        HimaLib.Math.Vector3.One,
-                        HimaLib.Math.Vector3.Zero,
-                        pos));
+                instanceTransforms.Add(Matrix.CreateTranslation(pos));
             }
+
+            renderParam.InstanceTransforms = instanceTransforms;
 
             renderParam.TransformsUpdated = true;
         }
@@ -173,7 +172,7 @@ namespace ccm.Scene
 
             renderParam.TransformsUpdated = false;
 
-            //if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Jump))
+            if (InputAccessor.IsPush(ControllerLabel.Main, BooleanDeviceLabel.Jump))
             {
                 ResetMap();
             }
