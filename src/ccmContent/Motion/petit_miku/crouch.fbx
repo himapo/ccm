@@ -9,11 +9,11 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2013
-		Month: 08
-		Day: 24
-		Hour: 15
-		Minute: 46
-		Second: 03
+		Month: 11
+		Day: 23
+		Hour: 19
+		Minute: 45
+		Second: 38
 		Millisecond: 0
 	}
 	Creator: "FBX SDK/FBX Plugins build 20070228"
@@ -21,7 +21,7 @@ FBXHeaderExtension:  {
 		FlagPLE: 0
 	}
 }
-CreationTime: "2013-08-24 15:46:03:000"
+CreationTime: "2013-11-23 19:45:38:000"
 Creator: "Blender version 2.64 (sub 0)"
 
 ; Object definitions
@@ -12648,9 +12648,9 @@ Connections:  {
 ;----------------------------------------------------
 
 Takes:  {
-	Current: "clouch"
-	Take: "clouch" {
-		FileName: "clouch.tak"
+	Current: "crouch"
+	Take: "crouch" {
+		FileName: "crouch.tak"
 		LocalTime: -769769299,769769300
 		ReferenceTime: -769769299,769769300
 
@@ -27344,7 +27344,7 @@ Version5:  {
 		SnapOnFrames: 0
 		ReferenceTimeIndex: -1
 		TimeLineStartTime: -769769299
-		TimeLineStopTime: 20783771100
+		TimeLineStopTime: 60811774700
 	}
 	RendererSetting:  {
 		DefaultCamera: "Producer Perspective"
