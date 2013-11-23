@@ -38,6 +38,8 @@ namespace ccm.Enemy
         // システム
         HimaLib.Math.IRand GameRand { get { return System.GameRand.Instance; } }
 
+        float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
+
         // 実体
         Enemy Enemy;
 
@@ -66,6 +68,8 @@ namespace ccm.Enemy
         int HitPoint;
 
         float Speed;
+
+        float ScaledSpeed { get { return Speed * UpdateTimeScale; } }
 
         float Distance;
 
@@ -167,8 +171,8 @@ namespace ccm.Enemy
                 vecToPlayer.Normalize();
 
                 var position = Transform.Translation;
-                position.X += vecToPlayer.X * Speed;
-                position.Z += vecToPlayer.Y * Speed;
+                position.X += vecToPlayer.X * ScaledSpeed;
+                position.Z += vecToPlayer.Y * ScaledSpeed;
                 Transform.Translation = position;
             }
         }

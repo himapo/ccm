@@ -56,13 +56,13 @@ namespace ccm.Player
 
         bool IsMove { get { return PressUp || PressDown || PressLeft || PressRight; } }
 
-        float VelocityRun { get { return 0.5f; } }
-        float VelocityWalk { get { return 0.1f; } }
-        float VelocityDash { get { return 0.9f; } }
-        float VelocityRotate { get { return 20.0f; } }
-        float VelocityStep { get { return 1.2f; } }
+        float VelocityRun { get { return 0.5f * UpdateTimeScale; } }
+        float VelocityWalk { get { return 0.1f * UpdateTimeScale; } }
+        float VelocityDash { get { return 0.9f * UpdateTimeScale; } }
+        float VelocityRotate { get { return 20.0f * UpdateTimeScale; } }
+        float VelocityStep { get { return 1.2f * UpdateTimeScale; } }
 
-        float AccelFall { get { return -0.01f; } }
+        float AccelFall { get { return -0.01f * UpdateTimeScale; } }
 
         float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
 

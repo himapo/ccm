@@ -5,6 +5,7 @@ using System.Text;
 using HimaLib.Camera;
 using HimaLib.Input;
 using HimaLib.Math;
+using HimaLib.System;
 using ccm.Input;
 
 namespace ccm.Camera
@@ -51,6 +52,14 @@ namespace ccm.Camera
 
         public bool RotWithoutKey { get; set; }
 
+        float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
+
+        public float ScaledEyeZInterval { get { return EyeZInterval * UpdateTimeScale; } }
+
+        public float ScaledRotInterval { get { return RotInterval * UpdateTimeScale; } }
+
+        public float ScaledPanInterval { get { return PanInterval * UpdateTimeScale; } }
+
         public ViewerCameraUpdater(CameraBase camera, IController controller)
         {
             this.camera = camera;
@@ -94,18 +103,18 @@ namespace ccm.Camera
             // rotate
             if (RotWithoutKey || controller.IsPress((int)BooleanDeviceLabel.MouseSub))
             {
-                rotX += RotInterval * controller.GetMoveY((int)PointingDeviceLabel.Mouse0);
+                rotX += ScaledRotInterval * controller.GetMoveY((int)PointingDeviceLabel.Mouse0);
                 rotX = MathUtil.Clamp(rotX, MinRotX, MaxRotX);
-                rotY -= RotInterval * controller.GetMoveX((int)PointingDeviceLabel.Mouse0);
+                rotY -= ScaledRotInterval * controller.GetMoveX((int)PointingDeviceLabel.Mouse0);
             }
             else if (EnablePan && controller.IsPress((int)BooleanDeviceLabel.MouseMiddle))
             {
-                pan -= horizontal * (PanInterval * controller.GetMoveX((int)PointingDeviceLabel.Mouse0));
-                pan += vertical * (PanInterval * controller.GetMoveY((int)PointingDeviceLabel.Mouse0));
+                pan -= horizontal * (ScaledPanInterval * controller.GetMoveX((int)PointingDeviceLabel.Mouse0));
+                pan += vertical * (ScaledPanInterval * controller.GetMoveY((int)PointingDeviceLabel.Mouse0));
             }
             else
             {
-                eyeZ -= EyeZInterval * controller.GetDigitalDelta((int)DigitalDeviceLabel.MouseWheel0);
+                eyeZ -= ScaledEyeZInterval * controller.GetDigitalDelta((int)DigitalDeviceLabel.MouseWheel0);
                 eyeZ = MathUtil.Clamp(eyeZ, MinEyeZ, MaxEyeZ);
             }
 

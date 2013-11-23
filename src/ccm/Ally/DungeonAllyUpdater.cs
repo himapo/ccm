@@ -35,6 +35,8 @@ namespace ccm.Ally
         // システム
         HimaLib.Math.IRand GameRand { get { return System.GameRand.Instance; } }
 
+        float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
+
         // 実体
         Ally Ally;
 
@@ -59,6 +61,8 @@ namespace ccm.Ally
         int Frame = 0;
 
         float Speed;
+
+        float ScaledSpeed { get { return Speed * UpdateTimeScale; } }
 
         float Distance;
 
@@ -139,8 +143,8 @@ namespace ccm.Ally
                 vecToPlayer.Normalize();
 
                 var position = Transform.Translation;
-                position.X += vecToPlayer.X * Speed;
-                position.Z += vecToPlayer.Y * Speed;
+                position.X += vecToPlayer.X * ScaledSpeed;
+                position.Z += vecToPlayer.Y * ScaledSpeed;
                 Transform.Translation = position;
             }
         }
