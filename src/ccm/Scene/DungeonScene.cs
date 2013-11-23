@@ -176,8 +176,8 @@ namespace ccm.Scene
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
 
-            Dungeon.Drawable = false;
-            CollisionManager.Drawable = true;
+            Dungeon.Drawable = true;
+            CollisionManager.Drawable = false;
         }
 
         void UpdateStateInit()
@@ -252,7 +252,7 @@ namespace ccm.Scene
 
         void InitCamera()
         {
-            Camera.Near = 20.0f;
+            Camera.Near = 2.0f;
             Camera.Far = 200.0f;
 
             cameraUpdater.Reset();
