@@ -290,6 +290,26 @@ namespace ccm.System
                     SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
                 });
 
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.DEBUG,
+                new DebugRenderPath()
+                {
+                    //Enabled = false,
+                    Name = "Debug",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.HDRBuffer,
+                });
+
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.TRANSLUCENT,
+                new TranslucentRenderPath()
+                {
+                    Enabled = false,
+                    Name = "Translucent",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.HDRBuffer,
+                });
+
             ToneMappingRenderParameter = new ToneMappingRenderParameter()
             {
                 HDRScene = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.HDRBuffer),
@@ -333,26 +353,6 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                     Billboard = BillboardFactory.Instance.Create(),
                     RenderParam = ToneMappingRenderParameter,
-                });
-
-            RenderSceneManager.Instance.AddPath(
-                RenderPathType.DEBUG,
-                new DebugRenderPath()
-                {
-                    //Enabled = false,
-                    Name = "Debug",
-                    RenderDevice = RenderDeviceFactory.Instance.Create(),
-                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
-                });
-
-            RenderSceneManager.Instance.AddPath(
-                RenderPathType.TRANSLUCENT,
-                new TranslucentRenderPath()
-                {
-                    Enabled = false,
-                    Name = "Translucent",
-                    RenderDevice = RenderDeviceFactory.Instance.Create(),
-                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
 
             RenderSceneManager.Instance.AddPath(
