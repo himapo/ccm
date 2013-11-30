@@ -28,14 +28,8 @@ namespace HimaLib.Render
                 return;
             }
 
-            LoadProfiler.Instance.BeginMark("OpaqueToArray");
-
-            Shader.InstanceTransforms = param.InstanceTransforms.Select(matrix =>
-            {
-                return MathUtilXna.ToXnaMatrix(matrix);
-            }).ToArray();
-
-            LoadProfiler.Instance.EndMark();
+            Shader.InstanceTransforms = FrameCacheData.Instance.InstanceTransformsToArray(param.InstanceTransforms);
+            Shader.InstanceTransformsLength = FrameCacheData.Instance.InstanceTransformsLength;
 
             Shader.TransformsUpdated = param.TransformsUpdated;
             Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);

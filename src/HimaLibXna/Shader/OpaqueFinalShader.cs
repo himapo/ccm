@@ -24,6 +24,8 @@ namespace HimaLib.Shader
 
         public Matrix[] InstanceTransforms { get; set; }
 
+        public int InstanceTransformsLength { get; set; }
+
         public bool TransformsUpdated { get; set; }
         
         public Matrix View { get; set; }
@@ -96,10 +98,12 @@ namespace HimaLib.Shader
 
         public void RenderInstatncedModel()
         {
-            if (InstanceTransforms.Length == 0)
+            if (InstanceTransforms.Length == 0 || InstanceTransformsLength == 0)
+            {
                 return;
+            }
 
-            InstancedVertexBuffer.Setup(InstanceTransforms);
+            InstancedVertexBuffer.Setup(InstanceTransforms, InstanceTransformsLength);
 
             if (ShadowEnabled)
             {
@@ -136,7 +140,7 @@ namespace HimaLib.Shader
                             part.NumVertices,
                             part.StartIndex,
                             part.PrimitiveCount,
-                            InstanceTransforms.Length);
+                            InstanceTransformsLength);
                     }
                 }
             }

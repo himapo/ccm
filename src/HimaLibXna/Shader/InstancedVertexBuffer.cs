@@ -24,21 +24,21 @@ namespace HimaLib.Shader
             new VertexElement(48, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 3)
         );
 
-        public void Setup(Matrix[] instanceTransforms)
+        public void Setup(Matrix[] instanceTransforms, int length)
         {
             // 頂点バッファーに必要なインスタンスを保持するための容量が足りない場合、バッファー サイズを増やす。
             if ((VertexBuffer == null) ||
-                (instanceTransforms.Length > VertexBuffer.VertexCount))
+                (length > VertexBuffer.VertexCount))
             {
                 if (VertexBuffer != null)
                     VertexBuffer.Dispose();
 
                 VertexBuffer = new DynamicVertexBuffer(GraphicsDevice, instanceVertexDeclaration,
-                                                               instanceTransforms.Length, BufferUsage.WriteOnly);
+                                                               length, BufferUsage.WriteOnly);
             }
 
             // 最新のトランスフォーム行列を InstanceVertexBuffer へコピーする。
-            VertexBuffer.SetData(instanceTransforms, 0, instanceTransforms.Length, SetDataOptions.Discard);
+            VertexBuffer.SetData(instanceTransforms, 0, length, SetDataOptions.Discard);
         }
     }
 }

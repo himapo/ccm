@@ -39,10 +39,8 @@ namespace HimaLib.Render
             {
                 LoadProfiler.Instance.BeginMark("GBufferToArray");
 
-                Shader.InstanceTransforms = param.InstanceTransforms.Select(matrix =>
-                {
-                    return MathUtilXna.ToXnaMatrix(matrix);
-                }).ToArray();
+                Shader.InstanceTransforms = FrameCacheData.Instance.InstanceTransformsToArray(param.InstanceTransforms);
+                Shader.InstanceTransformsLength = FrameCacheData.Instance.InstanceTransformsLength;
 
                 LoadProfiler.Instance.EndMark();
             }
