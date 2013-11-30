@@ -363,6 +363,8 @@ namespace ccm.System
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
+
+            FrameCacheData.Create();
         }
 
         void InitDebugMenu()
@@ -449,6 +451,8 @@ namespace ccm.System
 
         void UpdateStateMain()
         {
+            FrameCacheDataBase.Instance.Clear();
+
             DebugMenuUpdater.Update();
 
             LoadProfiler.StartFrame();

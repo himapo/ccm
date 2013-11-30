@@ -143,6 +143,8 @@ namespace HimaLib.Render
 
         void InnerRender()
         {
+            FrameCacheDataBase.Instance.Clear();
+
             foreach (var path in PathDic.Values)
             {
                 path.PointLights = PointLights;

@@ -163,6 +163,7 @@
     <Compile Include="Render\DeferredRenderPath.cs" />
     <Compile Include="Render\DepthBillboardRenderParameter.cs" />
     <Compile Include="Render\DepthModelRenderParameter.cs" />
+    <Compile Include="Render\FrameCacheDataBase.cs" />
     <Compile Include="Render\FrustumCulling.cs" />
     <Compile Include="Render\GBufferBillboardRenderParameter.cs" />
     <Compile Include="Render\GBufferModelRenderParameter.cs" />

@@ -62,8 +62,10 @@ namespace HimaLib.Render
                     Shader.RenderStaticModel();
                     break;
                 case InstancingType.Instanced:
+                    LoadProfiler.Instance.BeginMark("GBufferRender");
                     SetModelBones(model);
                     Shader.RenderInstancedModel();
+                    LoadProfiler.Instance.EndMark();
                     break;
             }
         }

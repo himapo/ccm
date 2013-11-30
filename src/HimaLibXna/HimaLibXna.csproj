@@ -157,6 +157,7 @@
     <Compile Include="Render\DefaultModelRendererXna.cs" />
     <Compile Include="Render\DeferredRenderer.cs" />
     <Compile Include="Render\DepthRendererXna.cs" />
+    <Compile Include="Render\FrameCacheData.cs" />
     <Compile Include="Render\GBufferRendererXna.cs" />
     <Compile Include="Render\IAABBRendererXna.cs" />
     <Compile Include="Render\IBillboardRendererXna.cs" />

@@ -54,7 +54,7 @@ namespace HimaLib.Render
 
         public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
-            LoadProfiler.Instance.BeginMark("RenderInstancing");
+            LoadProfiler.Instance.BeginMark("OpaqueRender");
 
             Shader.Model = model;
             SetModelBones(model);

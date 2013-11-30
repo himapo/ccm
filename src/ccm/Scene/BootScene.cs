@@ -52,7 +52,7 @@ namespace ccm.Scene
 
         void InitHud()
         {
-            renderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/miki");
+            renderParam.Texture = TextureFactory.Instance.CreateFromImage("Texture/kotoridori");
             renderParam.Alpha = 1.0f;
             renderParam.Transform = new AffineTransform(
                 Vector3.One,
