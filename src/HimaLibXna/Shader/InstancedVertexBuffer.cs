@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HimaLib.System;
+using HimaLib.Render;
 
 namespace HimaLib.Shader
 {
@@ -24,21 +25,21 @@ namespace HimaLib.Shader
             new VertexElement(48, VertexElementFormat.Vector4, VertexElementUsage.BlendWeight, 3)
         );
 
-        public void Setup(Matrix[] instanceTransforms, int length)
+        public void Setup(InstanceTransforms instanceTransforms)
         {
             // 頂点バッファーに必要なインスタンスを保持するための容量が足りない場合、バッファー サイズを増やす。
             if ((VertexBuffer == null) ||
-                (length > VertexBuffer.VertexCount))
+                (instanceTransforms.Length > VertexBuffer.VertexCount))
             {
                 if (VertexBuffer != null)
                     VertexBuffer.Dispose();
 
                 VertexBuffer = new DynamicVertexBuffer(GraphicsDevice, instanceVertexDeclaration,
-                                                               length, BufferUsage.WriteOnly);
+                                                               instanceTransforms.Length, BufferUsage.WriteOnly);
             }
 
             // 最新のトランスフォーム行列を InstanceVertexBuffer へコピーする。
-            VertexBuffer.SetData(instanceTransforms, 0, length, SetDataOptions.Discard);
+            VertexBuffer.SetData(instanceTransforms.Matrices, 0, instanceTransforms.Length, SetDataOptions.Discard);
         }
     }
 }

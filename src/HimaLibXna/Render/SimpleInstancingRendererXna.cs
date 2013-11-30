@@ -29,7 +29,6 @@ namespace HimaLib.Render
             }
 
             Shader.InstanceTransforms = FrameCacheData.Instance.InstanceTransformsToArray(param.InstanceTransforms);
-            Shader.InstanceTransformsLength = FrameCacheData.Instance.InstanceTransformsLength;
 
             Shader.TransformsUpdated = param.TransformsUpdated;
             Shader.View = MathUtilXna.ToXnaMatrix(param.Camera.View);

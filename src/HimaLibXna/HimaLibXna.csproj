@@ -164,6 +164,7 @@
     <Compile Include="Render\ICylinderRendererXna.cs" />
     <Compile Include="Render\IModelRendererMMDX.cs" />
     <Compile Include="Render\IModelRendererXna.cs" />
+    <Compile Include="Render\InstanceTransforms.cs" />
     <Compile Include="Render\ISphereRendererXna.cs" />
     <Compile Include="Render\LightBufferRenderer.cs" />
     <Compile Include="Render\ModelRendererFactoryMMDX.cs" />

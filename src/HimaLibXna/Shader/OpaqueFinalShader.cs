@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using HimaLib.System;
+using HimaLib.Render;
 
 namespace HimaLib.Shader
 {
@@ -22,9 +23,7 @@ namespace HimaLib.Shader
 
         public Matrix[] ModelBones { get; set; }
 
-        public Matrix[] InstanceTransforms { get; set; }
-
-        public int InstanceTransformsLength { get; set; }
+        public InstanceTransforms InstanceTransforms { get; set; }
 
         public bool TransformsUpdated { get; set; }
         
@@ -98,12 +97,12 @@ namespace HimaLib.Shader
 
         public void RenderInstatncedModel()
         {
-            if (InstanceTransforms.Length == 0 || InstanceTransformsLength == 0)
+            if (InstanceTransforms.Length == 0)
             {
                 return;
             }
 
-            InstancedVertexBuffer.Setup(InstanceTransforms, InstanceTransformsLength);
+            InstancedVertexBuffer.Setup(InstanceTransforms);
 
             if (ShadowEnabled)
             {
@@ -140,7 +139,7 @@ namespace HimaLib.Shader
                             part.NumVertices,
                             part.StartIndex,
                             part.PrimitiveCount,
-                            InstanceTransformsLength);
+                            InstanceTransforms.Length);
                     }
                 }
             }

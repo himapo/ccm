@@ -40,7 +40,6 @@ namespace HimaLib.Render
                 LoadProfiler.Instance.BeginMark("GBufferToArray");
 
                 Shader.InstanceTransforms = FrameCacheData.Instance.InstanceTransformsToArray(param.InstanceTransforms);
-                Shader.InstanceTransformsLength = FrameCacheData.Instance.InstanceTransformsLength;
 
                 LoadProfiler.Instance.EndMark();
             }
