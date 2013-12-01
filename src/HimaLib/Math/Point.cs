@@ -34,13 +34,13 @@ namespace HimaLib.Math
             if (obj == null)
                 return base.Equals(obj);
 
-            if (!(obj is Rectangle))
+            if (!(obj is Point))
             {
-                throw new InvalidCastException("The 'obj' argument is not a Rectangle object.");
+                throw new InvalidCastException("The 'obj' argument is not a Point object.");
             }
             else
             {
-                return Equals((Rectangle)obj);
+                return Equals((Point)obj);
             }
         }
 
