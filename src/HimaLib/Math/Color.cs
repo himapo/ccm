@@ -102,14 +102,14 @@ namespace HimaLib.Math
             return (this == other);
         }
 
-        public override bool Equals(object other)
+        public override bool Equals(object obj)
         {
-            if (other == null || !(other is Color))
+            if (obj == null || !(obj is Color))
             {
                 return false;
             }
 
-            return this.Equals((Color)other);
+            return this.Equals((Color)obj);
         }
 
         public override int GetHashCode()

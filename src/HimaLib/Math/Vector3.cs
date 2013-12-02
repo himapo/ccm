@@ -71,9 +71,49 @@ namespace HimaLib.Math
             return new Vector3(value1.X + value2.X, value1.Y + value2.Y, value1.Z + value2.Z);
         }
 
+        public static bool operator !=(Vector3 value1, Vector3 value2)
+        {
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+
+            return (value1.X != value2.X) || (value1.Y != value2.Y) || (value1.Z != value2.Z);
+        }
+
+        public static bool operator ==(Vector3 value1, Vector3 value2)
+        {
+            if (value1 == null || value2 == null)
+            {
+                return false;
+            }
+
+            return !(value1 != value2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null || !(obj is Vector3))
+            {
+                return false;
+            }
+
+            return Equals((Vector3)obj);
+        }
+
         public bool Equals(Vector3 other)
         {
-            return (X == other.X && Y == other.Y && Z == other.Z);
+            if (other == null)
+            {
+                return false;
+            }
+
+            return (this == other);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public static Vector3 Cross(Vector3 vector1, Vector3 vector2)

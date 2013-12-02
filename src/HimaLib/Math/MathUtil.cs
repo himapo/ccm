@@ -75,6 +75,11 @@ namespace HimaLib.Math
             return 1.0f / Tan(radians);
         }
 
+        public static float Abs(float value)
+        {
+            return global::System.Math.Abs(value);
+        }
+
         /// <summary>
         /// ワールド座標をスクリーン座標に変換
         /// </summary>

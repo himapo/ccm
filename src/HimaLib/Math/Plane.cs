@@ -5,31 +5,38 @@ using System.Text;
 
 namespace HimaLib.Math
 {
-    public struct Point : IEquatable<Point>
+    public struct Plane : IEquatable<Plane>
     {
-        public int X;
+        public float D;
 
-        public int Y;
+        public Vector3 Normal;
 
-        public static Point Zero { get { return new Point(0, 0); } }
-
-        public Point(int x, int y)
+        public Plane(Vector3 normal, float d)
         {
-            X = x;
-            Y = y;
+            D = d;
+            Normal = normal;
         }
 
-        public static bool operator !=(Point a, Point b)
+        public Plane(Vector3 point1, Vector3 point2, Vector3 point3)
+        {
+            Normal = Vector3.Cross(point2 - point1, point3 - point1);
+
+            D = -Vector3.Dot(Normal, point1) / Normal.Length();
+
+            Normal.Normalize();
+        }
+
+        public static bool operator !=(Plane a, Plane b)
         {
             if (a == null || b == null)
             {
                 return false;
             }
 
-            return (a.X != b.X) || (a.Y != b.Y);
+            return (a.D != b.D) || (a.Normal != b.Normal);
         }
 
-        public static bool operator ==(Point a, Point b)
+        public static bool operator ==(Plane a, Plane b)
         {
             if (a == null || b == null)
             {
@@ -41,15 +48,15 @@ namespace HimaLib.Math
 
         public override bool Equals(object obj)
         {
-            if (obj == null || !(obj is Point))
+            if (obj == null || !(obj is Plane))
             {
                 return false;
             }
 
-            return Equals((Point)obj);
+            return Equals((Plane)obj);
         }
 
-        public bool Equals(Point other)
+        public bool Equals(Plane other)
         {
             if (other == null)
             {
