@@ -253,7 +253,7 @@ namespace ccm.Scene
         void InitCamera()
         {
             Camera.Near = 2.0f;
-            Camera.Far = 200.0f;
+            Camera.Far = 500.0f;
 
             cameraUpdater.Reset();
             RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
@@ -307,6 +307,14 @@ namespace ccm.Scene
                 Selectable = true,
                 Getter = () => { return CollisionManager.Drawable; },
                 Setter = (b) => { CollisionManager.Drawable = b; },
+            });
+
+            debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeTunableBool()
+            {
+                Label = "簡易視錐台カリング",
+                Selectable = true,
+                Getter = () => { return DungeonDrawer.IsLightCulling; },
+                Setter = (b) => { DungeonDrawer.IsLightCulling = b; },
             });
 
             debugMenu.AddChild(debugMenu.RootNode.Label, new HimaLib.Debug.DebugMenuNodeExecutable()

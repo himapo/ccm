@@ -6,6 +6,7 @@ using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.Render;
 using HimaLib.Camera;
+using HimaLib.Debug;
 using ccm.Render;
 
 namespace ccm.Map
@@ -13,6 +14,8 @@ namespace ccm.Map
     public class DungeonDrawer : IDungeonDrawer
     {
         public CameraBase Camera { get; set; }
+
+        public bool IsLightCulling { get; set; }
 
         SimpleInstancingRenderParameter RenderParam = new SimpleInstancingRenderParameter();
 
@@ -36,7 +39,10 @@ namespace ccm.Map
             RenderParam.TransformsUpdated = updated;
             RenderParam.InstanceTransforms = transforms.Where(matrix =>
             {
-                return FrustumCulling.IsCulled(matrix, 3.0f);
+                return
+                    IsLightCulling ?
+                    FrustumCulling.IsCulledLight(matrix, 3.0f) :
+                    FrustumCulling.IsCulled(matrix, 3.0f);
             });
 
             RenderSceneManager.Instance.RenderModel(model, RenderParam);
