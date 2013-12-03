@@ -67,7 +67,7 @@ namespace HimaLib.Math
         };
 
         [TestCaseSource("TestDataDistanceNormal")]
-        public void XnaCompatible(TestDataTypeDistanceNormal data)
+        public void FromDistanceNormal(TestDataTypeDistanceNormal data)
         {
             var himaPlane = new HimaLib.Math.Plane(data.Normal, data.Distance);
 
@@ -81,7 +81,7 @@ namespace HimaLib.Math
         }
 
         [TestCaseSource("TestDataPoints")]
-        public void XnaCompatible(TestDataTypePoints data)
+        public void FromPoints(TestDataTypePoints data)
         {
             var himaPlane = new HimaLib.Math.Plane(data.Point1, data.Point2, data.Point3);
 
@@ -94,6 +94,24 @@ namespace HimaLib.Math
             Assert.AreEqual(xnaPlane.Normal.Y, himaPlane.Normal.Y, Delta);
             Assert.AreEqual(xnaPlane.Normal.Z, himaPlane.Normal.Z, Delta);
             Assert.AreEqual(xnaPlane.D, himaPlane.D, Delta);
+        }
+
+        [TestCaseSource("TestDataPoints")]
+        public void DotCoordinate(TestDataTypePoints data)
+        {
+            var himaPlane = new HimaLib.Math.Plane(data.Point1, data.Point2, data.Point3);
+
+            var xnaPlane = new Microsoft.Xna.Framework.Plane(
+                MathUtilXna.ToXnaVector(data.Point1),
+                MathUtilXna.ToXnaVector(data.Point2),
+                MathUtilXna.ToXnaVector(data.Point3));
+
+            var coord = new Vector3(0.5f, 2.4f, -1.1f);
+
+            Assert.AreEqual(
+                xnaPlane.DotCoordinate(MathUtilXna.ToXnaVector(coord)),
+                himaPlane.DotCoordinate(coord),
+                Delta);
         }
     }
 }

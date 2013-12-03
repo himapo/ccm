@@ -70,5 +70,15 @@ namespace HimaLib.Math
         {
             return base.GetHashCode();
         }
+
+        public void Normalize()
+        {
+            Normal.Normalize();
+        }
+
+        public float DotCoordinate(Vector3 value)
+        {
+            return Vector3.Dot(value, Normal) + D;
+        }
     }
 }
