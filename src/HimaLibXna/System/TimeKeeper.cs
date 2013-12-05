@@ -68,10 +68,6 @@ namespace HimaLib.System
                 AverageFrameRate = totalFrame / totalTime;
                 totalTime = 0.0f;
                 totalFrame = 0;
-                if (AverageFrameRate > 999.99f)
-                {
-                    AverageFrameRate = 999.99f;
-                }
             }
         }
     }
