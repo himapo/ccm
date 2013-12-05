@@ -89,6 +89,7 @@ namespace HimaLib.System
         void InitializeProperty()
         {
             IsFixedTimeStep = Initializer.FixedFrameRate;
+            TargetElapsedTime = new TimeSpan((long)((1.0f / Initializer.FPS) * 1000 * 1000 * 10));
             IsMouseVisible = Initializer.MouseVisible;
         }
 
