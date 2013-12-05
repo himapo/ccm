@@ -77,6 +77,8 @@ namespace HimaLib.System
                 ? PresentInterval.Immediate
                 : PresentInterval.One;
 
+            graphics.SynchronizeWithVerticalRetrace = Initializer.VSyncEnable;
+
             graphics.PreferredBackBufferWidth = Initializer.ScreenWidth;
             graphics.PreferredBackBufferHeight = Initializer.ScreenHeight;
             graphics.PreferMultiSampling = Initializer.MSAAEnable;
