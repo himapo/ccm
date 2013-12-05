@@ -54,15 +54,6 @@ namespace HimaLib.Model
             AnimationPlayer.Update(TimeSpan.FromSeconds(elapsedTimeSeconds), true);
 
             AnimationPlayer.GetBoneTransforms().CopyTo(BoneTransforms, 0);
-
-            RotationTexture.Flip();
-            TranslationTexture.Flip();
-
-            RotationTexture.Texture.SetData<Microsoft.Xna.Framework.Quaternion>(AnimationPlayer.GetSkinRotations());
-            TranslationTexture.Texture.SetData<Microsoft.Xna.Framework.Vector4>(AnimationPlayer.GetSkinTraslations());
-
-            TextureSize.X = RotationTexture.Texture.Width;
-            TextureSize.Y = RotationTexture.Texture.Height;
         }
 
         public bool Init()
@@ -129,6 +120,15 @@ namespace HimaLib.Model
             {
                 return;
             }
+
+            RotationTexture.Flip();
+            TranslationTexture.Flip();
+
+            RotationTexture.Texture.SetData<Microsoft.Xna.Framework.Quaternion>(AnimationPlayer.GetSkinRotations());
+            TranslationTexture.Texture.SetData<Microsoft.Xna.Framework.Vector4>(AnimationPlayer.GetSkinTraslations());
+
+            TextureSize.X = RotationTexture.Texture.Width;
+            TextureSize.Y = RotationTexture.Texture.Height;
 
             skinnedModelRenderer.BoneRotationTexture = RotationTexture.Texture;
             skinnedModelRenderer.BoneTranslationTexture = TranslationTexture.Texture;
