@@ -33,6 +33,8 @@ namespace HimaLib.System
 
         public override void Apply()
         {
+            XnaGame.VSyncEnable = VSyncEnable;
+
             XnaGame.ApplyGraphicsChanges();
         }
     }

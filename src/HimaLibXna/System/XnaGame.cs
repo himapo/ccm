@@ -23,7 +23,11 @@ namespace HimaLib.System
 
         public IDrawer RootDrawer { get; set; }
 
-        public bool VSyncEnable { get { return graphics.SynchronizeWithVerticalRetrace; } }
+        public bool VSyncEnable
+        {
+            get { return graphics.SynchronizeWithVerticalRetrace; }
+            set { graphics.SynchronizeWithVerticalRetrace = value; }
+        }
 
         GraphicsDeviceManager graphics;
 
