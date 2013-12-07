@@ -197,6 +197,7 @@
     <Compile Include="Script\Script.cs" />
     <Compile Include="Script\ScriptManager.cs" />
     <Compile Include="Sound\ISound.cs" />
+    <Compile Include="System\GraphicsOptionBase.cs" />
     <Compile Include="System\IGameInitializer.cs" />
     <Compile Include="System\IDrawer.cs" />
     <Compile Include="System\IUpdater.cs" />

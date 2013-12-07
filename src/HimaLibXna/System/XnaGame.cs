@@ -23,6 +23,8 @@ namespace HimaLib.System
 
         public IDrawer RootDrawer { get; set; }
 
+        public bool VSyncEnable { get { return graphics.SynchronizeWithVerticalRetrace; } }
+
         GraphicsDeviceManager graphics;
 
         bool disposed = false;
@@ -83,6 +85,11 @@ namespace HimaLib.System
             graphics.PreferredBackBufferHeight = Initializer.ScreenHeight;
             graphics.PreferMultiSampling = Initializer.MSAAEnable;
 
+            ApplyGraphicsChanges();
+        }
+
+        public void ApplyGraphicsChanges()
+        {
             graphics.ApplyChanges();
         }
 

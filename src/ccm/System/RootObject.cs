@@ -73,6 +73,8 @@ namespace ccm.System
             keyboard.Game = Game;
             mouse.Game = Game;
 
+            InitSystem();
+
             InitController();
 
             SoundManager.Initialize();
@@ -85,6 +87,11 @@ namespace ccm.System
 
             UpdateState = UpdateStateMain;
             DrawState = DrawStateMain;
+        }
+
+        void InitSystem()
+        {
+            GraphicsOption.Create();
         }
 
         void InitController()
@@ -449,7 +456,15 @@ namespace ccm.System
 
             DebugMenu.AddChild(graphicsOptionLabel, new DebugMenuNodeExecutable()
             {
-                Label = "適用"
+                Label = "適用",
+                ExecFunc = GraphicsOptionBase.Instance.Apply,
+            });
+
+            DebugMenu.AddChild(graphicsOptionLabel, new DebugMenuNodeTunableBool
+            {
+                Label = "VSync有効",
+                Getter = () => { return GraphicsOptionBase.Instance.VSyncEnable; },
+                Setter = (value) => { GraphicsOptionBase.Instance.VSyncEnable = value; },
             });
         }
 

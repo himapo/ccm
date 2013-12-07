@@ -203,6 +203,7 @@
     <Compile Include="Sound\SoundXACT.cs" />
     <Compile Include="System\DefaultGameInitializer.cs" />
     <Compile Include="System\Game.cs" />
+    <Compile Include="System\GraphicsOption.cs" />
     <Compile Include="System\TimeKeeper.cs" />
     <Compile Include="System\XnaGame.cs" />
     <Compile Include="Texture\ImageTexture.cs" />
