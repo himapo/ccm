@@ -447,7 +447,8 @@ namespace ccm.System
         {
             var graphicsOptionNode = new DebugMenuNodeInternal()
             {
-                Label = "描画オプション"
+                Label = "描画オプション",
+                ExecFunc = GraphicsOptionBase.Instance.GetCurrentSetting,
             };
 
             DebugMenu.AddChild(DebugMenu.RootNode.Label, graphicsOptionNode);
