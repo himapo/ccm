@@ -106,9 +106,10 @@ namespace HimaLib.Debug
         {
             Advance();
 
+            CurrentNode.OnPushOK();
+
             if (!CurrentNode.HasChildren)
             {
-                CurrentNode.OnPushOK();
                 Back();
             }
         }

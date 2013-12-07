@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HimaLib.Debug
 {
-    public class DebugMenuNodeInternal : DebugMenuNode
+    public class DebugMenuNodeInternal : DebugMenuNodeExecutable
     {
         public override bool HasChildren
         {
