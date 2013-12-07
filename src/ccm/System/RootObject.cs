@@ -369,6 +369,8 @@ namespace ccm.System
 
         void InitDebugMenu()
         {
+            InitDebugMenuGraphicsOption();
+
             var nodeShowTarget = new DebugMenuNodeSelectable()
             {
                 Label = "レンダーターゲット表示",
@@ -432,6 +434,23 @@ namespace ccm.System
             };
 
             DebugMenu.AddChild(DebugMenu.RootNode.Label, nodeExposure);
+        }
+
+        void InitDebugMenuGraphicsOption()
+        {
+            var graphicsOptionNode = new DebugMenuNodeInternal()
+            {
+                Label = "描画オプション"
+            };
+
+            DebugMenu.AddChild(DebugMenu.RootNode.Label, graphicsOptionNode);
+
+            var graphicsOptionLabel = DebugMenu.RootNode.Label + "." + graphicsOptionNode.Label;
+
+            DebugMenu.AddChild(graphicsOptionLabel, new DebugMenuNodeExecutable()
+            {
+                Label = "適用"
+            });
         }
 
         void InitRenderTargetHud()

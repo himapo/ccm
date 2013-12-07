@@ -11,6 +11,7 @@ namespace HimaLib.Debug
 
         public DebugMenuNodeExecutable()
         {
+            ExecFunc = () => { };
         }
 
         public override void OnPushOK()
