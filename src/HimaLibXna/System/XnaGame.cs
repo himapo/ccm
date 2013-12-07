@@ -17,7 +17,7 @@ namespace HimaLib.System
 
         public static XnaGame Instance { get { return instance; } private set { instance = value; } }
 
-        public IGameInitializer Initializer { get; set; }
+        IGameInitializer Initializer { get; set; }
 
         public IUpdater RootUpdater { get; set; }
 
@@ -33,11 +33,17 @@ namespace HimaLib.System
 
         bool disposed = false;
 
-        public XnaGame()
+        public XnaGame(IGameInitializer initializer)
         {
             Instance = this;
 
+            Initializer = initializer;
+
+            Initializer.Initialize();
+
             graphics = new GraphicsDeviceManager(this);
+
+            InitializeGraphics();
 
             DebugSampleAccessor.CreateInstance(this);
         }
@@ -65,10 +71,6 @@ namespace HimaLib.System
         /// </summary>
         protected override void Initialize()
         {
-            Initializer.Initialize();
-
-            InitializeGraphics();
-
             InitializeProperty();
 
             InitializeSystemProperty();
@@ -78,18 +80,10 @@ namespace HimaLib.System
 
         void InitializeGraphics()
         {
-            GraphicsDevice.PresentationParameters.PresentationInterval =
-                (Initializer.FixedFrameRate || !Initializer.VSyncEnable)
-                ? PresentInterval.Immediate
-                : PresentInterval.One;
-
             graphics.SynchronizeWithVerticalRetrace = Initializer.VSyncEnable;
-
             graphics.PreferredBackBufferWidth = Initializer.ScreenWidth;
             graphics.PreferredBackBufferHeight = Initializer.ScreenHeight;
             graphics.PreferMultiSampling = Initializer.MSAAEnable;
-
-            ApplyGraphicsChanges();
         }
 
         public void ApplyGraphicsChanges()

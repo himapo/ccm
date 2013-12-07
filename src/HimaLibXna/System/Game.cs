@@ -24,10 +24,9 @@ namespace HimaLib.System
 
         public void Run(IUpdater RootUpdater, IDrawer RootDrawer)
         {
-            using (var game = new XnaGame())
+            using (var game = new XnaGame(Initializer))
             {
                 XnaGame = game;
-                game.Initializer = Initializer;
                 game.RootUpdater = RootUpdater;
                 game.RootDrawer = RootDrawer;
                 game.Run();
