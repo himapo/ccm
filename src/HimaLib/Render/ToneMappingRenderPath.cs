@@ -57,21 +57,5 @@ namespace HimaLib.Render
 
             RenderBillboard();
         }
-
-        void ClearTarget()
-        {
-            if (ColorClearEnabled && DepthClearEnabled)
-            {
-                RenderDevice.ClearAll(ClearColor);
-            }
-            else if (ColorClearEnabled)
-            {
-                RenderDevice.ClearColor(ClearColor);
-            }
-            else if (DepthClearEnabled)
-            {
-                RenderDevice.ClearDepth();
-            }
-        }
     }
 }

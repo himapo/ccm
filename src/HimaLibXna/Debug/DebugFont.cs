@@ -3,45 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using HimaLib.Math;
+using HimaLib.Model;
 
 namespace HimaLib.Debug
 {
-    public static class DebugFont
+    public class DebugFont : DebugFontBase
     {
-#if DEBUG
-        static SpriteDebugFont instance = new SpriteDebugFont();
-#else
-        static NullDebugFont instance = new NullDebugFont();
-#endif
-
-        static IDebugFont GetInstance()
+        public static void Create()
         {
-            return instance;
+            Instance = new DebugFont();
         }
 
-        public static void Initialize(string fontName)
+        DebugFont()
         {
-            GetInstance().Initialize(fontName);
         }
 
-        public static void Clear()
+        protected override Font CreateFont(string output)
         {
-            GetInstance().Clear();
+            return new FontXna()
+            {
+                String = output,
+            };
         }
 
         public static void Add(string output, float x, float y)
         {
-            GetInstance().Add(output, x, y);
+            Instance.Draw(output, x, y);
         }
 
         public static void Add(string output, float x, float y, Color fontColor, Color bgColor)
         {
-            GetInstance().Add(output, x, y, fontColor, bgColor);
-        }
-
-        public static void Draw()
-        {
-            GetInstance().Draw();
+            Instance.Draw(output, x, y, fontColor, bgColor);
         }
     }
 }

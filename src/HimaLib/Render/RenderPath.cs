@@ -34,6 +34,8 @@ namespace HimaLib.Render
 
         public IEnumerable<AABBInfo> AABBInfoList { get; set; }
 
+        public IEnumerable<FontInfo> FontInfoList { get; set; }
+
         public IRenderDevice RenderDevice { get; set; }
 
         public bool ColorClearEnabled { get; set; }
@@ -74,6 +76,8 @@ namespace HimaLib.Render
 
         public bool RenderAABBEnabled { get; set; }
 
+        public bool RenderFontEnabled { get; set; }
+
         public RenderPath()
         {
             Enabled = true;
@@ -100,6 +104,7 @@ namespace HimaLib.Render
             RenderSphereEnabled = false;
             RenderCylinderEnabled = false;
             RenderAABBEnabled = false;
+            RenderFontEnabled = false;
         }
 
         public virtual void Render()
@@ -109,33 +114,13 @@ namespace HimaLib.Render
                 return;
             }
 
-            if (RenderTargetIndices == null)
-            {
-                RenderDevice.SetRenderTarget(RenderTargetIndex);
-            }
-            else
-            {
-                RenderDevice.SetRenderTargets(RenderTargetIndices);
-            }
+            SetRenderTarget();
 
-            if (DepthSortEnabled)
-            {
-            }
+            DepthSort();
 
-            RenderDevice.SetDepthState(DepthTestEnabled, DepthWriteEnabled);
+            SetDepthState();
 
-            if (ColorClearEnabled && DepthClearEnabled)
-            {
-                RenderDevice.ClearAll(ClearColor);
-            }
-            else if (ColorClearEnabled)
-            {
-                RenderDevice.ClearColor(ClearColor);
-            }
-            else if (DepthClearEnabled)
-            {
-                RenderDevice.ClearDepth();
-            }
+            ClearTarget();
 
             if (RenderModelEnabled)
             {
@@ -160,6 +145,52 @@ namespace HimaLib.Render
             if (RenderAABBEnabled)
             {
                 RenderAABB();
+            }
+
+            if (RenderFontEnabled)
+            {
+                RenderFont();
+            }
+        }
+
+        protected void SetRenderTarget()
+        {
+            if (RenderTargetIndices == null)
+            {
+                RenderDevice.SetRenderTarget(RenderTargetIndex);
+            }
+            else
+            {
+                RenderDevice.SetRenderTargets(RenderTargetIndices);
+            }
+        }
+
+        protected void DepthSort()
+        {
+            if (DepthSortEnabled)
+            {
+                // TODO : implement depth sort
+            }
+        }
+
+        protected void SetDepthState()
+        {
+            RenderDevice.SetDepthState(DepthTestEnabled, DepthWriteEnabled);
+        }
+
+        protected void ClearTarget()
+        {
+            if (ColorClearEnabled && DepthClearEnabled)
+            {
+                RenderDevice.ClearAll(ClearColor);
+            }
+            else if (ColorClearEnabled)
+            {
+                RenderDevice.ClearColor(ClearColor);
+            }
+            else if (DepthClearEnabled)
+            {
+                RenderDevice.ClearDepth();
             }
         }
 
@@ -250,6 +281,14 @@ namespace HimaLib.Render
                 info.RenderParam.Camera = Camera;
                 info.RenderParam.DirectionalLights = DirectionalLights;
                 info.AABB.Render(info.RenderParam);
+            }
+        }
+
+        protected void RenderFont()
+        {
+            foreach (var info in FontInfoList)
+            {
+                info.Font.Render(info.RenderParam);
             }
         }
     }

@@ -37,6 +37,12 @@ namespace HimaLib.Render
         public AABBRenderParameter RenderParam { get; set; }
     }
 
+    public class FontInfo
+    {
+        public Font Font { get; set; }
+        public FontRenderParameter RenderParam { get; set; }
+    }
+
     public class RenderScene
     {
         Dictionary<int, IRenderPath> PathDic = new Dictionary<int, IRenderPath>();
@@ -54,6 +60,8 @@ namespace HimaLib.Render
         List<CylinderInfo> CylinderInfoList = new List<CylinderInfo>();
 
         List<AABBInfo> AABBInfoList = new List<AABBInfo>();
+
+        List<FontInfo> FontInfoList = new List<FontInfo>();
 
         public RenderScene()
         {
@@ -135,6 +143,11 @@ namespace HimaLib.Render
             AABBInfoList.Add(new AABBInfo() { AABB = aabb, RenderParam = renderParam });
         }
 
+        public void RenderFont(Font font, FontRenderParameter renderParam)
+        {
+            FontInfoList.Add(new FontInfo() { Font = font, RenderParam = renderParam });
+        }
+
         public void Render()
         {
             // TODO : 別スレッド化
@@ -154,6 +167,7 @@ namespace HimaLib.Render
                 path.SphereInfoList = SphereInfoList;
                 path.CylinderInfoList = CylinderInfoList;
                 path.AABBInfoList = AABBInfoList;
+                path.FontInfoList = FontInfoList;
                 path.Render();
             }
 
@@ -162,6 +176,7 @@ namespace HimaLib.Render
             SphereInfoList.Clear();
             CylinderInfoList.Clear();
             AABBInfoList.Clear();
+            FontInfoList.Clear();
         }
     }
 }

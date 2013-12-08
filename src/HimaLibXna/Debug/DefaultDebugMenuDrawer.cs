@@ -10,7 +10,7 @@ namespace HimaLib.Debug
     {
         public void Draw(string label, List<DebugMenuNode> nodes, int selected)
         {
-            DebugFont.Add(label, 140.0f, 110.0f, Color.LightBlue, new Color(0.0f, 0.0f, 0.0f, 0.2f));
+            DrawFont(label, 140.0f, 110.0f, Color.LightBlue, new Color(0.0f, 0.0f, 0.0f, 0.2f));
 
             for (var i =0; i<nodes.Count; ++i)
             {
@@ -19,8 +19,13 @@ namespace HimaLib.Debug
                     ? (new Color(1.0f, 1.0f, 0.0f, 0.2f))
                     : (new Color(0.0f, 0.0f, 0.0f, 0.2f));
 
-                DebugFont.Add(nodes[i].Label, 160.0f, 140.0f + 25.0f * i, FontColor, BGColor);
+                DrawFont(nodes[i].Label, 160.0f, 140.0f + 25.0f * i, FontColor, BGColor);
             }
+        }
+
+        void DrawFont(string output, float x, float y, Color fontColor, Color bgColor)
+        {
+            DebugFontBase.Instance.Draw(output, x, y, fontColor, bgColor);
         }
     }
 }

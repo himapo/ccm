@@ -99,6 +99,7 @@
     <Compile Include="Collision\SphereCollisionPrimitive.cs" />
     <Compile Include="Collision\SphereSphereCollisionDetector.cs" />
     <Compile Include="Debug\ConsoleDebugPrint.cs" />
+    <Compile Include="Debug\DebugFontBase.cs" />
     <Compile Include="Debug\DebugMenu.cs" />
     <Compile Include="Debug\DebugMenuNode.cs" />
     <Compile Include="Debug\DebugMenuNodeExecutable.cs" />
@@ -109,12 +110,10 @@
     <Compile Include="Debug\DebugMenuNodeTunableFloat.cs" />
     <Compile Include="Debug\DebugMenuNodeTunableInt.cs" />
     <Compile Include="Debug\DebugPrint.cs" />
-    <Compile Include="Debug\IDebugFont.cs" />
     <Compile Include="Debug\IDebugMenu.cs" />
     <Compile Include="Debug\IDebugMenuDrawer.cs" />
     <Compile Include="Debug\IDebugPrint.cs" />
     <Compile Include="Debug\ILoadProfiler.cs" />
-    <Compile Include="Debug\NullDebugFont.cs" />
     <Compile Include="Debug\NullDebugPrint.cs" />
     <Compile Include="Input\Controller.cs" />
     <Compile Include="Input\FakeKeyboard.cs" />
@@ -153,6 +152,7 @@
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Model\AABB.cs" />
     <Compile Include="Model\Cylinder.cs" />
+    <Compile Include="Model\Font.cs" />
     <Compile Include="Model\IBillboard.cs" />
     <Compile Include="Model\IModel.cs" />
     <Compile Include="Model\Sphere.cs" />
@@ -164,6 +164,7 @@
     <Compile Include="Render\DeferredRenderPath.cs" />
     <Compile Include="Render\DepthBillboardRenderParameter.cs" />
     <Compile Include="Render\DepthModelRenderParameter.cs" />
+    <Compile Include="Render\FontRenderParameter.cs" />
     <Compile Include="Render\FrameCacheDataBase.cs" />
     <Compile Include="Render\FrustumCulling.cs" />
     <Compile Include="Render\GBufferBillboardRenderParameter.cs" />

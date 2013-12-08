@@ -65,8 +65,6 @@ namespace ccm.System
 
         void UpdateStateInit()
         {
-            DebugFont.Initialize("SpriteFont/Debug");
-
             GameRand.Instance.Init(Environment.TickCount);
             DrawRand.Instance.Init(Environment.TickCount);
 
@@ -80,6 +78,8 @@ namespace ccm.System
             SoundManager.Initialize();
 
             InitRender();
+
+            InitDebugFont();
 
             InitDebugMenu();
 
@@ -371,7 +371,23 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
 
+            RenderSceneManager.Instance.AddPath(
+                RenderPathType.DEBUGFONT,
+                new FontRenderPath()
+                {
+                    Name = "DebugFont",
+                    RenderDevice = RenderDeviceFactory.Instance.Create(),
+                    RenderTargetIndex = (int)RenderTargetType.BackBuffer,
+                });
+
             FrameCacheData.Create();
+        }
+
+        void InitDebugFont()
+        {
+            DebugFont.Create();
+            DebugFontBase.Instance.RenderScene = RenderSceneManager.Instance.RenderScene;
+            DebugFontBase.Instance.FontName = "SpriteFont/Debug";
         }
 
         void InitDebugMenu()
@@ -496,8 +512,6 @@ namespace ccm.System
 
             TimeKeeper.Instance.Update();
 
-            DebugFont.Clear();
-
             InputAccessor.Update();
 
             SoundManager.Update();
@@ -525,20 +539,18 @@ namespace ccm.System
                 RenderSceneManager.Instance.RenderBillboard(Billboard, TargetRenderParam);
             }
 
-            RenderSceneManager.Instance.Render();
-
             DrawDebugFPS();
 
             DebugMenu.Draw(DebugMenuDrawer);
 
-            DebugFont.Draw();
+            RenderSceneManager.Instance.Render();
 
             LoadProfiler.EndMark();
         }
 
         void DrawDebugFPS()
         {
-            DebugFont.Add(string.Format("{0:f2}FPS", TimeKeeper.Instance.AverageFrameRate), 0.0f, 0.0f);
+            DebugFontBase.Instance.Draw(string.Format("{0:f2}FPS", TimeKeeper.Instance.AverageFrameRate), 0.0f, 0.0f);
         }
     }
 }

@@ -32,6 +32,8 @@ namespace HimaLib.Render
 
         IEnumerable<AABBInfo> AABBInfoList { get; set; }
 
+        IEnumerable<FontInfo> FontInfoList { get; set; }
+
         void Render();
     }
 }

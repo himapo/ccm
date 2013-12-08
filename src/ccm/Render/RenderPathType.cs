@@ -17,5 +17,6 @@ namespace ccm.Render
         TONEMAPPING,
         HUD,
         DEBUGHUD,
+        DEBUGFONT,
     }
 }
