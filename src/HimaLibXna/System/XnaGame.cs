@@ -35,6 +35,8 @@ namespace HimaLib.System
 
         public XnaGame(IGameInitializer initializer)
         {
+            Content.RootDirectory = "Content";
+
             Instance = this;
 
             Initializer = initializer;
@@ -110,7 +112,6 @@ namespace HimaLib.System
         /// </summary>
         protected override void LoadContent()
         {
-            Content.RootDirectory = "Content";
             base.LoadContent();
         }
 
@@ -143,10 +144,6 @@ namespace HimaLib.System
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.Gray);
-
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-
             TimeKeeper.Instance.XnaGameTime = gameTime;
             RootDrawer.Draw();
             base.Draw(gameTime);
