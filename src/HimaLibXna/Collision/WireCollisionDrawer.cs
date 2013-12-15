@@ -10,7 +10,7 @@ namespace HimaLib.Collision
 {
     public class WireCollisionDrawer : ICollisionDrawer
     {
-        public RenderScene RenderScene { get; set; }
+        public IRenderManager RenderManager { get; set; }
 
         public WireCollisionDrawer()
         {
@@ -30,7 +30,7 @@ namespace HimaLib.Collision
                 Color = color,
             };
 
-            RenderScene.RenderSphere(sphere, renderParam);
+            RenderManager.RenderSphere(sphere, renderParam);
         }
 
         public void DrawCylinder(CylinderCollisionPrimitive primitive, Color color)
@@ -47,7 +47,7 @@ namespace HimaLib.Collision
                 Color = color,
             };
 
-            RenderScene.RenderCylinder(cylinder, renderParam);
+            RenderManager.RenderCylinder(cylinder, renderParam);
         }
 
         public void DrawAABB(AABBCollisionPrimitive primitive, Color color)
@@ -63,7 +63,7 @@ namespace HimaLib.Collision
                 Color = color,
             };
 
-            RenderScene.RenderAABB(aabb, renderParam);
+            RenderManager.RenderAABB(aabb, renderParam);
         }
     }
 }

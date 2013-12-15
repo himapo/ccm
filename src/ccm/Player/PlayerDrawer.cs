@@ -82,7 +82,7 @@ namespace ccm.Player
 
             ModelRenderParameter renderParam = defaultRenderParam;
 
-            RenderSceneManager.Instance.RenderModel(model, renderParam);
+            RenderManager.Instance.RenderModel(model, renderParam);
 
             BillboardRenderParam.Camera = Camera;
             BillboardRenderParam.Alpha = Alpha;
@@ -94,7 +94,7 @@ namespace ccm.Player
                     transform.Translation.Y + 8.5f,
                     transform.Translation.Z + 1.0f));
             
-            RenderSceneManager.Instance.RenderBillboard(Billboard, BillboardRenderParam);
+            RenderManager.Instance.RenderBillboard(Billboard, BillboardRenderParam);
         }
 
         void DrawCombo(int count, AffineTransform transform)

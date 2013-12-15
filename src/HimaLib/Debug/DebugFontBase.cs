@@ -13,7 +13,7 @@ namespace HimaLib.Debug
     {
         public static DebugFontBase Instance { get; protected set; }
 
-        public RenderScene RenderScene { get; set; }
+        public IRenderManager RenderManager { get; set; }
 
         public string FontName { get; set; }
 
@@ -38,7 +38,7 @@ namespace HimaLib.Debug
                 BGColor = bgColor,
             };
 
-            RenderScene.RenderFont(CreateFont(output), renderParam);
+            RenderManager.RenderFont(CreateFont(output), renderParam);
 #endif
         }
 

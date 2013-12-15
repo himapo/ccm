@@ -34,7 +34,7 @@ namespace ccm.Ally
             RenderParam.Camera = Camera;
             RenderParam.Transform = transform.WorldMatrix;
             //RenderParam.Alpha = 0.5f;
-            RenderSceneManager.Instance.RenderModel(model, RenderParam);
+            RenderManager.Instance.RenderModel(model, RenderParam);
         }
     }
 }

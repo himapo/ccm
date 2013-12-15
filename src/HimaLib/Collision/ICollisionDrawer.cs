@@ -9,7 +9,7 @@ namespace HimaLib.Collision
 {
     public interface ICollisionDrawer
     {
-        RenderScene RenderScene { get;  set; }
+        IRenderManager RenderManager { get;  set; }
 
         void DrawSphere(SphereCollisionPrimitive primitive, Color color);
 

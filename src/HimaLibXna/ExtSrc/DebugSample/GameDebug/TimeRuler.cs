@@ -676,6 +676,12 @@ namespace DebugSample
             SpriteFont font = debugManager.DebugFont;
             Texture2D texture = debugManager.WhiteTexture;
 
+            if (prevLog == null)
+            {
+                // 測定メソッドが呼ばれていない
+                return;
+            }
+
             // 表示するべきバーの数によって表示サイズと位置を変更する
             int height = 0;
             float maxTime = 0;

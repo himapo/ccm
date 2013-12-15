@@ -171,6 +171,7 @@
     <Compile Include="Render\GBufferModelRenderParameter.cs" />
     <Compile Include="Render\GBufferRenderPath.cs" />
     <Compile Include="Render\DirectionalLightRenderParameter.cs" />
+    <Compile Include="Render\IRenderManager.cs" />
     <Compile Include="Render\LightBufferRenderPath.cs" />
     <Compile Include="Render\PointLightRenderParameter.cs" />
     <Compile Include="Render\RenderParameter.cs" />

@@ -85,22 +85,22 @@ namespace ccm.Scene
         {
             cameraUpdater.Reset();
             cameraUpdater.Update(Vector3.Zero);
-            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
         }
 
         void InitLight()
         {
-            RenderSceneManager.Instance.ClearDirectionalLight();
+            RenderManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
             DirectionalLight0.Direction.Normalize();
             DirectionalLight0.Color = new Color(1.5f, 1.6f, 1.8f);
-            RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
+            RenderManager.Instance.AddDirectionalLight(DirectionalLight0);
         }
 
         void InitRenderer()
@@ -184,7 +184,7 @@ namespace ccm.Scene
         {
             if (Drawable)
             {
-                RenderSceneManager.Instance.RenderModel(dungeonCubeModel, renderParam);
+                RenderManager.Instance.RenderModel(dungeonCubeModel, renderParam);
             }
 
             debugMenu.Draw(debugMenuDrawer);

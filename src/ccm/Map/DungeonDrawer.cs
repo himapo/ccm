@@ -45,7 +45,7 @@ namespace ccm.Map
                     FrustumCulling.IsCulled(matrix, 3.0f);
             });
 
-            RenderSceneManager.Instance.RenderModel(model, RenderParam);
+            RenderManager.Instance.RenderModel(model, RenderParam);
         }
     }
 }

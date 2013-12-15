@@ -155,7 +155,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Render\RenderPathType.cs" />
-    <Compile Include="Render\RenderSceneManager.cs" />
+    <Compile Include="Render\RenderManager.cs" />
     <Compile Include="Render\RenderTargetType.cs" />
     <Compile Include="Scene\BootScene.cs" />
     <Compile Include="Scene\FakeScene.cs" />

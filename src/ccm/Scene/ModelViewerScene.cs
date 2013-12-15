@@ -92,22 +92,22 @@ namespace ccm.Scene
         void InitCamera()
         {
             cameraUpdater.Reset();
-            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
         }
 
         void InitLight()
         {
-            RenderSceneManager.Instance.ClearDirectionalLight();
+            RenderManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
             DirectionalLight0.Direction.Normalize();
             DirectionalLight0.Color = new Color(0.8f, 0.9f, 0.7f);
-            RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
+            RenderManager.Instance.AddDirectionalLight(DirectionalLight0);
         }
 
         void InitRenderer()
@@ -342,7 +342,7 @@ namespace ccm.Scene
         {
             if (model != null)
             {
-                RenderSceneManager.Instance.RenderModel(model, renderParam);
+                RenderManager.Instance.RenderModel(model, renderParam);
             }
 
             debugMenu.Draw(debugMenuDrawer);

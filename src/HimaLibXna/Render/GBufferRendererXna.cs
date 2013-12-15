@@ -37,11 +37,11 @@ namespace HimaLib.Render
 
             if (param.InstancingType == InstancingType.Instanced)
             {
-                LoadProfiler.Instance.BeginMark("GBufferToArray");
+                //LoadProfiler.Instance.BeginMark("GBufferToArray");
 
                 Shader.InstanceTransforms = FrameCacheData.Instance.InstanceTransformsToArray(param.InstanceTransforms);
 
-                LoadProfiler.Instance.EndMark();
+                //LoadProfiler.Instance.EndMark();
             }
         }
 
@@ -59,10 +59,10 @@ namespace HimaLib.Render
                     Shader.RenderStaticModel();
                     break;
                 case InstancingType.Instanced:
-                    LoadProfiler.Instance.BeginMark("GBufferRender");
+                    //LoadProfiler.Instance.BeginMark("GBufferRender");
                     SetModelBones(model);
                     Shader.RenderInstancedModel();
-                    LoadProfiler.Instance.EndMark();
+                    //LoadProfiler.Instance.EndMark();
                     break;
             }
         }

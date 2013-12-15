@@ -246,7 +246,7 @@ namespace ccm.Scene
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.EnemyAttack, (int)Collision.CollisionGroup.PlayerDamage);
             CollisionManager.Drawer = new WireCollisionDrawer()
             {
-                RenderScene = RenderSceneManager.Instance.RenderScene,
+                RenderManager = RenderManager.Instance,
             };
         }
 
@@ -256,23 +256,23 @@ namespace ccm.Scene
             Camera.Far = 500.0f;
 
             cameraUpdater.Reset();
-            RenderSceneManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
-            RenderSceneManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
+            RenderManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
         }
 
         void InitLight()
         {
-            RenderSceneManager.Instance.ClearDirectionalLight();
+            RenderManager.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
             DirectionalLight0.Color = new Color(3.0f, 3.0f, 3.0f, 1.0f);
-            RenderSceneManager.Instance.AddDirectionalLight(DirectionalLight0);
+            RenderManager.Instance.AddDirectionalLight(DirectionalLight0);
 
-            RenderSceneManager.Instance.ClearPointLight();
+            RenderManager.Instance.ClearPointLight();
 
             for (var i = 0; i < 128; ++i)
             {
@@ -288,7 +288,7 @@ namespace ccm.Scene
                 PointLights.Add(light);
             }
 
-            PointLights.ForEach((light) => { RenderSceneManager.Instance.AddPointLight(light); });
+            PointLights.ForEach((light) => { RenderManager.Instance.AddPointLight(light); });
         }
 
         void InitDebugMenu()

@@ -47,24 +47,32 @@ namespace HimaLib.Render
     {
         Dictionary<int, IRenderPath> PathDic = new Dictionary<int, IRenderPath>();
 
-        List<PointLight> PointLights = new List<PointLight>();
+        public List<PointLight> PointLights { get; set; }
 
-        List<DirectionalLight> DirectionalLights = new List<DirectionalLight>();
+        public List<DirectionalLight> DirectionalLights { get; set; }
 
-        List<ModelInfo> ModelInfoList = new List<ModelInfo>();
+        public List<ModelInfo> ModelInfoList { get; set; }
 
-        List<BillboardInfo> BillboardInfoList = new List<BillboardInfo>();
+        public List<BillboardInfo> BillboardInfoList { get; set; }
 
-        List<SphereInfo> SphereInfoList = new List<SphereInfo>();
+        public List<SphereInfo> SphereInfoList { get; set; }
 
-        List<CylinderInfo> CylinderInfoList = new List<CylinderInfo>();
+        public List<CylinderInfo> CylinderInfoList { get; set; }
 
-        List<AABBInfo> AABBInfoList = new List<AABBInfo>();
+        public List<AABBInfo> AABBInfoList { get; set; }
 
-        List<FontInfo> FontInfoList = new List<FontInfo>();
+        public List<FontInfo> FontInfoList { get; set; }
 
         public RenderScene()
         {
+            PointLights = new List<PointLight>();
+            DirectionalLights = new List<DirectionalLight>();
+            ModelInfoList = new List<ModelInfo>();
+            BillboardInfoList = new List<BillboardInfo>();
+            SphereInfoList = new List<SphereInfo>();
+            CylinderInfoList = new List<CylinderInfo>();
+            AABBInfoList = new List<AABBInfo>();
+            FontInfoList = new List<FontInfo>();
         }
 
         public void AddPath(int index, IRenderPath path)
@@ -82,82 +90,8 @@ namespace HimaLib.Render
             PathDic.Remove(index);
         }
 
-        public void AddPointLight(PointLight light)
-        {
-            if (!PointLights.Contains(light))
-            {
-                PointLights.Add(light);
-            }
-        }
-
-        public void RemovePointLight(PointLight light)
-        {
-            PointLights.Remove(light);
-        }
-
-        public void ClearPointLight()
-        {
-            PointLights.Clear();
-        }
-
-        public void AddDirectionalLight(DirectionalLight light)
-        {
-            if (!DirectionalLights.Contains(light))
-            {
-                DirectionalLights.Add(light);
-            }
-        }
-
-        public void RemoveDirectionalLight(DirectionalLight light)
-        {
-            DirectionalLights.Remove(light);
-        }
-
-        public void ClearDirectionalLight()
-        {
-            DirectionalLights.Clear();
-        }
-
-        public void RenderModel(IModel model, ModelRenderParameter renderParam)
-        {
-            ModelInfoList.Add(new ModelInfo() { Model = model, RenderParam = renderParam });
-        }
-
-        public void RenderBillboard(IBillboard billboard, BillboardRenderParameter renderParam)
-        {
-            BillboardInfoList.Add(new BillboardInfo() { Billboard = billboard, RenderParam = renderParam });
-        }
-
-        public void RenderSphere(Sphere sphere, SphereRenderParameter renderParam)
-        {
-            SphereInfoList.Add(new SphereInfo() { Sphere = sphere, RenderParam = renderParam });
-        }
-
-        public void RenderCylinder(Cylinder cylinder, CylinderRenderParameter renderParam)
-        {
-            CylinderInfoList.Add(new CylinderInfo() { Cylinder = cylinder, RenderParam = renderParam });
-        }
-
-        public void RenderAABB(AABB aabb, AABBRenderParameter renderParam)
-        {
-            AABBInfoList.Add(new AABBInfo() { AABB = aabb, RenderParam = renderParam });
-        }
-
-        public void RenderFont(Font font, FontRenderParameter renderParam)
-        {
-            FontInfoList.Add(new FontInfo() { Font = font, RenderParam = renderParam });
-        }
-
         public void Render()
         {
-            // TODO : 別スレッド化
-            InnerRender();
-        }
-
-        void InnerRender()
-        {
-            FrameCacheDataBase.Instance.Clear();
-
             foreach (var path in PathDic.Values)
             {
                 path.PointLights = PointLights;
@@ -170,13 +104,6 @@ namespace HimaLib.Render
                 path.FontInfoList = FontInfoList;
                 path.Render();
             }
-
-            ModelInfoList.Clear();
-            BillboardInfoList.Clear();
-            SphereInfoList.Clear();
-            CylinderInfoList.Clear();
-            AABBInfoList.Clear();
-            FontInfoList.Clear();
         }
     }
 }

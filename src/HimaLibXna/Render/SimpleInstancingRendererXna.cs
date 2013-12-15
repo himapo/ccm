@@ -47,14 +47,14 @@ namespace HimaLib.Render
 
         public void RenderStatic(Microsoft.Xna.Framework.Graphics.Model model)
         {
-            LoadProfiler.Instance.BeginMark("OpaqueRender");
+            //LoadProfiler.Instance.BeginMark("OpaqueRender");
 
             Shader.Model = model;
             SetModelBones(model);
 
             Shader.RenderInstatncedModel();
 
-            LoadProfiler.Instance.EndMark();
+            //LoadProfiler.Instance.EndMark();
         }
 
         public void RenderDynamic(Microsoft.Xna.Framework.Graphics.Model model)

@@ -40,7 +40,7 @@ namespace ccm.Enemy
             RenderParam.Camera = Camera;
             RenderParam.Transform = enemy.Transform.WorldMatrix;
             //RenderParam.Alpha = 0.5f;
-            RenderSceneManager.Instance.RenderModel(enemy.Model, RenderParam);
+            RenderManager.Instance.RenderModel(enemy.Model, RenderParam);
         }
     }
 }

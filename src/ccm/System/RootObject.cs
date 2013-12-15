@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using HimaLib;
 using HimaLib.Debug;
 using HimaLib.System;
@@ -227,7 +228,7 @@ namespace ccm.System
                 SurfaceType.R16F,
                 false, false);
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.SHADOW,
                 new ShadowMapRenderPath()
                 {
@@ -236,7 +237,7 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.ShadowMap0,
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.GBUFFER,
                 new GBufferRenderPath()
                 {
@@ -250,7 +251,7 @@ namespace ccm.System
                     }
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.LIGHTBUFFER,
                 new LightBufferRenderPath()
                 {
@@ -269,7 +270,7 @@ namespace ccm.System
                     //ClearColor = Color.Gray,
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.DEFERRED,
                 new DeferredRenderPath()
                 {
@@ -284,7 +285,7 @@ namespace ccm.System
                     ClearColor = Color.Gray,
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.OPAQUE,
                 new OpaqueRenderPath()
                 {
@@ -297,7 +298,7 @@ namespace ccm.System
                     SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.DEBUG,
                 new DebugRenderPath()
                 {
@@ -307,7 +308,7 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.HDRBuffer,
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.TRANSLUCENT,
                 new TranslucentRenderPath()
                 {
@@ -350,7 +351,7 @@ namespace ccm.System
                 Exposure = 0.8f,
             };
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.TONEMAPPING,
                 new ToneMappingRenderPath()
                 {
@@ -362,7 +363,7 @@ namespace ccm.System
                     RenderParam = ToneMappingRenderParameter,
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.HUD,
                 new HudRenderPath()
                 {
@@ -371,7 +372,7 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
 
-            RenderSceneManager.Instance.AddPath(
+            RenderManager.Instance.AddPath(
                 RenderPathType.DEBUGFONT,
                 new FontRenderPath()
                 {
@@ -386,7 +387,7 @@ namespace ccm.System
         void InitDebugFont()
         {
             DebugFont.Create();
-            DebugFontBase.Instance.RenderScene = RenderSceneManager.Instance.RenderScene;
+            DebugFontBase.Instance.RenderManager = RenderManager.Instance;
             DebugFontBase.Instance.FontName = "SpriteFont/Debug";
         }
 
@@ -502,13 +503,15 @@ namespace ccm.System
 
         void UpdateStateMain()
         {
-            FrameCacheDataBase.Instance.Clear();
-
-            DebugMenuUpdater.Update();
-
             LoadProfiler.StartFrame();
 
             LoadProfiler.BeginMark("Update");
+            
+            FrameCacheDataBase.Instance.Clear();
+
+            RenderManager.Instance.StartRender();
+
+            DebugMenuUpdater.Update();
 
             TimeKeeper.Instance.Update();
 
@@ -536,14 +539,18 @@ namespace ccm.System
 
             if (ShowRenderTarget)
             {
-                RenderSceneManager.Instance.RenderBillboard(Billboard, TargetRenderParam);
+                RenderManager.Instance.RenderBillboard(Billboard, TargetRenderParam);
             }
 
             DrawDebugFPS();
 
             DebugMenu.Draw(DebugMenuDrawer);
 
-            RenderSceneManager.Instance.Render();
+            LoadProfiler.EndMark();
+
+            LoadProfiler.BeginMark("WaitRender");
+
+            RenderManager.Instance.WaitRender();
 
             LoadProfiler.EndMark();
         }
