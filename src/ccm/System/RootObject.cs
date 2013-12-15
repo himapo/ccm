@@ -503,9 +503,7 @@ namespace ccm.System
 
         void UpdateStateMain()
         {
-            LoadProfiler.StartFrame();
-
-            LoadProfiler.BeginMark("Update");
+            LoadProfiler.BeginMark("UpdateMain");
             
             FrameCacheDataBase.Instance.Clear();
 
@@ -533,7 +531,7 @@ namespace ccm.System
 
         void DrawStateMain()
         {
-            LoadProfiler.BeginMark("Draw");
+            LoadProfiler.BeginMark("DrawMain");
 
             CurrentScene.Draw();
 

@@ -132,10 +132,15 @@ namespace HimaLib.System
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Update(GameTime gameTime)
         {
+            LoadProfiler.StartFrame();
+            LoadProfiler.BeginMark("Update");
+
             TimeKeeper.Instance.XnaGameTime = gameTime;
             MMDXCore.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             RootUpdater.Update();
             base.Update(gameTime);
+
+            LoadProfiler.EndMark();
         }
 
         /// <summary>
@@ -144,9 +149,13 @@ namespace HimaLib.System
         /// <param name="gameTime">ゲームの瞬間的なタイミング情報</param>
         protected override void Draw(GameTime gameTime)
         {
+            LoadProfiler.BeginMark("Draw");
+
             TimeKeeper.Instance.XnaGameTime = gameTime;
             RootDrawer.Draw();
             base.Draw(gameTime);
+
+            LoadProfiler.EndMark();
         }
     }
 }
