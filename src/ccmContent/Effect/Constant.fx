@@ -209,7 +209,7 @@ float4 PSMain(PSInput pin,
 		output *= diffuseTextureColor;
 	}
 
-	output.a = Alpha;
+	output.a *= Alpha;
 	
 	return output;
 }

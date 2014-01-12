@@ -38,6 +38,11 @@ namespace ccm.Particle
             InitialPosition = new Vector3(transform.Translation);
             Transform = new AffineTransform(transform);
 
+            SimpleBillboardRenderParameter.IsShadowCaster = false;
+            SimpleBillboardRenderParameter.IsShadowReceiver = false;
+            SimpleBillboardRenderParameter.IsTranslucent = true;
+            SimpleBillboardRenderParameter.GBufferEnabled = false;
+
             SimpleBillboardRenderParameter.Camera = camera;
             SimpleBillboardRenderParameter.Alpha = 0.8f;
 
