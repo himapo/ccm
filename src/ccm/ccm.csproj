@@ -121,6 +121,7 @@
     <Compile Include="Enemy\EnemyBodyCollisionInfo.cs" />
     <Compile Include="Enemy\EnemyDamageCollisionInfo.cs" />
     <Compile Include="Game\GameProperty.cs" />
+    <Compile Include="Game\Reticule.cs" />
     <Compile Include="Item\ItemWindow.cs" />
     <Compile Include="Map\Dungeon.cs" />
     <Compile Include="Map\DungeonDrawer.cs" />

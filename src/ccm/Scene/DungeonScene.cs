@@ -22,6 +22,7 @@ using ccm.Ally;
 using ccm.Item;
 using ccm.Sound;
 using ccm.Render;
+using ccm.Game;
 
 namespace ccm.Scene
 {
@@ -70,6 +71,7 @@ namespace ccm.Scene
         SoundManager SoundManager { get { return SoundManager.Instance; } }
 
         // HUD
+        Reticule Reticule = new Reticule();
 
         // デバッグメニュー
         DebugMenu debugMenu = new DebugMenu("DungeonScene デバッグメニュー");
@@ -454,6 +456,8 @@ namespace ccm.Scene
             DrawMap();
 
             DrawCollision();
+
+            Reticule.Draw();
 
             debugMenu.Draw(debugMenuDrawer);
         }
