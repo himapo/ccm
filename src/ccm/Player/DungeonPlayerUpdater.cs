@@ -169,12 +169,13 @@ namespace ccm.Player
             AttackCollision = new PlayerAttackCollisionInfo()
             {
                 Active = () => AttackCount > 0.0f,
-                Center = () =>
-                {
-                    // 判定をネギの先端(Z方向)に4ずらす
-                    var offset = new Vector3(0.0f, 0.0f, 4.0f);
-                    return Vector3.TransformAffine(offset, Model.GetAttachmentMatrix("negi"));
-                },
+                Center = () => Transform.Translation + Direction * 6.0f + Vector3.UnitY * 2.0f,
+                //Center = () =>
+                //{
+                //    // 判定をネギの先端(Z方向)に4ずらす
+                //    var offset = new Vector3(0.0f, 0.0f, 4.0f);
+                //    return Vector3.TransformAffine(offset, Model.GetAttachmentMatrix("negi"));
+                //},
             };
 
             UpdateState = UpdateStateInit;
@@ -198,7 +199,7 @@ namespace ccm.Player
         {
             if (HitPoint > 0 && collisionCount == 1)
             {
-                SoundManager.PlaySoundEffect("metal03");
+                //SoundManager.PlaySoundEffect("metal03");
                 //DebugPrint.PrintLine("Player guard");
                 ComboCounter.Guard(actor.Shock);
                 if (ComboCounter.Shocked)
@@ -687,7 +688,7 @@ namespace ccm.Player
             Model.ChangeMotion("attack1", 0.01f);
             AttackCount = 38.0f;
             JumpCount = 0.0f;
-            SoundManager.PlaySoundEffect("hit_s03_a");
+            //SoundManager.PlaySoundEffect("hit_s03_a");
         }
 
         void GoToAttack2()
@@ -696,7 +697,7 @@ namespace ccm.Player
             Model.ChangeMotion("attack2", 0.01f);
             AttackCount = 38.0f;
             JumpCount = 0.0f;
-            SoundManager.PlaySoundEffect("hit_s02");
+            //SoundManager.PlaySoundEffect("hit_s02");
         }
 
         void GoToGuard()
@@ -720,7 +721,7 @@ namespace ccm.Player
         {
             UpdateState = UpdateStateShocked;
             Model.ChangeMotion("stand", 0.2f);
-            SoundManager.PlaySoundEffect("puu17");
+            //SoundManager.PlaySoundEffect("puu17");
             JumpCount = 0.0f;
 
             CreateShockDeco();

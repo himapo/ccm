@@ -41,10 +41,9 @@ namespace ccm.Particle
             SimpleBillboardRenderParameter.Camera = camera;
             SimpleBillboardRenderParameter.Alpha = 0.8f;
 
-            SimpleBillboardRenderParameter.Transform = new AffineTransform(
-                Vector3.One * 0.04f,
-                Vector3.Zero,
-                Transform.Translation).WorldMatrix;
+            SimpleBillboardRenderParameter.AffineTransform = Transform;
+            SimpleBillboardRenderParameter.AffineTransform.Scale = Vector3.One * 0.04f;
+            SimpleBillboardRenderParameter.AffineTransform.Rotation = Vector3.Zero;
 
             SimpleBillboardRenderParameter.Texture = TextureFactory.Instance.CreateFromImage(textureName);
 

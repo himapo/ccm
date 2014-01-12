@@ -139,7 +139,7 @@ namespace ccm.Enemy
         {
             CollisionManager.Add(BodyCollision);
             CollisionManager.Add(DamageCollision);
-            //CollisionManager.Add(AttackCollision);
+            CollisionManager.Add(AttackCollision);
         }
 
         void UpdateStateMain()

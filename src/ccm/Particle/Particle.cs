@@ -7,6 +7,7 @@ using HimaLib.System;
 using HimaLib.Math;
 using HimaLib.Model;
 using HimaLib.Render;
+using ccm.Render;
 
 namespace ccm.Particle
 {
@@ -29,7 +30,7 @@ namespace ccm.Particle
 
         public virtual void Draw()
         {
-            Billboard.Render(BillboardRenderParameter);
+            RenderManager.Instance.RenderBillboard(Billboard, BillboardRenderParameter);
         }
     }
 }
