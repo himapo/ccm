@@ -62,7 +62,7 @@ namespace ccm.Player
         float VelocityRotate { get { return 20.0f * UpdateTimeScale; } }
         float VelocityStep { get { return 1.2f * UpdateTimeScale; } }
 
-        float AccelFall { get { return -0.01f * UpdateTimeScale; } }
+        float AccelFall { get { return -0.07f * UpdateTimeScale; } }
 
         float UpdateTimeScale { get { return TimeKeeper.Instance.LastTimeScale; } }
 
@@ -90,6 +90,8 @@ namespace ccm.Player
         float JumpCount;
 
         Vector3 StepDirection;
+
+        Vector3 MoveVelocity;
 
         float FallVelocity;
 
@@ -251,6 +253,7 @@ namespace ccm.Player
         {
             Transform.Translation = Dungeon.GetRandomRespawnPoint();
             FallVelocity = 0.0f;
+            MoveVelocity = Vector3.Zero;
             IsGround = false;
             GoToFall();
         }
@@ -277,7 +280,8 @@ namespace ccm.Player
             }
             else if (PushJump)
             {
-                JumpCount = 20.0f;
+                GoToJump();
+                return;
             }
             
             if (PushAttack)
@@ -321,6 +325,8 @@ namespace ccm.Player
                 if (JumpCount < 0.0f)
                 {
                     JumpCount = 0.0f;
+                    GoToJump();
+                    return;
                 }
             }
 
@@ -333,9 +339,9 @@ namespace ccm.Player
                 GoToDash();
                 return;
             }
-            else if (PushJump)
+            else if (JumpCount <= 0.0f && PushJump)
             {
-                JumpCount = 20.0f;
+                JumpCount = 15.0f;
             }
 
             if (PushAttack)
@@ -380,7 +386,13 @@ namespace ccm.Player
             {
                 GoToFall();
             }
-            else if (PushAttack)
+            else if (PushJump)
+            {
+                GoToJump();
+                return;
+            }
+            
+            if (PushAttack)
             {
                 GoToAttack();
                 return;
@@ -484,7 +496,8 @@ namespace ccm.Player
 
         void MovePosition(Vector3 move, float velocity)
         {
-            Transform.Translation += move * velocity;
+            MoveVelocity = move * velocity;
+            Transform.Translation += MoveVelocity;
         }
 
         void MoveRotation(Vector3 move)
@@ -629,12 +642,16 @@ namespace ccm.Player
 
         void UpdateStateJump()
         {
-
+            UpdateStateFall();
         }
 
         void UpdateStateFall()
         {
-            if (IsGround)
+            if (JumpCount > 0.0f)
+            {
+                JumpCount -= UpdateTimeScale;
+            }
+            else if (IsGround)
             {
                 Transform.Translation.Y = -0.1f;
                 FallVelocity = 0.0f;
@@ -642,6 +659,9 @@ namespace ccm.Player
             }
 
             Transform.Translation.Y += FallVelocity;
+            
+            Transform.Translation.X += MoveVelocity.X;
+            Transform.Translation.Z += MoveVelocity.Z;
 
             if (FallVelocity > -2.0f)
             {
@@ -659,6 +679,7 @@ namespace ccm.Player
             UpdateState = UpdateStateStand;
             Model.ChangeMotion("stand", 0.2f);
             JumpCount = 0.0f;
+            MoveVelocity = Vector3.Zero;
         }
 
         void GoToRun()
@@ -736,7 +757,10 @@ namespace ccm.Player
 
         void GoToJump()
         {
-
+            UpdateState = UpdateStateJump;
+            Model.ChangeMotion("step", 0.01f);
+            JumpCount = 2.0f;
+            FallVelocity = 1.6f;
         }
 
         void GoToFall()
