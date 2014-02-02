@@ -520,10 +520,15 @@ namespace ccm.Player
             var rotDegreeY = MathUtil.ToDegrees(rotY);
 
             var rotDiff = eyeAngle - rotDegreeY;
+
             if (rotDiff > 180.0f)
+            {
                 rotDiff -= 360.0f;
+            }
             else if (rotDiff < -180.0f)
+            {
                 rotDiff += 360.0f;
+            }
 
             var rotAngle = 0.0f;
             if (rotDiff > 0.0f)
@@ -542,6 +547,16 @@ namespace ccm.Player
             }
 
             rotY += MathUtil.ToRadians(rotAngle);
+
+            if (rotY > MathUtil.Pi)
+            {
+                rotY -= MathUtil.Pi * 2.0f;
+            }
+            else if (rotY < -MathUtil.Pi)
+            {
+                rotY += MathUtil.Pi * 2.0f;
+            }
+
             Transform.Rotation = Vector3.UnitY * rotY;
         }
 
