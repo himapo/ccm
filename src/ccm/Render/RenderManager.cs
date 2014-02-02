@@ -44,6 +44,8 @@ namespace ccm.Render
 
         List<FontInfo>[] FontInfoList = new List<FontInfo>[BUFFER_NUM];
 
+        bool AsyncRender = true;
+
         RenderManager()
         {
             RenderScene = new RenderScene();
@@ -160,12 +162,22 @@ namespace ccm.Render
 
             ClearBuffer();
 
-            RenderTask = Task.Factory.StartNew(Render);
+            if (AsyncRender)
+            {
+                RenderTask = Task.Factory.StartNew(Render);
+            }
         }
 
         public void WaitRender()
         {
-            RenderTask.Wait();
+            if (AsyncRender)
+            {
+                RenderTask.Wait();
+            }
+            else
+            {
+                Render();
+            }
         }
 
         void IncrementBuffer()
