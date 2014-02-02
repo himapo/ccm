@@ -10,8 +10,6 @@ namespace HimaLib.Render
 {
     public class ShadowMapRenderPath : RenderPath
     {
-        CameraBase EyeCamera;
-
         public ShadowMapRenderPath()
         {
             ColorClearEnabled = true;
@@ -41,23 +39,24 @@ namespace HimaLib.Render
                 return;
             }
 
-            if (EyeCamera == null)
-            {
-                EyeCamera = Camera;
-            }
+            // カメラを退避
+            var eyeCamera = Camera;
 
-            // TODO : ライトをカメラに変換
-            Camera = LightToCamera(DirectionalLights[0]);
+            // ライトをカメラに変換
+            Camera = LightToCamera(DirectionalLights[0], eyeCamera);
 
             CreateModelList();
             CreateBillboardList();
 
             base.Render();
+
+            // カメラを戻す
+            Camera = eyeCamera;
         }
 
-        CameraBase LightToCamera(DirectionalLight light)
+        CameraBase LightToCamera(DirectionalLight light, CameraBase eyeCamera)
         {
-            return light.ToCamera(EyeCamera);
+            return light.ToCamera(eyeCamera);
         }
 
         void CreateModelList()
