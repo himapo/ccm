@@ -152,10 +152,26 @@ namespace HimaLib.System
             LoadProfiler.BeginMark("Draw");
 
             TimeKeeper.Instance.XnaGameTime = gameTime;
+
             RootDrawer.Draw();
+
+            ResetFloatSampler();
+            
             base.Draw(gameTime);
 
             LoadProfiler.EndMark();
+        }
+
+        /// <summary>
+        /// XNA4.0のバグ回避のため浮動小数点数バッファのサンプラステートをリセット
+        /// </summary>
+        void ResetFloatSampler()
+        {
+            foreach (var i in Enumerable.Range(0, 4))
+            {
+                GraphicsDevice.SamplerStates[i] = Microsoft.Xna.Framework.Graphics.SamplerState.PointClamp;
+                GraphicsDevice.VertexSamplerStates[i] = Microsoft.Xna.Framework.Graphics.SamplerState.PointClamp;
+            }
         }
     }
 }

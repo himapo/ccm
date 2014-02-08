@@ -232,6 +232,7 @@ namespace ccm.System
                 RenderPathType.SHADOW,
                 new ShadowMapRenderPath()
                 {
+                    //Enabled = false,
                     Name = "ShadowMap",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndex = (int)RenderTargetType.ShadowMap0,
@@ -241,6 +242,7 @@ namespace ccm.System
                 RenderPathType.GBUFFER,
                 new GBufferRenderPath()
                 {
+                    //Enabled = false,
                     Name = "GBuffer",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndices = new int[]
@@ -367,6 +369,7 @@ namespace ccm.System
                 RenderPathType.HUD,
                 new HudRenderPath()
                 {
+                    //Enabled = false,
                     Name = "HUD",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
@@ -376,6 +379,7 @@ namespace ccm.System
                 RenderPathType.DEBUGFONT,
                 new FontRenderPath()
                 {
+                    //Enabled = false,
                     Name = "DebugFont",
                     RenderDevice = RenderDeviceFactory.Instance.Create(),
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
