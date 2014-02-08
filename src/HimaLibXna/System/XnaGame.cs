@@ -33,6 +33,8 @@ namespace HimaLib.System
 
         bool disposed = false;
 
+        public bool ApplyGraphicsChangesFlag { get; set; }
+
         public XnaGame(IGameInitializer initializer)
         {
             Content.RootDirectory = "Content";
@@ -86,11 +88,6 @@ namespace HimaLib.System
             graphics.PreferredBackBufferWidth = Initializer.ScreenWidth;
             graphics.PreferredBackBufferHeight = Initializer.ScreenHeight;
             graphics.PreferMultiSampling = Initializer.MSAAEnable;
-        }
-
-        public void ApplyGraphicsChanges()
-        {
-            graphics.ApplyChanges();
         }
 
         void InitializeProperty()
@@ -156,7 +153,13 @@ namespace HimaLib.System
             RootDrawer.Draw();
 
             ResetFloatSampler();
-            
+
+            if (ApplyGraphicsChangesFlag)
+            {
+                graphics.ApplyChanges();
+                ApplyGraphicsChangesFlag = false;
+            }
+
             base.Draw(gameTime);
 
             LoadProfiler.EndMark();

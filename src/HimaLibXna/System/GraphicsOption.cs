@@ -35,7 +35,7 @@ namespace HimaLib.System
         {
             XnaGame.VSyncEnable = VSyncEnable;
 
-            XnaGame.ApplyGraphicsChanges();
+            XnaGame.ApplyGraphicsChangesFlag = true;
         }
     }
 }
