@@ -228,8 +228,8 @@ namespace ccm.System
                 SurfaceType.R16F,
                 false, false);
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.SHADOW,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.SHADOW,
                 new ShadowMapRenderPath()
                 {
                     //Enabled = false,
@@ -238,8 +238,8 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.ShadowMap0,
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.GBUFFER,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.GBUFFER,
                 new GBufferRenderPath()
                 {
                     //Enabled = false,
@@ -253,8 +253,8 @@ namespace ccm.System
                     }
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.LIGHTBUFFER,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.LIGHTBUFFER,
                 new LightBufferRenderPath()
                 {
                     //Enabled = false,
@@ -272,8 +272,8 @@ namespace ccm.System
                     //ClearColor = Color.Gray,
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.DEFERRED,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.DEFERRED,
                 new DeferredRenderPath()
                 {
                     Enabled = false,
@@ -287,8 +287,8 @@ namespace ccm.System
                     ClearColor = Color.Gray,
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.OPAQUE,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.OPAQUE,
                 new OpaqueRenderPath()
                 {
                     //Enabled = false,
@@ -300,8 +300,8 @@ namespace ccm.System
                     SpecularLightMap = TextureFactory.Instance.CreateRenderTarget((int)RenderTargetType.SpecularLightMap),
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.DEBUG,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.DEBUG,
                 new DebugRenderPath()
                 {
                     //Enabled = false,
@@ -343,8 +343,8 @@ namespace ccm.System
                 Exposure = 0.8f,
             };
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.TONEMAPPING,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.TONEMAPPING,
                 new ToneMappingRenderPath()
                 {
                     //Enabled = false,
@@ -355,8 +355,8 @@ namespace ccm.System
                     RenderParam = ToneMappingRenderParameter,
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.TRANSLUCENT,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.TRANSLUCENT,
                 new TranslucentRenderPath()
                 {
                     //Enabled = false,
@@ -365,8 +365,8 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.HUD,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.HUD,
                 new HudRenderPath()
                 {
                     //Enabled = false,
@@ -375,8 +375,8 @@ namespace ccm.System
                     RenderTargetIndex = (int)RenderTargetType.BackBuffer,
                 });
 
-            RenderManager.Instance.AddPath(
-                RenderPathType.DEBUGFONT,
+            RenderManagerAccessor.Instance.AddPath(
+                (int)RenderPathType.DEBUGFONT,
                 new FontRenderPath()
                 {
                     //Enabled = false,
@@ -391,7 +391,7 @@ namespace ccm.System
         void InitDebugFont()
         {
             DebugFont.Create();
-            DebugFontBase.Instance.RenderManager = RenderManager.Instance;
+            DebugFontBase.Instance.RenderManager = RenderManagerAccessor.Instance;
             DebugFontBase.Instance.FontName = "SpriteFont/Debug";
         }
 
@@ -511,7 +511,7 @@ namespace ccm.System
             
             FrameCacheDataBase.Instance.Clear();
 
-            RenderManager.Instance.StartRender();
+            RenderManagerAccessor.Instance.StartRender();
 
             DebugMenuUpdater.Update();
 
@@ -541,7 +541,7 @@ namespace ccm.System
 
             if (ShowRenderTarget)
             {
-                RenderManager.Instance.RenderBillboard(Billboard, TargetRenderParam);
+                RenderManagerAccessor.Instance.RenderBillboard(Billboard, TargetRenderParam);
             }
 
             DrawDebugFPS();
@@ -552,7 +552,7 @@ namespace ccm.System
 
             LoadProfiler.BeginMark("WaitRender");
 
-            RenderManager.Instance.WaitRender();
+            RenderManagerAccessor.Instance.WaitRender();
 
             LoadProfiler.EndMark();
         }

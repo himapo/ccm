@@ -245,7 +245,7 @@ namespace ccm.Item
                 Position).WorldMatrix;
             BillboardRenderParam.Alpha = 1.0f;
 
-            RenderManager.Instance.RenderBillboard(Billboard, BillboardRenderParam);
+            RenderManagerAccessor.Instance.RenderBillboard(Billboard, BillboardRenderParam);
         }
 
         void DrawIcons()
@@ -290,7 +290,7 @@ namespace ccm.Item
                 renderParam.RectSize = new Vector2(50.0f, 50.0f);
                 renderParam.Alpha = 0.5f;
 
-                RenderManager.Instance.RenderBillboard(Billboard, renderParam);
+                RenderManagerAccessor.Instance.RenderBillboard(Billboard, renderParam);
             }
         }
 

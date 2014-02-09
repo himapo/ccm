@@ -30,7 +30,7 @@ namespace ccm.Particle
 
         public virtual void Draw()
         {
-            RenderManager.Instance.RenderBillboard(Billboard, BillboardRenderParameter);
+            RenderManagerAccessor.Instance.RenderBillboard(Billboard, BillboardRenderParameter);
         }
     }
 }

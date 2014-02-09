@@ -85,22 +85,22 @@ namespace ccm.Scene
         {
             cameraUpdater.Reset();
             cameraUpdater.Update(Vector3.Zero);
-            RenderManager.Instance.GetPath(RenderPathType.SHADOW).Camera = Camera;
-            RenderManager.Instance.GetPath(RenderPathType.GBUFFER).Camera = Camera;
-            RenderManager.Instance.GetPath(RenderPathType.LIGHTBUFFER).Camera = Camera;
-            RenderManager.Instance.GetPath(RenderPathType.OPAQUE).Camera = Camera;
-            RenderManager.Instance.GetPath(RenderPathType.DEBUG).Camera = Camera;
-            RenderManager.Instance.GetPath(RenderPathType.TRANSLUCENT).Camera = Camera;
+            RenderManagerAccessor.Instance.GetPath((int)RenderPathType.SHADOW).Camera = Camera;
+            RenderManagerAccessor.Instance.GetPath((int)RenderPathType.GBUFFER).Camera = Camera;
+            RenderManagerAccessor.Instance.GetPath((int)RenderPathType.LIGHTBUFFER).Camera = Camera;
+            RenderManagerAccessor.Instance.GetPath((int)RenderPathType.OPAQUE).Camera = Camera;
+            RenderManagerAccessor.Instance.GetPath((int)RenderPathType.DEBUG).Camera = Camera;
+            RenderManagerAccessor.Instance.GetPath((int)RenderPathType.TRANSLUCENT).Camera = Camera;
         }
 
         void InitLight()
         {
-            RenderManager.Instance.ClearDirectionalLight();
+            RenderManagerAccessor.Instance.ClearDirectionalLight();
 
             DirectionalLight0.Direction = -Vector3.One;
             DirectionalLight0.Direction.Normalize();
             DirectionalLight0.Color = new Color(1.5f, 1.6f, 1.8f);
-            RenderManager.Instance.AddDirectionalLight(DirectionalLight0);
+            RenderManagerAccessor.Instance.AddDirectionalLight(DirectionalLight0);
         }
 
         void InitRenderer()
@@ -184,7 +184,7 @@ namespace ccm.Scene
         {
             if (Drawable)
             {
-                RenderManager.Instance.RenderModel(dungeonCubeModel, renderParam);
+                RenderManagerAccessor.Instance.RenderModel(dungeonCubeModel, renderParam);
             }
 
             debugMenu.Draw(debugMenuDrawer);

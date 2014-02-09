@@ -127,7 +127,7 @@ namespace ccm.Scene
 
         void DrawStateMain()
         {
-            RenderManager.Instance.RenderBillboard(billboard, renderParam);
+            RenderManagerAccessor.Instance.RenderBillboard(billboard, renderParam);
 
             debugMenu.Draw(debugMenuDrawer);
         }

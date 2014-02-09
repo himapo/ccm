@@ -182,6 +182,7 @@
     <Compile Include="Render\NullSphereRendererXna.cs" />
     <Compile Include="Render\RenderDeviceFactory.cs" />
     <Compile Include="Render\RenderDeviceXna.cs" />
+    <Compile Include="Render\RenderManagerXna.cs" />
     <Compile Include="Render\ScreenBillboardRenderer.cs" />
     <Compile Include="Render\SimpleBillboardRendererXna.cs" />
     <Compile Include="Render\SimpleInstancingRendererXna.cs" />

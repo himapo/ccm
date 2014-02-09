@@ -3,54 +3,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HimaLib.Render;
 using HimaLib.System;
 using HimaLib.Model;
 using HimaLib.Light;
 
-namespace ccm.Render
+namespace HimaLib.Render
 {
-    public class RenderManager : IRenderManager
+    public abstract class RenderManager : IRenderManager
     {
-        public static RenderManager Instance
-        {
-            get
-            {
-                return Singleton<RenderManager>.Instance;
-            }
-        }
+        RenderScene RenderScene = new RenderScene();
 
-        static readonly int BUFFER_NUM = 2;
+        public int BufferNum { get; private set; }
 
         int Buffer;
 
-        RenderScene RenderScene { get; set; }
+        List<PointLight>[] PointLights;
 
-        Task RenderTask;
+        List<DirectionalLight>[] DirectionalLights;
 
-        List<PointLight>[] PointLights = new List<PointLight>[BUFFER_NUM];
+        List<ModelInfo>[] ModelInfoList;
 
-        List<DirectionalLight>[] DirectionalLights = new List<DirectionalLight>[BUFFER_NUM];
+        List<BillboardInfo>[] BillboardInfoList;
 
-        List<ModelInfo>[] ModelInfoList = new List<ModelInfo>[BUFFER_NUM];
+        List<SphereInfo>[] SphereInfoList;
 
-        List<BillboardInfo>[] BillboardInfoList = new List<BillboardInfo>[BUFFER_NUM];
+        List<CylinderInfo>[] CylinderInfoList;
 
-        List<SphereInfo>[] SphereInfoList = new List<SphereInfo>[BUFFER_NUM];
+        List<AABBInfo>[] AABBInfoList;
 
-        List<CylinderInfo>[] CylinderInfoList = new List<CylinderInfo>[BUFFER_NUM];
+        List<FontInfo>[] FontInfoList;
 
-        List<AABBInfo>[] AABBInfoList = new List<AABBInfo>[BUFFER_NUM];
+        public bool AsyncRender { get; set; }
 
-        List<FontInfo>[] FontInfoList = new List<FontInfo>[BUFFER_NUM];
+        protected Task RenderTask;
 
-        bool AsyncRender = true;
-
-        RenderManager()
+        public RenderManager()
         {
-            RenderScene = new RenderScene();
+            BufferNum = 2;
 
-            for (var i = 0; i < BUFFER_NUM; ++i)
+            PointLights = new List<PointLight>[BufferNum];
+            DirectionalLights = new List<DirectionalLight>[BufferNum];
+            ModelInfoList = new List<ModelInfo>[BufferNum];
+            BillboardInfoList = new List<BillboardInfo>[BufferNum];
+            SphereInfoList = new List<SphereInfo>[BufferNum];
+            CylinderInfoList = new List<CylinderInfo>[BufferNum];
+            AABBInfoList = new List<AABBInfo>[BufferNum];
+            FontInfoList = new List<FontInfo>[BufferNum];
+
+            for (var i = 0; i < BufferNum; ++i)
             {
                 PointLights[i] = new List<PointLight>();
                 DirectionalLights[i] = new List<DirectionalLight>();
@@ -61,21 +61,23 @@ namespace ccm.Render
                 AABBInfoList[i] = new List<AABBInfo>();
                 FontInfoList[i] = new List<FontInfo>();
             }
+
+            AsyncRender = true;
         }
 
-        public void AddPath(RenderPathType index, IRenderPath path)
+        public void AddPath(int index, IRenderPath path)
         {
-            RenderScene.AddPath((int)index, path);
+            RenderScene.AddPath(index, path);
         }
 
-        public IRenderPath GetPath(RenderPathType index)
+        public IRenderPath GetPath(int index)
         {
-            return RenderScene.GetPath((int)index);
+            return RenderScene.GetPath(index);
         }
 
-        public void RemovePath(RenderPathType index)
+        public void RemovePath(int index)
         {
-            RenderScene.RemovePath((int)index);
+            RenderScene.RemovePath(index);
         }
 
         public void AddPointLight(PointLight light)
@@ -138,10 +140,10 @@ namespace ccm.Render
             FontInfoList[Buffer].Add(new FontInfo() { Font = primitive, RenderParam = renderParam });
         }
 
-        void Render()
+        protected void Render()
         {
             var prev = GetPrevBuffer();
-            
+
             RenderScene.PointLights = PointLights[prev];
             RenderScene.DirectionalLights = DirectionalLights[prev];
             RenderScene.ModelInfoList = ModelInfoList[prev];
@@ -154,35 +156,13 @@ namespace ccm.Render
             RenderScene.Render();
         }
 
-        public void StartRender()
+        public abstract void StartRender();
+
+        public abstract void WaitRender();
+
+        protected void IncrementBuffer()
         {
-            IncrementBuffer();
-
-            CopyPrevBuffer();
-
-            ClearBuffer();
-
-            if (AsyncRender)
-            {
-                RenderTask = Task.Factory.StartNew(Render);
-            }
-        }
-
-        public void WaitRender()
-        {
-            if (AsyncRender)
-            {
-                RenderTask.Wait();
-            }
-            else
-            {
-                Render();
-            }
-        }
-
-        void IncrementBuffer()
-        {
-            if (++Buffer == BUFFER_NUM)
+            if (++Buffer == BufferNum)
             {
                 Buffer = 0;
             }
@@ -190,10 +170,10 @@ namespace ccm.Render
 
         int GetPrevBuffer()
         {
-            return (Buffer == 0) ? (BUFFER_NUM - 1) : (Buffer - 1);
+            return (Buffer == 0) ? (BufferNum - 1) : (Buffer - 1);
         }
 
-        void CopyPrevBuffer()
+        protected void CopyPrevBuffer()
         {
             var prev = GetPrevBuffer();
 
@@ -204,7 +184,7 @@ namespace ccm.Render
             DirectionalLights[Buffer].AddRange(DirectionalLights[prev]);
         }
 
-        void ClearBuffer()
+        protected void ClearBuffer()
         {
             ModelInfoList[Buffer].Clear();
             BillboardInfoList[Buffer].Clear();
