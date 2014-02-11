@@ -41,6 +41,18 @@ namespace HimaLib.System
             set { graphics.IsFullScreen = value; }
         }
 
+        public int ResolutionWidth
+        {
+            get { return graphics.PreferredBackBufferWidth; }
+            set { graphics.PreferredBackBufferWidth = value; }
+        }
+
+        public int ResolutionHeight
+        {
+            get { return graphics.PreferredBackBufferHeight; }
+            set { graphics.PreferredBackBufferHeight = value; }
+        }
+
         GraphicsDeviceManager graphics;
 
         bool disposed = false;
@@ -93,6 +105,27 @@ namespace HimaLib.System
             InitializeProperty();
 
             InitializeSystemProperty();
+
+            GraphicsOption.Create();
+
+            foreach (var displayMode in GraphicsDevice.Adapter.SupportedDisplayModes)
+            {
+                DebugPrint.PrintLine(string.Format(
+                    "{0} {1}x{2} ({3})",
+                    displayMode.Format.ToString(),
+                    displayMode.Width,
+                    displayMode.Height,
+                    displayMode.AspectRatio));
+
+                if (displayMode.Format == SurfaceFormat.Color)
+                {
+                    GraphicsOptionBase.Instance.Resolutions.Add(new Resolution()
+                    {
+                        Width = displayMode.Width,
+                        Height = displayMode.Height,
+                    });
+                }
+            }
 
             base.Initialize();
         }
@@ -148,6 +181,14 @@ namespace HimaLib.System
             LoadProfiler.StartFrame();
             LoadProfiler.BeginMark("Update");
 
+            // ApplyChanges()はUpdateの中で呼ぶこと
+            // レンダリング中に呼ばれるとまずいので最初に呼んでおく
+            if (ApplyGraphicsChangesFlag)
+            {
+                graphics.ApplyChanges();
+                ApplyGraphicsChangesFlag = false;
+            }
+
             TimeKeeper.Instance.XnaGameTime = gameTime;
             MMDXCore.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
             RootUpdater.Update();
@@ -169,12 +210,6 @@ namespace HimaLib.System
             RootDrawer.Draw();
 
             ResetFloatSampler();
-
-            if (ApplyGraphicsChangesFlag)
-            {
-                graphics.ApplyChanges();
-                ApplyGraphicsChangesFlag = false;
-            }
 
             base.Draw(gameTime);
 

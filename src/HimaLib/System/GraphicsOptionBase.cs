@@ -19,6 +19,16 @@ namespace HimaLib.System
 
         public bool IsFullScreen { get; set; }
 
+        public List<Resolution> Resolutions { get; private set; }
+
+        public Resolution Resolution { get; set; }
+
+        protected GraphicsOptionBase()
+        {
+            Resolutions = new List<Resolution>();
+            Resolution = new Resolution();
+        }
+
         public abstract void GetCurrentSetting();
 
         public abstract void Apply();

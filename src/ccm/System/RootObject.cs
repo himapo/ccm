@@ -92,7 +92,7 @@ namespace ccm.System
 
         void InitSystem()
         {
-            GraphicsOption.Create();
+            
         }
 
         void InitController()
@@ -502,6 +502,22 @@ namespace ccm.System
                 Getter = () => { return GraphicsOptionBase.Instance.IsFullScreen; },
                 Setter = (value) => { GraphicsOptionBase.Instance.IsFullScreen = value; },
             });
+
+            var resolutionNode = new DebugMenuNodeSelectable
+            {
+                Label = "解像度",
+            };
+            foreach (var resolution in GraphicsOptionBase.Instance.Resolutions)
+            {
+                resolutionNode.AddChoice(
+                    string.Format("{0}x{1}", resolution.Width, resolution.Height),
+                    () =>
+                    {
+                        GraphicsOptionBase.Instance.Resolution.Width = resolution.Width;
+                        GraphicsOptionBase.Instance.Resolution.Height = resolution.Height;
+                    });
+            }
+            DebugMenu.AddChild(graphicsOptionLabel, resolutionNode);
         }
 
         void InitRenderTargetHud()
