@@ -45,8 +45,11 @@ namespace HimaLib.System
 
             Initializer.Initialize();
 
+            // コンストラクタ後にGraphicsDeviceが生成されるので、
+            // GraphicsDeviceManagerはInitializeの前にコンストラクタで作ること
             graphics = new GraphicsDeviceManager(this);
 
+            // 解像度等の設定もInitializeの前にやっておく
             InitializeGraphics();
 
             DebugSampleAccessor.CreateInstance(this);
