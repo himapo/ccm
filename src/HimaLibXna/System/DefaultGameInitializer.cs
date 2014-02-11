@@ -21,6 +21,8 @@ namespace HimaLib.System
 
         public bool MouseVisible { get; private set; }
 
+        public bool IsFullScreen { get; private set; }
+
         public void Initialize()
         {
             // TODO : デバイスの性能取得
@@ -32,6 +34,7 @@ namespace HimaLib.System
             FixedFrameRate = false;
             VSyncEnable = false;
             MouseVisible = true;
+            IsFullScreen = false;
         }
     }
 }

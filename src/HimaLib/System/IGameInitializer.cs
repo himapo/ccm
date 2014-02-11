@@ -21,6 +21,8 @@ namespace HimaLib.System
 
         bool MouseVisible { get; }
 
+        bool IsFullScreen { get; }
+
         void Initialize();
     }
 }

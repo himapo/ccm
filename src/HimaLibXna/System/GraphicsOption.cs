@@ -30,12 +30,14 @@ namespace HimaLib.System
         {
             VSyncEnable = XnaGame.VSyncEnable;
             MSAAEnable = XnaGame.MSAAEnable;
+            IsFullScreen = XnaGame.IsFullScreen;
         }
 
         public override void Apply()
         {
             XnaGame.VSyncEnable = VSyncEnable;
             XnaGame.MSAAEnable = MSAAEnable;
+            XnaGame.IsFullScreen = IsFullScreen;
 
             XnaGame.ApplyGraphicsChangesFlag = true;
         }

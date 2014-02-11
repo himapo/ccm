@@ -35,6 +35,12 @@ namespace HimaLib.System
             set { graphics.PreferMultiSampling = value; }
         }
 
+        public bool IsFullScreen
+        {
+            get { return graphics.IsFullScreen; }
+            set { graphics.IsFullScreen = value; }
+        }
+
         GraphicsDeviceManager graphics;
 
         bool disposed = false;
@@ -97,6 +103,7 @@ namespace HimaLib.System
             graphics.PreferredBackBufferWidth = Initializer.ScreenWidth;
             graphics.PreferredBackBufferHeight = Initializer.ScreenHeight;
             graphics.PreferMultiSampling = Initializer.MSAAEnable;
+            graphics.IsFullScreen = Initializer.IsFullScreen;
         }
 
         void InitializeProperty()

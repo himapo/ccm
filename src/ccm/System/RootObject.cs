@@ -495,6 +495,13 @@ namespace ccm.System
                 Getter = () => { return GraphicsOptionBase.Instance.MSAAEnable; },
                 Setter = (value) => { GraphicsOptionBase.Instance.MSAAEnable = value; },
             });
+
+            DebugMenu.AddChild(graphicsOptionLabel, new DebugMenuNodeTunableBool
+            {
+                Label = "フルスクリーン",
+                Getter = () => { return GraphicsOptionBase.Instance.IsFullScreen; },
+                Setter = (value) => { GraphicsOptionBase.Instance.IsFullScreen = value; },
+            });
         }
 
         void InitRenderTargetHud()

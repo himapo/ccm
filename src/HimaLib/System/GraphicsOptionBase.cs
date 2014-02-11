@@ -17,6 +17,8 @@ namespace HimaLib.System
 
         public bool MSAAEnable { get; set; }
 
+        public bool IsFullScreen { get; set; }
+
         public abstract void GetCurrentSetting();
 
         public abstract void Apply();
