@@ -15,6 +15,8 @@ namespace HimaLib.System
 
         public bool VSyncEnable { get; set; }
 
+        public bool MSAAEnable { get; set; }
+
         public abstract void GetCurrentSetting();
 
         public abstract void Apply();

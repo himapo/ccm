@@ -488,6 +488,13 @@ namespace ccm.System
                 Getter = () => { return GraphicsOptionBase.Instance.VSyncEnable; },
                 Setter = (value) => { GraphicsOptionBase.Instance.VSyncEnable = value; },
             });
+
+            DebugMenu.AddChild(graphicsOptionLabel, new DebugMenuNodeTunableBool
+            {
+                Label = "MSAA有効",
+                Getter = () => { return GraphicsOptionBase.Instance.MSAAEnable; },
+                Setter = (value) => { GraphicsOptionBase.Instance.MSAAEnable = value; },
+            });
         }
 
         void InitRenderTargetHud()

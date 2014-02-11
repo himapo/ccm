@@ -29,11 +29,13 @@ namespace HimaLib.System
         public override void GetCurrentSetting()
         {
             VSyncEnable = XnaGame.VSyncEnable;
+            MSAAEnable = XnaGame.MSAAEnable;
         }
 
         public override void Apply()
         {
             XnaGame.VSyncEnable = VSyncEnable;
+            XnaGame.MSAAEnable = MSAAEnable;
 
             XnaGame.ApplyGraphicsChangesFlag = true;
         }

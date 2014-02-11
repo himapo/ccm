@@ -29,6 +29,12 @@ namespace HimaLib.System
             set { graphics.SynchronizeWithVerticalRetrace = value; }
         }
 
+        public bool MSAAEnable
+        {
+            get { return graphics.PreferMultiSampling; }
+            set { graphics.PreferMultiSampling = value; }
+        }
+
         GraphicsDeviceManager graphics;
 
         bool disposed = false;
