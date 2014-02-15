@@ -12,10 +12,13 @@ namespace HimaLib.Collision
 
         public SphereCollisionPrimitive Sphere { get; set; }
 
-        public bool Detect(out Vector3 overlap)
+        public bool Detect(CollisionResult result)
         {
-            overlap = Vector3.Zero;
-            return Ray.Ray.Intersects(new Sphere(Sphere.Center(), Sphere.Radius())) != null;
+            var distance = Ray.Ray.Intersects(new Sphere(Sphere.Center(), Sphere.Radius()));
+
+            result.Distance = distance ?? 0.0f;
+
+            return distance != null;
         }
     }
 }

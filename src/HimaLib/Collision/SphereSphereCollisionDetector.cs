@@ -12,10 +12,10 @@ namespace HimaLib.Collision
 
         public SphereCollisionPrimitive ParamB { get; set; }
 
-        public bool Detect(out Vector3 overlap)
+        public bool Detect(CollisionResult result)
         {
             // 中心間ベクトル
-            overlap = ParamB.Center() - ParamA.Center();
+            var overlap = ParamB.Center() - ParamA.Center();
             
             // 中心間の距離
             var centerLength = overlap.Length();
@@ -26,6 +26,8 @@ namespace HimaLib.Collision
             // めり込みベクトル
             overlap *= overlapLength / centerLength;
 
+            result.Overlap = overlap;
+            
             return overlapLength > 0.0f;
         }
     }

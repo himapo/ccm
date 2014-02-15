@@ -6,13 +6,13 @@ using HimaLib.Math;
 
 namespace HimaLib.Collision
 {
-    public class CylinderCylinderCpollisionDetector : ICollisionDetector
+    public class CylinderCylinderCollisionDetector : ICollisionDetector
     {
         public CylinderCollisionPrimitive ParamA { get; set; }
 
         public CylinderCollisionPrimitive ParamB { get; set; }
 
-        public bool Detect(out Vector3 overlap)
+        public bool Detect(CollisionResult result)
         {
             var baseA = ParamA.Base();
             var baseB = ParamB.Base();
@@ -29,12 +29,12 @@ namespace HimaLib.Collision
 
             if (!horizontal)
             {
-                overlap = Vector3.Zero;
+                result.Overlap = Vector3.Zero;
                 return false;
             }
 
-            overlap.X = hOverlapVector.X;
-            overlap.Z = hOverlapVector.Y;
+            result.Overlap.X = hOverlapVector.X;
+            result.Overlap.Z = hOverlapVector.Y;
 
             // 垂直交差判定
             var al = baseA.Y;
@@ -49,7 +49,7 @@ namespace HimaLib.Collision
 
             if (!vertical)
             {
-                overlap = Vector3.Zero;
+                result.Overlap = Vector3.Zero;
                 return false;
             }
 
@@ -60,7 +60,7 @@ namespace HimaLib.Collision
             var a_top_b_bottom = ah - bl;
 
             // めり込み量が少ない方を採用
-            overlap.Y =
+            result.Overlap.Y =
                 MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
                 ? a_bottom_b_top
                 : a_top_b_bottom;

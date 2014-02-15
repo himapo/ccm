@@ -123,15 +123,15 @@ namespace ccm.Player
             BodyCollision = new PlayerBodyCollisionInfo()
             {
                 Base = () => Transform.Translation,
-                Reaction = (id, count, overlap) =>
+                Reaction = (id, count, result) =>
                 {
-                    if (MathUtil.Abs(overlap.X) < MathUtil.Abs(overlap.Z))
+                    if (MathUtil.Abs(result.Overlap.X) < MathUtil.Abs(result.Overlap.Z))
                     {
-                        Transform.Translation.X -= overlap.X;
+                        Transform.Translation.X -= result.Overlap.X;
                     }
                     else
                     {
-                        Transform.Translation.Z -= overlap.Z;
+                        Transform.Translation.Z -= result.Overlap.Z;
                     }
                 },
             };
@@ -187,7 +187,7 @@ namespace ccm.Player
             UpdateState = UpdateStateInit;
         }
 
-        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor, Vector3 overlap)
+        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor, CollisionResult result)
         {
             if (HitPoint > 0 && collisionCount == 1)
             {
@@ -201,7 +201,7 @@ namespace ccm.Player
             }
         }
 
-        void Guard(int collisionId, int collisionCount, AttackCollisionActor actor, Vector3 overlap)
+        void Guard(int collisionId, int collisionCount, AttackCollisionActor actor, CollisionResult result)
         {
             if (HitPoint > 0 && collisionCount == 1)
             {

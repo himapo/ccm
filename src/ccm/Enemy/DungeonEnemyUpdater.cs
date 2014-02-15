@@ -105,7 +105,7 @@ namespace ccm.Enemy
             UpdateState = UpdateStateInit;
         }
 
-        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor, Vector3 overlap)
+        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor, CollisionResult result)
         {
             if (HitPoint > 0 && collisionCount == 1)
             {

@@ -2,15 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HimaLib.Math;
 
 namespace HimaLib.Collision
 {
     public class NullCollisionDetector : ICollisionDetector
     {
-        public bool Detect(out Vector3 overlap)
+        public bool Detect(CollisionResult result)
         {
-            overlap = Vector3.Zero;
             return false;
         }
     }

@@ -17,7 +17,7 @@ namespace ccm.Ally
 
         public Func<float> Radius { set { Primitive.Radius = value; } }
 
-        public Action<int, int, AttackCollisionActor, Vector3> AttackReaction { set { AttackCollisionReactor.AttackReaction = value; } }
+        public Action<int, int, AttackCollisionActor, CollisionResult> AttackReaction { set { AttackCollisionReactor.AttackReaction = value; } }
 
         SphereCollisionPrimitive Primitive = new SphereCollisionPrimitive();
 
@@ -28,7 +28,7 @@ namespace ccm.Ally
             Active = () => true;
             Group = () => (int)ccm.Collision.CollisionGroup.AllyDamage;
 
-            AttackReaction = (id, count, actor, overlap) => { };
+            AttackReaction = (id, count, actor, result) => { };
             Reactor = AttackCollisionReactor;
 
             Center = () => Vector3.Zero;

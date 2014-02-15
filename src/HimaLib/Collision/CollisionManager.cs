@@ -127,15 +127,23 @@ namespace HimaLib.Collision
             {
                 foreach (var b in betaQuery)
                 {
-                    Vector3 overlap;
-                    if (Detect(a, b, out overlap))
+                    var result = new CollisionResult();
+                    if (Detect(a, b, result))
                     {
+                        result.Detected = true;
+
                         var collisionCount = UpdateCollisionMatrix(a, b);
                         var collisionID = ++collisionIDCount;
 
                         // 衝突応答
-                        a.Reactor.React(collisionID, collisionCount, b.Actor, overlap);
-                        b.Reactor.React(collisionID, collisionCount, a.Actor, -overlap);
+                        a.Reactor.React(collisionID, collisionCount, b.Actor, result);
+                        b.Reactor.React(collisionID, collisionCount, a.Actor,
+                            new CollisionResult()
+                            {
+                                Detected = result.Detected,
+                                Overlap = -result.Overlap,  // めり込みベクトルは反転させる
+                                Distance = result.Distance,
+                            });
                     }
                 }
             }
@@ -159,19 +167,19 @@ namespace HimaLib.Collision
             return groupQuery;
         }
 
-        bool Detect(CollisionInfo a, CollisionInfo b, out Vector3 overlap)
+        bool Detect(CollisionInfo a, CollisionInfo b, CollisionResult result)
         {
             foreach (var primitiveA in a.Primitives)
             {
                 foreach (var primitiveB in b.Primitives)
                 {
-                    if (DetectorFactory.Create(primitiveA, primitiveB).Detect(out overlap))
+                    if (DetectorFactory.Create(primitiveA, primitiveB).Detect(result))
                     {
                         return true;
                     }
                 }
             }
-            overlap = Vector3.Zero;
+
             return false;
         }
 

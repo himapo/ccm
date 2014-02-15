@@ -40,7 +40,7 @@ namespace HimaLib.Collision
                     {
                         case CollisionShape.Cylinder:
                             {
-                                var result = new CylinderCylinderCpollisionDetector();
+                                var result = new CylinderCylinderCollisionDetector();
                                 result.ParamA = paramA as CylinderCollisionPrimitive;
                                 result.ParamB = paramB as CylinderCollisionPrimitive;
                                 return result;

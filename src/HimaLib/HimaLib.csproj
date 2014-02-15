@@ -88,12 +88,13 @@
     <Compile Include="Collision\CollisionDetectorFactory.cs" />
     <Compile Include="Collision\CylinderAABBCollisionDetector.cs" />
     <Compile Include="Collision\CylinderCollisionPrimitive.cs" />
-    <Compile Include="Collision\CylinderCylinderCpollisionDetector.cs" />
+    <Compile Include="Collision\CylinderCylinderCollisionDetector.cs" />
     <Compile Include="Collision\ICollisionDetector.cs" />
     <Compile Include="Collision\ICollisionDrawer.cs" />
     <Compile Include="Collision\ICollisionPrimitive.cs" />
     <Compile Include="Collision\ICollisionActor.cs" />
     <Compile Include="Collision\ICollisionReactor.cs" />
+    <Compile Include="Collision\CollisionResult.cs" />
     <Compile Include="Collision\NullCollisionDetector.cs" />
     <Compile Include="Collision\NullCollisionReactor.cs" />
     <Compile Include="Collision\RayCollisionPrimitive.cs" />

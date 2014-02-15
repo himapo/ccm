@@ -12,7 +12,7 @@ namespace HimaLib.Collision
 
         public AABBCollisionPrimitive AABB { get; set; }
 
-        public bool Detect(out Vector3 overlap)
+        public bool Detect(CollisionResult result)
         {
             // 垂直交差判定
             var al = Cylinder.Base().Y;
@@ -27,7 +27,7 @@ namespace HimaLib.Collision
 
             if (!vertical)
             {
-                overlap = Vector3.Zero;
+                result.Overlap = Vector3.Zero;
                 return false;
             }
 
@@ -39,7 +39,7 @@ namespace HimaLib.Collision
                 var a_top_b_bottom = ah - bl;
 
                 // めり込み量が少ない方を採用
-                overlap.Y =
+                result.Overlap.Y =
                     MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
                     ? a_bottom_b_top
                     : a_top_b_bottom;
@@ -50,14 +50,14 @@ namespace HimaLib.Collision
             if (Cylinder.Base().X + Cylinder.Radius() < AABB.Corner.X
                 || Cylinder.Base().X - Cylinder.Radius() > AABB.Corner.X + AABB.Width.X)
             {
-                overlap = Vector3.Zero;
+                result.Overlap = Vector3.Zero;
                 return false;
             }
 
             if (Cylinder.Base().Z + Cylinder.Radius() < AABB.Corner.Z
                 || Cylinder.Base().Z - Cylinder.Radius() > AABB.Corner.Z + AABB.Width.Z)
             {
-                overlap = Vector3.Zero;
+                result.Overlap = Vector3.Zero;
                 return false;
             }
 
@@ -77,7 +77,7 @@ namespace HimaLib.Collision
                 var a_left_b_right = (Cylinder.Base().X - Cylinder.Radius()) - (AABB.Corner.X + AABB.Width.X);
 
                 // めり込み量が少ない方を採用
-                overlap.X =
+                result.Overlap.X =
                     MathUtil.Abs(a_right_b_left) < MathUtil.Abs(a_left_b_right)
                     ? a_right_b_left
                     : a_left_b_right;
@@ -97,7 +97,7 @@ namespace HimaLib.Collision
                 var a_top_b_bottom = (Cylinder.Base().Z - Cylinder.Radius()) - (AABB.Corner.Z + AABB.Width.Z);
 
                 // めり込み量が少ない方を採用
-                overlap.Z =
+                result.Overlap.Z =
                     MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
                     ? a_bottom_b_top
                     : a_top_b_bottom;
@@ -126,7 +126,7 @@ namespace HimaLib.Collision
 
             if (minLength >= (Cylinder.Radius() * Cylinder.Radius()))
             {
-                overlap = Vector3.Zero;
+                result.Overlap = Vector3.Zero;
                 return false;
             }
 
@@ -144,7 +144,7 @@ namespace HimaLib.Collision
                 var a_left_b_right = (cylinderCenter.X - Cylinder.Radius()) - minCorner.X;
 
                 // めり込み量が少ない方を採用
-                overlap.X =
+                result.Overlap.X =
                     MathUtil.Abs(a_right_b_left) < MathUtil.Abs(a_left_b_right)
                     ? a_right_b_left
                     : a_left_b_right;
@@ -158,7 +158,7 @@ namespace HimaLib.Collision
                 var a_top_b_bottom = (cylinderCenter.Y - Cylinder.Radius()) - minCorner.Y;
 
                 // めり込み量が少ない方を採用
-                overlap.Z =
+                result.Overlap.Z =
                     MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
                     ? a_bottom_b_top
                     : a_top_b_bottom;
