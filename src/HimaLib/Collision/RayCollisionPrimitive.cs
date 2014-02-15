@@ -10,7 +10,9 @@ namespace HimaLib.Collision
     {
         public CollisionShape Shape { get { return CollisionShape.Ray; } }
 
-        public Ray Ray { get; set; }
+        public Func<Vector3> Direction { get; set; }
+
+        public Func<Vector3> Position { get; set; }
 
         public void Draw(ICollisionDrawer drawer, Color color)
         {

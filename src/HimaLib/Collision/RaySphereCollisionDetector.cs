@@ -14,7 +14,9 @@ namespace HimaLib.Collision
 
         public bool Detect(CollisionResult result)
         {
-            var distance = Ray.Ray.Intersects(new Sphere(Sphere.Center(), Sphere.Radius()));
+            var ray = new Ray(Ray.Direction(), Ray.Position());
+
+            var distance = ray.Intersects(new Sphere(Sphere.Center(), Sphere.Radius()));
 
             result.Distance = distance ?? 0.0f;
 
