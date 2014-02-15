@@ -96,6 +96,8 @@
     <Compile Include="Collision\ICollisionReactor.cs" />
     <Compile Include="Collision\NullCollisionDetector.cs" />
     <Compile Include="Collision\NullCollisionReactor.cs" />
+    <Compile Include="Collision\RayCollisionPrimitive.cs" />
+    <Compile Include="Collision\RaySphereCollisionDetector.cs" />
     <Compile Include="Collision\SphereCollisionPrimitive.cs" />
     <Compile Include="Collision\SphereSphereCollisionDetector.cs" />
     <Compile Include="Debug\ConsoleDebugPrint.cs" />
@@ -139,6 +141,8 @@
     <Compile Include="Light\SpotLight.cs" />
     <Compile Include="Math\AffineTransform.cs" />
     <Compile Include="Math\Plane.cs" />
+    <Compile Include="Math\Ray.cs" />
+    <Compile Include="Math\Sphere.cs" />
     <Compile Include="Math\TransformChain.cs" />
     <Compile Include="Math\Color.cs" />
     <Compile Include="Math\IRand.cs" />

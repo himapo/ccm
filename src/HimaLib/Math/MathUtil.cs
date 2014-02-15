@@ -80,6 +80,11 @@ namespace HimaLib.Math
             return global::System.Math.Abs(value);
         }
 
+        public static float Sqrt(float value)
+        {
+            return (float)global::System.Math.Sqrt(value);
+        }
+
         /// <summary>
         /// ワールド座標をスクリーン座標に変換
         /// </summary>

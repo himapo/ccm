@@ -11,6 +11,7 @@ namespace HimaLib.Collision
         Sphere,
         Cylinder,
         AABB,
+        Ray,
     }
 
     public interface ICollisionPrimitive
