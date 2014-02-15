@@ -71,7 +71,7 @@ namespace ccm.Ally
             BodyCollision = new AllyBodyCollisionInfo()
             {
                 Base = () => { return new Vector3(Transform.Translation - Vector3.UnitY * 2.0f); },
-                Reaction = (id, count) =>
+                Reaction = (id, count, overlap) =>
                 {
                     Transform.Translation = PrevTransform.Translation;
                 },
@@ -80,7 +80,7 @@ namespace ccm.Ally
             DamageCollision = new AllyDamageCollisionInfo()
             {
                 Center = () => Transform.Translation,
-                AttackReaction = (id, count, actor) =>
+                AttackReaction = (id, count, actor, overlap) =>
                 {
                     UpdateState = UpdateStateTerm;
 

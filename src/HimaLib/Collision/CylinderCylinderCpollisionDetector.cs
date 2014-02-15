@@ -12,17 +12,29 @@ namespace HimaLib.Collision
 
         public CylinderCollisionPrimitive ParamB { get; set; }
 
-        public bool Detect()
+        public bool Detect(out Vector3 overlap)
         {
             var baseA = ParamA.Base();
             var baseB = ParamB.Base();
-            var horizonalA = new Vector2(baseA.X, baseA.Z);
-            var horizonalB = new Vector2(baseB.X, baseB.Z);
+            var horizontalA = new Vector2(baseA.X, baseA.Z);
+            var horizontalB = new Vector2(baseB.X, baseB.Z);
 
             // 水平交差判定
-            var horizonal = ((horizonalA - horizonalB).Length() < ParamA.Radius() + ParamB.Radius());
-            if (!horizonal)
+            var hOverlapVector = horizontalB - horizontalA;
+            var hCenterLength = hOverlapVector.Length();
+            var hOverlapLength = ParamA.Radius() + ParamB.Radius() - hCenterLength;
+            hOverlapVector *= hOverlapLength / hCenterLength;
+
+            var horizontal = hOverlapLength > 0.0f;
+
+            if (!horizontal)
+            {
+                overlap = Vector3.Zero;
                 return false;
+            }
+
+            overlap.X = hOverlapVector.X;
+            overlap.Z = hOverlapVector.Y;
 
             // 垂直交差判定
             var al = baseA.Y;
@@ -35,7 +47,25 @@ namespace HimaLib.Collision
                 || (bl > al && bl < ah)
                 || (bh > al && bh < ah);
 
-            return vertical;
+            if (!vertical)
+            {
+                overlap = Vector3.Zero;
+                return false;
+            }
+
+            // Aの下とBの上がめり込んでると見る場合
+            var a_bottom_b_top = al - bh;
+            
+            // Aの上とBの下がめり込んでると見る場合
+            var a_top_b_bottom = ah - bl;
+
+            // めり込み量が少ない方を採用
+            overlap.Y =
+                MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
+                ? a_bottom_b_top
+                : a_top_b_bottom;
+
+            return true;
         }
     }
 }

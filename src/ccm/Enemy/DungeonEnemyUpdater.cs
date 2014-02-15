@@ -80,7 +80,7 @@ namespace ccm.Enemy
             BodyCollision = new EnemyBodyCollisionInfo()
             {
                 Base = () => { return new Vector3(Transform.Translation - Vector3.UnitY * 2.0f); },
-                Reaction = (id, count) =>
+                Reaction = (id, count, overlap) =>
                 {
                     Transform.Translation = PrevTransform.Translation;
                 },
@@ -105,7 +105,7 @@ namespace ccm.Enemy
             UpdateState = UpdateStateInit;
         }
 
-        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor)
+        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor, Vector3 overlap)
         {
             if (HitPoint > 0 && collisionCount == 1)
             {

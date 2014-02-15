@@ -15,7 +15,7 @@ namespace ccm.Enemy
     {
         public Func<Vector3> Base { set { Primitive.Base = value; } }
 
-        public Action<int, int> Reaction { set { CollisionReactor.Reaction = value; } }
+        public Action<int, int, Vector3> Reaction { set { CollisionReactor.Reaction = value; } }
 
         CylinderCollisionPrimitive Primitive = new CylinderCollisionPrimitive();
 

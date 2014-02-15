@@ -12,7 +12,7 @@ namespace HimaLib.Collision
 
         public AABBCollisionPrimitive AABB { get; set; }
 
-        public bool Detect()
+        public bool Detect(out Vector3 overlap)
         {
             // 垂直交差判定
             var al = Cylinder.Base().Y;
@@ -25,9 +25,24 @@ namespace HimaLib.Collision
                 || (bl > al && bl < ah)
                 || (bh > al && bh < ah);
 
-            if(!vertical)
+            if (!vertical)
             {
+                overlap = Vector3.Zero;
                 return false;
+            }
+
+            {
+                // Aの下とBの上がめり込んでると見る場合
+                var a_bottom_b_top = al - bh;
+
+                // Aの上とBの下がめり込んでると見る場合
+                var a_top_b_bottom = ah - bl;
+
+                // めり込み量が少ない方を採用
+                overlap.Y =
+                    MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
+                    ? a_bottom_b_top
+                    : a_top_b_bottom;
             }
 
             // 水平交差判定
@@ -35,23 +50,60 @@ namespace HimaLib.Collision
             if (Cylinder.Base().X + Cylinder.Radius() < AABB.Corner.X
                 || Cylinder.Base().X - Cylinder.Radius() > AABB.Corner.X + AABB.Width.X)
             {
+                overlap = Vector3.Zero;
                 return false;
             }
 
             if (Cylinder.Base().Z + Cylinder.Radius() < AABB.Corner.Z
                 || Cylinder.Base().Z - Cylinder.Radius() > AABB.Corner.Z + AABB.Width.Z)
             {
+                overlap = Vector3.Zero;
                 return false;
             }
 
-            if(Cylinder.Base().X > AABB.Corner.X
+            var horizontal = false;
+
+            if (Cylinder.Base().X > AABB.Corner.X
                 && Cylinder.Base().X < AABB.Corner.X + AABB.Width.X)
             {
-                return true;
+                horizontal = true;
+            }
+
+            {
+                // 円が箱の左辺から右方向にめり込んでると見る場合
+                var a_right_b_left = (Cylinder.Base().X + Cylinder.Radius()) - AABB.Corner.X;
+
+                // 円が箱の右辺から左方向にめり込んでると見る場合
+                var a_left_b_right = (Cylinder.Base().X - Cylinder.Radius()) - (AABB.Corner.X + AABB.Width.X);
+
+                // めり込み量が少ない方を採用
+                overlap.X =
+                    MathUtil.Abs(a_right_b_left) < MathUtil.Abs(a_left_b_right)
+                    ? a_right_b_left
+                    : a_left_b_right;
             }
 
             if (Cylinder.Base().Z > AABB.Corner.Z
                 && Cylinder.Base().Z < AABB.Corner.Z + AABB.Width.Z)
+            {
+                horizontal = true;
+            }
+
+            {
+                // 円が箱の上辺から下方向にめり込んでると見る場合
+                var a_bottom_b_top = (Cylinder.Base().Z + Cylinder.Radius()) - AABB.Corner.Z;
+
+                // 円が箱の下辺から上方向にめり込んでると見る場合
+                var a_top_b_bottom = (Cylinder.Base().Z - Cylinder.Radius()) - (AABB.Corner.Z + AABB.Width.Z);
+
+                // めり込み量が少ない方を採用
+                overlap.Z =
+                    MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
+                    ? a_bottom_b_top
+                    : a_top_b_bottom;
+            }
+
+            if (horizontal)
             {
                 return true;
             }
@@ -72,7 +124,47 @@ namespace HimaLib.Collision
                 return (corner - cylinderCenter).LengthSquared();
             });
 
-            return minLength < (Cylinder.Radius() * Cylinder.Radius());
+            if (minLength >= (Cylinder.Radius() * Cylinder.Radius()))
+            {
+                overlap = Vector3.Zero;
+                return false;
+            }
+
+            // 最短距離の角
+            var minCorner = corners.First((corner) =>
+            {
+                return minLength == (corner - cylinderCenter).LengthSquared();
+            });
+
+            {
+                // 円が箱の左辺から右方向にめり込んでると見る場合
+                var a_right_b_left = (cylinderCenter.X + Cylinder.Radius()) - minCorner.X;
+
+                // 円が箱の右辺から左方向にめり込んでると見る場合
+                var a_left_b_right = (cylinderCenter.X - Cylinder.Radius()) - minCorner.X;
+
+                // めり込み量が少ない方を採用
+                overlap.X =
+                    MathUtil.Abs(a_right_b_left) < MathUtil.Abs(a_left_b_right)
+                    ? a_right_b_left
+                    : a_left_b_right;
+            }
+
+            {
+                // 円が箱の上辺から下方向にめり込んでると見る場合
+                var a_bottom_b_top = (cylinderCenter.Y + Cylinder.Radius()) - minCorner.Y;
+
+                // 円が箱の下辺から上方向にめり込んでると見る場合
+                var a_top_b_bottom = (cylinderCenter.Y - Cylinder.Radius()) - minCorner.Y;
+
+                // めり込み量が少ない方を採用
+                overlap.Z =
+                    MathUtil.Abs(a_bottom_b_top) < MathUtil.Abs(a_top_b_bottom)
+                    ? a_bottom_b_top
+                    : a_top_b_bottom;
+            }
+
+            return true;
         }
     }
 }

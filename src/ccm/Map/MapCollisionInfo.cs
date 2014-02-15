@@ -16,7 +16,7 @@ namespace ccm.Map
         {
             Active = () => true;
             Group = () => (int)CollisionGroup.Floor;
-            CollisionReactor.Reaction = (id, count) => { };
+            CollisionReactor.Reaction = (id, count, overlap) => { };
             Reactor = CollisionReactor;
         }
 

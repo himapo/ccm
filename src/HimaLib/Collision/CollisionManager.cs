@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.Math;
 
 namespace HimaLib.Collision
 {
@@ -126,14 +127,15 @@ namespace HimaLib.Collision
             {
                 foreach (var b in betaQuery)
                 {
-                    if (Detect(a, b))
+                    Vector3 overlap;
+                    if (Detect(a, b, out overlap))
                     {
                         var collisionCount = UpdateCollisionMatrix(a, b);
                         var collisionID = ++collisionIDCount;
 
                         // 衝突応答
-                        a.Reactor.React(collisionID, collisionCount, b.Actor);
-                        b.Reactor.React(collisionID, collisionCount, a.Actor);
+                        a.Reactor.React(collisionID, collisionCount, b.Actor, overlap);
+                        b.Reactor.React(collisionID, collisionCount, a.Actor, -overlap);
                     }
                 }
             }
@@ -157,18 +159,19 @@ namespace HimaLib.Collision
             return groupQuery;
         }
 
-        bool Detect(CollisionInfo a, CollisionInfo b)
+        bool Detect(CollisionInfo a, CollisionInfo b, out Vector3 overlap)
         {
             foreach (var primitiveA in a.Primitives)
             {
                 foreach (var primitiveB in b.Primitives)
                 {
-                    if (DetectorFactory.Create(primitiveA, primitiveB).Detect())
+                    if (DetectorFactory.Create(primitiveA, primitiveB).Detect(out overlap))
                     {
                         return true;
                     }
                 }
             }
+            overlap = Vector3.Zero;
             return false;
         }
 

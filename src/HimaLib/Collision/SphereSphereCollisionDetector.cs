@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using HimaLib.Math;
 
 namespace HimaLib.Collision
 {
@@ -11,9 +12,21 @@ namespace HimaLib.Collision
 
         public SphereCollisionPrimitive ParamB { get; set; }
 
-        public bool Detect()
+        public bool Detect(out Vector3 overlap)
         {
-            return ((ParamA.Center() - ParamB.Center()).Length() < ParamA.Radius() + ParamB.Radius());
+            // 中心間ベクトル
+            overlap = ParamB.Center() - ParamA.Center();
+            
+            // 中心間の距離
+            var centerLength = overlap.Length();
+
+            // めり込み距離
+            var overlapLength = ParamA.Radius() + ParamB.Radius() - centerLength;
+
+            // めり込みベクトル
+            overlap *= overlapLength / centerLength;
+
+            return overlapLength > 0.0f;
         }
     }
 }

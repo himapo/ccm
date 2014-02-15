@@ -17,7 +17,7 @@ namespace ccm.Enemy
 
         public Func<float> Radius { set { Primitive.Radius = value; } }
 
-        public Action<int, int, AttackCollisionActor> AttackReaction { set { AttackCollisionReactor.AttackReaction = value; } }
+        public Action<int, int, AttackCollisionActor, Vector3> AttackReaction { set { AttackCollisionReactor.AttackReaction = value; } }
 
         SphereCollisionPrimitive Primitive = new SphereCollisionPrimitive();
 
@@ -28,7 +28,7 @@ namespace ccm.Enemy
             Active = () => true;
             Group = () => (int)ccm.Collision.CollisionGroup.EnemyDamage;
 
-            AttackReaction = (id, count, actor) => { };
+            AttackReaction = (id, count, actor, overlap) => { };
             Reactor = AttackCollisionReactor;
 
             Center = () => Vector3.Zero;

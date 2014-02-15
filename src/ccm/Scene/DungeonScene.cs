@@ -178,8 +178,8 @@ namespace ccm.Scene
 
             debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
 
-            Dungeon.Drawable = true;
-            CollisionManager.Drawable = false;
+            Dungeon.Drawable = false;
+            CollisionManager.Drawable = true;
         }
 
         void UpdateStateInit()

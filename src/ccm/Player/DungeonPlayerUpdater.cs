@@ -123,7 +123,7 @@ namespace ccm.Player
             BodyCollision = new PlayerBodyCollisionInfo()
             {
                 Base = () => Transform.Translation,
-                Reaction = (id, count) =>
+                Reaction = (id, count, overlap) =>
                 {
                     Transform.Translation = PrevTransform.Translation;
                 },
@@ -133,12 +133,9 @@ namespace ccm.Player
             {
                 Base = () => Transform.Translation,
                 Group = () => (int)CollisionGroup.PlayerGround,
-                Reaction = (id, count) =>
+                Reaction = (id, count, overlap) =>
                 {
                     IsGround = true;
-                    //Transform.Translation.Y = 0;
-                    //FallVelocity = 0.0f;
-                    //GoToStand();
                 },
                 Color = Color.Yellow,
             };
@@ -183,7 +180,7 @@ namespace ccm.Player
             UpdateState = UpdateStateInit;
         }
 
-        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor)
+        void Damage(int collisionId, int collisionCount, AttackCollisionActor actor, Vector3 overlap)
         {
             if (HitPoint > 0 && collisionCount == 1)
             {
@@ -197,7 +194,7 @@ namespace ccm.Player
             }
         }
 
-        void Guard(int collisionId, int collisionCount, AttackCollisionActor actor)
+        void Guard(int collisionId, int collisionCount, AttackCollisionActor actor, Vector3 overlap)
         {
             if (HitPoint > 0 && collisionCount == 1)
             {
