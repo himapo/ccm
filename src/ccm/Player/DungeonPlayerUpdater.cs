@@ -125,7 +125,14 @@ namespace ccm.Player
                 Base = () => Transform.Translation,
                 Reaction = (id, count, overlap) =>
                 {
-                    Transform.Translation = PrevTransform.Translation;
+                    if (MathUtil.Abs(overlap.X) < MathUtil.Abs(overlap.Z))
+                    {
+                        Transform.Translation.X -= overlap.X;
+                    }
+                    else
+                    {
+                        Transform.Translation.Z -= overlap.Z;
+                    }
                 },
             };
 

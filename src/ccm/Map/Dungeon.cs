@@ -112,7 +112,7 @@ namespace ccm.Map
 
                 var width = new Vector3(
                     rect.Width,
-                    10.0f,
+                    15.0f,
                     rect.Height) * GameProperty.CUBE_WIDTH;
 
                 WallCollisionInfo.AddAABB(corner, width);
