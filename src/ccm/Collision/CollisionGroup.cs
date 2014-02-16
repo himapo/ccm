@@ -19,5 +19,7 @@ namespace ccm.Collision
         EnemyDamage,
         Floor,
         Wall,
+        CameraRay,
+        CameraTarget,
     }
 }

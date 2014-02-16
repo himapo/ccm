@@ -57,6 +57,8 @@ namespace ccm.Scene
 
         TPSCameraUpdater cameraUpdater;
 
+        CameraRayCollisionInfo CameraRayCollision;
+
         // ライト
         DirectionalLight DirectionalLight0 = new DirectionalLight();
 
@@ -176,6 +178,18 @@ namespace ccm.Scene
                 MaxRotX = MathUtil.ToRadians(30.0f),
             };
 
+            CameraRayCollision = new CameraRayCollisionInfo()
+            {
+                Direction = () =>
+                {
+                    var direction = Camera.At - Camera.Eye;
+                    direction.Normalize();
+                    return direction;
+                },
+                Position = () => Camera.Eye,
+                Reaction = (id, count, result) => { },
+            };
+
             debugMenuUpdater = new DebugMenuUpdater(debugMenu, BooleanDeviceLabel.SceneDebugMenu);
 
             Dungeon.Drawable = false;
@@ -246,6 +260,8 @@ namespace ccm.Scene
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerBody, (int)Collision.CollisionGroup.Wall);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.PlayerAttack, (int)Collision.CollisionGroup.EnemyDamage);
             CollisionManager.AddGroupPair((int)Collision.CollisionGroup.EnemyAttack, (int)Collision.CollisionGroup.PlayerDamage);
+            CollisionManager.AddGroupPair((int)Collision.CollisionGroup.CameraRay, (int)Collision.CollisionGroup.CameraTarget);
+
             CollisionManager.Drawer = new WireCollisionDrawer()
             {
                 RenderManager = RenderManagerAccessor.Instance,
@@ -264,6 +280,8 @@ namespace ccm.Scene
             RenderManagerAccessor.Instance.GetPath((int)RenderPathType.OPAQUE).Camera = Camera;
             RenderManagerAccessor.Instance.GetPath((int)RenderPathType.DEBUG).Camera = Camera;
             RenderManagerAccessor.Instance.GetPath((int)RenderPathType.TRANSLUCENT).Camera = Camera;
+
+            CollisionManager.Add(CameraRayCollision);
         }
 
         void InitLight()

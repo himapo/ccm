@@ -54,6 +54,18 @@ namespace HimaLib.Collision
                             }
                     }
                     break;
+                case CollisionShape.Ray:
+                    switch (paramB.Shape)
+                    {
+                        case CollisionShape.Sphere:
+                            {
+                                var result = new RaySphereCollisionDetector();
+                                result.Ray = paramA as RayCollisionPrimitive;
+                                result.Sphere = paramB as SphereCollisionPrimitive;
+                                return result;
+                            }
+                    }
+                    break;
                 default:
                     break;
             }

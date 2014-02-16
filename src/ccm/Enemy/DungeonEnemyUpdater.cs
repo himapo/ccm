@@ -13,6 +13,7 @@ using ccm.Enemy;
 using ccm.Collision;
 using ccm.Deco;
 using ccm.Battle;
+using ccm.Camera;
 
 namespace ccm.Enemy
 {
@@ -63,6 +64,8 @@ namespace ccm.Enemy
 
         EnemyAttackCollisionInfo AttackCollision;
 
+        CameraTargetCollisionInfo CameraTargetCollision;
+
         int Frame;
 
         int HitPoint;
@@ -95,7 +98,17 @@ namespace ccm.Enemy
             AttackCollision = new EnemyAttackCollisionInfo()
             {
                 Active = () => Frame % 360 < 180,
-                Center = () => Transform.Translation,                
+                Center = () => Transform.Translation,
+            };
+
+            CameraTargetCollision = new CameraTargetCollisionInfo()
+            {
+                Center = () => Transform.Translation,
+                Radius = () => 2.0f,
+                Reaction = (id, count, result) =>
+                {
+                    DebugPrint.PrintLine(string.Format("Distance {0}", result.Distance));
+                },
             };
 
             Speed = GameRand.NextFloat() * 0.2f + 0.4f;
@@ -140,6 +153,7 @@ namespace ccm.Enemy
             CollisionManager.Add(BodyCollision);
             CollisionManager.Add(DamageCollision);
             CollisionManager.Add(AttackCollision);
+            CollisionManager.Add(CameraTargetCollision);
         }
 
         void UpdateStateMain()
